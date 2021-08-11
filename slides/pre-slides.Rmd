@@ -18,6 +18,8 @@ output:
 library("knitr")
 library("rmarkdown")
 
+statistics <- readRDS("/Users/jlug/Documents/GitLab/mtg-21-tidyverse/datasets/statistics.rds")
+
 opts_chunk$set(fig.path = 'pics/s6-', # path for calculated figures
                fig.align = 'center',  # alignment of figure (also possible right, left, default)
                fig.show = 'hold', # how to show figures: hold -> direct at the end of code chunk; animate: all plots in an animation
@@ -35,7 +37,6 @@ opts_chunk$set(fig.path = 'pics/s6-', # path for calculated figures
                rows.print = 15
 )
 
-statistics <- readRDS("/users/jlug/documents/gitlab/mtg-21-tidyverse/datasets/statistics.rds")
 ```
 
 ## Ziel des Workshops {.build}
