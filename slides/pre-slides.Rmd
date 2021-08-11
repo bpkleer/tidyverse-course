@@ -1,0 +1,79 @@
+---
+title: "Daten bändigen & visualisieren"
+author: "B. Philipp Kleer"
+date: "11. Oktober 2021"
+output: 
+  slidy_presentation:
+      widescreen: true
+      highlight: pygments
+      theme: readable
+      css: style.css
+      df_print: paged
+      mathjax: default
+      self_contained: false
+      incremental: false #True dann jedes Bullet einzeln
+---
+
+```{r setup, include=FALSE}
+library("knitr")
+library("rmarkdown")
+
+opts_chunk$set(fig.path = 'pics/s6-', # path for calculated figures
+               fig.align = 'center',  # alignment of figure (also possible right, left, default)
+               fig.show = 'hold', # how to show figures: hold -> direct at the end of code chunk; animate: all plots in an animation
+               fig.width = 3,   # figure width
+               fig.height = 4,  # figure height
+               echo = TRUE,     # Code is printed
+               eval = FALSE,    # Code is NOT evaluated
+               warning = FALSE, # warnings are NOT displayed
+               message = FALSE, # messages are NOT displayed
+               size = "tiny",  # latex-size of code chunks
+               background = "#E7E7E7", # background color of code chunks
+               comment = "", # no hashtags before output
+               options(width = 80),
+               results = "markdown",
+               rows.print = 15
+)
+
+statistics <- readRDS("/users/jlug/documents/gitlab/mtg-21-tidyverse/datasets/statistics.rds")
+```
+
+## Ziel des Workshops {.build}
+Die Teilnehmenden können am Ende des Workshops ...
+
+- ... die Grammatik der Pakete ggplot2 und tidyverse verstehen und auf eigene Zwecke anwenden.
+- ... Daten zielführend aufbereiten.
+- ... Daten und Ergebnisse sinnvoll darstellen.
+- ... erste eigene Funktionen programmieren.
+
+Es geht in diesem kurzen 1-Tages-Kurs vor allem um **Readbility-Skills**. Ziel ist es, dass man neue Probleme mit dem hier gezeigten lösen kann. Dafür sollte der Inhalt aber während des Workshops gut aufbereitet bzw. nachbereitet werden (eigene Notizen in den Skripten etc.).
+
+## Wer ich bin und wie ich Workshops leite
+**Wer bin ich?**
+
+> - seit 2015 Mitarbeiter an der Professur für Methoden (viele praktische Methoden-/Projektkurse bisher gegeben)
+> - nutze seit mehreren Jahren bereits R
+> - derzeit: gefördertes Lehrprojekt, in dem R-Kursmaterial für Personen aufbereitet wird, die keine Computer-/Programmierkenntnisse haben
+
+**Wie ich meine Rolle als Workshopleiter sehe?**
+
+1. kollegiales, respektvolles Mitaneinander
+2. Kursmaterialien alle über ILIAS bzw. gitlab erhältlich
+3. in der Ansprache ziehe ich das Du vor
+4. meine Rolle: 
+
+  + Unterstützer/Helfer, 
+  + aber nicht Motivator, Erzieher, allwissender Guru oder neuer bester Freund
+
+
+
+
+## Start
+Der Kurs setzt Grundkenntnisse voraus. Ihr lernt euch jetzt in Breakout-Rooms kennen. In den Breakout-Rooms sollt ihr euch kennenlernen und ein paar Grundaufgaben in R lösen. Dies dient auch der Auffrischung. Ich schaue abwechselnd in den Breakout-Rooms nach. Ihr könnte mich aber auch rufen. 
+
+$\lambda = \rho$
+
+```{r eval=TRUE, size ="tiny"}
+statistics
+````
+

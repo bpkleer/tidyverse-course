@@ -1,0 +1,106 @@
+
+div.blue { background-color:#DCE6EB; border-radius: 5px; padding: 20px;}
+
+
+p.caption {
+  font-style: normal;
+  color: grey;
+  margin-right: 10%;
+  margin-left: 10%;  
+  text-align: center;
+}
+
+title {
+  font-size: 26px;
+  color:rgb(69, 130, 236);
+  text-align: center;
+}
+
+h1 {
+  font-size: 28px;
+  color:rgb(69, 130, 236);
+  text-align: center;
+}
+
+h1.title {
+  font-size: 26px;
+  color:rgb(69, 130, 236);
+  text-align: center;
+}
+h2 {
+  font-size: 24px;
+  color:rgb(69, 130, 236);
+  text-align: center;
+}
+
+h3 {
+  font-size: 22px;
+  color:rgb(69, 130, 236)
+}
+
+p {
+	font-size: 22px;
+	}
+
+ul{
+  list-style-type: square;
+  display: block;
+  font-size: 20px;
+}
+
+ul li{
+  margin-top: 0;
+  margin-bottom: 0;
+  margin-left: 1.5em;
+  margin-right: 0;
+}
+
+ol {
+  list-style-type: upper-roman;
+  display: block;
+  font-size: 20px; 
+}
+ol li{
+  margin-top: 0;
+  margin-bottom: 0;
+  margin-left: 1.5em;
+  margin-right: 0;
+}
+
+strong {
+color:rgb(69, 130, 236)
+}
+
+#infobox {
+  padding: 1em;
+  background: rgb(226, 237, 280);
+  color: rgb(61, 65, 67);
+  border: 16px rgb(69, 130, 236);
+  border-radius: 10px;
+  line-height: 120%;
+  font-size: 13px;
+  margin-bottom: 20px;
+  margin-top: 10px;
+  margin-left: 20px;
+  margin-right: 20px;
+}
+
+body {
+  font-family: Fira Sans !important
+}
+
+code.r{
+  font-size: 18px;
+}
+
+table {
+  font-size: 14px;
+  text-align: center;
+}
+
+.pagedtable-footer {
+  padding-top: 4px;
+  padding-bottom: 5px;
+  font-size: 14px;
+}
+
