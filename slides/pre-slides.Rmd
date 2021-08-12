@@ -1,9 +1,11 @@
 ---
-title: "Daten bändigen & visualisieren"
+title: "Lasset die Spiele beginnen!"
+subtitle: "Daten bändigen & visualisieren \n Methodentage 2021"
 author: "B. Philipp Kleer"
 date: "11. Oktober 2021"
 output: 
   slidy_presentation:
+      footer: "CC BY-SA 4.0, B. Philipp Kleer"
       widescreen: true
       highlight: pygments
       theme: readable
@@ -11,7 +13,8 @@ output:
       df_print: paged
       mathjax: default
       self_contained: false
-      incremental: false #True dann jedes Bullet einzeln
+      incremental: false #True  dann jedes Bullet einzeln
+      collapse: true # means the text output will be merged into the R source code block
 ---
 
 ```{r setup, include=FALSE}
@@ -39,17 +42,88 @@ opts_chunk$set(fig.path = 'pics/s6-', # path for calculated figures
 
 ```
 
-## Ziel des Workshops {.build}
+## Was ist tidyverse?
+:::: {class="flex-container"}
+
+::: {style="text-align: left; flex-grow:1; flex-basis: 30%"}
+**Tidyverse** ist ein Paket, dass mehrere Pakete beinhaltet, die alle nach ähnlicher Syntax funktionieren und untereinander kompatibel sind. 
+
+Es bietet somit einen sehr großen Funktionsumfang und wird daher auch viel genutzt.
+:::
+
+::: {style="text-align: center; flex-grow:1"}
+![The tidyverse](pics/tidyverse.png)
+:::
+
+::::
+
+## The Core tidyverse
+:::: {class="flex-container"}
+
+::: {style="text-align: left; flex-grow:1; flex-basis: 30%"}
+**Tidyverse** beinhaltet Kernpakete, die allesamt mit dem Befehl ```library("tidyverse")``` geladen werden. Dies sind:
+
+- **dplyr**
+- **ggplot2**
+- forcats
+- tibble
+- readr
+- stringr
+- **tidyr**
+- purrr
+
+:::
+
+::: {style="text-align: center; flex-grow:1"}
+![The core tidyverse](pics/coretidy.png){width="300px"}
+:::
+
+::::
+
+## Drei Pakete im Fokus
+:::: {class="flex-container"}
+
+::: {class="flex-text"}
+**dplyr** beinhaltet eine Grammatik, um Datenmanipulationen zu machen. Es besticht dabei durch seine Einfachheit und der Kombinationsmöglichkeit der Grundbefehle. Für eine erste Dateneinsicht ist dies meist hilfreich zu nutzen, oder um die Daten umzustrukturieren (manipulieren).
+:::
+
+::: {class="flex-picture"}
+![dplyr](pics/dplyr.png){width="300px"}
+:::
+
+::: {class="flex-text"}
+**ggplot2** ist **das** Grafikpaket in R. Es bietet die Möglichkeit Grafiken genauestens den eigenen Präferenzen anzupassen und darzustellen. Dazu gibt es viele Erweiterungspakete, die ebenfalls auf der Syntax von **ggplot2** aufbauen.
+
+:::
+
+::: {class="flex-picture"}
+![ggplot2](pics/ggplot2.png){width="300px"}
+:::
+
+::: {class="flex-text"}
+**stringr** ist ein Paket um ```string```-Variablen vernünftig in R bearbeiten zu können. Es gibt einige Alternativen, aber dennoch bleibt **stringr** ein beliebtes Paket zur Bearbeitung von ```string```-Variablen. Insbesondere bei Textanalysen muss man im Vorfeld die ```string```-Variablen bearbeiten. 
+
+:::
+
+::: {class="flex-picture"}
+![stringr](pics/stringr.png){width="300px"}
+:::
+
+::::
+
+## Ziel des Workshops 
 Die Teilnehmenden können am Ende des Workshops ...
 
-- ... die Grammatik der Pakete ggplot2 und tidyverse verstehen und auf eigene Zwecke anwenden.
-- ... Daten zielführend aufbereiten.
-- ... Daten und Ergebnisse sinnvoll darstellen.
-- ... erste eigene Funktionen programmieren.
+> - ... die Grammatik der Pakete ggplot2 und tidyverse verstehen und auf eigene Zwecke anwenden.
+> - ... Daten zielführend aufbereiten.
+> - ... Daten und Ergebnisse sinnvoll darstellen.
+> - ... erste eigene Funktionen programmieren.
 
+
+## Ziel des Workshops
 Es geht in diesem kurzen 1-Tages-Kurs vor allem um **Readbility-Skills**. Ziel ist es, dass man neue Probleme mit dem hier gezeigten lösen kann. Dafür sollte der Inhalt aber während des Workshops gut aufbereitet bzw. nachbereitet werden (eigene Notizen in den Skripten etc.).
 
-## Wer ich bin und wie ich Workshops leite
+## Wer ich bin und wie ich Workshops leite?
 **Wer bin ich?**
 
 > - seit 2015 Mitarbeiter an der Professur für Methoden (viele praktische Methoden-/Projektkurse bisher gegeben)
@@ -58,23 +132,37 @@ Es geht in diesem kurzen 1-Tages-Kurs vor allem um **Readbility-Skills**. Ziel i
 
 **Wie ich meine Rolle als Workshopleiter sehe?**
 
-1. kollegiales, respektvolles Mitaneinander
-2. Kursmaterialien alle über ILIAS bzw. gitlab erhältlich
-3. in der Ansprache ziehe ich das Du vor
-4. meine Rolle: 
-
-  + Unterstützer/Helfer, 
-  + aber nicht Motivator, Erzieher, allwissender Guru oder neuer bester Freund
-
+> 1. kollegiales, respektvolles Mitaneinander
+> 2. Interesse daran, anderen zu helfen/zu unterstützen
+> 3. in der Ansprache ziehe ich das Du vor
+> 4. Kurz-Inputs und dann eigenes *trial-and-error*
+> 5. meine Rolle: Unterstützer/Helfer, aber nicht Motivator, Erzieher oder allwissender Guru
+> 6. gebe Input, aktive Mitarbeit aber erforderlich
 
 
+> * alle Kursmaterialien sind entweder auf [ILIAS](https://ilias.uni-giessen.de/ilias/goto.php?target=grp_247939&client_id=JLUG), auf [gitlab](https://gitlab.com/bpkleer/mtg-21-tidyverse) oder in der [R Studio Cloud]() runterzuladen.
 
-## Start
+## Arbeiten mit R
+Arbeiten mit R heißt in der Regel immer wieder auf Probleme zu stoßen und willens zu sein, diese Probleme zu lösen. In meiner jetzt fast 10-jährigen Arbeit mit R bin ich noch nie auf ein Problem gestoßen, dass man nicht lösen konnte. 
+
+**Wichtig dafür:** Lesefähigkeit von Code. Also das Verständnis von Code. Dies ist auch das primäre Ziel des heutigen Tages.
+
+## Start {.break}
 Der Kurs setzt Grundkenntnisse voraus. Ihr lernt euch jetzt in Breakout-Rooms kennen. In den Breakout-Rooms sollt ihr euch kennenlernen und ein paar Grundaufgaben in R lösen. Dies dient auch der Auffrischung. Ich schaue abwechselnd in den Breakout-Rooms nach. Ihr könnte mich aber auch rufen. 
 
-$\lambda = \rho$
+Folgende Aufgaben sind zu erledigen:
 
-```{r eval=TRUE, size ="tiny"}
-statistics
-````
+> 1. Den Datensatz ```pss.rds``` in das environment laden (fiktiver Datensatz Panem Social Survey)
+
+> 2. Die Variable ```agea``` deskriptiv beschreiben.
+
+> 3. Schafft eine neue Variable, die dem Datensatz hinzugefügt werden soll. Diese Variable soll ```socgroup``` heißen und einfach eine Sequenz von ```1, 2, 3, 4``` über die Länge des Datensatzes beinhalten. **Wichtig**: Jede Zahl soll gleich oft vorkommen. Ob sich die Sequenz immer wiederholt (also Reihenfolge ```1, 2, 3, 4, 1, 2, 3, 4, ...```), oder ihr erst alle ```1```, dann alle ```2``` etc. abbildet, ist euch überlassen.
+
+> 4. Vergesst nicht, euch gegenseitig vorzustellen!
+
+**Zeit:** 30 Minuten. 
+
+Wenn jemand nicht seine lokale R-Installation nutzen möchte, kann er einfach auf die **RStudio Cloud** zurückgreifen. Dort sind die Datensätze, Skripte & Folien auch bereits hinterlegt und müssen nicht direkt runtergeladen werden.
+
+# Viel Spaß!
 

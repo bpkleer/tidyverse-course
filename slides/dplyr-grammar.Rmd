@@ -1,0 +1,349 @@
+---
+title: "Einführung in dplyr-Grammatik"
+subtitle: "Daten bändigen & visualisieren"
+author: "B. Philipp Kleer"
+date: "11. Oktober 2021"
+output: 
+  slidy_presentation:
+      footer: "CC BY-SA 4.0, B. Philipp Kleer"
+      widescreen: true
+      highlight: pygments
+      theme: readable
+      css: style.css
+      df_print: paged
+      mathjax: default
+      self_contained: false
+      incremental: false #True  dann jedes Bullet einzeln
+      collapse: true # means the text output will be merged into the R source code block
+---
+
+```{r setup, include=FALSE}
+library("knitr")
+library("rmarkdown")
+library("tidyverse")
+
+uni <- readRDS("/users/jlug/documents/gitlab/mtg-21-tidyverse/datasets/uni.rds")
+
+opts_chunk$set(fig.path = 'pics/s6-', # path for calculated figures
+               fig.align = 'center',  # alignment of figure (also possible right, left, default)
+               fig.show = 'hold', # how to show figures: hold -> direct at the end of code chunk; animate: all plots in an animation
+               fig.width = 3,   # figure width
+               fig.height = 4,  # figure height
+               echo = TRUE,     # Code is printed
+               eval = FALSE,    # Code is NOT evaluated
+               warning = FALSE, # warnings are NOT displayed
+               message = FALSE, # messages are NOT displayed
+               size = "tiny",  # latex-size of code chunks
+               background = "#E7E7E7", # background color of code chunks
+               comment = "", # no hashtags before output
+               options(width = 80),
+               results = "markdown",
+               rows.print = 15
+)
+
+```
+
+## Starten wir!
+Nun tauchen wir in die Welt von **dplyr** ein. Das Paket nutzt man oft, um Datenstrukturen zu erkunden oder Transformationen vorzunehmen. Dabei gibt es einen Grundstock an Vokabeln, die über **piping** miteinander verbunden werden. 
+
+Dazu installieren wir zuerst **tidyverse**:
+
+``` {r install-tidy}
+install.packages("tidyverse")
+library("tidyverse")
+
+# alternativ: 
+# install.packages("dplyr")
+# library("dplyr")
+```
+
+Anschließend laden wir den Datensatz ```uni``` ins *environment*.
+
+``` {r uni-load}
+uni <- readRDS("yourpath/uni.rds")
+```
+
+Wir verschaffen uns einen Überblick über den Datensatz:
+``` {r inspect-data, eval=TRUE}
+uni
+```
+
+Einen Überblick über die Variablen:
+```{r codebook}
+# ID: laufende Nummer
+# mot: Studienmotivation (0 <sehr niedrig> - 10 <sehr hoch>)
+# study: Studienfach (1 <Political Science>, 2 <Sociology>, 3 <Educational Science>, 4 <Psychology>)
+# city: Studienort (1 <Gießen>, 2 <Marburg>, 3 <Frankfurt>)
+# distance: Anfahrtsdauer zur Uni in Minuten
+# abi: Abiturnote
+# term: Fachsemester
+```
+
+## Grundvokabeln in dplyr
+In **dplyr** gibt es nicht viele Vokabeln, die aber effektiv miteinander verbunden werden können, um Daten zu sortieren bzw. zu manipulieren. 
+
+Die Grundvokabeln lernen wir jetzt im Folgenden erstmal ohne *piping* kennen:
+
+- select()
+- slice()
+- filter()
+- arrange()
+- mutate()
+- summarize()
+- group_by()
+
+## select()
+Mit **select()** wählen wir Spalten aus, die uns angezeigt werden 
+
+``` {r select, eval=TRUE}
+select(uni,   # Datenquelle
+       c(mot, # ausgewählte Spalten
+         term))
+```
+
+## slice()
+Demgegenüber können wir mit **slice()** Zeilen auswählen, also Fälle:
+``` {r slice, eval=TRUE}
+slice(uni,    # Datenquelle
+      50:55)  # ausgewählte Zahlen
+```
+
+## filter()
+Mit **filter()** können wir spezifische Fälle des Datensatzes auswählen. Zur Erinnerung die logischen Verknüpfungen in R:
+
+- logisches und: ```&```
+- logisches oder: ```|```  
+- logisches gleich: ```==```
+- logisches ungleich: ```!=```
+- logisches größer: ```>```
+- logisches kleiner: ```<```
+- logisches kleiner gleich: ```<=```
+- logisches größer gleich: ```>=```
+
+``` {r filter, eval = TRUE}
+filter(uni,  # Datenquelle
+       city == "Giessen") # Filtervariable
+```
+
+```{r filter2, eval=TRUE}
+filter(uni,
+       city == "Frankfurt" & study == "Political Science")
+```
+
+
+## arrange()
+Mit **arrange()** können wir den Datensatz sortieren. 
+
+``` {r arrange, eval=TRUE}
+arrange(uni, 
+        abi)
+```
+
+Die Sortierung ist dabei immer aufsteigend. Dies kann man über die Funktion ```desc()``` ändert (***desc**ending*):
+``` {r arrange2, eval=TRUE}
+arrange(uni,
+        desc(abi))
+```
+
+Alternativ kann man auch einfach ein Minuszeichen vor die Variable, nach der sortiert werden soll, setzen:
+
+``` {r arrange3, eval=TRUE}
+arrange(uni, 
+        -abi)
+```
+
+
+## mutate()
+Mit **mutate()** werden neue Variablen geschaffen. 
+
+Zum Beispiel könnten wir eine Variable schaffen, die den Abstand zum Mittelwert in der Variable ```abi``` misst:
+``` {r mutate, eval=TRUE}
+mutate(uni, 
+       abiDist = abi - mean(abi,
+                             na.rm = TRUE))
+```
+
+**Wichtig:** Wir haben zwar hier die Variable ```abiDist``` gespeichert, aber diese nicht im Datensatz gespeichert. 
+
+Bei der Erstellung kategorieller Variablen muss man zusätzlich die Funktion **case_when()** nutzen. **case_when()** funktioniert wie eine Aneinanderreihung von *if*-Bedingung, wobei die spezifischste Bestimmung zuerst kommen sollte. (spezifisch -> allgemein).
+
+Im Beispiel schaffen wir eine Dummy-Variable, die anzeigt, ob die Person in Marburg studiert (```1```) oder nicht (```0```).
+
+Die Grammatik in **case_when()** ist wie folgt:
+``` {r casewhen}
+case_when(Fallauswahl ~ neuer Codewert)
+```
+
+
+``` {r mutate2, eval=TRUE}
+mutate(uni,
+       dum.pum = case_when(city == "Marburg" ~ 1, # "Fallauswahl" ~ "neuer Codewert"
+                           city == "Gießen" ~ 0, 
+                           city == "Frankfurt" ~ 0))
+```
+
+Auch hier könnten mehrere Bedingungen verknüpft werden: So möchten wir einen Dummy schaffen, der anzeigt, ob eine Person in Marburg Erziehungswissenschaften studiert. 
+
+Wir würden wie folgt beginnen:
+``` {r mutate3}
+mutate(uni, 
+       dum.pum.es = case_when(city == "Marburg" & study == "Educational Science" ~ 1))
+```
+
+Wenn man nicht alle verschiedenen Kombinationen eingeben möchte und zum Beispiel nur eine von Interesse ist, kann man mit ```TRUE ~ 0``` allen restlichen Fällen direkt einen Wert zuordnen (aber nur denselben Wert!). Alle Kombinationen, die nicht vor ```TRUE ~ 0``` definiert wurden, erhalten automatisch den in der ```TRUE```-Zeile definierten Wert.
+``` {r mutate4, eval=TRUE}
+mutate(uni, 
+       dum.pum.es = case_when(city == "Marburg" & study == "Educational Science" ~ 1,
+                              TRUE ~ 0))
+```
+
+## summarize()
+Mit **summarize()** können vereinfacht erste Einblicke in die Daten erfolgen. So könnten wir uns z.B. den Mittelwert von ```term``` ausgeben lassen. 
+
+```{r summarize, eval=TRUE}
+summarize(uni, 
+          mean(term))
+```
+
+In **summarize()** können verschiedene Funktionen genutzt werden, die auf die Variablen im Datensatz angewendet werden können. Auch können direkt mehrere Werte ausgegeben werden. **Wichtig:** Das Ausgabe-Format ist immer ein *tibble*.
+```{r summarize2, eval=TRUE}
+summarize(uni,
+          mean(term),
+          mean(mot))
+```
+
+Die Unterfunktion **summarize_if()** bietet dazu die Möglichkeit leicht auf eine Gruppe von Variablen Funktionen anzuwenden, also zum Beispiel auf alle numerischen Variablen:
+``` {r summarize3, eval=TRUE}
+summarize_if(uni,
+             is.numeric, 
+             list(mean = mean, 
+                  sd = sd))
+```
+
+Wer weiß, warum hier teils ```NA``` angezeigt wird?
+
+## group_by()
+Mit **group_by()** kann der Datensatz gruppiert werden, also zum Beispiel nach eine kategoriellen Variable. In ```uni```-Datensatz zum Beispiel nach ```study```:
+``` {r groupby, eval=TRUE}
+group_by(uni,
+         study)
+```
+
+Was sehen wir? **Nichts!** 
+
+**group_by()** macht nichts weiter als die Daten zu gruppieren, die Ausgabe verändert sich dabei erstmal nicht. Erst in Kombination mit weiteren Funktionen, wird dies sichtbar:
+
+```{r groupby2, eval=TRUE}
+summarize(group_by(uni, 
+                   study), 
+          mean(term))
+```
+
+Jetzt haben wir für jeden Studienort einen Mittelwert für das Fachsemester (```term```).
+
+**Wichtig:* Wenn Daten gespeichert oder übergeben werden, sollte am Ende die Befehlskette immer mit ```ungroup()``` enden, um die Datenteilung nicht zu übergeben!
+
+## Piping
+Mit den sogenannte *pipes* können Ergebnisse von Ausführungsschritten weitergegeben werden. Dies ist vorteilhaft, da so verschiedene Schritte direkt ausgeführt werden können. Auch kann so Code oftmas leichter nachvollzogen werden. 
+
+Den *pipe*-Operator ```%>%``` kann man einfach per Tastenkürzel hinzufügen (```Strg```/```Cmd``` + ```Shift``` + ```M```).
+
+Seit R Version 4.0 gibt es den Pipe-Operator auch in R Base, allerdings wird in R Base ```|>``` als *pipe*-Operator genutzt. Es kann sein, dass es bereits *packages* gibt, die damit umgehen können, allerdings benötigt das auf Entwicklerseite meist etwas Zeit. 
+
+Hier mal ein Beispiel: Das Ziel ist es eine Variable zu erstellen, die den Abiturschnitt pro Uni-Stadt ausgibt. Das könnte die Frage beantworten, ob besonders gute Schüler:innen einen der drei Studienorte präferieren.
+
+Die Schritte, die wir hierbei machen, sind folgende:
+
+1. Wir geben den Datensatz ```uni``` weiter.
+2. Wir gruppieren den Datensatz nach ```city```.
+3. Wir berechnen eine neue Variable ```abiMean```.
+4. Wir heben die Gruppierung wieder auf.
+5./0. Wir überspeichern den alten Datensatz.
+
+``` {r pipe, eval=TRUE}
+uni <- uni %>%     # Schritt 1 / Schritt 5/0
+  group_by(city) %>%  # Schritt 2
+  mutate(abiMean = mean(abi, 
+                         na.rm = TRUE)) %>% # Schritt 4
+  ungroup() #Schritt 5
+
+table(uni$city, uni$abiMean)
+```
+
+Alternativ könnten wir uns dies auch erstmal nur ausgeben lassen.
+```{r pipe2, eval=TRUE}
+uni %>% 
+  group_by(city) %>% 
+  summarize(mean = mean(abi, na.rm=TRUE))
+```
+
+Ein weiteres Beispiel: Wir möchten Studierende nach der Anzahl des Fachsemesters kategorisieren. Die neue Variable ```termg``` soll zwischen:
+
+- Anfänger:innen (<=2 Semester)
+- Erfahrene (>2 & <= 6 Semester)
+- Langzeitstudierende (>6 Semester)
+
+unterscheiden. 
+
+```{r pipe3, eval=TRUE}
+uni <- uni %>%
+  mutate(termg = case_when(term <= 2 ~ "Anfänger:in", 
+                           term > 2 & term <= 6 ~ "Erfahrene", 
+                           term > 6 ~ "Langzeit"))
+table(uni$termg)
+str(uni$termg)
+```
+
+Etwas komplexer wäre folgende Aufgabe: Wir möchten nicht die Abweichung zum Mittelwert des Abiturs in unserer gesamten Erhebung berechnen, sondern die Abweichung zum Mittelwert der einzelnen Universitäten. Damit wir die Gruppen-Mittelwerte angezeigt bekommen, berechnen wir auch eine Variable für den Gruppen-Mittelwert.
+
+```{r pipe4, eval=TRUE}
+uni <- uni %>%
+  group_by(city) %>%
+  mutate(abigm = mean(abi)) %>%
+  mutate(abid = abi - abigm) %>%
+  ungroup()
+
+uni[, c("ID",
+        "abi",
+        "city", 
+        "abigm", 
+        "abid")]
+```
+
+Alternativ könnten wir die Daten auch hierarchisch nach Standort und Studienfach gruppieren und uns dann einfach die unterschiedlichen Mittelwerte mit **summarize()** ausgeben lassen:
+
+```{r pipe5, eval=TRUE}
+uni %>%
+  group_by(city,
+           study) %>%
+  summarize(mean(abi)) -> mCityStudy
+
+mCityStudy
+```
+
+## Versuchen wir es zusammen zu lösen!
+Versucht euch mit dem Grundvokabular an folgenden Aufgaben in den Breakout-Rooms oder allein:
+
+1. Teile den Datensatz uni in drei Datensätze, die jeweils nur eine Universitätsstadt inkludieren.
+
+2. Berichte die durchschnittliche Semesterzahl pro Uni und Studiengang!
+
+3. Berechne eine Variable, die die Abweichung von der durchschnittlichen Semesterzahl nach Studienfach angibt. 
+
+## Lab Task
+In der nächsten halbe Stunde sollt ihr euch in Gruppen (Breakout-Rooms) oder einzeln an den folgenden Aufgaben versuchen. Es müssen nicht alle Aufgaben in der Zeit geschafft werden, es geht viel mehr um die Auseinandersetzung mit dem neuen Vokabular. 
+
+Nutzt dazu den Datensatz ```pss``` (Panem Social Survey).
+
+1. Filter den Datensatz, so dass ein Subset nur mit Personen aus Distrikt 1 entsteht. Lass dir mit **pipes** jeden 150. Fall anzeigen.
+
+2. Filter den Datensatz, so dass ein Subset entsteht, dass keine Personen aus Distrikt 1 oder Distrikt 5 beinhaltet. Lass dir mit **pipes** die letzten 50 Fälle anzeigen.
+
+3. Filter den Datensatz, so dass ein Subset mit Personen entsteht, die entweder in Distrikt 7 oder nicht in Distrikt 12 leben. Lass dir im Pipen die ersten 15a Fälle anzeigen.
+
+4. Woher kommen die 10 ältesten Personen. 
+
+5. Wie stufen sich die 10 jüngsten personen auf der Links-Rechts-Selbsteinschätzung ein.
+
+6. Gruppiere den Datensatz nach Distrikten und lasse dir deskriptive Werte für die Links-Rechts-Selbsteinschätzung ausgeben. 
+7. Zeigen sich, gruppiert nach Alter (!), deskriptive Differenzen auf der Links-Rechts-Selbsteinschätzung.

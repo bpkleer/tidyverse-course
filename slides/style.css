@@ -2,19 +2,12 @@
 div.blue { background-color:#DCE6EB; border-radius: 5px; padding: 20px;}
 
 
-p.caption {
-  font-style: normal;
-  color: grey;
-  margin-right: 10%;
-  margin-left: 10%;  
-  text-align: center;
-}
-
 title {
   font-size: 26px;
   color:rgb(69, 130, 236);
   text-align: center;
 }
+
 
 h1 {
   font-size: 28px;
@@ -27,8 +20,15 @@ h1.title {
   color:rgb(69, 130, 236);
   text-align: center;
 }
+
+h1.subtitle {
+  font-size: 12px;
+  color:lightgray;
+  text-align: center;
+}
+
 h2 {
-  font-size: 24px;
+  font-size: 25px;
   color:rgb(69, 130, 236);
   text-align: center;
 }
@@ -41,6 +41,18 @@ h3 {
 p {
 	font-size: 22px;
 	}
+
+p.author p.date {
+	font-size: 16px;
+	color: darkgray;
+}
+
+p.caption {
+  font-size: 10px;
+  font-style: normal;
+  color: darkgray;
+  text-align: center;
+}
 
 ul{
   list-style-type: square;
@@ -104,3 +116,41 @@ table {
   font-size: 14px;
 }
 
+/* unvisited link */
+a:link {
+  color: mediumseagreen;
+  font-weight: bold;
+}
+
+/* visited link */
+a:visited {
+  color: mediumseagreen;
+}
+
+/* mouse over link */
+a:hover {
+  color: darkgray;
+}
+
+/* selected link */
+a:active {
+  color: mediumseagreen;
+}
+
+.flex-container{
+  justify-content:space-evenly; 
+  display: flex;
+  flex-flow: row wrap;
+}
+
+.flex-picture {
+  text-align: center; 
+  flex-grow:1; 
+  flex-basis: 30%;
+}
+
+.flex-text{
+  text-align: left; 
+  flex-grow: 1; 
+  flex-basis: 50%;
+}
