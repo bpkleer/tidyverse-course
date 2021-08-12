@@ -3,6 +3,6 @@
 .RData
 .Ruserdata
 .Rproj
-
+.DS_Store
 slides/*.html
 slides/*_files/
