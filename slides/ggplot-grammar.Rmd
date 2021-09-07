@@ -251,7 +251,7 @@ eduPlot4
 Das schaut schon soweit gut aus, jetzt wollen wir nur noch die Legende anpassen, so dass auch dort ein angepasster Titel steht. Dies machen wir in der Funktion ```scale_fill_manual()```, die wir zuvor schon genutzt haben. Wir überschreiben sozusagen die Angaben:
 
 ``` {r legend1, eval=TRUE}
-eduPlot 5 <- eduPlot4 +
+eduPlot5 <- eduPlot4 +
   scale_fill_manual(values = cbp1,
                     name = "Education category",
                     labels = c("sehr niedrig",
@@ -397,6 +397,7 @@ barg2 <- ggplot(pss,
   facet_wrap(gndr ~ .)
 barg2
 ```
+
 ## Was es noch zu entdecken gibt in ggplot2?
 
 - Schriftarten bearbeiten
