@@ -22,7 +22,7 @@ library("knitr")
 library("rmarkdown")
 library("tidyverse")
 
-uni <- readRDS("/users/jlug/documents/gitlab/mtg-21-tidyverse/datasets/uni.rds")
+uni <- readRDS("../datasets/uni.rds")
 
 opts_chunk$set(fig.path = 'pics/s6-', # path for calculated figures
                fig.align = 'center',  # alignment of figure (also possible right, left, default)

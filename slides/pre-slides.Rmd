@@ -21,7 +21,7 @@ output:
 library("knitr")
 library("rmarkdown")
 
-statistics <- readRDS("/Users/jlug/Documents/GitLab/mtg-21-tidyverse/datasets/statistics.rds")
+statistics <- readRDS("../datasets/statistics.rds")
 
 opts_chunk$set(fig.path = 'pics/s6-', # path for calculated figures
                fig.align = 'center',  # alignment of figure (also possible right, left, default)

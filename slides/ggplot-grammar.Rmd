@@ -22,7 +22,7 @@ library("knitr")
 library("rmarkdown")
 library("tidyverse")
 
-pss <- readRDS("/users/jlug/documents/gitlab/mtg-21-tidyverse/datasets/pss.rds")
+pss <- readRDS("../datasets/pss.rds")
 
 opts_chunk$set(fig.path = 'pics/s6-', # path for calculated figures
                fig.align = 'center',  # alignment of figure (also possible right, left, default)
