@@ -1,0 +1,90 @@
+---
+title: "Quiz"
+subtitle: "Daten bändigen & visualisieren"
+author: "B. Philipp Kleer"
+date: "11. Oktober 2021"
+output: 
+  slidy_presentation:
+      footer: "CC BY-SA 4.0, B. Philipp Kleer"
+      widescreen: true
+      highlight: pygments
+      theme: readable
+      css: style.css
+      df_print: paged
+      mathjax: default
+      self_contained: false
+      incremental: false #True  dann jedes Bullet einzeln
+      collapse: true # means the text output will be merged into the R source code block
+---
+
+```{r setup, include=FALSE}
+library("knitr")
+library("rmarkdown")
+library("tidyverse")
+
+uni <- readRDS("../datasets/uni.rds")
+
+opts_chunk$set(fig.path = 'pics/s6-', # path for calculated figures
+               fig.align = 'center',  # alignment of figure (also possible right, left, default)
+               fig.show = 'hold', # how to show figures: hold -> direct at the end of code chunk; animate: all plots in an animation
+               fig.width = 3,   # figure width
+               fig.height = 4,  # figure height
+               echo = TRUE,     # Code is printed
+               eval = FALSE,    # Code is NOT evaluated
+               warning = FALSE, # warnings are NOT displayed
+               message = FALSE, # messages are NOT displayed
+               size = "tiny",  # latex-size of code chunks
+               background = "#E7E7E7", # background color of code chunks
+               comment = "", # no hashtags before output
+               options(width = 80),
+               results = "markdown",
+               rows.print = 15
+)
+
+```
+
+## Was macht der folgende Code?
+``` {r quiz1}
+df %>% 
+  slice(seq(1, 
+            1000, 
+            100)) %>% 
+  filter(os == "iOS") %>%
+  group_by(device) %>% 
+  summarize(mean(timeOfUse))
+```
+
+> - der Datensatz ```df``` wird geteilt, wie wählen mit ```seq()``` jeden 100. Fall
+> - wir nehmen daraus dann nur Fälle, deren Variable ```os``` gleich ```"iOS"``` ist
+> - dann sortieren wir nachd er Variable ```device``` 
+> - zuletzt lassen wir den Mittelwert der Variable ```timeOfUse``` gruppiert nach ```device``` ausgeben.
+
+## Und was macht dieser Code?
+``` {r quiz2}
+df %>% 
+  select(gndr, income, residence, inhabitants) %>% 
+  bind_rows(df2) %>% 
+  mutate(sizeOfTown = case_when(inhabitants < 10000 ~ "small town",
+                                inhabitants > 10000 & inhabitants < 50000 ~ "city",
+                                inhabitants > 50000 ~ "large city"))
+``` 
+
+> - aus dem Datensatz ```df``` werden die Variablen ```gndr```, ```income```, ```residence``` und ```inhabitants``` gefiltert
+> - danach fügen wir die Fälle aus dem Datensatz ```df2``` hinzu.
+> - zuletzt schaffen wir eine neue Variable ```sizeOfTown```, die der Höhe der Einwohner:innen eine Beschreibung zuordnet (ordinale Variable)
+
+## Und was macht dieser Code?
+``` {r quiz3}
+df %>% 
+  bind_rows(df3) %>% 
+  filter(income >> 1000 && gndr = "female") %>% 
+  mutate(sizeOfTown = case_when(inhabitants < 10000 ~ "small town",
+                                inhabitants > 10000 & inhabitants < 50000 ~ "city",
+                                inhabitants > 50000 ~ "large city"))
+``` 
+
+> - fehlerhaft Code!
+> - in ```filter()``` genutzte Anweisungen sind falsch!
+> - korrekt ist: ```filter(income > 1000 & gndr == "female")```
+
+## Das war's! Ab zu ```ggplot```!

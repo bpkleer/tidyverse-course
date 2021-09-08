@@ -89,7 +89,7 @@ Die Grundvokabeln lernen wir jetzt im Folgenden erstmal ohne *piping* kennen:
 - filter()
 - arrange()
 - mutate()
-- summarize()
+- summarise() / summarize()
 - group_by()
 
 ## select()
@@ -222,6 +222,14 @@ summarize_if(uni,
 
 Wer weiß, warum hier teils ```NA``` angezeigt wird?
 
+Die Unterfunktion **summarise_at()** bietet die Möglichkeit nur bei bestimmten Variablen die Funktion anzuwenden:
+``` {r summarize4, eval=TRUE}
+summarize_at(uni,
+             vars(mot, abi, term),
+             list(mean = mean, 
+                  sd = sd))
+```
+
 ## group_by()
 Mit **group_by()** kann der Datensatz gruppiert werden, also zum Beispiel nach eine kategoriellen Variable. In ```uni```-Datensatz zum Beispiel nach ```study```:
 ``` {r groupby, eval=TRUE}
@@ -274,7 +282,8 @@ Alternativ könnten wir uns dies auch erstmal nur ausgeben lassen.
 ```{r pipe2, eval=TRUE}
 uni %>% 
   group_by(city) %>% 
-  summarize(mean = mean(abi, na.rm=TRUE))
+  summarize(mean = mean(abi, 
+                        na.rm = TRUE))
 ```
 
 Ein weiteres Beispiel: Wir möchten Studierende nach der Anzahl des Fachsemesters kategorisieren. Die neue Variable ```termg``` soll zwischen:
@@ -313,10 +322,10 @@ uni[, c("ID",
 Alternativ könnten wir die Daten auch hierarchisch nach Standort und Studienfach gruppieren und uns dann einfach die unterschiedlichen Mittelwerte mit **summarize()** ausgeben lassen:
 
 ```{r pipe5, eval=TRUE}
-uni %>%
+mCityStudy <- uni %>%
   group_by(city,
            study) %>%
-  summarize(mean(abi)) -> mCityStudy
+  summarize(mean(abi))
 
 mCityStudy
 ```

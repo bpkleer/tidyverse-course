@@ -1,0 +1,186 @@
+---
+title: "Datensätze zusammenführen"
+subtitle: "Daten bändigen & visualisieren"
+author: "B. Philipp Kleer"
+date: "11. Oktober 2021"
+output: 
+  slidy_presentation:
+      footer: "CC BY-SA 4.0, B. Philipp Kleer"
+      widescreen: true
+      highlight: pygments
+      theme: readable
+      css: style.css
+      df_print: paged
+      mathjax: default
+      self_contained: false
+      incremental: false #True  dann jedes Bullet einzeln
+      collapse: true # means the text output will be merged into the R source code block
+---
+
+```{r setup, include=FALSE}
+library("knitr")
+library("rmarkdown")
+library("tidyverse")
+
+uni <- readRDS("../datasets/uni.rds")
+uni1 <- readRDS("../datasets/uni1.rds")
+uni2 <- readRDS("../datasets/uni2.rds")
+uni3 <- readRDS("../datasets/uni3.rds")
+uni4 <- readRDS("../datasets/uni4.rds")
+uniMacro <- readRDS("../datasets/unimacro.rds")
+points <- readRDS("../datasets/points.rds")
+opts_chunk$set(fig.path = 'pics/s6-', # path for calculated figures
+               fig.align = 'center',  # alignment of figure (also possible right, left, default)
+               fig.show = 'hold', # how to show figures: hold -> direct at the end of code chunk; animate: all plots in an animation
+               fig.width = 3,   # figure width
+               fig.height = 4,  # figure height
+               echo = TRUE,     # Code is printed
+               eval = FALSE,    # Code is NOT evaluated
+               warning = FALSE, # warnings are NOT displayed
+               message = FALSE, # messages are NOT displayed
+               size = "tiny",  # latex-size of code chunks
+               background = "#E7E7E7", # background color of code chunks
+               comment = "", # no hashtags before output
+               options(width = 80),
+               results = "markdown",
+               rows.print = 15
+)
+
+```
+
+## Daten verknüpfen 
+Oftmals kommt es vor, dass die Datenerhebung in Teilschritten erfolgt oder zum Beispiel Daten aus zwei verschiedenen Zeitpunkten für die Datenanalyse zusammengefügt werden sollen. Auch bei Multi-Level-Modellen werden oftmals Makrodaten mit Mikrodaten vor der Analyse gemergt. Diese verschiedenen Varianten werden wir uns nun in ```tidyverse``` anschauen. 
+
+## Teilen eines Datensatzes
+Zuerst wiederholen wir noch einmal, wie wir einen Datensatz teilen: Wir filtern die Fälle, die für unsere spätere Analyse relevant sind. Zum Beispiel wollen wir nur über Psychologie-Studierende aus Marburg forschen. Anschließend möchten wir eine neue Variable erstellen, die eine Beschreibung für die Studiendauer inkludiert (als Faktor)
+
+Welche Funktionen müssen wir anwenden?
+
+## Teilen eines Datensatzes
+```{r split-df, eval=TRUE}
+uniPumPsy <- uni %>%
+  filter(city == "Marburg" & study == "Psychology") %>%
+  mutate(term.group = factor(case_when(term <= 2 ~ "Anfänger:in", 
+                                       term > 2 & term <= 6 ~ "Regelstudienzeit", 
+                                       term > 6 ~ "Langzeit"))) 
+
+head(uniPumPsy)
+```
+
+## Datensätze zusammenführen (Fälle hinzufügen) 
+Im nächsten Schritt nehmen wir nun an, dass die Datenerfassung von 4 verschiedenen Personen durchgeführt wurde und es somit 4 Teildatensätze gibt, die nun zu einem vollständigen Datensatz verbunden werden sollen. Dazu nutzen wir die Funktion ```bind_rows()```. In unserem Beispiel haben alle 4 Teildatensätze genau die gleiche Anzahl an Variablen, die dazu auch noch genau gleich benannt sind! Mit dem Argument ```.id``` erstellen wir eine Variable names ```"origin"```, die die Herkunft des Falles erfasst. Dies ist automatisch nummeriert. Mit ```mutate()``` machen wir daraus einen Faktor, der eine bessere Beschreibung beinhaltet (*coder1*, *coder2*, *coder3*, *coder4*)
+
+## Datensätze zusammenführen (Fälle hinzufügen) 
+Im nächsten Schritt nehmen wir nun an, dass die Datenerfassung von 4 verschiedenen Personen durchgeführt wurde und es somit 4 Teildatensätze gibt, die nun zu einem vollständigen Datensatz verbunden werden sollen. Dazu nutzen wir die Funktion ```bind_rows()```. In unserem Beispiel haben alle 4 Teildatensätze genau die gleiche Anzahl an Variablen, die dazu auch noch genau gleich benannt sind! Mit dem Argument ```.id``` erstellen wir eine Variable names ```"origin"```, die die Herkunft des Falles erfasst. Dies ist automatisch nummeriert. Mit ```mutate()``` machen wir daraus einen Faktor, der eine bessere Beschreibung beinhaltet (*coder1*, *coder2*, *coder3*, *coder4*)
+
+```{r merge1, eval=TRUE}
+uniAll <- uni1 %>%
+  bind_rows(list(uni2,
+                 uni3, 
+                 uni4), 
+            .id = "origin") %>%
+  mutate(origin = factor(origin, 
+                         labels = c("coder1", 
+                                    "coder2", 
+                                    "coder3", 
+                                    "coder4")))
+
+table(uniAll$origin)
+head(uniAll$origin)
+``` 
+
+Wir haben hier jetzt also aus vier Teildatensätzen einen gesamten Datensatz erstellt, der alle Fälle der vier Teildatensätze enthält. Wichtig, in diesem Fall waren alle Variablennamen gleich!
+
+## Datensätze zusammenführen (Fälle hinzufügen) 
+Nun probieren wir einmal aus, was passiert, wenn es zum Beispiel in einem Teildatensatz einen Typo gibt. Zuerst erstellen wir dazu einfach zwei neue Datensätze, die jeweils nur 3 Fälle inkludieren, und unterschiedliche Variablen.
+
+``` {r merge-prob, eval=TRUE}
+uniA <- uni[1:3, 4:5]
+
+City <- c("Giessen", "Marburg", "Marburg")
+distance <- c(21, 30, 45)
+uniB <- data.frame(City, distance)
+head(uniA)
+head(uniB)
+``` 
+
+Wir haben also in beiden Datensätzen die zwei Variablen, die Studienort und die Distanz zum Studienort angeben. im Datensatz ```uniB``` ist aber die Variable des Studienorts anders geschrieben. Probieren wir ```bind_rows()``` aus. 
+
+## Datensätze zusammenführen (Fälle hinzufügen) 
+``` {r test-bind-rows, eval=TRUE}
+uniTest <- uniA %>% 
+  bind_rows(uniB)
+
+uniTest
+```
+
+Da die Variablennamen nicht genau gleich sind, werden nun drei Variablen geschaffen: ```city```, ```distance``` und ```City```. Wo die Variable nicht vorliegt, werden automatisch ```NAs``` erzeugt. Dies ist vorteilhaft, kann aber auch frickelig werden, wenn bei der Datensatzerstellung nicht streng nach einem Codenamen-Schema gearbeitet wurde. **Lösung**: Im Vorfeld Variablen abklären und umbenennen. Andernfalls kann man ```full_join()``` nutzen.
+
+## Datensätze zusammenführen (unterschiedliche Spaltennamen)
+Dieser Ansatz ist nicht weniger aufwändig, als das Umbenennen von Spaltennamen, bietet aber dennoch eine Alternative. Mit ```full_join()``` kombinieren wir zwei Datensätze und können im Argument ```by``` angeben, welche Spalten jeweils denselben Inhalt haben. Schreibaufwand hierbei ist, dass gleiche Spaltennamen auch aufgeführt werden müssen, da ansonsten (hier im Beispiel) die Variablen ```distance.x``` und ```distance.y``` gebildet werden. Dies liegt daran, da ```full_join()``` eigentlich dafür gedacht ist, neue/zusätzliche Variablen hinzuzufügen. 
+
+In unserem Beispiel würden wir also angeben, dass aus Datensatz ```uniA``` die Spalte ```city``` gleich der Spalte ```City``` aus dem Datensatz ```uniB``` ist. Gleiches gilt für die ```distance``` Variable. 
+
+``` {r full-join, eval=TRUE}
+uniTest2 <- uniA %>% 
+  full_join(uniB,
+            by = c("city" = "City", 
+                   "distance" = "distance")
+            )
+head(uniTest2)
+```
+
+## Zwei Datensätze kombinieren 
+Dies ist oft bei Mehrebenenansätzen nötig. Man hat Daten auf zwei verschiedenen Ebene und führt diese vor der Analyse in einem Datensatz zusammen, um alle Variablen aus einem Datensatz ansprechen zu können. Hierbei möchten wir Daten zu einem Datensatz hinzufügen, wobei wir eine Variable angeben, die als **Matching**-Variable dient. In diesem Beispiel haben wir im Datensatz ```uniMacro``` noch zusätzliche Variablen zu den jeweiligen Studienorten: Neben ```city``` und ```study``` sind hierin auch ```supervision``` (Betreuungsrelation) und ```maxsem``` (max. Seminargröße) pro Studienort und pro Studienfach eingetragen.
+
+Für das **Mergen** von Datensätzen, kann man je nach Ausgangspunkt ```left_join()``` bzw. ```right_join()``` oder auch ```full_join()``` nutzen. Um die Daten korrekt zu mergen, müssen wir sowohl die Variable ```city``` als auch ```study``` nutzen, da sich die Makro-Variablen eben nach Studienort und Studienfach unterscheiden! Dies geben wir im Argument ```by``` an. Bei ```left_join()``` geben wir den Datensatz, an dem die Daten hinzugefügt werden sollen, per **Piping** weiter. Bei ```right_join()``` werden die Daten an den zweiten Datensatz angehängt. 
+
+
+## Zwei Datensätze kombinieren 
+Wir möchten nun die Makrodaten aus ```uniMacro``` jeweils passend auf Studienort und Studienfach in den Mikrodatensatz hinzufügen, um anschließend ein Multi-Level-Modell zu berechnen. Hierzu nutzen wir ```left_join()``` und geben im Argument ```by``` an, dass sowohl ```city``` als auch ```study``` als **Matching**-Variablen genutzt werden sollen.
+
+``` {r left-join, eval=TRUE}
+uniMerged <- uni %>%
+  left_join(uniMacro, 
+            by = c("city", 
+                   "study")) 
+uniMerged
+``` 
+
+Alternativ geht dies auch mit ```full_join()```:
+
+``` {r full-join2, eval=TRUE}
+uniMerged2 <- uni %>%
+  full_join(uniMacro, 
+            by = c("city",
+                   "study")) 
+uniMerged2
+``` 
+
+## Datensätze zusammenführen (neue Variablen hinzufügen)
+Will man nur weitere Variablen in einen Datensatz hinzufügen, kann man auch hierfür ```full_join()``` nutzen. Wir haben zum Beispiel in einem weiteren Datensatz aus dem Prüfungsverwaltungssystem vor der Anonymisierung der Daten die geleisteten Creditpoints der Befragtena ausgelesen. Diese haben wir im Datensatz ```points``` getrennt gespeichert und dort ebenfalls eine ID-Variable genutzt, die auf die ID-Variable des Datensatzes ```uni``` matcht. Wir fügen jetzt die Creditpoints dem Datensatz ```uni``` mit ```full_join()``` hinzu. Schauen wir uns zuerst nochmal die zwei Datensätze an:
+
+```{r points, eval=TRUE}
+points
+
+uni
+```
+Wir haben zwar in beiden Variablen eine ID-Variable, allerdings ist die Spalte unterschiedlich benannt. Wir können jetzt - wie zuvor oben - wieder im ```by```-Argument dies angeben. Diesmal wollen wir einfach schnell vorher den Spaltennamen in einem der Datensätze anpassen. Dazu nutzen wir einfach ```rename()```. Die Logik in der Funktion ist ```neuer Name = alter Name```.
+
+``` {r add-points, eval=TRUE}
+points <- points %>% 
+  rename(ID = id)
+
+points
+```
+
+Jetzt sind die Spaltennamen gleich und wir können die Datensätze mergen.
+
+```{r final-merge, eval=TRUE}
+uni <- uni %>% 
+  full_join(points, 
+            by = "ID")
+uni
+```
+
+## Das war's! Nun machen wir ein kleines Quiz!
