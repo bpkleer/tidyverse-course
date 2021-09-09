@@ -1,0 +1,510 @@
+---
+title: "Weiterführend in ggplot2-Grammatik"
+subtitle: "Daten bändigen & visualisieren"
+author: "B. Philipp Kleer"
+date: "11. Oktober 2021"
+output: 
+  slidy_presentation:
+      footer: "CC BY-SA 4.0, B. Philipp Kleer"
+      widescreen: true
+      highlight: pygments
+      theme: readable
+      css: style.css
+      df_print: paged
+      mathjax: default
+      self_contained: false
+      incremental: false #True  dann jedes Bullet einzeln
+      collapse: true # means the text output will be merged into the R source code block
+---
+
+```{r setup, include=FALSE}
+library("knitr")
+library("rmarkdown")
+library("tidyverse")
+library("naniar")
+library("UpSetR")
+
+pss <- readRDS("../datasets/pss.rds")
+uniMis <- readRDS("../datasets/uniMis.rds")
+
+opts_chunk$set(fig.path = 'pics/s6-', # path for calculated figures
+               fig.align = 'center',  # alignment of figure (also possible right, left, default)
+               fig.show = 'hold', # how to show figures: hold -> direct at the end of code chunk; animate: all plots in an animation
+               fig.width = 6,   # figure width
+               fig.height = 6,  # figure height
+               echo = TRUE,     # Code is printed
+               eval = FALSE,    # Code is NOT evaluated
+               warning = FALSE, # warnings are NOT displayed
+               message = FALSE, # messages are NOT displayed
+               size = "tiny",  # latex-size of code chunks
+               background = "#E7E7E7", # background color of code chunks
+               comment = "", # no hashtags before output
+               options(width = 80),
+               results = "markdown",
+               rows.print = 15
+)
+
+```
+
+## Weiterführende Darstellungen in ```ggplot2```
+In diesem Teil des Kurses werden weiterführende Einstellungen innerhalb des Pakets ```ggplot2``` dargestellt. Aufbauend auf die Einführung in die Grammatik von ```ggplot``` werden folgende Teile dargestellt:
+
+- Schriftarten bearbeiten bzw. Darstellung des Plots
+
+- Anmerkungen im Plot
+
+- *missing values* darstellen
+
+- Marginal Plots / Regressionsplots
+
+- Karten bearbeiten
+
+Eine gute Übersicht bietet auch folgendes [Online-Lernbuch](https://r-graphics.org) (auf Englisch). 
+
+## Weitere Layout-Fragen
+Innerhalb eines ```ggplots``` können nahezu alle dargestellten Teilbereiche verändert und angepasst werden. Einige dieser Änderungen werden wie im nachfolgenden besprechen.
+
+Dazu schaffen wir uns zuerst nochmal ein ggplot-Objekt mit unserem Scatterplot aus der Einführung in ```ggplot```:
+``` {r base-scatter, eval=TRUE}
+scatter <- ggplot(pss, 
+                  aes(stfeco, 
+                      stfdem)) +  
+  geom_jitter(alpha = .2, 
+              col = "blue") +
+  scale_x_continuous(breaks = seq(0, 10, 1)) +
+  scale_y_continuous(breaks = seq(0, 10, 1))
+
+scatter
+``` 
+
+Zuerst fügen wir nochmals Titel, Achsenbeschriftung und Quellen hinzu. 
+``` {r legends, eval=TRUE}
+scatterLeg <- scatter +
+  labs(x = "Satisfaction with Economy",
+       y = "Satisfaction with Democracy",
+       title = "Correlation Plot",
+       caption = "Data: Panem Social Survey.\n Data jittered.")
+
+scatterLeg
+```
+
+Innerhalb der Funktion ```theme()``` können wir Teilbereiche des Plots ansprechen und ändern. Dies umfasst u.a. folgende Eigenschaften des Plots:
+
+- plot.title
+- axis.title.x / axis.title.y
+- axis.text.x / axis.text.y
+- panel.grid / panel.grid.minor / panel.grid.major
+- plot.background / panel.background
+
+Eine komplette Übersicht aller Einstellungen die in ```theme()``` genutzt werden können findet sich in der [User-Dokumentation](https://ggplot2.tidyverse.org/reference/theme.html).
+
+Wir werden jetzt nach und nach Veränderungen vornehmen. Zuerst werden wir die Schriftgröße, Position und das Erscheinungsbild des Titels ändern. Dies machen wir über ```plot.title``` in ```theme()```. Dazu verwenden wir die Funktion ```element_text()```:
+``` {r title, eval=TRUE}
+scatterLeg +
+  theme(plot.title = element_text(size = 25,
+                                  face = "italic",
+                                  hjust = 0.5))
+```
+
+Dazu haben wir die drei Argumente ```size``` (Schriftgröße), ```face``` (Erscheinungsbild) und ```hjust``` (Position) genutzt. 
+
+Als nächstes wollen wir die Achsentitel bearbeiten. 
+
+``` {r axisticks, eval=TRUE}
+scatterAxes <- scatterLeg +
+  theme(plot.title = element_text(size = 25,
+                                  face = "italic",
+                                  hjust = 0.5),
+        axis.title.x = element_text(size = 16, 
+                                    color = "seagreen", 
+                                    hjust = 0),
+        axis.title.y = element_text(size = 8, 
+                                    color = rgb(0, 105, 179, maxColorValue = 255), 
+                                    hjust = 1, 
+                                    face = "bold")
+  )
+
+scatterAxes
+```
+
+Anstatt eine Farbe anzugeben, kann man mit der Funktion```rgb()``` auch den Farbton bestimmen. Alternativ kann man auch den HTML-Code der Farbe innerhalb des Arguments ```color``` nutzen.
+
+``` {r axisticks2}
+scatterLeg +
+  theme(plot.title = element_text(size = 25,
+                                  face = "italic",
+                                  hjust = 0.5),
+        axis.title.x = element_text(size = 16, 
+                                    color = "seagreen", 
+                                    hjust = 0),
+        axis.title.y = element_text(size = 8, 
+                                    color = "#0069B3", 
+                                    hjust = 1, 
+                                    face = "bold")
+  )
+```
+
+Nun möchten wir weiter experimentieren und die Achsenticks bearbeiten. Dazu nutzen wir ```axis.ticks.x``` bzw. ```axis.ticks.y```.
+
+```{r axesticks, eval=TRUE}
+scatterTicks <- scatterAxes +
+  theme(axis.text.x = element_text(size = 12, 
+                                    angle = 45,
+                                    color = "darkgrey"),
+        axis.text.y = element_text(size = 11, 
+                                   hjust = 0,
+                                   vjust = 1))
+
+scatterTicks
+```
+
+Mit dem Argument ```angle``` können wir die Achsenbeschriftungen drehen lassen. Mit ```hjust``` und ```vjust``` können wir die Startposition des Texts ändern. 
+
+Als nächstes möchten wir das Grid des Plots ändern, also die Linien. Dazu nutzen wir erstmal das Argument ```panel.grid``` und innerhalb des Arguments die Funktion ```element_line()```
+```{r grid1, eval=TRUE}
+scatterGrid <- scatterTicks +
+  theme(panel.grid = element_line(color = "green",
+                                  size = 1,
+                                  linetype = "solid") # blank, solid, dashed, dotted, dotdash, longdash, twodash
+        )
+
+scatterGrid
+```
+
+Mit den Argumenten ```panel.grid.major``` und ```panel.grid.minor``` können die Haupt- und Hilfslinien getrennt bearbeitet werden. Wenn wir zum Beispiel nur die Hauptlinien wollen, machen wir folgendes:
+```{r grid2, eval=TRUE}
+scatterGrid <- scatterTicks +
+  theme(panel.grid.major = element_line(color = "green",
+                                  size = 1,
+                                  linetype = "solid"), # blank, solid, dashed, dotted, dotdash, longdash, twodash
+        panel.grid.minor = element_blank()
+        )
+
+scatterGrid
+```
+
+Man kann auch die Hilfslinien getrennt nach Achsen bearbeiten. Dazu muss man einfach jeweils ```.x``` bzw. ```.y``` beifügen.
+
+Zuletzt kann man noch den Hintergrund des Plots bzw. des Panels ändern. Dies geschieht über die Argumente ```plot.background``` bzw. ```panel.background```. Dazu nutzt man die Funktion ```element_rect()``` innerhalb des Arguments
+
+```{r background, eval=TRUE}
+scatterGrid +
+  theme(plot.background = element_rect(color ="darkgray",
+                                       size = 2,
+                                       fill = "lightpink"),
+        panel.background = element_rect(fill = "moccasin")
+        )
+```
+ 
+Es gibt ebenso eine ganze Reihe an vorgefertigten Themes, die dann wiederum individuell angepasst werden können. Eine Übersicht über vorhandene Themes gibt es [hier](https://ggplot2.tidyverse.org/reference/ggtheme.html).
+
+## Annotations
+Neben den ganzen Spielereien möchte man manchmal auch einzelne Bereiche einer Grafik besonders hervorheben oder aber zum Beispiel Beschriftungen der Fälle hinzufügen (bei kleinem n). 
+
+Hierzu gibt es die Funktionen ```geom_text()``` und ```annotate()```, die mit ```ggplot``` genutzt werden können. Dazu nehmen wir wieder das Scatterplot vom Beginn, begrenzen aber diesmal die Anzahl auf 15, damit wir eine klare Darstellung bekommen. **Wichtig**: ```geom_jitter()``` kann nicht genutzt werden, da die Datenbeschriftungen am Datenpunkt und nicht am gejitterten Datenpunkt auftauchen!
+
+``` {r base-scatter2, eval=TRUE}
+scatter2 <- ggplot(pss[1:15,], 
+                  aes(stfeco, 
+                      stfdem)) +  
+  geom_point(col = "blue") +
+  scale_x_continuous(breaks = seq(0, 10, 1)) +
+  scale_y_continuous(breaks = seq(0, 10, 1))
+
+scatter2
+``` 
+Mit der Funktion ```geom_text()``` kann man den Datenpunkten-Beschriftungen hinzufügen. So zum Beispiel die Zeilennummer oder die ID-Variable. Wir machen letzteres, da sich die Zeilennummer bei Sortierungen ändern kann und somit nicht eindeutig ist. Daher fügen wir jetzt mit der Funktion in ```aes``` ein ```label``` hinzu (```idno```).
+
+``` {r addtext, eval=TRUE}
+scatter2 +
+  geom_text(aes(label = idno))
+``` 
+Innerhalb von ```geom_text()``` kann man nun weitere Einstellungen vornehmen. Ein paar davon kennen wir schon, zwei weitere wichtige sind ```nudge_y``` und ```nudge_x```, die den Schriftstart auf der jeweiligen Achse verschieben. 
+
+``` {r addtext2, eval=TRUE}
+scatter2 +
+  geom_text(aes(label = idno),
+            size = 2, 
+            nudge_y = -.15)
+``` 
+
+Wenn man nun trotzdem alle Datenpunkte abbilden möchte und nur spezifische Datenpunkte hervorheben möchte, ist dies ganz leicht möglich: Wir möchten nur die ersten zehn Fälle anzeigen und begrenzen daher die Daten in ```geom_text()```. Dies ist auch über ```subset()``` mit mehreren Verknüpfungen möglich.
+
+``` {r addtext3, eval=TRUE}
+ggplot(pss, 
+                  aes(stfeco, 
+                      stfdem)) +  
+  geom_point(alpha = .2, 
+              col = "blue") +
+  scale_x_continuous(breaks = seq(0, 10, 1)) +
+  scale_y_continuous(breaks = seq(0, 10, 1)) +
+  geom_text(aes(label = idno), 
+            data = pss[1:10,])
+``` 
+
+Weitaus größere Möglichkeiten bietet ```annotate()```. Mit dieser können nicht nur Beschriftungen, sondern auch bestimmte Bereiche innerhalb eines Plots hervorgehoben werden. Nehmen wir wieder das gejitterte Plot und markieren einen bestimmten Bereich im Plot:
+``` {r annotated, eval=TRUE}
+scatter +
+    annotate("rect", 
+           xmin = 8.5, # this corresponds to the axis scale!
+           xmax = 9.5,
+           ymin = 8.5,
+           ymax = 10.5,
+           colour = "darkgreen",
+           fill = "lightgreen")
+```
+
+Der Nachteil wird direkt ersichtlich! Da ```ggplot``` über Layer angesprochen wird, muss der ```annotate()```-Layer vor dem ```geom_jitter()```-Layer stehen. Oder wir fügen ```alpha``` hinzu, um die Sichtbarkeit zu verändrn:
+
+``` {r annotated, eval=TRUE}
+scatter +
+    annotate("rect", 
+           xmin = 8.5, # this corresponds to the axis scale!
+           xmax = 9.5,
+           ymin = 8.5,
+           ymax = 10.5,
+           colour = "darkgreen",
+           fill = "lightgreen",
+           alpha = .1)
+```
+Jetzt möchten wir in der Grafik noch eine Beschriftung hinzufügen, damit der Leser:in klar wird, welchen Bereich wir hier markiert haben:
+``` {r annotated2, eval=TRUE}
+scatter +
+    annotate("rect", 
+           xmin = 8.5, 
+           xmax = 9.5,
+           ymin = 8.5,
+           ymax = 10.5,
+           colour = "darkgreen",
+           fill = "lightgreen",
+           alpha = .1) +
+  annotate("text", 
+           x = 1, 
+           y = 9, 
+           label = "highlighted area", # with \n you get a new line
+           colour = "darkgreen") 
+```
+Als weitere Möglichkeit bietet ```annotate()``` die Möglichkeit Linien zu erstellen, so dass wir unseren Text auf das Feld zeigen lassen können:
+``` {r annotated3, eval=TRUE}
+scatter +
+    annotate("rect", 
+           xmin = 8.5, 
+           xmax = 9.5,
+           ymin = 8.5,
+           ymax = 10.5,
+           colour = "darkgreen",
+           fill = "lightgreen",
+           alpha = .1) +
+  annotate("text", 
+           x = 1, 
+           y = 9, 
+           label = "highlighted area", # with \n you get a new line
+           color = "darkgreen") +
+  annotate("segment", 
+           x = 2,
+           xend = 8.5, 
+           y = 9, 
+           yend = 9,
+           color = "darkgreen",
+           arrow = arrow())
+```
+
+## Grafikpakete zur Darstellung von *missing values*
+Oftmals möchte man bevor man die eigentliche Datenanalyse beginnt, zuerst die Daten inspizieren und vor allem die **missing values** prüfen. Dazu gibt es zwei umfangreiche Pakete, die auf ```ggplot2``` aufbauen. Dies sind: ```naniar``` und ```UpSetR```.
+
+Zuerst installieren bzw. laden wir die Pakete:
+``` {r packages-install-mis}
+install.packages("UpSetR")
+install.packages("naniar")
+
+library("UpSetR")
+library("naniar")
+```
+
+Wir benutzen nun den Datensatz ```uniMis```, in dem zufällig *missings* in den Variablen ```mot```, ```term```, ```distance``` und ```abi``` hinzugefügt wurde. Der Datenatz ist sonst gleich mit dem Datensatz ```uni```.
+
+```{r data-inspection, eval=TRUE}
+uniMis 
+```
+
+Zuerst wollen wir nun die *missings* pro Variable darstellen. Dazu filtern wir zuerst den Datensatz auf die ID-Variable und die vier Variablen mit missings. Anschließend bringen wir den Datensatz in ein long-Format und schaffen eine dann dritte Spaltel, die angibt, ob es ein *missing*-Wert ist oder nicht. Dann gruppieren wir nach Variablen und der neuen ditten Spalte und zählen die *missings* pro Variable (bzw. auch die nicht-*missings*). Danach schließen wir die nicht-*missings* aus und sortieren die Tabelle absteigend. Wir sehen dann, wie viele *missings* in jeder der vier Variablen vorhanden ist. 
+``` {r miss-tidy, eval=TRUE}
+missingValues <- uniMis %>%
+  select(c(1:5)) %>% 
+  pivot_longer(everything(),
+               names_to = "variable",
+               values_to = "val") %>%
+  mutate(is.missing = is.na(val)) %>%
+  group_by(variable, 
+           is.missing) %>%
+  summarize(num.missing = n()) %>%
+  filter(is.missing == TRUE) %>%
+  select(-is.missing) %>%
+  arrange(desc(num.missing))
+
+missingValues
+```
+
+Anschließend kann man sich ein einfaches Balkendiagramm ausgeben lassen mit diesem neuen Datensatz:
+```{r missValBarplot, eval=TRUE}
+missing.values %>%
+  ggplot() +
+  geom_bar(aes(key, 
+               num.missing), 
+           stat = 'identity') +
+  labs(x = 'Variable',
+       y = "Anzahl MV", 
+       title = 'Missing Values pro Variable') +
+  theme(axis.text.x = element_text(angle = 45, 
+                                   hjust = 1))
+```
+
+Hier kann man alle Spielereien von oben austesten. Wir wollen aber jetzt Prozente ausgeben, um zu sehen, wie viel Prozent der Variable *missings* sind. Dazu wiederholen wir die Schritte von zuvor, fügen aber einen ```mutate```-Schritt ein, der uns die Prozent angibt.
+
+```{r missValPercent, eval=TRUE}
+#Prozente
+missing.values <- uniMis %>%
+  select(c(1:4)) %>% 
+  pivot_longer(everything(),
+               names_to = "key",
+               values_to = "val") %>%
+  mutate(isna = is.na(val)) %>%
+  group_by(key) %>%
+  mutate(total = n()) %>%
+  group_by(key, 
+           total,
+           isna) %>%
+  summarise(num.isna = n()) %>%
+  mutate(pct = num.isna / total * 100)
+
+levels <- (missing.values  %>% 
+             filter(isna == T) %>%     
+             arrange(desc(pct)))$key
+
+percentage.plot <- missing.values %>%
+  ggplot() +
+  geom_bar(aes(x = reorder(key, 
+                           desc(pct)), 
+               y = pct, 
+               fill = isna), 
+           stat = 'identity',
+           alpha = 0.8) +
+  scale_x_discrete(limits = levels) +
+  scale_fill_manual(name = "", 
+                    values = c('steelblue', 'tomato3'), 
+                    labels = c("vorhanden", "fehlend")) +
+  coord_flip() +
+  labs(title = "Prozent von missing values", 
+       x = 'Variable', 
+       y = "% missing values")
+percentage.plot
+```
+
+Alternativ kann man auch die *missings* so anzeigen, dass sichtbar wird, welcher Fall auf welcher Variable *missing* ist. Bei großen Datensätzen wird das aber schnell unübersichtlich.
+``` {r missValCasewise, eval=TRUE}
+# pro Fall (wird aber bei großen Datensätzen etwas schwer zu lesen)
+row.plot <- uniMis %>%
+  select(c(1:4)) %>% 
+  pivot_longer(-c("ID"),
+               names_to = "key",
+               values_to = "val") %>%
+  mutate(isna = is.na(val)) %>%
+  ggplot(aes(key, 
+             ID, 
+             fill = isna)) +
+  geom_raster(alpha = 0.8) +
+  scale_fill_manual(name = "",
+                    values = c('steelblue', 'tomato3'),
+                    labels = c("vorhanden", "fehlend")) +
+  scale_x_discrete(limits = levels) +
+  labs(x = "Variable",
+       y = "Row Number",
+       title = "Missing values in rows") +
+  coord_flip()
+row.plot
+```
+
+## Missing values mit ```naniar``` & ```UpSetR```
+Mit dem Paket ```naniar``` sind die oben dargestellten Schritte viel schneller und leichter darzustellen. Das Paket schafft dabei auch immer einen ```ggplot```, so dass die oben gelernten Anpassungen auch hier möglich sind. Zuerst nutzen wir Funktionen, um uns Tabellen mithilfe von ```naniar``` ausgeben zu lassen. Die erste ist die Funktion ```miss_var_summary()```, die uns die absolute und relative Häufigkeit von *missings* in den Variablen ausgibt. 
+
+``` {r table-naniar1, eval=TRUE}
+uniMis %>%
+  miss_var_summary()
+```
+
+Dies können wir auch gruppieren:
+``` {r table-naniar2, eval=TRUE}
+uniMis %>% 
+  group_by(city) %>% 
+  miss_var_summary()
+```
+
+Zuerst können wir uns eine Verteilung der *missings* im Datensatz ausgeben lassen. Die Funktion ```gg_miss_var_cumsum()``` gibt uns die kumulierte Summe der *missings* pro Variable aus. Hieran kann man also ablesen, wie sich die *missings* auf die Variablen verteilen.
+
+```{r naniar0, eval=TRUE}
+gg_miss_var_cumsum(uniMis)
+```
+
+Die Funktion ```vis_miss()``` visualisiert die *missings* eines gesamten Datensatzes (außer wir grenzen ein). 
+
+``` {r naniar1, eval=TRUE}
+vis_miss(uniMis)
+```
+
+Eine weitere ansprechende Alternative ist die Funktion ```gg_miss_upset()``` aus dem Paket ```naniar```. Hierbei werden auch die Häufigkeiten der Kombination der *missings* zwischen den Variablen angezeigt. Aber auch dies wird bei allzu großen Datensätzen schnell unübersichtlich. Für Teilbereich kann das aber aufschlussreich sein (z.B. wenn man prüfen möchte, ob Personen nur Teile einer Itembatterie oder die Itembatterie komplett nicht beantwortet haben).
+
+``` {r naniar2, eval=TRUE}
+gg_miss_upset(uniMis)
+```
+
+In der Grafik sieht man, dass die vier Variablen ```abi```, ```term```, ```mot``` und ```distance``` ```NA's``` haben. Insgesamt gibt es folgende Kombinationen:
+
+- 80 Fälle, die in ```distance``` ```NA``` haben, 
+- 77 Fälle, die in ```mot``` ```NA``` haben, 
+- 76 Fälle, die in ```term``` ```NA``` haben, 
+- 66 Fälle, die in ```abi``` ```NA``` haben, 
+- 13 Fälle, die in ```mot``` und ```distance``` ```NA``` haben, 
+- 11 Fälle, die in ```abi``` und ```term``` ```NA``` haben, 
+- 11 Fälle, die in ```abi``` und ```distance``` ```NA``` haben, 
+- 5 Fälle, die in ```abi``` und ```mot``` ```NA``` haben, 
+- 5 Fälle, die in ```term``` und ```distance``` ```NA``` haben, 
+- 3 Fälle, die in ```term``` und ```mot``` ```NA``` haben, 
+- 3 Fälle, die in ```term```, ```mot``` und ```distance``` ```NA``` haben, 
+- 2 Fälle, die in ```abi```, ```term``` und ```mot``` ```NA``` haben, 
+- 1 Fall, der in ```abi```, ```term``` und ```distance``` ```NA``` hat, 
+- 1 Fall, der in ```abi```, ```mot``` und ```distance``` ```NA``` hat.
+
+Insgesamt gilt, dass die maximale Anzahl an Kombinationen wie folgt berechnet wird: $2^{Anzahl Variabl} - 1$. In diesem Fall wären es 15 mögliche Kombinationen, angezeigt werden aber nur 14. Warum?
+
+Daneben können *missings* auch über die Funktion ```geom_miss_point()``` ganz leicht in einem ```ggplot``` dargestellt werden:
+``` {r missValggplot, eval=TRUE}
+ggplot(uniMis,
+       aes(x = mot,
+           y = abi)) +
+  geom_miss_point() 
+```
+
+So kann man ganz leicht sehen, ob die *missings* sich eventuell bei einer bestimmten Kombinatione häufen. 
+
+Alternativ kann man auch noch die Funktionen ```gg_miss_var()``` und ```gg_miss_fct()``` nutzen. 
+
+Mit der Funktion ```gg_miss_var()``` wird die Anzahl der *missings* dargestellt. Mit dem Argument ```facet``` kann man dies auch auf einzelne Ausprägungen runterbrechen. So kann man sehen, ob evtl. eine Gruppe deutlich mehr *missings* aufweist, als eine andere Gruppe.
+```{r ggmissvar, eval=TRUE}
+gg_miss_var(uniMis,
+            facet = study)
+
+```
+Mit der Funktion ```gg_miss_fct()``` können *missings* visuell sehr schön aufbereitet werden. 
+
+``` {r ggmissfct, eval=TRUE}
+gg_miss_fct(x = uniMis, 
+            fct = study)
+```
+Auch das kann man sich wieder nach Ausprägungen auf einer weiteren Variable ausgeben lassen, um zu sehen, ob es starke Gruppenunterschiede gibt:
+``` {r ggmissfct2, eval=TRUE}
+gg_miss_fct(x = uniMis, 
+            fct = study) + 
+  labs(title = "NA in Uni-df nach Studienfach")
+```
+
+## Das war's!
