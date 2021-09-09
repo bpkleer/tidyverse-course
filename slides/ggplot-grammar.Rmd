@@ -358,7 +358,7 @@ ggplot(pss,
               col = "blue")
 ``` 
 
-Als weitere Argumente können sowohl in ```geom_jitter()``` als auch in ```geom_point()``` mit ```shape``` das Erscheinungsbild geändert werden. Das Cheat Sheet findet man [hier](https://github.com/rstudio/cheatsheets/raw/master/package-development.pdf).
+Als weitere Argumente können sowohl in ```geom_jitter()``` als auch in ```geom_point()``` mit ```shape``` das Erscheinungsbild geändert werden. Das Cheat Sheet findet man [hier](https://github.com/rstudio/cheatsheets/raw/master/data-visualization.pdf).
 
 ## Gruppierungen
 Oftmals möchte man eine Variable oder den Zusammenhang zweier Variablen getrennt nach einer kategoriellen Variable einblicken. Dazu gibt es in **ggplot2** verschiedene Möglichkeiten. Ein paar davon werde ich kurz vorstellen:
@@ -394,13 +394,69 @@ barg2 <- ggplot(pss,
                aes(district, 
                    fill = gndr)) +
   geom_bar() +
-  facet_wrap(gndr ~ .)
+  facet_wrap(vars(gndr))
 barg2
 ```
 
-## Was es noch zu entdecken gibt in ggplot2?
+### Scatterplots
+Bei Scatteprlots kann man ebenfalls mit ```shape``` arbeiten oder auch direkt ```facet_wrap```/```facet_grid``` benutzen.
 
-- Schriftarten bearbeiten
+Wir möchten nun das Scatterplot von vorher nach Distrikten ausgeben lassen. Dazu können wir zuerst den Distrikten verschiedene Formen zuordnen. Dazu geben wir innerhalb von ```aes()``` einfach an, dass die Form (```shape```) in Abhängigkeit der Variable ```district``` ausgegeben werden soll.
+
+``` {r scatter-shapes, eval=TRUE}
+ggplot(pss, 
+       aes(stfeco, 
+           stfdem,
+           shape = district)) +  
+  geom_jitter(alpha = .2, 
+              col = "blue")
+```
+
+Das ist jetzt noch nicht ganz so übersichtlich. Jetzt könnte man noch zusätzlich die Farbe in Abhängigkeit des Distrikts ändern. Dazu nutzt man das ```color```-Argument in ```aes()``` und entfernt es aus ```geom_jitter()```. Lässt man das ```color```-Argument in ```geom_jitter()``` bestehen, wird dies als zuletzt definierte Einstellung verwendet und alles bleibt blau.
+
+``` {r scatter-color, eval=TRUE}
+ggplot(pss, 
+       aes(stfeco, 
+           stfdem,
+           shape = district,
+           color = district)) +  
+  geom_jitter(alpha = .2)
+```
+
+Die Abbildung ist zwar jetzt schön bunt, aber so richtig einen guten Überblick gibt auch diese Darstellung noch nicht. Um das zu erreichen, nutzt man ```facets```. Der Unterschied zwischen den zwei möglichen ```facets``` ist folgender: Bei ```facet_wrap()``` wird aus einer eigentlich eindimensionalen Darstellung eine zweidimensionalen Darstellung gemacht und dementsprechend mehrere Abbildungen erstellt. Wenn man zum Beispiel eine kategoriale Variable hat, nach der man die Darstellung splitten möchte, ist ```facet_wrap()``` die richtige Wahl. Mit den Argumenten ```nrow``` und ```ncol``` kann man dazu die Anzahl der Zeilen und Spalten festlegen.
+```facet_grid()``` dagegen ist zweidimensional. Hier wird ein Grafikpanel anhand von zwei Variablen erstellt, dass alle Kombinationen (auch die ohne Fälle) anzeigt. Dazu wird die Reihenfolge der Variablen auch wie in einer Formel angegeben, erst pro Zeile und dann pro Spalte.
+
+
+``` {r scatter-facetwrap, eval=TRUE}
+ggplot(pss, 
+       aes(stfeco, 
+           stfdem,
+           shape = district,
+           color = district)) +  
+  geom_jitter(alpha = .2) +
+  facet_wrap(vars(district))
+```
+
+Wie oben beschrieben wird in ```facet_grid()``` ein tatsächlicher zweidimensionaler Plot erstellt. Dazu geben wir in der Funktion selbst an, über welche (kategorialen) Variablen der Plot geteilt werden soll. Die erste Variable ist die Trennung über Zeilen und die zweite Variable die Trennung über Spalten. Im Beispiel trennen wir in Zeilen nach Distrikt und in Spalten nach Geschlecht:
+``` {r scatter-facetgrid, eval=TRUE}
+ggplot(pss, 
+       aes(stfeco, 
+           stfdem,
+           shape = district,
+           color = district)) +  
+  geom_jitter(alpha = .2) +
+  facet_grid(district ~ gndr)
+```
+
+## Was es noch zu entdecken gibt in ```ggplot2```?
+
+- Schriftarten bearbeiten bzw. Darstellung des Plots
+
+- *missing values* darstellen
+
+- Marginal Plots
+
+- bivariate Normalverteilungen
 
 - Karten bearbeiten
 
