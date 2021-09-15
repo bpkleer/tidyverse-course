@@ -23,6 +23,7 @@ library("rmarkdown")
 library("tidyverse")
 library("naniar")
 library("UpSetR")
+library("dotwhisker")
 
 pss <- readRDS("../datasets/pss.rds")
 uniMis <- readRDS("../datasets/uniMis.rds")
@@ -508,60 +509,48 @@ gg_miss_fct(x = uniMis,
 ```
 
 ## Darstellungen von Regressionsmodellen
-Oftmals ist es nicht nur das Ziel Regressionsmodelle in Tabellen darzustellen, sondern auch spezifische Effekte grafisch darzustellen. Dazu stellen wir hier zwei Möglichkeiten vor:
+Oftmals ist es nicht nur das Ziel Regressionsmodelle in Tabellen darzustellen, sondern auch spezifische Effekte grafisch darzustellen. Dazu stellen wir hier eine Möglichkeit vor: manuell über eigene **predictions**. 
 
-1. mithilfe des *packages* ```ggiraphExtra```
-
-2. Manuell über eigene **predictions**
-
-Das *package* ```ggiraphExtra``` ist noch im Developer-Status und muss daher mithilfe des *packages* ```devtools``` geladen werden. 
-
-``` {r devtools}
-install.packages("devtools")
-
-devtools::install_github("cardiomoon/ggiraphExtra")
-```
-
-Anschließend kann das *package* verwendet werden. 
+Es gibt zwar *packages* wie ```ggiraphExtra```, diese können aber nur sehr eingeschränkt plotten. 
 
 Bevor wir nun verschiedene lineare Modelle berechnen, berechnen wir ein paar Modelle. 
 
 ``` {r regmodels, eval=TRUE}
-model1 <- lm(stfdem ~ 1 + stfeco, 
+model1 <- lm(trstprl ~ 1 + trstprt, 
              pss)
 
-model2 <- lm(stfdem ~ 1 + stfeco + agea + lrscale,
+model2 <- lm(trstprl ~ 1 + trstprt + agea + stfdem,
              pss)
 
-model3 <- lm(stfdem ~ 1 + stfeco + agea + lrscale + gndr,
+model3 <- lm(trstprl ~ 1 + trstprt + agea + stfdem + district,
              pss)
 ```
 
 Im bivariaten Trainingsfall kann man ganz einfach ```ggplot``` und die Funktion ```stat_smooth()``` verwenden (```model1```):
 ```{r bivariat, eval=TRUE}
 ggplot(pss,
-       aes(x = stfeco, y = stfdem)) +  
+       aes(x = trstprt, y = trstprl)) +  
   geom_jitter(color = "darkblue") + # observations
   stat_smooth(method = "lm",       # regression line
               color = "tomato") +    
-  labs(title = "Regression stfdem on stfeco",  # titles
-       x = "stfeco",
-       y = "stfdem")
+  labs(title = "Regression trstprl on trstprt",  # titles
+       x = "Trust in Parties",
+       y = "Trust in Parliament")
 ```
 
 
 Sobald wir aber ein multivariates Modell haben, ist dies nicht mehr direkt so möglich. Da wir die anderen Effekte konstanthalten müssen, um die Abbildung korrekt darzustellen. Aber es ist immer noch leicht umzusetzen, sobald man versteht, was **Konstanthalten** bedeutet.
 
-Wir möchten den Effekt von ```stfeco``` auf ```stfdem``` plotten, im ```model2``` haben wir aber zusätzlich noch die Variable ```lrscale``. Daher ist dieser Effekt immer mit dem weiteren Effekt zu interpretieren. Um den Effekt plotten zu können, halten wir den (oder die) weiteren Effekt(e) konstant. 
+Wir möchten den Effekt von ```trstprt``` auf ```trstprl``` plotten, im ```model2``` haben wir aber zusätzlich noch die Variable ```agea``` und ```stfdem```. Daher ist dieser Effekt immer mit den weiteren Effekten zu interpretieren. Um den Effekt plotten zu können, halten wir den (oder die) weiteren Effekt(e) konstant. 
 
-Daher bilden wir nun eine neue Matrix (Schätzungs-Datensatz). Diese beinhaltet am Ende die Vorhersage unseres Schätzmodells. Zuvor müssen wir aber fiktive Werte der zwei Variablen generieren. Wir möchten den Effekt von ```stfeco``` plotten, daher halten wir term konstant (bei metrischen Variablen oftmals der *mean*). Mit der Funktion ```list()``` schaffen wir eine Liste mit zwei Objekten (```stfeco``` und ```lrscale```). Die Funktion ```expand.grid()``` macht aus dieser liste dann ein ```data frame```:
+Daher bilden wir nun eine neue Matrix (Schätzungs-Datensatz). Diese beinhaltet am Ende die Vorhersage unseres Schätzmodells. Zuvor müssen wir aber fiktive Werte der zwei Variablen generieren. Wir möchten den Effekt von ```trstprt``` plotten, daher halten wir ```agea``` und ```stfdem``` konstant (bei metrischen Variablen oftmals der *mean*). Mit der Funktion ```list()``` schaffen wir eine Liste mit drei Objekten (```trstprt```,  ```agea``` und ```stfdem```). Die Funktion ```expand.grid()``` macht aus dieser liste dann ein ```data frame```:
 
 ``` {r expand grid, eval=TRUE}
-fakeDf <- expand.grid(list(stfeco = seq(0,   
+fakeDf <- expand.grid(list(trstprt = seq(0,   
                                         10,  
                                         1),
-                           lrscale = mean(pss$lrscale, na.rm = TRUE),
-                           agea = mean(pss$agea, na.rm = TRUE)))  
+                           agea = mean(pss$agea, na.rm = TRUE),
+                           stfdem = mean(pss$stfdem, na.rm = TRUE)))  
 
 fakeDf
 ``` 
@@ -573,7 +562,7 @@ predFakeDf <- predict(model2,
                       se = TRUE)       
 ```
 
-- Das Objekt ist eine Liste, die ```fit``` (*fitted values*), ```se.fit``` (*standard errors*), ```df``` (*degrees of freedom*) und ```residual.scale``` beinhaltet.
+- Das Objekt ist eine Liste, die ```fit``` (*fitted values*), ```se.fit``` (*standard errors*), ```df``` (*degrees of freedom*) und ```residual.scale``` (*residual standard deviation*) beinhaltet.
 
 - Wir sind an den ersten beiden Werten interessiert, die wir für das Plotten benötigen. Diese Werte binden wir im nächsten Schritt nun an die Anfangsmatrix.
 
@@ -587,122 +576,194 @@ fakeDf$pred_se <- predFakeDf$se.fit
 Nun können wir den Plot erstellen, wir haben alle Werte in einem Datenobjekt:
 ```{r predggplot, eval=TRUE}
 ggplot(fakeDf,
-       aes(x = stfeco, 
+       aes(x = trstprt, 
            y = pred)) +
   geom_line(color = "darkgreen") +              
   geom_line(data = fakeDf,                         
-            aes(x = stfeco, 
+            aes(x = trstprt, 
                 y = pred - 1.96 * pred_se),   
             linetype = 3) +
   geom_line(data = fakeDf,                         
-            aes(x = stfeco, 
+            aes(x = trstprt, 
                 y = pred + 1.96 * pred_se), 
             linetype = 3) +
-  labs(title = "Linear relationship between stfeco and stfdem (others constant)", 
-       y = "Predicted value of stfdem",
-       x = "stfeco") 
+  labs(title = "Linear relationship between trstprl and trstprt (others constant)", 
+       y = "Predicted value of Trust in Parliament",
+       x = "Trust in Parties") 
 ```
 
-Als nächstes fahren wir genauso fort mit ```model3```. Hier haben wir allerdings eine kategorielle Variable (```gndr```) und diese lässt sich nicht konstant halten. Daher machen wir zwei fake-Datensätze, die wir dann zusammenfügen (einen für jede Kategorie in ```gndr```). Beginnen wir mit dem ```female``` Datensatz:
+Als nächstes fahren wir genauso fort mit ```model3```. Hier haben wir allerdings eine kategorielle Variable (```district```) und diese lässt sich nicht konstant halten. Daher machen wir so viele *fake*-Datensätze wie es Ausprägungen auf der Variable gibt: also **5**. Diese fügen wir dann zusammen. Beginnen wir mit dem ```Distrikt 1``` Datensatz:
 
 ``` {r gndr-regression, eval=TRUE}
-fakeDfFemale <- expand.grid(list(stfeco = seq(0,   
-                                        10,  
-                                        1),
-                           lrscale = mean(pss$lrscale, na.rm = TRUE),
-                           agea = mean(pss$agea, na.rm = TRUE),
-                           gndr = "female")) 
+fakeDfD1 <- expand.grid(list(trstprt = seq(0,   
+                                           10,  
+                                           1),
+                             agea = mean(pss$agea, na.rm = TRUE),
+                             stfdem = mean(pss$stfdem, na.rm = TRUE),
+                             district = "Distrikt 1")) 
 
-predFakeDfFemale <- predict(model3, 
-                            newdata = fakeDfFemale, 
-                            se = TRUE)  
+fakeDfD2 <- expand.grid(list(trstprt = seq(0,   
+                                           10,  
+                                           1),
+                             agea = mean(pss$agea, na.rm = TRUE),
+                             stfdem = mean(pss$stfdem, na.rm = TRUE),
+                             district = "Distrikt 5")) 
 
-fakeDfFemale$pred    <- predFakeDfFemale$fit
-fakeDfFemale$pred_se <- predFakeDfFemale$se.fit
+fakeDfD3 <- expand.grid(list(trstprt = seq(0,   
+                                           10,  
+                                           1),
+                             agea = mean(pss$agea, na.rm = TRUE),
+                             stfdem = mean(pss$stfdem, na.rm = TRUE),
+                             district = "Distrikt 7")) 
 
-ggplot(fakeDfFemale,
-       aes(x = stfeco, 
-           y = pred)) +
-  geom_line(color = "darkblue") +
-  geom_line(data = fakeDfFemale,
-            aes(x = stfeco, 
-                y = pred - 1.96 * pred_se),
-            linetype = 3) +
-  geom_line(data = fakeDfFemale,
-            aes(x = stfeco, 
-                y = pred + 1.96 * pred_se),
-            linetype = 3) +
-  ylab("Predicted value of stfdem") +
-  xlab("stfeco") +
-  labs(title = "Linear relationship between stfeco and stfdem (others constant)")
-```
-Somit haben wir die Regressionslinie zwischen ```stfeco``` und ```stfdem``` unter Konstanthalten von Alter, Links-Rechts-Selbsteinschätung und Geschlecht. Jetzt erstellen wir die zweite Linie für männliche Befragte. 
+fakeDfD4 <- expand.grid(list(trstprt = seq(0,   
+                                           10,  
+                                           1),
+                             agea = mean(pss$agea, na.rm = TRUE),
+                             stfdem = mean(pss$stfdem, na.rm = TRUE),
+                             district = "Distrikt 10")) 
 
-``` {r gndr2-regression, eval=TRUE}
-fakeDfMale <- expand.grid(list(stfeco = seq(0,   
-                                        10,  
-                                        1),
-                           lrscale = mean(pss$lrscale, na.rm = TRUE),
-                           agea = mean(pss$agea, na.rm = TRUE),
-                           gndr = "male")) 
-
-predFakeDfMale <- predict(model3, 
-                            newdata = fakeDfMale, 
-                            se = TRUE)  
-
-fakeDfMale$pred    <- predFakeDfMale$fit
-fakeDfMale$pred_se <- predFakeDfMale$se.fit
-
-ggplot(fakeDfMale,
-       aes(x = stfeco, 
-           y = pred)) +
-  geom_line(color = "darkgreen") +
-  geom_line(data = fakeDfMale,
-            aes(x = stfeco, 
-                y = pred - 1.96 * pred_se),
-            linetype = 3) +
-  geom_line(data = fakeDfMale,
-            aes(x = stfeco, 
-                y = pred + 1.96 * pred_se),
-            linetype = 3) +
-  ylab("Predicted value of stfdem") +
-  xlab("stfeco") +
-  labs(title = "Linear relationship between stfeco and stfdem (others constant)")
+fakeDfD5 <- expand.grid(list(trstprt = seq(0,   
+                                           10,  
+                                           1),
+                             agea = mean(pss$agea, na.rm = TRUE),
+                             stfdem = mean(pss$stfdem, na.rm = TRUE),
+                             district = "Distrikt 12")) 
 ```
 
+Jetzt fügen wir diese Datensätze erst in einem Datensatz zusammen, da wir ansonsten mit dem Vorgehen wie oben unnötig weitere Objekte erstellen würden. Und anschließend schätzen wir die Werte von ```trstprl```: 
 
-Um nun beide Linien in einer Grafik zu haben, fügen wir die Layer einfach zusammen und machen zur besseren Lesbarkeit noch eine Legende.
+```{r bind_fakedata, eval=TRUE}
+fakeDfbyDistrict <- rbind(fakeDfD1, 
+                          fakeDfD2, 
+                          fakeDfD3, 
+                          fakeDfD4, 
+                          fakeDfD5)
 
-``` {r gndr2-legend, eval=TRUE}
-ggplot(fakeDfMale,
-       aes(x = stfeco, 
-           y = pred)) +
-  geom_line(color = "red") +
-  geom_line(data = fakeDfMale,
-            aes(x = stfeco, 
-                y = pred - 1.96 * pred_se),
-            linetype = 3) +
-  geom_line(data = fakeDfMale,
-            aes(x = stfeco, 
-                y = pred + 1.96 * pred_se),
-            linetype = 3) +
-  geom_line(color = "darkblue") +
-  geom_line(data = fakeDfFemale,
-            aes(x = stfeco, 
-                y = pred - 1.96 * pred_se),
-            linetype = 3) +
-  geom_line(data = fakeDfFemale,
-            aes(x = stfeco, 
-                y = pred + 1.96 * pred_se),
-            linetype = 3) +
-  scale_color_manual(values = c("female" = "darkblue", 
-                                "male" = "red")) +
-labs(title = "Linear relationship between stfeco and stfdem (others constant)",
-       y = "Predicted value of stfdem",
-       x = "stfeco")
+predFakeDfbyDistrict <- predict(model3,     
+                                newdata = fakeDfbyDistrict,  # der fiktive Datensatz
+                                se = TRUE) 
+
+fakeDfbyDistrict$pred    <- predFakeDfbyDistrict$fit
+fakeDfbyDistrict$pred_se <- predFakeDfbyDistrict$se.fit
+``` 
+
+Anschließend können wir das ganze dann mit ```ggplot``` plotten:
+```{r ggplot-districts, eval=TRUE}
+ggplot(fakeDfbyDistrict,
+       aes(x = trstprt, 
+           y = pred,
+           color = district,
+           shape = district
+           )) +
+  geom_line() +
+  ylab("Predicted value of Trust in Parliament") +
+  xlab("Trust in Parties") +
+  labs(title = "Linear relationship between trstprl and trstprt (others constant)",
+       color = "Distrikte") 
 ```
-## Das war's!
+Somit haben wir die Regressionslinie zwischen ```trstprl``` und ```trstprt``` unter Konstanthalten von Alter, Zufriedenheit mit der Demokratie für Personen nach Distrikten dargestellt. 
 
+Oftmals möchte man aber eine Linie besonders hervorheben und zum Beispiel die Datenpunkte des hervorgehobenen Distrikts einzeichnen. Prüfe den Code zu dem vorherigen und überlege, was an welchen Stellen geändert wurde!
+
+```{r ggplot-districts2, eval=TRUE}
+fakeDistrict12 <- fakeDfbyDistrict %>% 
+  filter(district == "Distrikt 12") %>% 
+  select(-district)
+
+district12 <- pss %>% 
+  filter(district == "Distrikt 12") %>% 
+  select(-district)
+
+ggplot(fakeDistrict12,
+       aes(x = trstprt, 
+           y = pred
+           )) +
+  geom_line(color = "tomato") + 
+  geom_point(data = district12,
+             aes(y = trstprl),
+             color = "tomato",
+             position = "jitter",
+             size = 0.7,
+             alpha = 0.5) + 
+  ylab("Predicted value of Trust in Parliament") +
+  xlab("Trust in Parties") +
+  labs(title = "Linear relationship between trstprl and trstprt (others constant)",
+       lty = "Distrikte",
+       caption = "Highlighted District 12.")
+```
+
+Wir könnten zusätzlich auch noch die anderen Datenpunkte in das Bild einfügen. Man sollte aber immer aufpassen, dass ein Plot nicht zu unübersichtlich wird. 
+
+```{r ggplot-districts3, eval=TRUE}
+districts <- pss %>% 
+  filter(district != "Distrikt 12") %>% 
+  select(-district)
+
+ggplot(fakeDistrict12,
+       aes(x = trstprt, 
+           y = pred
+           )) +
+  geom_line(color = "tomato") + 
+  geom_point(data = district12,
+             aes(y = trstprl),
+             color = "tomato",
+             position = "jitter",
+             size = 0.7,
+             alpha = 0.85) + 
+  geom_point(data = districts,
+             aes(y = trstprl),
+             color = "darkgray",
+             position = "jitter",
+             size = 0.7,
+             alpha = 0.3) + 
+  ylab("Predicted value of Trust in Parliament") +
+  xlab("Trust in Parties") +
+  labs(title = "Linear relationship between trstprl and trstprt (others constant)",
+       lty = "Distrikte",
+       caption = "Highlighted District 12.") +
+  scale_color_manual(values = c("darkgray", "darkgray", "darkgray", "darkgray", "tomato")) +
+  guides(color = "none")
+```
+
+### Koeffizienten darstellen
+
+Wenn wir aber das Modell grafisch darstellen wollen, also die Koeffizienten (anstatt oder zusätzlich zu einer Tabelle), hilft das *package* ```dotwhisker```. Mithilfe dieses *packages* können Objekte aus ```lm()```-Funktionen direkt geplottet werden. 
+
+Zuerst installieren und laden wir das Paket:
+
+```{r dotwhisker}
+install.packages("dotwhisker")
+
+library("dotwhisker")
+```
+
+
+Anschließend ruft man die Funktion ```dwplot()``` auf, die die Koeffizienten grafisch darstellt. Dies ist ebenfalls ein ```ggplot```, so dass man es im Anschluss beliebig bearbeiten kann. 
+
+``` {r coefplot, eval=TRUE}
+dwplot(model3)
+
+```
+
+Das sieht noch etwas unschön aus und wir bearbeiten dies nun in ```ggplot```: Wir fügen bei **0** eine Linie ein (Signifikanz), wir ändern die Achsenbeschriftung auf der y-Achese und wir ändern die Skala auf der x-Achse und fügen Titel ein. 
+
+```{r coefplot2, eval=TRUE}
+dwplot(model3) +
+  geom_vline(xintercept = 0,
+             linetype = "dashed") +
+  scale_y_discrete(labels = rev(c("Trust Parties", 
+                                  "Age", 
+                                  "Satisfaction w/ Democracy",
+                                  "District 5", 
+                                  "District 7", 
+                                  "District 10", 
+                                  "District 12"
+                                  ))) + 
+  scale_x_continuous(breaks = seq(-2, 1 , 0.2)) +
+  labs(title = "Lin. Regression on Trust in Parliament (ref: District 1)",
+       caption = "Data: Panem Social Survey.")
+```
 ## Labs
 1. Prediciton machen und korrekte Werte mit eintragen.
 2. Lineare Regression mit Income als group-Variablen und prediction darstellen
