@@ -3,61 +3,71 @@ div.blue { background-color:#DCE6EB; border-radius: 5px; padding: 20px;}
 
 
 title {
-  font-size: 26px;
+  font-size: 28px;
   color:rgb(69, 130, 236);
   text-align: center;
+  font-family: Fira Sans !important
 }
 
 
 h1 {
-  font-size: 28px;
+  font-size: 26px;
   color:rgb(69, 130, 236);
   text-align: center;
+  font-family: Fira Sans !important
 }
 
 h1.title {
   font-size: 26px;
   color:rgb(69, 130, 236);
   text-align: center;
+  font-family: Fira Sans !important
 }
 
 h1.subtitle {
-  font-size: 12px;
+  font-size: 24px;
   color:lightgray;
   text-align: center;
+  font-family: Fira Sans !important
 }
 
 h2 {
-  font-size: 25px;
+  font-size: 22px;
   color:rgb(69, 130, 236);
   text-align: center;
+  font-family: Fira Sans !important
 }
 
 h3 {
-  font-size: 22px;
+  font-size: 20px;
   color:rgb(69, 130, 236)
+  font-family: Fira Sans !important
 }
 
 p {
-	font-size: 22px;
+	font-size: 20px;
+	font-family: Fira Sans !important
 	}
 
 p.author p.date {
 	font-size: 16px;
 	color: darkgray;
+	font-family: Fira Sans !important
 }
 
 p.caption {
-  font-size: 10px;
+  font-size: 14px;
   font-style: normal;
   color: darkgray;
   text-align: center;
+  font-family: Fira Sans !important
 }
 
 ul{
   list-style-type: square;
   display: block;
-  font-size: 20px;
+  font-size: 18px;
+  font-family: Fira Sans !important
 }
 
 ul li{
@@ -70,7 +80,8 @@ ul li{
 ol {
   list-style-type: upper-roman;
   display: block;
-  font-size: 20px; 
+  font-size: 18px; 
+  font-family: Fira Sans !important
 }
 ol li{
   margin-top: 0;
@@ -90,7 +101,7 @@ color:rgb(69, 130, 236)
   border: 16px rgb(69, 130, 236);
   border-radius: 10px;
   line-height: 120%;
-  font-size: 13px;
+  font-size: 20px;
   margin-bottom: 20px;
   margin-top: 10px;
   margin-left: 20px;
@@ -106,14 +117,14 @@ code.r{
 }
 
 table {
-  font-size: 14px;
+  font-size: 15px;
   text-align: center;
 }
 
 .pagedtable-footer {
   padding-top: 4px;
   padding-bottom: 5px;
-  font-size: 14px;
+  font-size: 13px;
 }
 
 /* unvisited link */
