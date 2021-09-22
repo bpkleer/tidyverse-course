@@ -1,20 +1,22 @@
 ---
-title: "Tabellen publizierbar erstellen"
-subtitle: "Daten bändigen & visualisieren"
-author: "B. Philipp Kleer"
-date: "11. Oktober 2021"
 output: 
-  slidy_presentation:
-      footer: "CC BY-SA 4.0, B. Philipp Kleer"
+  html_document:
+      toc: true
+      toc_float:
+        toc_collapsed: true
+        smooth_scroll: true
       widescreen: true
       highlight: pygments
       theme: readable
-      css: style.css
+      css: ./styles/style.css
       df_print: paged
       mathjax: default
       self_contained: false
       incremental: false #True  dann jedes Bullet einzeln
       collapse: true # means the text output will be merged into the R source code block
+      includes:
+        after_body: ./styles/footer.html
+        before_body: ./styles/header.html
 ---
 
 ```{r setup, include=FALSE}
@@ -57,11 +59,19 @@ opts_chunk$set(fig.path = 'pics/s6-', # path for calculated figures
 
 example <- table(uni$study, 
                  uni$city)
-library("xaringanExtra")
+
+htmltools::tagList(
+  xaringanExtra::use_clipboard(
+    button_text = "<i class=\"fa fa-clipboard\"></i>",
+    success_text = "<i class=\"fa fa-check\" style=\"color: #90BE6D\"></i>",
+    error_text = "<i class=\"fa fa-times-circle\" style=\"color: #F94144\"></i>"
+  ),
+  rmarkdown::html_dependency_font_awesome()
+)
 ```
 
 
-## Zum Paket ```gt```
+## Tabellen publizierbar erstellen mit ```gt```
 Das *package* ```gt``` inkludiert hilfreiche Funktionen, um Tabellen aus R in ein Format zu exportieren, das in wissenschaftlichen Arbeiten oder bei Präsentationen genutzt werden kann. 
 
 Das Paket ist umfassend und hier werden nur einführende Schritte dargestellt, die aber für erste Projekte im BA-Studium hilfreich sind. Die genaue Dokumentation findet sich in der [Benutzerdokumentation](https://gt.rstudio.com/).

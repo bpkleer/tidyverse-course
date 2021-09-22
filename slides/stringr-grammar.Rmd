@@ -1,0 +1,364 @@
+---
+title: "Textdaten bearbeiten mit **stringr**"
+author: "B. Philipp Kleer"
+date: "11. Oktober 2021"
+output: 
+  html_document:
+      toc: true
+      toc_float:
+        toc_collapsed: true
+        smooth_scroll: true
+      toc_depth: 3
+      widescreen: true
+      highlight: pygments
+      theme: readable
+      css: styles/style.css
+      df_print: paged
+      mathjax: default
+      self_contained: false
+      incremental: false #True  dann jedes Bullet einzeln
+      collapse: true # means the text output will be merged into the R source code block
+      includes:
+        after_body: ./styles/footer.html
+        before_body: ./styles/header.html
+---
+
+```{r setup, include=FALSE}
+library("knitr")
+library("rmarkdown")
+library("tidyverse")
+
+gbbo <- readRDS("../datasets/gbbo.rds")
+
+opts_chunk$set(#fig.path = 'pics/s6-', # path for calculated figures
+               fig.align = 'center',  # alignment of figure (also possible right, left, default)
+               fig.show = 'hold', # how to show figures: hold -> direct at the end of code chunk; animate: all plots in an animation
+               fig.width = 6,   # figure width
+               fig.height = 6,  # figure height
+               echo = TRUE,     # Code is printed
+               eval = FALSE,    # Code is NOT evaluated
+               warning = FALSE, # warnings are NOT displayed
+               message = FALSE, # messages are NOT displayed
+               size = "tiny",  # latex-size of code chunks
+               background = "#E7E7E7", # background color of code chunks
+               comment = "", # no hashtags before output
+               options(width = 80),
+               results = "markdown",
+               rows.print = 15
+)
+
+htmltools::tagList(
+  xaringanExtra::use_clipboard(
+    button_text = "<i class=\"fa fa-clipboard\"></i>",
+    success_text = "<i class=\"fa fa-check\" style=\"color: #90BE6D\"></i>",
+    error_text = "<i class=\"fa fa-times-circle\" style=\"color: #F94144\"></i>"
+  ),
+  rmarkdown::html_dependency_font_awesome()
+)
+```
+
+
+## Starten wir!
+:::: {class="flex-container"}
+
+::: {class="flex-text"}
+In diesen Slides wollen wir uns mit Textdaten beschäftigen. Hieru lernen wir grundlegende Funktionen im Umgang mit Textdaten kennen. Eins vorweg: Textdaten sind immer schwieriger zu händeln als numerische Daten. Der Umgang in R ist zwar ganz passabel, aber optimal ist anders. 
+
+In R gibt es dazu ein gutes Paket innerhalb des **tidyverse** - **stringr**. Gemeinsam mit *regular expressions* können viele Transformationen durchgeführt werden.
+
+Es bedarf aber einer erhöhten Lernbereitschaft (im Vergleich zu anderen Paketen und Funktionen).
+:::
+
+::: {class="flex-picture"}
+![stringr](pics/stringr.png){width="300px"}
+:::
+
+::::
+
+
+## Wie bekommen wir Textdaten?
+Als Textdaten fallen einen natürlich sofort Tweets ein, oder für die Offline-Leute z.B. Wahlprogramme. Im Kurs **Quantitative Text- und Inhaltsanalyse** wird die Erhebung dieser Daten über die sogenannte **API** (*Application Programming Interferenc*) beigebracht. Wir überspringen jetzt diesen Schritt, da wir uns erstmal nur mit den grundlegenden Funktionen der Bearbeitung von Textvariablen in R beschäftigen wollen.
+
+Dafür habe ich die letzten Tweets der hervorragenden Sendung [The Great British Bake Off](https://thegreatbritishbakeoff.co.uk) über die Twitter-API geladen (Stand: 22. September 2021). Wir werden im nachfolgenden verschiedene Schritte durchgehen, wie wir Textdaten mit den Funktionen des Pakets **stringr** bearbeiten können. 
+
+## Package und Daten laden
+Zuerst laden wir wieder **tidyverse** bzw. installieren es, wenn es noch nicht installiert ist:
+
+``` {r install-tidy}
+# install.packages("tidyverse")
+library("tidyverse")
+
+# alternativ: 
+# install.packages("stringr")
+# library("stringr")
+```
+
+Anschließend laden wir den Datensatz ```gbbo``` ins *environment*.
+
+``` {r uni-load}
+gbbo <- readRDS("../datasets/gbbo.rds") # oder eigenen Pfad!
+```
+
+Schauen wir uns nun den Datensatz mal an:
+``` {r data-inspect, eval = TRUE}
+gbbo
+```
+
+Der Datensatz umfasst in Gänze 90 Variablen, für uns ist in diesem Fall aber nur eine einzige Variable erstmal relevant - nämlich **text**. In **text** befindet sich der Text des jeweiligen Tweets. Und wir möchten ja nun Text bearbeiten mit **stringr**.
+
+Der einfachheithalber speichern wir diese eine Variable als einzelnen Vektor, schaffen eine neue ID-Variable und erstellen den Datensatz ```tweet```.
+
+```{r vektor, eval=TRUE}
+tweet <- gbbo %>% 
+  select(text)
+
+tweet$id <- seq(1, 862, 1)
+
+head(tweet,
+     n = 100)
+```
+
+## Basisfunktionen in **stringr**
+Die Basisfunktionen umfassen ...
+
+- ```str_length()```
+
+- ```str_sub()```
+
+- ```str_dup()```
+
+- ```str_pad()```
+
+- ```str_trunc()```
+
+- ```str_trim()```
+
+- ```str_to_upper()``` / ```str_to_lower()``` / ```str_to_title()```
+
+- ```str_order``` / ```str_sort()```
+
+- ```str_detect()```
+
+- ```str_subset()```
+
+- ```str_count()```
+
+- ```str_locate()```
+
+- ```str_extract()```
+
+- ```str_match()```
+
+- ```str_replace()```
+
+- ```str_split()```
+
+## ```str_length()```
+Die Funktion ist ähnlich zur Funktion ```nchar()``` aus ```baseR```. Sie gibt die Länge der jeweiligen Zeichenkette an.
+
+```{r length, eval=TRUE}
+str_length(tweet$text)
+
+# oder für einen spezifischen
+tweet %>% 
+  filter(id == 275) %>% 
+  select(text) %>% 
+  str_length()
+
+```
+
+Hiermit sehen wir für jede Position die Länge des Tweets. Wir können auch einzelne Positionen aufrufen (also einzelne Tweets).
+
+```{r length-single, eval=TRUE}
+# hier der 23. tweet
+str_length(tweet$text[23])
+
+```
+
+## ```str_sub()```
+Wir können uns auch einzelne Zeichen aus einem String ausgeben lassen. So z.B. das zweite bis fünfte Zeichen aus dem Tweet an Stelle 23. 
+
+```{r sub, eval=TRUE}
+# hier der 23. tweet
+str_sub(tweet$text[23], 
+        2, 
+        5)
+
+tweet %>% 
+  filter(id == 23) %>% 
+  select(text) %>% 
+  str_sub(2, 5)
+```
+
+Natürlich kann man sich auch einzelne Buchstaben ausgeben lassen, dazu setzt man den Anfang (2. Argument) und das Ende der Extraktion (3. Argument) gleich. Will man von hinten zählen nimmt man einfach ein ```-``` zur Hilfe.
+
+```{r sub2, eval=TRUE}
+# hier der 23. tweet
+str_sub(tweet$text[23], 
+        25, 
+        25)
+
+str_sub(tweet$text[23], 
+        -20, 
+        -2)
+```
+
+**Warum ist die erste Ausgabe leer?**
+
+Mit dieser Funktion kann man auch einzelne Zeichen innerhalb einer Funktion ändern:
+```{r sub3, eval=TRUE}
+tweet$text[23]
+
+str_sub(tweet$text[23], 26, 26) <- "M"
+
+tweet[23]
+```
+
+## ```str_dup()```
+Anstatt Zeichen zu löschen oder zu ersetzen, können wir Zeichen auch wiederholen. Wiederholen wir einfach den Text von Tweet 23 viermal.
+```{r dup, eval=TRUE}
+str_dup(tweet$text[23], 4)
+```
+
+Man kann das ganze auch verketten und wieder direkt die *Pipes* nehmen, die wir am Vormittag kennengelernt haben.
+```{r dup, eval=TRUE}
+tweet %>% 
+  filter(id == 23) %>% 
+  select(text) %>% 
+  str_sub(1, 8) %>% 
+  str_dup(4)
+```
+**Was wird hier wiederholt?**
+
+## ```str_pad()```
+Oft ist es von Vorteil, wenn Zeichenketten dieselbe Länge aufweisen, z.B. wenn man sie gleichmäßig grafisch darstellen möchte. Dies können wir mit ```str_pad()``` machen: Die Zeichenkette soll 100 Zeichen lang werden.
+
+``` {r pad, eval=TRUE}
+text  <- tweet$text[c(23, 731)]
+
+text
+```
+
+Wir haben jetzt also einen einzelnen Vektor, der zwei Tweets beinhaltet. Jetzt wollen wir die Länge auf 100 festsetzen:
+```{r pad2, eval=TRUE}
+str_pad(text, 
+        100, 
+        side = "both")
+```
+**Was passiert hier nun beim zweiten Tweet?**
+
+Da passiert nichts, da der Tweet länger als 100 Zeichen ist und die Funktion ```str_pad()``` kürzt nicht automatisch. 
+
+Will man es doch mit *Pipes* machen gibt es einen Umweg über ```mutate()```, denn die ```str_..()```-Funktionen haben überwiegend kein Datenargument.
+```{r pad-pipe, eval=TRUE}
+tweet <- tweet %>% 
+  mutate(shortT = str_pad(text, 
+                          100, 
+                          side = "both"))
+
+head(tweet$shortT, 
+     n = 50)
+```
+
+Dies empfiehlt sich eigentlich sogar, da man so immer die originalen Daten behält. 
+
+## ```str_trunc()```
+Um gleichzeitig die Tweets zu kürzen, benutzt man die Funktion ```str_trunc()```. Hiermit kann die maximale Zeichenkettenzahl gesetzt werden. So könnten wir zum Beispiel sagen, uns interessiert nur der Beginn der Tweets, also die ersten 50 Zeichen. 
+
+``` {r trunc, eval=TRUE}
+tweet <- tweet %>% 
+  mutate(truncT = str_trunc(text, 50),
+         truncT = str_pad(truncT, 
+                          60, 
+                          side = "both"))
+
+head(tweet$truncT, 
+     n = 50)
+```
+
+## ```str_trim()```
+Um Leerzeichen zu entfernen, nutzt man ```str_trim()```. Wir entfernen jetzt wieder die Zeichen:
+``` {r trim, eval=TRUE}
+tweet <- tweet %>% 
+  mutate(truncT2 = str_trim(truncT, 
+                            side = "both"))
+
+head(tweet$truncT2, 
+     n = 50)
+```
+
+## ```str_to_upper()``` / ```str_to_lower()``` / ```str_to_title()```
+Groß- und Kleinschreibung spielt gerade bei der quantitativen Analyse von Texten keine Rolle. Daher ändert man in der Regel alle Zeichen auf Großbuchstaben (```str_to_upper()```) oder auf Kleinbuchstaben (```str_to_lower```). Teste gleich anschließend selbst aus, was die Funktion ```str_to_title()``` macht!
+
+``` {r schreibweise, eval=TRUE}
+tweet <- tweet %>% 
+  mutate(truncT2 = str_to_lower(truncT2))
+
+head(tweet$truncT2, 
+     n = 50)
+```
+
+## ```str_order``` / ```str_sort()```
+Mit diesen zwei Funktionen können die einzelnen Zeichenketten innerhalb eines Vektors geordnet werden. Die Standardeinstellung ist dabei Englisch. Mit ```str_order()``` erhält man die Reihungszahl des Tweets. Mit ```str_sort()``` werden die Tweets neu geordnet (was die ID-Variable zerstört!).
+
+```{r order, eval=TRUE}
+tweet <- tweet %>% 
+  mutate(orderedText = str_order(truncT2,
+                                 locale = "en")) # für D z.B. de
+
+```
+
+## Regular Expression
+Mit **regular expression** (*regex*) können Zeichenkette bestimmt werden, die beliebig eingesetzt werden können. 
+
+Die folgenden Funktionen werden oftmals in Kombination mit *regex* eingesetzt, um String-Variablen zu bearbeiten:
+
+- ```str_detect()```
+
+- ```str_subset()```
+
+- ```str_count()```
+
+- ```str_locate()```
+
+- ```str_extract()```
+
+- ```str_match()```
+
+- ```str_replace()```
+
+- ```str_split()```
+
+## ```str_detect()```
+Machen wir der einfachheithalber nochmal ein Subsample, dass nur 50 Tweets erhält. 
+```{r subsample, eval=TRUE}
+tweet2 <- tweet %>% 
+  filter(id < 51) %>% 
+  select(id, text)
+```
+
+In diesem möchten wir nun die Tweets finden, die das Wort *thanks* beinhalten. Die Funktion gibt einen **Boolean**-Wert zurück, also ```TRUE``` oder ```FALSE```.
+```{r detect, eval=TRUE}
+tweet2 <- tweet2 %>% 
+  mutate(includesThanks = str_detect(text, "thanks"))
+
+table(tweet2$includesThanks)
+```
+
+Kein Tweet beinhaltet also *thanks*, aber was ist mit Tweet 7?
+```{r detect2, eval=TRUE}
+tweet2$text[7]
+```
+
+**Wo könnte das Problem liegen?**
+
+Das Problem liegt im großen ```T```, da wir in der Anweisung nicht berücksichtigt haben, dass es uns egal ist, ob es genau die Reihenfolge ist oder ob Groß-/Kleinschreibung unberücksichtigt bleiben soll. Dazu benötigen wir die Hilfsfunktion ```regex()```, bei der wir im Argument ```ignore_case = TRUE``` angeben, dass es egal ist, wie die Buchstaben geschrieben sind, sondern nur die Reihenfolge vorhanden sein muss
+```{r detect3, eval=TRUE}
+tweet2 <- tweet2 %>% 
+  mutate(includeThanks = str_detect(text, 
+                                    regex("thanks",
+                                          ignore_case = TRUE)))
+
+table(tweet2$includeThanks)
+```
+

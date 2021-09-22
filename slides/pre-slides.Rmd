@@ -9,7 +9,7 @@ output:
       widescreen: true
       highlight: pygments
       theme: readable
-      css: style.css
+      css: ./styles/style-slides.css
       df_print: paged
       mathjax: default
       self_contained: false
@@ -40,6 +40,14 @@ opts_chunk$set(fig.path = 'pics/s6-', # path for calculated figures
                rows.print = 15
 )
 
+htmltools::tagList(
+  xaringanExtra::use_clipboard(
+    button_text = "<i class=\"fa fa-clipboard\"></i>",
+    success_text = "<i class=\"fa fa-check\" style=\"color: #90BE6D\"></i>",
+    error_text = "<i class=\"fa fa-times-circle\" style=\"color: #F94144\"></i>"
+  ),
+  rmarkdown::html_dependency_font_awesome()
+)
 ```
 
 ## Was ist tidyverse?
@@ -146,6 +154,29 @@ Es geht in diesem kurzen 1-Tages-Kurs vor allem um **Readbility-Skills**. Ziel i
 Arbeiten mit R heißt in der Regel immer wieder auf Probleme zu stoßen und willens zu sein, diese Probleme zu lösen. In meiner jetzt fast 10-jährigen Arbeit mit R bin ich noch nie auf ein Problem gestoßen, dass man nicht lösen konnte. 
 
 **Wichtig dafür:** Lesefähigkeit von Code. Also das Verständnis von Code. Dies ist auch das primäre Ziel des heutigen Tages.
+
+## Kursmaterialien
+Wie gesagt, sind die Kursmaterialien direkt in der [RStudio Cloud](https://rstudio.cloud/spaces/146374/join?access_code=xfg7axLLy1bVgItjpH869s1Jg3Lmd9ajntRdEKMH) verlinkt, aber auch in [gitlab](https://gitlab.com/bpkleer/mtg-21-tidyverse).
+
+Die ```code chunks``` haben ein integriertes *Clipboard*, mit dem der Code direkt in ein R Skript kopiert werden kann. Dafür geht man einfach beim betreffenden Code oben rechts auf das *Clipboard*-Zeichen. 
+
+```{r codechunk}
+install.packages("tidyverse",
+                 dependencies = TRUE)
+```
+
+**Wichtig**: Bei den HTML-Präsentationen führt ein Mausklick immer zur nächsten Slide. Dies einfach deaktiveren, in dem man die Taste ```k``` drückt. Dann kann man in Ruhe den Code kopieren und mit den Pfeiltasten durch die Slide navigieren. In den HTML-Dokumenten am Nachmittag kann man einfach klicken, da es keine Präsentationen mehr sind. 
+
+**Weitere Shortcuts für die Präsentationen:**
+
+```b```, ```>```, ```+```: Text wird größer
+
+```s```, ```<```, ```-```: Text wird kleiner
+
+```f```: Fußzeile zeigen/verstecken
+
+```c```, ```t```: Inhaltsverzeichnis (springen auf andere Seite möglich)
+
 
 ## Start {.break}
 Der Kurs setzt Grundkenntnisse voraus. Ihr lernt euch jetzt in Breakout-Rooms kennen. In den Breakout-Rooms sollt ihr euch kennenlernen und ein paar Grundaufgaben in R lösen. Dies dient auch der Auffrischung. Ich schaue abwechselnd in den Breakout-Rooms nach. Ihr könnte mich aber auch rufen. 

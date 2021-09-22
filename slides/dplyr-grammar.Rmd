@@ -5,11 +5,11 @@ author: "B. Philipp Kleer"
 date: "11. Oktober 2021"
 output: 
   slidy_presentation:
-      footer: "CC BY-SA 4.0, B. Philipp Kleer"
+      footer: "Copyright: CC BY-SA 4.0, B. Philipp Kleer"
       widescreen: true
       highlight: pygments
       theme: readable
-      css: style.css
+      css: styles/style-slides.css
       df_print: paged
       mathjax: default
       self_contained: false
@@ -41,6 +41,14 @@ opts_chunk$set(fig.path = 'pics/s6-', # path for calculated figures
                rows.print = 15
 )
 
+htmltools::tagList(
+  xaringanExtra::use_clipboard(
+    button_text = "<i class=\"fa fa-clipboard\"></i>",
+    success_text = "<i class=\"fa fa-check\" style=\"color: #90BE6D\"></i>",
+    error_text = "<i class=\"fa fa-times-circle\" style=\"color: #F94144\"></i>"
+  ),
+  rmarkdown::html_dependency_font_awesome()
+)
 ```
 
 ## Starten wir!

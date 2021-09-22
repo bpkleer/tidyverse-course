@@ -1,20 +1,22 @@
 ---
-title: "Weiterführend in ggplot2-Grammatik"
-subtitle: "Daten bändigen & visualisieren"
-author: "B. Philipp Kleer"
-date: "11. Oktober 2021"
 output: 
-  slidy_presentation:
-      footer: "CC BY-SA 4.0, B. Philipp Kleer"
+  html_document:
+      toc: true
+      toc_float:
+        toc_collapsed: true
+        smooth_scroll: true
       widescreen: true
       highlight: pygments
       theme: readable
-      css: style.css
+      css: ./styles/style.css
       df_print: paged
       mathjax: default
       self_contained: false
       incremental: false #True  dann jedes Bullet einzeln
       collapse: true # means the text output will be merged into the R source code block
+      includes:
+        after_body: ./styles/footer.html
+        before_body: ./styles/header.html
 ---
 
 ```{r setup, include=FALSE}
@@ -44,7 +46,15 @@ opts_chunk$set(#fig.path = 'pics/s6-', # path for calculated figures
                results = "markdown",
                rows.print = 15
 )
-
+             
+htmltools::tagList(
+  xaringanExtra::use_clipboard(
+    button_text = "<i class=\"fa fa-clipboard\"></i>",
+    success_text = "<i class=\"fa fa-check\" style=\"color: #90BE6D\"></i>",
+    error_text = "<i class=\"fa fa-times-circle\" style=\"color: #F94144\"></i>"
+  ),
+  rmarkdown::html_dependency_font_awesome()
+)
 ```
 
 ## Weiterführende Darstellungen in ```ggplot2```
