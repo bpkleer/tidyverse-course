@@ -1,0 +1,1032 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+
+
+<title>ggplot-advanced.knit</title>
+
+<script src="ggplot-advanced_files/header-attrs-2.11/header-attrs.js"></script>
+<script src="ggplot-advanced_files/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="ggplot-advanced_files/bootstrap-3.3.5/css/readable.min.css" rel="stylesheet" />
+<script src="ggplot-advanced_files/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="ggplot-advanced_files/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="ggplot-advanced_files/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="ggplot-advanced_files/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<link href="ggplot-advanced_files/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="ggplot-advanced_files/tocify-1.9.1/jquery.tocify.js"></script>
+<script src="ggplot-advanced_files/navigation-1.1/tabsets.js"></script>
+<link href="ggplot-advanced_files/pagedtable-1.1/css/pagedtable.css" rel="stylesheet" />
+<script src="ggplot-advanced_files/pagedtable-1.1/js/pagedtable.js"></script>
+<script src="ggplot-advanced_files/clipboard-2.0.6/clipboard.min.js"></script>
+<link href="ggplot-advanced_files/xaringanExtra-clipboard-0.2.6/xaringanExtra-clipboard.css" rel="stylesheet" />
+<script src="ggplot-advanced_files/xaringanExtra-clipboard-0.2.6/xaringanExtra-clipboard.js"></script>
+<script>window.xaringanExtraClipboard(null, {"button":"<i class=\"fa fa-clipboard\"><\/i>","success":"<i class=\"fa fa-check\" style=\"color: #90BE6D\"><\/i>","error":"<i class=\"fa fa-times-circle\" style=\"color: #F94144\"><\/i>"})</script>
+<link href="ggplot-advanced_files/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
+<link href="ggplot-advanced_files/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+
+<style type="text/css">
+  code {
+    white-space: pre;
+  }
+  .sourceCode {
+    overflow: visible;
+  }
+</style>
+<style type="text/css" data-origin="pandoc">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+
+</style>
+<script>
+// apply pandoc div.sourceCode style to pre.sourceCode instead
+(function() {
+  var sheets = document.styleSheets;
+  for (var i = 0; i < sheets.length; i++) {
+    if (sheets[i].ownerNode.dataset["origin"] !== "pandoc") continue;
+    try { var rules = sheets[i].cssRules; } catch (e) { continue; }
+    for (var j = 0; j < rules.length; j++) {
+      var rule = rules[j];
+      // check if there is a div.sourceCode rule
+      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") continue;
+      var style = rule.style.cssText;
+      // check if color or background-color is set
+      if (rule.style.color === '' && rule.style.backgroundColor === '') continue;
+      // replace div.sourceCode by a pre.sourceCode rule
+      sheets[i].deleteRule(j);
+      sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
+    }
+  }
+})();
+</script>
+
+
+
+
+<link rel="stylesheet" href="styles/style.css" type="text/css" />
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+pre code {
+  padding: 0;
+}
+</style>
+
+
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+@media print {
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
+
+<br><br>
+
+<center>
+<p style="font-size: 26px; font-weight:bold; align:center;color:rgb(69, 130, 236)"> Datensätze bändigen & visualisieren mit R</p>
+<br>
+<p style="font-size: 24px; align:center"> Benedikt Philipp Kleer <br> 11. Oktober 2021</p>
+<hr />
+<br>
+</center>
+
+<div id="header">
+
+
+
+
+</div>
+
+
+<div id="weiterführende-darstellungen-in-ggplot2" class="section level2">
+<h2>Weiterführende Darstellungen in <code>ggplot2</code></h2>
+<p>In diesem Teil des Kurses werden weiterführende Einstellungen innerhalb des Pakets <code>ggplot2</code> dargestellt. Aufbauend auf die Einführung in die Grammatik von <code>ggplot</code> werden folgende Teile dargestellt:</p>
+<ul>
+<li><p>Schriftarten bearbeiten bzw. Darstellung des Plots</p></li>
+<li><p>Anmerkungen im Plot</p></li>
+<li><p><em>missing values</em> darstellen</p></li>
+<li><p>Marginal Plots / Regressionsplots</p></li>
+<li><p>Karten bearbeiten</p></li>
+</ul>
+<p>Eine gute Übersicht bietet auch folgendes <a href="https://r-graphics.org">Online-Lernbuch</a> (auf Englisch).</p>
+</div>
+<div id="weitere-layout-fragen" class="section level2">
+<h2>Weitere Layout-Fragen</h2>
+<p>Innerhalb eines <code>ggplots</code> können nahezu alle dargestellten Teilbereiche verändert und angepasst werden. Einige dieser Änderungen werden wie im nachfolgenden besprechen.</p>
+<p>Dazu schaffen wir uns zuerst nochmal ein ggplot-Objekt mit unserem Scatterplot aus der Einführung in <code>ggplot</code>:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>scatter <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(pss, </span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>                  <span class="fu">aes</span>(stfeco, </span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>                      stfdem)) <span class="sc">+</span>  </span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_jitter</span>(<span class="at">alpha =</span> .<span class="dv">2</span>, </span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>              <span class="at">col =</span> <span class="st">&quot;blue&quot;</span>) <span class="sc">+</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">breaks =</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">10</span>, <span class="dv">1</span>)) <span class="sc">+</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">breaks =</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">10</span>, <span class="dv">1</span>))</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>scatter</span></code></pre></div>
+<p><img src="ggplot-advanced_files/figure-html/base-scatter-1.png" width="576" style="display: block; margin: auto;" /></p>
+<p>Zuerst fügen wir nochmals Titel, Achsenbeschriftung und Quellen hinzu.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>scatterLeg <span class="ot">&lt;-</span> scatter <span class="sc">+</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;Satisfaction with Economy&quot;</span>,</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">&quot;Satisfaction with Democracy&quot;</span>,</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>       <span class="at">title =</span> <span class="st">&quot;Correlation Plot&quot;</span>,</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>       <span class="at">caption =</span> <span class="st">&quot;Data: Panem Social Survey.</span><span class="sc">\n</span><span class="st"> Data jittered.&quot;</span>)</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>scatterLeg</span></code></pre></div>
+<p><img src="ggplot-advanced_files/figure-html/legends-1.png" width="576" style="display: block; margin: auto;" /></p>
+<p>Innerhalb der Funktion <code>theme()</code> können wir Teilbereiche des Plots ansprechen und ändern. Dies umfasst u.a. folgende Eigenschaften des Plots:</p>
+<ul>
+<li>plot.title</li>
+<li>axis.title.x / axis.title.y</li>
+<li>axis.text.x / axis.text.y</li>
+<li>panel.grid / panel.grid.minor / panel.grid.major</li>
+<li>plot.background / panel.background</li>
+</ul>
+<p>Eine komplette Übersicht aller Einstellungen die in <code>theme()</code> genutzt werden können findet sich in der <a href="https://ggplot2.tidyverse.org/reference/theme.html">User-Dokumentation</a>.</p>
+<p>Wir werden jetzt nach und nach Veränderungen vornehmen. Zuerst werden wir die Schriftgröße, Position und das Erscheinungsbild des Titels ändern. Dies machen wir über <code>plot.title</code> in <code>theme()</code>. Dazu verwenden wir die Funktion <code>element_text()</code>:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>scatterLeg <span class="sc">+</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">25</span>,</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>                                  <span class="at">face =</span> <span class="st">&quot;italic&quot;</span>,</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>                                  <span class="at">hjust =</span> <span class="fl">0.5</span>))</span></code></pre></div>
+<p><img src="ggplot-advanced_files/figure-html/title-1.png" width="576" style="display: block; margin: auto;" /></p>
+<p>Dazu haben wir die drei Argumente <code>size</code> (Schriftgröße), <code>face</code> (Erscheinungsbild) und <code>hjust</code> (Position) genutzt.</p>
+<p>Als nächstes wollen wir die Achsentitel bearbeiten.</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>scatterAxes <span class="ot">&lt;-</span> scatterLeg <span class="sc">+</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">25</span>,</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>                                  <span class="at">face =</span> <span class="st">&quot;italic&quot;</span>,</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>                                  <span class="at">hjust =</span> <span class="fl">0.5</span>),</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>        <span class="at">axis.title.x =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">16</span>, </span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>                                    <span class="at">color =</span> <span class="st">&quot;seagreen&quot;</span>, </span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>                                    <span class="at">hjust =</span> <span class="dv">0</span>),</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>        <span class="at">axis.title.y =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">8</span>, </span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>                                    <span class="at">color =</span> <span class="fu">rgb</span>(<span class="dv">0</span>, <span class="dv">105</span>, <span class="dv">179</span>, <span class="at">maxColorValue =</span> <span class="dv">255</span>), </span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>                                    <span class="at">hjust =</span> <span class="dv">1</span>, </span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>                                    <span class="at">face =</span> <span class="st">&quot;bold&quot;</span>)</span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>scatterAxes</span></code></pre></div>
+<p><img src="ggplot-advanced_files/figure-html/axisticks-1.png" width="576" style="display: block; margin: auto;" /></p>
+<p>Anstatt eine Farbe anzugeben, kann man mit der Funktion<code>rgb()</code> auch den Farbton bestimmen. Alternativ kann man auch den HTML-Code der Farbe innerhalb des Arguments <code>color</code> nutzen.</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>scatterLeg <span class="sc">+</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">25</span>,</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>                                  <span class="at">face =</span> <span class="st">&quot;italic&quot;</span>,</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>                                  <span class="at">hjust =</span> <span class="fl">0.5</span>),</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>        <span class="at">axis.title.x =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">16</span>, </span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>                                    <span class="at">color =</span> <span class="st">&quot;seagreen&quot;</span>, </span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>                                    <span class="at">hjust =</span> <span class="dv">0</span>),</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>        <span class="at">axis.title.y =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">8</span>, </span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>                                    <span class="at">color =</span> <span class="st">&quot;#0069B3&quot;</span>, </span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>                                    <span class="at">hjust =</span> <span class="dv">1</span>, </span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>                                    <span class="at">face =</span> <span class="st">&quot;bold&quot;</span>)</span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div>
+<p>Nun möchten wir weiter experimentieren und die Achsenticks bearbeiten. Dazu nutzen wir <code>axis.ticks.x</code> bzw. <code>axis.ticks.y</code>.</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>scatterTicks <span class="ot">&lt;-</span> scatterAxes <span class="sc">+</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">12</span>, </span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>                                    <span class="at">angle =</span> <span class="dv">45</span>,</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>                                    <span class="at">color =</span> <span class="st">&quot;darkgrey&quot;</span>),</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>        <span class="at">axis.text.y =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">11</span>, </span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>                                   <span class="at">hjust =</span> <span class="dv">0</span>,</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>                                   <span class="at">vjust =</span> <span class="dv">1</span>))</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>scatterTicks</span></code></pre></div>
+<p><img src="ggplot-advanced_files/figure-html/axesticks-1.png" width="576" style="display: block; margin: auto;" /></p>
+<p>Mit dem Argument <code>angle</code> können wir die Achsenbeschriftungen drehen lassen. Mit <code>hjust</code> und <code>vjust</code> können wir die Startposition des Texts ändern.</p>
+<p>Als nächstes möchten wir das Grid des Plots ändern, also die Linien. Dazu nutzen wir erstmal das Argument <code>panel.grid</code> und innerhalb des Arguments die Funktion <code>element_line()</code></p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>scatterGrid <span class="ot">&lt;-</span> scatterTicks <span class="sc">+</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">panel.grid =</span> <span class="fu">element_line</span>(<span class="at">color =</span> <span class="st">&quot;green&quot;</span>,</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>                                  <span class="at">size =</span> <span class="dv">1</span>,</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>                                  <span class="at">linetype =</span> <span class="st">&quot;solid&quot;</span>) <span class="co"># blank, solid, dashed, dotted, dotdash, longdash, twodash</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>        )</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>scatterGrid</span></code></pre></div>
+<p><img src="ggplot-advanced_files/figure-html/grid1-1.png" width="576" style="display: block; margin: auto;" /></p>
+<p>Mit den Argumenten <code>panel.grid.major</code> und <code>panel.grid.minor</code> können die Haupt- und Hilfslinien getrennt bearbeitet werden. Wenn wir zum Beispiel nur die Hauptlinien wollen, machen wir folgendes:</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>scatterGrid <span class="ot">&lt;-</span> scatterTicks <span class="sc">+</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">panel.grid.major =</span> <span class="fu">element_line</span>(<span class="at">color =</span> <span class="st">&quot;green&quot;</span>,</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>                                  <span class="at">size =</span> <span class="dv">1</span>,</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>                                  <span class="at">linetype =</span> <span class="st">&quot;solid&quot;</span>), <span class="co"># blank, solid, dashed, dotted, dotdash, longdash, twodash</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>        <span class="at">panel.grid.minor =</span> <span class="fu">element_blank</span>()</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>        )</span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>scatterGrid</span></code></pre></div>
+<p><img src="ggplot-advanced_files/figure-html/grid2-1.png" width="576" style="display: block; margin: auto;" /></p>
+<p>Man kann auch die Hilfslinien getrennt nach Achsen bearbeiten. Dazu muss man einfach jeweils <code>.x</code> bzw. <code>.y</code> beifügen.</p>
+<p>Zuletzt kann man noch den Hintergrund des Plots bzw. des Panels ändern. Dies geschieht über die Argumente <code>plot.background</code> bzw. <code>panel.background</code>. Dazu nutzt man die Funktion <code>element_rect()</code> innerhalb des Arguments</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>scatterGrid <span class="sc">+</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">plot.background =</span> <span class="fu">element_rect</span>(<span class="at">color =</span><span class="st">&quot;darkgray&quot;</span>,</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>                                       <span class="at">size =</span> <span class="dv">2</span>,</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>                                       <span class="at">fill =</span> <span class="st">&quot;lightpink&quot;</span>),</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>        <span class="at">panel.background =</span> <span class="fu">element_rect</span>(<span class="at">fill =</span> <span class="st">&quot;moccasin&quot;</span>)</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>        )</span></code></pre></div>
+<p><img src="ggplot-advanced_files/figure-html/background-1.png" width="576" style="display: block; margin: auto;" /></p>
+<p>Es gibt ebenso eine ganze Reihe an vorgefertigten Themes, die dann wiederum individuell angepasst werden können. Eine Übersicht über vorhandene Themes gibt es <a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">hier</a>.</p>
+</div>
+<div id="annotations" class="section level2">
+<h2>Annotations</h2>
+<p>Neben den ganzen Spielereien möchte man manchmal auch einzelne Bereiche einer Grafik besonders hervorheben oder aber zum Beispiel Beschriftungen der Fälle hinzufügen (bei kleinem n).</p>
+<p>Hierzu gibt es die Funktionen <code>geom_text()</code> und <code>annotate()</code>, die mit <code>ggplot</code> genutzt werden können. Dazu nehmen wir wieder das Scatterplot vom Beginn, begrenzen aber diesmal die Anzahl auf 15, damit wir eine klare Darstellung bekommen. <strong>Wichtig</strong>: <code>geom_jitter()</code> kann nicht genutzt werden, da die Datenbeschriftungen am Datenpunkt und nicht am gejitterten Datenpunkt auftauchen!</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>scatter2 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(pss[<span class="dv">1</span><span class="sc">:</span><span class="dv">15</span>,], </span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>                  <span class="fu">aes</span>(stfeco, </span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>                      stfdem)) <span class="sc">+</span>  </span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">col =</span> <span class="st">&quot;blue&quot;</span>) <span class="sc">+</span></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">breaks =</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">10</span>, <span class="dv">1</span>)) <span class="sc">+</span></span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">breaks =</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">10</span>, <span class="dv">1</span>))</span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>scatter2</span></code></pre></div>
+<p><img src="ggplot-advanced_files/figure-html/base-scatter2-1.png" width="576" style="display: block; margin: auto;" /> Mit der Funktion <code>geom_text()</code> kann man den Datenpunkten-Beschriftungen hinzufügen. So zum Beispiel die Zeilennummer oder die ID-Variable. Wir machen letzteres, da sich die Zeilennummer bei Sortierungen ändern kann und somit nicht eindeutig ist. Daher fügen wir jetzt mit der Funktion in <code>aes</code> ein <code>label</code> hinzu (<code>idno</code>).</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>scatter2 <span class="sc">+</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text</span>(<span class="fu">aes</span>(<span class="at">label =</span> idno))</span></code></pre></div>
+<p><img src="ggplot-advanced_files/figure-html/addtext-1.png" width="576" style="display: block; margin: auto;" /> Innerhalb von <code>geom_text()</code> kann man nun weitere Einstellungen vornehmen. Ein paar davon kennen wir schon, zwei weitere wichtige sind <code>nudge_y</code> und <code>nudge_x</code>, die den Schriftstart auf der jeweiligen Achse verschieben.</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>scatter2 <span class="sc">+</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text</span>(<span class="fu">aes</span>(<span class="at">label =</span> idno),</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>            <span class="at">size =</span> <span class="dv">2</span>, </span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>            <span class="at">nudge_y =</span> <span class="sc">-</span>.<span class="dv">15</span>)</span></code></pre></div>
+<p><img src="ggplot-advanced_files/figure-html/addtext2-1.png" width="576" style="display: block; margin: auto;" /></p>
+<p>Wenn man nun trotzdem alle Datenpunkte abbilden möchte und nur spezifische Datenpunkte hervorheben möchte, ist dies ganz leicht möglich: Wir möchten nur die ersten zehn Fälle anzeigen und begrenzen daher die Daten in <code>geom_text()</code>. Dies ist auch über <code>subset()</code> mit mehreren Verknüpfungen möglich.</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(pss, </span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>                  <span class="fu">aes</span>(stfeco, </span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>                      stfdem)) <span class="sc">+</span>  </span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">alpha =</span> .<span class="dv">2</span>, </span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>              <span class="at">col =</span> <span class="st">&quot;blue&quot;</span>) <span class="sc">+</span></span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">breaks =</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">10</span>, <span class="dv">1</span>)) <span class="sc">+</span></span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">breaks =</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">10</span>, <span class="dv">1</span>)) <span class="sc">+</span></span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text</span>(<span class="fu">aes</span>(<span class="at">label =</span> idno), </span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>            <span class="at">data =</span> pss[<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>,])</span></code></pre></div>
+<p><img src="ggplot-advanced_files/figure-html/addtext3-1.png" width="576" style="display: block; margin: auto;" /></p>
+<p>Weitaus größere Möglichkeiten bietet <code>annotate()</code>. Mit dieser können nicht nur Beschriftungen, sondern auch bestimmte Bereiche innerhalb eines Plots hervorgehoben werden. Nehmen wir wieder das gejitterte Plot und markieren einen bestimmten Bereich im Plot:</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>scatter <span class="sc">+</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">annotate</span>(<span class="st">&quot;rect&quot;</span>, </span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>           <span class="at">xmin =</span> <span class="fl">8.5</span>, <span class="co"># this corresponds to the axis scale!</span></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>           <span class="at">xmax =</span> <span class="fl">9.5</span>,</span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>           <span class="at">ymin =</span> <span class="fl">8.5</span>,</span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>           <span class="at">ymax =</span> <span class="fl">10.5</span>,</span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>           <span class="at">colour =</span> <span class="st">&quot;darkgreen&quot;</span>,</span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>           <span class="at">fill =</span> <span class="st">&quot;lightgreen&quot;</span>)</span></code></pre></div>
+<p><img src="ggplot-advanced_files/figure-html/annotated-1.png" width="576" style="display: block; margin: auto;" /></p>
+<p>Der Nachteil wird direkt ersichtlich! Da <code>ggplot</code> über Layer angesprochen wird, muss der <code>annotate()</code>-Layer vor dem <code>geom_jitter()</code>-Layer stehen. Oder wir fügen <code>alpha</code> hinzu, um die Sichtbarkeit zu verändrn:</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>scatter <span class="sc">+</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">annotate</span>(<span class="st">&quot;rect&quot;</span>, </span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>           <span class="at">xmin =</span> <span class="fl">8.5</span>, <span class="co"># this corresponds to the axis scale!</span></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>           <span class="at">xmax =</span> <span class="fl">9.5</span>,</span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>           <span class="at">ymin =</span> <span class="fl">8.5</span>,</span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>           <span class="at">ymax =</span> <span class="fl">10.5</span>,</span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>           <span class="at">colour =</span> <span class="st">&quot;darkgreen&quot;</span>,</span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>           <span class="at">fill =</span> <span class="st">&quot;lightgreen&quot;</span>,</span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a>           <span class="at">alpha =</span> .<span class="dv">1</span>)</span></code></pre></div>
+<p><img src="ggplot-advanced_files/figure-html/annotated2-1.png" width="576" style="display: block; margin: auto;" /> Jetzt möchten wir in der Grafik noch eine Beschriftung hinzufügen, damit der Leser:in klar wird, welchen Bereich wir hier markiert haben:</p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>scatter <span class="sc">+</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">annotate</span>(<span class="st">&quot;rect&quot;</span>, </span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>           <span class="at">xmin =</span> <span class="fl">8.5</span>, </span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>           <span class="at">xmax =</span> <span class="fl">9.5</span>,</span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>           <span class="at">ymin =</span> <span class="fl">8.5</span>,</span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>           <span class="at">ymax =</span> <span class="fl">10.5</span>,</span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>           <span class="at">colour =</span> <span class="st">&quot;darkgreen&quot;</span>,</span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>           <span class="at">fill =</span> <span class="st">&quot;lightgreen&quot;</span>,</span>
+<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a>           <span class="at">alpha =</span> .<span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">annotate</span>(<span class="st">&quot;text&quot;</span>, </span>
+<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a>           <span class="at">x =</span> <span class="dv">1</span>, </span>
+<span id="cb16-12"><a href="#cb16-12" aria-hidden="true" tabindex="-1"></a>           <span class="at">y =</span> <span class="dv">9</span>, </span>
+<span id="cb16-13"><a href="#cb16-13" aria-hidden="true" tabindex="-1"></a>           <span class="at">label =</span> <span class="st">&quot;highlighted area&quot;</span>, <span class="co"># with \n you get a new line</span></span>
+<span id="cb16-14"><a href="#cb16-14" aria-hidden="true" tabindex="-1"></a>           <span class="at">colour =</span> <span class="st">&quot;darkgreen&quot;</span>) </span></code></pre></div>
+<p><img src="ggplot-advanced_files/figure-html/annotated3-1.png" width="576" style="display: block; margin: auto;" /> Als weitere Möglichkeit bietet <code>annotate()</code> die Möglichkeit Linien zu erstellen, so dass wir unseren Text auf das Feld zeigen lassen können:</p>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>scatter <span class="sc">+</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">annotate</span>(<span class="st">&quot;rect&quot;</span>, </span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>           <span class="at">xmin =</span> <span class="fl">8.5</span>, </span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>           <span class="at">xmax =</span> <span class="fl">9.5</span>,</span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>           <span class="at">ymin =</span> <span class="fl">8.5</span>,</span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>           <span class="at">ymax =</span> <span class="fl">10.5</span>,</span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>           <span class="at">colour =</span> <span class="st">&quot;darkgreen&quot;</span>,</span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a>           <span class="at">fill =</span> <span class="st">&quot;lightgreen&quot;</span>,</span>
+<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a>           <span class="at">alpha =</span> .<span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">annotate</span>(<span class="st">&quot;text&quot;</span>, </span>
+<span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a>           <span class="at">x =</span> <span class="dv">1</span>, </span>
+<span id="cb17-12"><a href="#cb17-12" aria-hidden="true" tabindex="-1"></a>           <span class="at">y =</span> <span class="dv">9</span>, </span>
+<span id="cb17-13"><a href="#cb17-13" aria-hidden="true" tabindex="-1"></a>           <span class="at">label =</span> <span class="st">&quot;highlighted area&quot;</span>, <span class="co"># with \n you get a new line</span></span>
+<span id="cb17-14"><a href="#cb17-14" aria-hidden="true" tabindex="-1"></a>           <span class="at">color =</span> <span class="st">&quot;darkgreen&quot;</span>) <span class="sc">+</span></span>
+<span id="cb17-15"><a href="#cb17-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">annotate</span>(<span class="st">&quot;segment&quot;</span>, </span>
+<span id="cb17-16"><a href="#cb17-16" aria-hidden="true" tabindex="-1"></a>           <span class="at">x =</span> <span class="dv">2</span>,</span>
+<span id="cb17-17"><a href="#cb17-17" aria-hidden="true" tabindex="-1"></a>           <span class="at">xend =</span> <span class="fl">8.5</span>, </span>
+<span id="cb17-18"><a href="#cb17-18" aria-hidden="true" tabindex="-1"></a>           <span class="at">y =</span> <span class="dv">9</span>, </span>
+<span id="cb17-19"><a href="#cb17-19" aria-hidden="true" tabindex="-1"></a>           <span class="at">yend =</span> <span class="dv">9</span>,</span>
+<span id="cb17-20"><a href="#cb17-20" aria-hidden="true" tabindex="-1"></a>           <span class="at">color =</span> <span class="st">&quot;darkgreen&quot;</span>,</span>
+<span id="cb17-21"><a href="#cb17-21" aria-hidden="true" tabindex="-1"></a>           <span class="at">arrow =</span> <span class="fu">arrow</span>())</span></code></pre></div>
+<p><img src="ggplot-advanced_files/figure-html/annotated4-1.png" width="576" style="display: block; margin: auto;" /></p>
+</div>
+<div id="grafikpakete-zur-darstellung-von-missing-values" class="section level2">
+<h2>Grafikpakete zur Darstellung von <em>missing values</em></h2>
+<p>Oftmals möchte man bevor man die eigentliche Datenanalyse beginnt, zuerst die Daten inspizieren und vor allem die <strong>missing values</strong> prüfen. Dazu gibt es zwei umfangreiche Pakete, die auf <code>ggplot2</code> aufbauen. Dies sind: <code>naniar</code> und <code>UpSetR</code>.</p>
+<p>Zuerst installieren bzw. laden wir die Pakete:</p>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;UpSetR&quot;</span>)</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;naniar&quot;</span>)</span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;UpSetR&quot;</span>)</span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;naniar&quot;</span>)</span></code></pre></div>
+<p>Wir benutzen nun den Datensatz <code>uniMis</code>, in dem zufällig <em>missings</em> in den Variablen <code>mot</code>, <code>term</code>, <code>distance</code> und <code>abi</code> hinzugefügt wurde. Der Datenatz ist sonst gleich mit dem Datensatz <code>uni</code>.</p>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>uniMis </span></code></pre></div>
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":["ID"],"name":[1],"type":["int"],"align":["right"]},{"label":["mot"],"name":[2],"type":["int"],"align":["right"]},{"label":["distance"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["abi"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["term"],"name":[5],"type":["int"],"align":["right"]},{"label":["study"],"name":[6],"type":["fct"],"align":["left"]},{"label":["city"],"name":[7],"type":["fct"],"align":["left"]}],"data":[{"1":"1","2":"8","3":"NA","4":"1.6","5":"3","6":"Political Science","7":"Frankfurt"},{"1":"2","2":"4","3":"36","4":"3.0","5":"5","6":"Sociology","7":"Frankfurt"},{"1":"3","2":"2","3":"56","4":"2.1","5":"4","6":"Political Science","7":"Marburg"},{"1":"4","2":"1","3":"62","4":"3.3","5":"5","6":"Sociology","7":"Gießen"},{"1":"5","2":"3","3":"43","4":"1.0","5":"8","6":"Psychology","7":"Marburg"},{"1":"6","2":"1","3":"43","4":"1.1","5":"2","6":"Political Science","7":"Marburg"},{"1":"7","2":"7","3":"39","4":"3.8","5":"3","6":"Educational Science","7":"Marburg"},{"1":"8","2":"0","3":"NA","4":"NA","5":"3","6":"Sociology","7":"Marburg"},{"1":"9","2":"NA","3":"38","4":"NA","5":"9","6":"Psychology","7":"Marburg"},{"1":"10","2":"6","3":"59","4":"1.6","5":"4","6":"Psychology","7":"Gießen"},{"1":"11","2":"4","3":"69","4":"2.4","5":"2","6":"Psychology","7":"Gießen"},{"1":"12","2":"2","3":"NA","4":"2.6","5":"6","6":"Sociology","7":"Frankfurt"},{"1":"13","2":"1","3":"49","4":"2.6","5":"2","6":"Educational Science","7":"Marburg"},{"1":"14","2":"NA","3":"44","4":"1.0","5":"NA","6":"Political Science","7":"Marburg"},{"1":"15","2":"8","3":"39","4":"3.7","5":"10","6":"Educational Science","7":"Marburg"},{"1":"16","2":"8","3":"21","4":"NA","5":"2","6":"Political Science","7":"Frankfurt"},{"1":"17","2":"7","3":"79","4":"3.0","5":"NA","6":"Educational Science","7":"Marburg"},{"1":"18","2":"0","3":"33","4":"3.1","5":"5","6":"Sociology","7":"Frankfurt"},{"1":"19","2":"6","3":"44","4":"2.4","5":"5","6":"Educational Science","7":"Marburg"},{"1":"20","2":"1","3":"63","4":"3.0","5":"7","6":"Psychology","7":"Gießen"},{"1":"21","2":"NA","3":"74","4":"2.5","5":"9","6":"Educational Science","7":"Gießen"},{"1":"22","2":"6","3":"60","4":"2.2","5":"4","6":"Educational Science","7":"Gießen"},{"1":"23","2":"1","3":"14","4":"1.5","5":"NA","6":"Sociology","7":"Frankfurt"},{"1":"24","2":"0","3":"75","4":"NA","5":"6","6":"Sociology","7":"Gießen"},{"1":"25","2":"2","3":"56","4":"NA","5":"4","6":"Sociology","7":"Gießen"},{"1":"26","2":"4","3":"50","4":"2.8","5":"4","6":"Educational Science","7":"Marburg"},{"1":"27","2":"5","3":"39","4":"1.1","5":"8","6":"Psychology","7":"Marburg"},{"1":"28","2":"2","3":"82","4":"2.7","5":"9","6":"Sociology","7":"Gießen"},{"1":"29","2":"1","3":"NA","4":"3.0","5":"2","6":"Psychology","7":"Marburg"},{"1":"30","2":"2","3":"41","4":"2.4","5":"3","6":"Sociology","7":"Marburg"},{"1":"31","2":"6","3":"63","4":"3.8","5":"NA","6":"Educational Science","7":"Gießen"},{"1":"32","2":"6","3":"30","4":"1.1","5":"7","6":"Sociology","7":"Marburg"},{"1":"33","2":"9","3":"NA","4":"2.8","5":"7","6":"Educational Science","7":"Gießen"},{"1":"34","2":"NA","3":"43","4":"3.6","5":"5","6":"Educational Science","7":"Gießen"},{"1":"35","2":"0","3":"53","4":"3.1","5":"5","6":"Sociology","7":"Gießen"},{"1":"36","2":"4","3":"28","4":"1.4","5":"5","6":"Sociology","7":"Frankfurt"},{"1":"37","2":"8","3":"44","4":"2.2","5":"10","6":"Political Science","7":"Marburg"},{"1":"38","2":"5","3":"86","4":"2.2","5":"6","6":"Political Science","7":"Gießen"},{"1":"39","2":"4","3":"56","4":"2.3","5":"6","6":"Political Science","7":"Gießen"},{"1":"40","2":"NA","3":"58","4":"2.3","5":"10","6":"Educational Science","7":"Gießen"},{"1":"41","2":"7","3":"65","4":"2.9","5":"6","6":"Psychology","7":"Gießen"},{"1":"42","2":"0","3":"38","4":"2.7","5":"9","6":"Political Science","7":"Marburg"},{"1":"43","2":"NA","3":"20","4":"1.7","5":"2","6":"Psychology","7":"Frankfurt"},{"1":"44","2":"NA","3":"55","4":"2.6","5":"9","6":"Educational Science","7":"Gießen"},{"1":"45","2":"1","3":"35","4":"3.7","5":"9","6":"Educational Science","7":"Marburg"},{"1":"46","2":"3","3":"44","4":"3.9","5":"6","6":"Educational Science","7":"Marburg"},{"1":"47","2":"0","3":"25","4":"2.7","5":"6","6":"Psychology","7":"Frankfurt"},{"1":"48","2":"NA","3":"NA","4":"NA","5":"5","6":"Psychology","7":"Frankfurt"},{"1":"49","2":"5","3":"43","4":"2.6","5":"NA","6":"Sociology","7":"Marburg"},{"1":"50","2":"7","3":"18","4":"2.2","5":"9","6":"Educational Science","7":"Frankfurt"},{"1":"51","2":"5","3":"56","4":"1.6","5":"3","6":"Political Science","7":"Gießen"},{"1":"52","2":"0","3":"48","4":"1.2","5":"6","6":"Educational Science","7":"Marburg"},{"1":"53","2":"NA","3":"57","4":"3.4","5":"3","6":"Political Science","7":"Marburg"},{"1":"54","2":"2","3":"69","4":"2.6","5":"3","6":"Political Science","7":"Marburg"},{"1":"55","2":"6","3":"22","4":"3.2","5":"5","6":"Sociology","7":"Frankfurt"},{"1":"56","2":"6","3":"50","4":"1.4","5":"6","6":"Educational Science","7":"Frankfurt"},{"1":"57","2":"3","3":"17","4":"1.4","5":"6","6":"Sociology","7":"Frankfurt"},{"1":"58","2":"9","3":"39","4":"3.7","5":"6","6":"Sociology","7":"Frankfurt"},{"1":"59","2":"0","3":"99","4":"3.6","5":"5","6":"Sociology","7":"Gießen"},{"1":"60","2":"0","3":"49","4":"3.7","5":"2","6":"Sociology","7":"Marburg"},{"1":"61","2":"6","3":"42","4":"4.0","5":"4","6":"Psychology","7":"Marburg"},{"1":"62","2":"3","3":"NA","4":"1.7","5":"4","6":"Psychology","7":"Frankfurt"},{"1":"63","2":"9","3":"52","4":"1.6","5":"2","6":"Psychology","7":"Frankfurt"},{"1":"64","2":"8","3":"NA","4":"2.2","5":"NA","6":"Political Science","7":"Gießen"},{"1":"65","2":"NA","3":"85","4":"2.2","5":"9","6":"Political Science","7":"Gießen"},{"1":"66","2":"3","3":"NA","4":"2.4","5":"7","6":"Political Science","7":"Marburg"},{"1":"67","2":"7","3":"NA","4":"2.5","5":"2","6":"Psychology","7":"Marburg"},{"1":"68","2":"5","3":"50","4":"1.6","5":"2","6":"Educational Science","7":"Marburg"},{"1":"69","2":"4","3":"63","4":"2.7","5":"6","6":"Sociology","7":"Gießen"},{"1":"70","2":"3","3":"45","4":"2.3","5":"10","6":"Educational Science","7":"Marburg"},{"1":"71","2":"2","3":"58","4":"2.2","5":"7","6":"Political Science","7":"Marburg"},{"1":"72","2":"8","3":"74","4":"3.4","5":"4","6":"Psychology","7":"Marburg"},{"1":"73","2":"8","3":"67","4":"3.4","5":"5","6":"Sociology","7":"Gießen"},{"1":"74","2":"6","3":"52","4":"2.9","5":"3","6":"Sociology","7":"Gießen"},{"1":"75","2":"7","3":"60","4":"1.6","5":"8","6":"Educational Science","7":"Gießen"},{"1":"76","2":"5","3":"72","4":"1.7","5":"4","6":"Political Science","7":"Gießen"},{"1":"77","2":"NA","3":"27","4":"1.9","5":"10","6":"Psychology","7":"Frankfurt"},{"1":"78","2":"9","3":"29","4":"NA","5":"2","6":"Sociology","7":"Frankfurt"},{"1":"79","2":"7","3":"29","4":"1.8","5":"NA","6":"Political Science","7":"Frankfurt"},{"1":"80","2":"6","3":"15","4":"2.9","5":"NA","6":"Educational Science","7":"Frankfurt"},{"1":"81","2":"8","3":"66","4":"2.4","5":"6","6":"Sociology","7":"Gießen"},{"1":"82","2":"5","3":"41","4":"1.6","5":"6","6":"Political Science","7":"Frankfurt"},{"1":"83","2":"0","3":"77","4":"2.0","5":"9","6":"Political Science","7":"Gießen"},{"1":"84","2":"4","3":"NA","4":"2.2","5":"8","6":"Sociology","7":"Gießen"},{"1":"85","2":"5","3":"26","4":"2.3","5":"8","6":"Sociology","7":"Frankfurt"},{"1":"86","2":"NA","3":"48","4":"2.3","5":"5","6":"Psychology","7":"Marburg"},{"1":"87","2":"9","3":"54","4":"1.0","5":"4","6":"Educational Science","7":"Gießen"},{"1":"88","2":"0","3":"68","4":"3.9","5":"5","6":"Educational Science","7":"Gießen"},{"1":"89","2":"7","3":"NA","4":"2.1","5":"2","6":"Psychology","7":"Marburg"},{"1":"90","2":"3","3":"89","4":"2.7","5":"3","6":"Political Science","7":"Gießen"},{"1":"91","2":"NA","3":"80","4":"1.1","5":"9","6":"Psychology","7":"Gießen"},{"1":"92","2":"8","3":"25","4":"1.7","5":"7","6":"Sociology","7":"Frankfurt"},{"1":"93","2":"6","3":"54","4":"2.5","5":"8","6":"Psychology","7":"Marburg"},{"1":"94","2":"8","3":"36","4":"3.7","5":"NA","6":"Political Science","7":"Marburg"},{"1":"95","2":"3","3":"60","4":"2.9","5":"4","6":"Psychology","7":"Marburg"},{"1":"96","2":"2","3":"43","4":"1.1","5":"4","6":"Educational Science","7":"Frankfurt"},{"1":"97","2":"9","3":"56","4":"NA","5":"3","6":"Educational Science","7":"Frankfurt"},{"1":"98","2":"2","3":"55","4":"2.1","5":"4","6":"Sociology","7":"Marburg"},{"1":"99","2":"3","3":"25","4":"4.0","5":"9","6":"Sociology","7":"Frankfurt"},{"1":"100","2":"6","3":"NA","4":"2.7","5":"3","6":"Educational Science","7":"Frankfurt"},{"1":"101","2":"9","3":"25","4":"3.4","5":"9","6":"Sociology","7":"Frankfurt"},{"1":"102","2":"9","3":"21","4":"3.2","5":"9","6":"Sociology","7":"Frankfurt"},{"1":"103","2":"7","3":"33","4":"2.0","5":"3","6":"Educational Science","7":"Frankfurt"},{"1":"104","2":"7","3":"20","4":"1.6","5":"2","6":"Political Science","7":"Frankfurt"},{"1":"105","2":"1","3":"NA","4":"3.4","5":"3","6":"Political Science","7":"Marburg"},{"1":"106","2":"9","3":"35","4":"NA","5":"7","6":"Political Science","7":"Frankfurt"},{"1":"107","2":"3","3":"49","4":"2.2","5":"6","6":"Psychology","7":"Marburg"},{"1":"108","2":"4","3":"29","4":"NA","5":"9","6":"Educational Science","7":"Frankfurt"},{"1":"109","2":"4","3":"42","4":"2.1","5":"6","6":"Political Science","7":"Marburg"},{"1":"110","2":"1","3":"18","4":"1.8","5":"7","6":"Sociology","7":"Frankfurt"},{"1":"111","2":"9","3":"60","4":"3.6","5":"6","6":"Sociology","7":"Marburg"},{"1":"112","2":"5","3":"50","4":"2.4","5":"9","6":"Psychology","7":"Marburg"},{"1":"113","2":"4","3":"60","4":"3.9","5":"2","6":"Political Science","7":"Marburg"},{"1":"114","2":"2","3":"35","4":"3.6","5":"2","6":"Educational Science","7":"Marburg"},{"1":"115","2":"7","3":"33","4":"1.3","5":"5","6":"Political Science","7":"Frankfurt"},{"1":"116","2":"NA","3":"58","4":"1.9","5":"5","6":"Sociology","7":"Marburg"},{"1":"117","2":"NA","3":"68","4":"2.7","5":"7","6":"Educational Science","7":"Gießen"},{"1":"118","2":"9","3":"48","4":"2.1","5":"2","6":"Sociology","7":"Marburg"},{"1":"119","2":"2","3":"59","4":"NA","5":"NA","6":"Sociology","7":"Gießen"},{"1":"120","2":"4","3":"74","4":"2.9","5":"5","6":"Sociology","7":"Marburg"},{"1":"121","2":"7","3":"59","4":"3.8","5":"7","6":"Educational Science","7":"Marburg"},{"1":"122","2":"NA","3":"53","4":"1.7","5":"7","6":"Educational Science","7":"Frankfurt"},{"1":"123","2":"4","3":"70","4":"3.3","5":"3","6":"Political Science","7":"Gießen"},{"1":"124","2":"4","3":"61","4":"3.1","5":"4","6":"Educational Science","7":"Gießen"},{"1":"125","2":"3","3":"51","4":"3.4","5":"4","6":"Educational Science","7":"Gießen"},{"1":"126","2":"6","3":"42","4":"4.0","5":"5","6":"Sociology","7":"Marburg"},{"1":"127","2":"9","3":"34","4":"NA","5":"7","6":"Psychology","7":"Frankfurt"},{"1":"128","2":"3","3":"81","4":"2.1","5":"7","6":"Psychology","7":"Gießen"},{"1":"129","2":"4","3":"53","4":"1.4","5":"3","6":"Educational Science","7":"Marburg"},{"1":"130","2":"8","3":"36","4":"3.8","5":"8","6":"Educational Science","7":"Marburg"},{"1":"131","2":"4","3":"58","4":"NA","5":"3","6":"Educational Science","7":"Marburg"},{"1":"132","2":"4","3":"49","4":"1.2","5":"9","6":"Sociology","7":"Gießen"},{"1":"133","2":"8","3":"45","4":"1.9","5":"5","6":"Educational Science","7":"Marburg"},{"1":"134","2":"6","3":"27","4":"3.0","5":"3","6":"Psychology","7":"Frankfurt"},{"1":"135","2":"8","3":"45","4":"1.3","5":"7","6":"Educational Science","7":"Gießen"},{"1":"136","2":"8","3":"80","4":"3.1","5":"10","6":"Psychology","7":"Gießen"},{"1":"137","2":"0","3":"24","4":"2.2","5":"4","6":"Educational Science","7":"Frankfurt"},{"1":"138","2":"0","3":"65","4":"1.7","5":"3","6":"Psychology","7":"Gießen"},{"1":"139","2":"3","3":"66","4":"2.9","5":"6","6":"Sociology","7":"Marburg"},{"1":"140","2":"2","3":"39","4":"3.0","5":"7","6":"Sociology","7":"Frankfurt"},{"1":"141","2":"4","3":"67","4":"3.9","5":"3","6":"Educational Science","7":"Gießen"},{"1":"142","2":"8","3":"56","4":"1.7","5":"6","6":"Educational Science","7":"Marburg"},{"1":"143","2":"NA","3":"55","4":"2.6","5":"5","6":"Political Science","7":"Marburg"},{"1":"144","2":"0","3":"70","4":"1.3","5":"4","6":"Political Science","7":"Marburg"},{"1":"145","2":"1","3":"34","4":"3.8","5":"2","6":"Educational Science","7":"Frankfurt"},{"1":"146","2":"3","3":"56","4":"1.2","5":"5","6":"Psychology","7":"Marburg"},{"1":"147","2":"5","3":"NA","4":"3.2","5":"9","6":"Educational Science","7":"Frankfurt"},{"1":"148","2":"5","3":"64","4":"4.0","5":"NA","6":"Educational Science","7":"Gießen"},{"1":"149","2":"3","3":"51","4":"1.4","5":"NA","6":"Sociology","7":"Marburg"},{"1":"150","2":"3","3":"NA","4":"2.9","5":"8","6":"Sociology","7":"Marburg"},{"1":"151","2":"NA","3":"39","4":"3.7","5":"3","6":"Educational Science","7":"Marburg"},{"1":"152","2":"4","3":"33","4":"3.8","5":"2","6":"Educational Science","7":"Frankfurt"},{"1":"153","2":"9","3":"66","4":"3.2","5":"NA","6":"Psychology","7":"Marburg"},{"1":"154","2":"8","3":"47","4":"4.0","5":"4","6":"Psychology","7":"Marburg"},{"1":"155","2":"0","3":"37","4":"3.1","5":"10","6":"Psychology","7":"Marburg"},{"1":"156","2":"7","3":"21","4":"4.0","5":"9","6":"Psychology","7":"Frankfurt"},{"1":"157","2":"8","3":"26","4":"1.5","5":"7","6":"Political Science","7":"Frankfurt"},{"1":"158","2":"6","3":"40","4":"3.2","5":"NA","6":"Psychology","7":"Marburg"},{"1":"159","2":"0","3":"65","4":"1.9","5":"7","6":"Psychology","7":"Gießen"},{"1":"160","2":"0","3":"26","4":"2.9","5":"6","6":"Educational Science","7":"Frankfurt"},{"1":"161","2":"9","3":"66","4":"1.9","5":"10","6":"Educational Science","7":"Gießen"},{"1":"162","2":"NA","3":"36","4":"NA","5":"NA","6":"Psychology","7":"Frankfurt"},{"1":"163","2":"9","3":"57","4":"3.9","5":"7","6":"Sociology","7":"Marburg"},{"1":"164","2":"7","3":"70","4":"3.7","5":"NA","6":"Educational Science","7":"Marburg"},{"1":"165","2":"8","3":"NA","4":"3.0","5":"8","6":"Sociology","7":"Gießen"},{"1":"166","2":"5","3":"65","4":"1.9","5":"7","6":"Sociology","7":"Gießen"},{"1":"167","2":"5","3":"67","4":"1.5","5":"NA","6":"Educational Science","7":"Marburg"},{"1":"168","2":"9","3":"70","4":"2.2","5":"7","6":"Sociology","7":"Marburg"},{"1":"169","2":"5","3":"32","4":"1.4","5":"6","6":"Political Science","7":"Frankfurt"},{"1":"170","2":"5","3":"46","4":"NA","5":"NA","6":"Educational Science","7":"Marburg"},{"1":"171","2":"4","3":"47","4":"1.8","5":"6","6":"Sociology","7":"Gießen"},{"1":"172","2":"NA","3":"NA","4":"1.1","5":"8","6":"Sociology","7":"Frankfurt"},{"1":"173","2":"2","3":"21","4":"3.5","5":"9","6":"Psychology","7":"Frankfurt"},{"1":"174","2":"3","3":"55","4":"1.6","5":"5","6":"Sociology","7":"Gießen"},{"1":"175","2":"5","3":"NA","4":"3.2","5":"6","6":"Sociology","7":"Marburg"},{"1":"176","2":"9","3":"34","4":"3.4","5":"2","6":"Sociology","7":"Frankfurt"},{"1":"177","2":"NA","3":"68","4":"1.3","5":"3","6":"Political Science","7":"Gießen"},{"1":"178","2":"4","3":"NA","4":"3.8","5":"NA","6":"Political Science","7":"Frankfurt"},{"1":"179","2":"0","3":"67","4":"NA","5":"5","6":"Educational Science","7":"Gießen"},{"1":"180","2":"6","3":"80","4":"1.5","5":"NA","6":"Political Science","7":"Gießen"},{"1":"181","2":"NA","3":"36","4":"4.0","5":"8","6":"Sociology","7":"Frankfurt"},{"1":"182","2":"5","3":"42","4":"NA","5":"10","6":"Sociology","7":"Frankfurt"},{"1":"183","2":"6","3":"NA","4":"2.4","5":"10","6":"Political Science","7":"Frankfurt"},{"1":"184","2":"6","3":"82","4":"2.0","5":"7","6":"Sociology","7":"Gießen"},{"1":"185","2":"3","3":"25","4":"2.4","5":"2","6":"Psychology","7":"Frankfurt"},{"1":"186","2":"5","3":"39","4":"3.3","5":"5","6":"Sociology","7":"Frankfurt"},{"1":"187","2":"2","3":"66","4":"1.7","5":"9","6":"Educational Science","7":"Gießen"},{"1":"188","2":"4","3":"43","4":"3.7","5":"6","6":"Political Science","7":"Marburg"},{"1":"189","2":"NA","3":"NA","4":"4.0","5":"2","6":"Psychology","7":"Frankfurt"},{"1":"190","2":"2","3":"40","4":"1.7","5":"7","6":"Sociology","7":"Marburg"},{"1":"191","2":"4","3":"37","4":"1.8","5":"10","6":"Political Science","7":"Frankfurt"},{"1":"192","2":"2","3":"76","4":"2.7","5":"8","6":"Educational Science","7":"Marburg"},{"1":"193","2":"NA","3":"56","4":"3.5","5":"6","6":"Sociology","7":"Marburg"},{"1":"194","2":"NA","3":"57","4":"3.3","5":"4","6":"Educational Science","7":"Marburg"},{"1":"195","2":"4","3":"20","4":"3.7","5":"8","6":"Political Science","7":"Frankfurt"},{"1":"196","2":"5","3":"33","4":"2.0","5":"2","6":"Political Science","7":"Frankfurt"},{"1":"197","2":"5","3":"25","4":"3.6","5":"6","6":"Sociology","7":"Marburg"},{"1":"198","2":"4","3":"74","4":"3.2","5":"6","6":"Sociology","7":"Gießen"},{"1":"199","2":"0","3":"NA","4":"2.8","5":"7","6":"Psychology","7":"Gießen"},{"1":"200","2":"NA","3":"NA","4":"1.1","5":"3","6":"Educational Science","7":"Marburg"},{"1":"201","2":"4","3":"77","4":"3.3","5":"7","6":"Psychology","7":"Gießen"},{"1":"202","2":"8","3":"72","4":"3.0","5":"10","6":"Political Science","7":"Gießen"},{"1":"203","2":"1","3":"59","4":"NA","5":"5","6":"Sociology","7":"Marburg"},{"1":"204","2":"4","3":"53","4":"1.9","5":"NA","6":"Political Science","7":"Frankfurt"},{"1":"205","2":"7","3":"82","4":"2.8","5":"4","6":"Political Science","7":"Gießen"},{"1":"206","2":"9","3":"50","4":"2.3","5":"6","6":"Educational Science","7":"Marburg"},{"1":"207","2":"1","3":"18","4":"NA","5":"4","6":"Political Science","7":"Frankfurt"},{"1":"208","2":"NA","3":"55","4":"1.3","5":"6","6":"Educational Science","7":"Marburg"},{"1":"209","2":"3","3":"45","4":"1.5","5":"2","6":"Sociology","7":"Marburg"},{"1":"210","2":"7","3":"49","4":"2.3","5":"4","6":"Sociology","7":"Frankfurt"},{"1":"211","2":"NA","3":"NA","4":"2.2","5":"10","6":"Political Science","7":"Frankfurt"},{"1":"212","2":"3","3":"26","4":"1.3","5":"5","6":"Political Science","7":"Frankfurt"},{"1":"213","2":"4","3":"36","4":"NA","5":"2","6":"Psychology","7":"Frankfurt"},{"1":"214","2":"2","3":"48","4":"1.1","5":"6","6":"Educational Science","7":"Marburg"},{"1":"215","2":"NA","3":"43","4":"2.6","5":"7","6":"Sociology","7":"Marburg"},{"1":"216","2":"3","3":"NA","4":"3.0","5":"7","6":"Political Science","7":"Gießen"},{"1":"217","2":"4","3":"39","4":"NA","5":"10","6":"Sociology","7":"Frankfurt"},{"1":"218","2":"2","3":"42","4":"3.5","5":"3","6":"Sociology","7":"Frankfurt"},{"1":"219","2":"2","3":"58","4":"2.9","5":"4","6":"Educational Science","7":"Marburg"},{"1":"220","2":"5","3":"77","4":"2.1","5":"NA","6":"Psychology","7":"Marburg"},{"1":"221","2":"7","3":"45","4":"NA","5":"3","6":"Sociology","7":"Frankfurt"},{"1":"222","2":"4","3":"72","4":"2.3","5":"7","6":"Sociology","7":"Gießen"},{"1":"223","2":"8","3":"23","4":"1.7","5":"10","6":"Psychology","7":"Frankfurt"},{"1":"224","2":"5","3":"66","4":"2.4","5":"7","6":"Sociology","7":"Frankfurt"},{"1":"225","2":"1","3":"39","4":"2.7","5":"3","6":"Political Science","7":"Frankfurt"},{"1":"226","2":"9","3":"60","4":"1.8","5":"8","6":"Political Science","7":"Gießen"},{"1":"227","2":"5","3":"33","4":"3.0","5":"2","6":"Educational Science","7":"Frankfurt"},{"1":"228","2":"NA","3":"65","4":"1.1","5":"8","6":"Political Science","7":"Gießen"},{"1":"229","2":"8","3":"65","4":"1.5","5":"10","6":"Psychology","7":"Gießen"},{"1":"230","2":"2","3":"39","4":"2.6","5":"9","6":"Educational Science","7":"Marburg"},{"1":"231","2":"4","3":"70","4":"3.5","5":"6","6":"Psychology","7":"Gießen"},{"1":"232","2":"2","3":"NA","4":"4.0","5":"9","6":"Sociology","7":"Gießen"},{"1":"233","2":"4","3":"18","4":"3.8","5":"3","6":"Political Science","7":"Frankfurt"},{"1":"234","2":"3","3":"NA","4":"1.9","5":"7","6":"Political Science","7":"Marburg"},{"1":"235","2":"9","3":"28","4":"3.3","5":"NA","6":"Educational Science","7":"Frankfurt"},{"1":"236","2":"5","3":"31","4":"3.2","5":"10","6":"Political Science","7":"Frankfurt"},{"1":"237","2":"0","3":"57","4":"2.1","5":"8","6":"Psychology","7":"Marburg"},{"1":"238","2":"1","3":"51","4":"1.0","5":"6","6":"Political Science","7":"Marburg"},{"1":"239","2":"5","3":"36","4":"NA","5":"5","6":"Political Science","7":"Frankfurt"},{"1":"240","2":"9","3":"37","4":"1.1","5":"NA","6":"Sociology","7":"Marburg"},{"1":"241","2":"6","3":"58","4":"NA","5":"9","6":"Sociology","7":"Marburg"},{"1":"242","2":"5","3":"77","4":"2.8","5":"4","6":"Political Science","7":"Gießen"},{"1":"243","2":"6","3":"53","4":"3.0","5":"4","6":"Sociology","7":"Marburg"},{"1":"244","2":"9","3":"85","4":"3.3","5":"5","6":"Political Science","7":"Gießen"},{"1":"245","2":"4","3":"36","4":"NA","5":"NA","6":"Educational Science","7":"Frankfurt"},{"1":"246","2":"3","3":"53","4":"3.2","5":"4","6":"Sociology","7":"Marburg"},{"1":"247","2":"2","3":"34","4":"2.8","5":"7","6":"Sociology","7":"Frankfurt"},{"1":"248","2":"6","3":"36","4":"1.8","5":"3","6":"Sociology","7":"Frankfurt"},{"1":"249","2":"0","3":"81","4":"1.6","5":"3","6":"Psychology","7":"Gießen"},{"1":"250","2":"1","3":"55","4":"1.4","5":"8","6":"Psychology","7":"Marburg"},{"1":"251","2":"6","3":"76","4":"3.7","5":"9","6":"Sociology","7":"Gießen"},{"1":"252","2":"6","3":"18","4":"1.2","5":"9","6":"Political Science","7":"Frankfurt"},{"1":"253","2":"NA","3":"64","4":"NA","5":"7","6":"Political Science","7":"Gießen"},{"1":"254","2":"0","3":"49","4":"3.9","5":"9","6":"Sociology","7":"Frankfurt"},{"1":"255","2":"4","3":"NA","4":"1.5","5":"7","6":"Educational Science","7":"Frankfurt"},{"1":"256","2":"3","3":"34","4":"4.0","5":"4","6":"Psychology","7":"Frankfurt"},{"1":"257","2":"8","3":"55","4":"2.2","5":"10","6":"Psychology","7":"Marburg"},{"1":"258","2":"2","3":"61","4":"3.1","5":"NA","6":"Sociology","7":"Marburg"},{"1":"259","2":"2","3":"64","4":"3.2","5":"6","6":"Educational Science","7":"Gießen"},{"1":"260","2":"7","3":"52","4":"2.3","5":"NA","6":"Political Science","7":"Marburg"},{"1":"261","2":"8","3":"NA","4":"2.5","5":"7","6":"Sociology","7":"Frankfurt"},{"1":"262","2":"2","3":"54","4":"3.5","5":"4","6":"Educational Science","7":"Marburg"},{"1":"263","2":"7","3":"23","4":"NA","5":"2","6":"Psychology","7":"Frankfurt"},{"1":"264","2":"9","3":"28","4":"2.0","5":"6","6":"Psychology","7":"Frankfurt"},{"1":"265","2":"1","3":"NA","4":"3.8","5":"8","6":"Educational Science","7":"Frankfurt"},{"1":"266","2":"9","3":"36","4":"3.8","5":"4","6":"Political Science","7":"Frankfurt"},{"1":"267","2":"3","3":"39","4":"1.4","5":"6","6":"Educational Science","7":"Frankfurt"},{"1":"268","2":"7","3":"46","4":"4.0","5":"NA","6":"Political Science","7":"Marburg"},{"1":"269","2":"9","3":"90","4":"2.1","5":"3","6":"Psychology","7":"Gießen"},{"1":"270","2":"NA","3":"39","4":"2.0","5":"2","6":"Psychology","7":"Frankfurt"},{"1":"271","2":"1","3":"80","4":"1.0","5":"8","6":"Psychology","7":"Gießen"},{"1":"272","2":"NA","3":"93","4":"2.4","5":"8","6":"Psychology","7":"Gießen"},{"1":"273","2":"1","3":"23","4":"3.8","5":"9","6":"Educational Science","7":"Frankfurt"},{"1":"274","2":"6","3":"59","4":"1.0","5":"9","6":"Political Science","7":"Marburg"},{"1":"275","2":"1","3":"80","4":"2.7","5":"7","6":"Sociology","7":"Gießen"},{"1":"276","2":"8","3":"68","4":"2.1","5":"10","6":"Educational Science","7":"Gießen"},{"1":"277","2":"7","3":"72","4":"3.2","5":"5","6":"Educational Science","7":"Gießen"},{"1":"278","2":"1","3":"NA","4":"2.8","5":"4","6":"Psychology","7":"Gießen"},{"1":"279","2":"8","3":"55","4":"3.5","5":"8","6":"Political Science","7":"Marburg"},{"1":"280","2":"9","3":"41","4":"3.3","5":"NA","6":"Political Science","7":"Marburg"},{"1":"281","2":"0","3":"78","4":"2.3","5":"4","6":"Political Science","7":"Gießen"},{"1":"282","2":"2","3":"59","4":"1.6","5":"10","6":"Educational Science","7":"Gießen"},{"1":"283","2":"4","3":"35","4":"3.4","5":"7","6":"Political Science","7":"Frankfurt"},{"1":"284","2":"6","3":"40","4":"3.1","5":"2","6":"Political Science","7":"Marburg"},{"1":"285","2":"5","3":"28","4":"1.6","5":"10","6":"Sociology","7":"Frankfurt"},{"1":"286","2":"7","3":"NA","4":"2.0","5":"8","6":"Sociology","7":"Marburg"},{"1":"287","2":"5","3":"51","4":"1.4","5":"10","6":"Educational Science","7":"Marburg"},{"1":"288","2":"2","3":"62","4":"1.6","5":"NA","6":"Educational Science","7":"Marburg"},{"1":"289","2":"1","3":"71","4":"4.0","5":"NA","6":"Sociology","7":"Gießen"},{"1":"290","2":"3","3":"29","4":"1.5","5":"6","6":"Psychology","7":"Marburg"},{"1":"291","2":"8","3":"24","4":"2.3","5":"5","6":"Political Science","7":"Frankfurt"},{"1":"292","2":"5","3":"70","4":"3.9","5":"8","6":"Political Science","7":"Marburg"},{"1":"293","2":"7","3":"71","4":"3.0","5":"8","6":"Psychology","7":"Marburg"},{"1":"294","2":"5","3":"17","4":"1.9","5":"9","6":"Educational Science","7":"Frankfurt"},{"1":"295","2":"3","3":"27","4":"3.4","5":"7","6":"Educational Science","7":"Frankfurt"},{"1":"296","2":"4","3":"73","4":"NA","5":"8","6":"Psychology","7":"Gießen"},{"1":"297","2":"8","3":"54","4":"2.8","5":"10","6":"Sociology","7":"Marburg"},{"1":"298","2":"9","3":"62","4":"3.0","5":"3","6":"Political Science","7":"Gießen"},{"1":"299","2":"6","3":"20","4":"2.1","5":"2","6":"Psychology","7":"Frankfurt"},{"1":"300","2":"6","3":"NA","4":"1.0","5":"3","6":"Political Science","7":"Marburg"},{"1":"301","2":"9","3":"62","4":"2.1","5":"4","6":"Psychology","7":"Marburg"},{"1":"302","2":"9","3":"50","4":"NA","5":"7","6":"Educational Science","7":"Marburg"},{"1":"303","2":"2","3":"61","4":"3.3","5":"5","6":"Psychology","7":"Gießen"},{"1":"304","2":"8","3":"63","4":"3.6","5":"7","6":"Educational Science","7":"Gießen"},{"1":"305","2":"9","3":"NA","4":"3.5","5":"6","6":"Educational Science","7":"Marburg"},{"1":"306","2":"2","3":"63","4":"1.2","5":"5","6":"Psychology","7":"Gießen"},{"1":"307","2":"9","3":"78","4":"2.2","5":"3","6":"Sociology","7":"Gießen"},{"1":"308","2":"9","3":"86","4":"NA","5":"10","6":"Educational Science","7":"Gießen"},{"1":"309","2":"6","3":"36","4":"1.9","5":"3","6":"Psychology","7":"Frankfurt"},{"1":"310","2":"0","3":"NA","4":"4.0","5":"9","6":"Psychology","7":"Frankfurt"},{"1":"311","2":"NA","3":"68","4":"2.0","5":"4","6":"Political Science","7":"Gießen"},{"1":"312","2":"NA","3":"25","4":"NA","5":"9","6":"Political Science","7":"Frankfurt"},{"1":"313","2":"NA","3":"83","4":"1.5","5":"7","6":"Educational Science","7":"Gießen"},{"1":"314","2":"NA","3":"67","4":"2.5","5":"3","6":"Political Science","7":"Gießen"},{"1":"315","2":"3","3":"87","4":"1.5","5":"9","6":"Political Science","7":"Gießen"},{"1":"316","2":"8","3":"62","4":"1.5","5":"NA","6":"Sociology","7":"Gießen"},{"1":"317","2":"9","3":"23","4":"1.4","5":"10","6":"Educational Science","7":"Frankfurt"},{"1":"318","2":"0","3":"NA","4":"3.7","5":"3","6":"Educational Science","7":"Frankfurt"},{"1":"319","2":"3","3":"50","4":"2.1","5":"9","6":"Political Science","7":"Marburg"},{"1":"320","2":"4","3":"25","4":"3.6","5":"2","6":"Political Science","7":"Frankfurt"},{"1":"321","2":"3","3":"50","4":"3.5","5":"3","6":"Educational Science","7":"Gießen"},{"1":"322","2":"4","3":"31","4":"3.4","5":"8","6":"Educational Science","7":"Frankfurt"},{"1":"323","2":"1","3":"NA","4":"3.0","5":"9","6":"Sociology","7":"Frankfurt"},{"1":"324","2":"9","3":"44","4":"3.5","5":"3","6":"Psychology","7":"Frankfurt"},{"1":"325","2":"0","3":"20","4":"2.0","5":"4","6":"Educational Science","7":"Frankfurt"},{"1":"326","2":"0","3":"45","4":"3.2","5":"2","6":"Psychology","7":"Frankfurt"},{"1":"327","2":"9","3":"61","4":"1.5","5":"4","6":"Sociology","7":"Gießen"},{"1":"328","2":"1","3":"72","4":"3.9","5":"2","6":"Psychology","7":"Gießen"},{"1":"329","2":"8","3":"42","4":"3.1","5":"3","6":"Sociology","7":"Frankfurt"},{"1":"330","2":"7","3":"NA","4":"2.7","5":"5","6":"Educational Science","7":"Gießen"},{"1":"331","2":"1","3":"38","4":"3.4","5":"3","6":"Educational Science","7":"Frankfurt"},{"1":"332","2":"1","3":"68","4":"1.6","5":"NA","6":"Political Science","7":"Gießen"},{"1":"333","2":"5","3":"36","4":"1.4","5":"9","6":"Educational Science","7":"Marburg"},{"1":"334","2":"3","3":"47","4":"3.4","5":"5","6":"Sociology","7":"Marburg"},{"1":"335","2":"5","3":"50","4":"1.5","5":"2","6":"Educational Science","7":"Frankfurt"},{"1":"336","2":"2","3":"66","4":"2.5","5":"2","6":"Sociology","7":"Gießen"},{"1":"337","2":"NA","3":"40","4":"3.9","5":"2","6":"Sociology","7":"Marburg"},{"1":"338","2":"3","3":"49","4":"2.7","5":"3","6":"Educational Science","7":"Marburg"},{"1":"339","2":"2","3":"NA","4":"NA","5":"3","6":"Psychology","7":"Frankfurt"},{"1":"340","2":"5","3":"42","4":"2.6","5":"8","6":"Educational Science","7":"Frankfurt"},{"1":"341","2":"4","3":"82","4":"NA","5":"7","6":"Political Science","7":"Gießen"},{"1":"342","2":"0","3":"32","4":"3.2","5":"8","6":"Psychology","7":"Frankfurt"},{"1":"343","2":"1","3":"45","4":"NA","5":"NA","6":"Political Science","7":"Frankfurt"},{"1":"344","2":"6","3":"41","4":"2.0","5":"NA","6":"Psychology","7":"Marburg"},{"1":"345","2":"NA","3":"41","4":"3.0","5":"10","6":"Educational Science","7":"Gießen"},{"1":"346","2":"1","3":"63","4":"NA","5":"10","6":"Psychology","7":"Gießen"},{"1":"347","2":"7","3":"25","4":"1.4","5":"NA","6":"Educational Science","7":"Frankfurt"},{"1":"348","2":"1","3":"NA","4":"1.0","5":"6","6":"Educational Science","7":"Frankfurt"},{"1":"349","2":"3","3":"75","4":"1.5","5":"10","6":"Sociology","7":"Gießen"},{"1":"350","2":"5","3":"40","4":"2.7","5":"6","6":"Political Science","7":"Marburg"},{"1":"351","2":"2","3":"NA","4":"2.0","5":"9","6":"Sociology","7":"Frankfurt"},{"1":"352","2":"NA","3":"NA","4":"2.3","5":"10","6":"Psychology","7":"Marburg"},{"1":"353","2":"1","3":"38","4":"NA","5":"NA","6":"Political Science","7":"Frankfurt"},{"1":"354","2":"2","3":"54","4":"1.3","5":"8","6":"Sociology","7":"Frankfurt"},{"1":"355","2":"8","3":"NA","4":"2.6","5":"5","6":"Psychology","7":"Frankfurt"},{"1":"356","2":"2","3":"30","4":"3.7","5":"10","6":"Psychology","7":"Frankfurt"},{"1":"357","2":"8","3":"92","4":"1.5","5":"9","6":"Political Science","7":"Gießen"},{"1":"358","2":"0","3":"61","4":"2.5","5":"8","6":"Political Science","7":"Marburg"},{"1":"359","2":"4","3":"91","4":"2.9","5":"10","6":"Sociology","7":"Gießen"},{"1":"360","2":"8","3":"31","4":"2.1","5":"8","6":"Political Science","7":"Frankfurt"},{"1":"361","2":"5","3":"29","4":"2.1","5":"NA","6":"Political Science","7":"Frankfurt"},{"1":"362","2":"9","3":"25","4":"2.4","5":"NA","6":"Political Science","7":"Frankfurt"},{"1":"363","2":"7","3":"48","4":"3.4","5":"5","6":"Educational Science","7":"Frankfurt"},{"1":"364","2":"3","3":"35","4":"2.1","5":"10","6":"Political Science","7":"Marburg"},{"1":"365","2":"0","3":"53","4":"3.4","5":"6","6":"Psychology","7":"Marburg"},{"1":"366","2":"0","3":"NA","4":"2.8","5":"6","6":"Psychology","7":"Frankfurt"},{"1":"367","2":"0","3":"95","4":"3.1","5":"7","6":"Educational Science","7":"Gießen"},{"1":"368","2":"6","3":"NA","4":"2.2","5":"NA","6":"Sociology","7":"Frankfurt"},{"1":"369","2":"0","3":"32","4":"1.5","5":"9","6":"Psychology","7":"Marburg"},{"1":"370","2":"4","3":"71","4":"2.1","5":"6","6":"Sociology","7":"Gießen"},{"1":"371","2":"6","3":"68","4":"1.4","5":"10","6":"Political Science","7":"Gießen"},{"1":"372","2":"0","3":"59","4":"2.3","5":"3","6":"Educational Science","7":"Gießen"},{"1":"373","2":"5","3":"51","4":"2.5","5":"9","6":"Sociology","7":"Marburg"},{"1":"374","2":"NA","3":"65","4":"2.9","5":"5","6":"Psychology","7":"Gießen"},{"1":"375","2":"2","3":"42","4":"NA","5":"2","6":"Psychology","7":"Marburg"},{"1":"376","2":"7","3":"75","4":"3.9","5":"3","6":"Educational Science","7":"Gießen"},{"1":"377","2":"2","3":"65","4":"1.2","5":"7","6":"Psychology","7":"Gießen"},{"1":"378","2":"3","3":"47","4":"3.1","5":"2","6":"Educational Science","7":"Gießen"},{"1":"379","2":"5","3":"18","4":"1.2","5":"2","6":"Psychology","7":"Marburg"},{"1":"380","2":"9","3":"NA","4":"2.4","5":"9","6":"Political Science","7":"Marburg"},{"1":"381","2":"1","3":"NA","4":"NA","5":"9","6":"Psychology","7":"Marburg"},{"1":"382","2":"3","3":"60","4":"1.3","5":"7","6":"Educational Science","7":"Marburg"},{"1":"383","2":"0","3":"NA","4":"3.2","5":"5","6":"Sociology","7":"Gießen"},{"1":"384","2":"1","3":"80","4":"NA","5":"10","6":"Sociology","7":"Gießen"},{"1":"385","2":"3","3":"35","4":"3.5","5":"6","6":"Educational Science","7":"Frankfurt"},{"1":"386","2":"8","3":"NA","4":"1.1","5":"8","6":"Sociology","7":"Frankfurt"},{"1":"387","2":"3","3":"71","4":"NA","5":"4","6":"Psychology","7":"Gießen"},{"1":"388","2":"5","3":"50","4":"3.5","5":"NA","6":"Psychology","7":"Frankfurt"},{"1":"389","2":"2","3":"28","4":"3.0","5":"4","6":"Psychology","7":"Gießen"},{"1":"390","2":"0","3":"41","4":"2.1","5":"6","6":"Sociology","7":"Marburg"},{"1":"391","2":"0","3":"44","4":"2.9","5":"4","6":"Psychology","7":"Frankfurt"},{"1":"392","2":"0","3":"37","4":"3.0","5":"4","6":"Sociology","7":"Frankfurt"},{"1":"393","2":"7","3":"41","4":"2.2","5":"NA","6":"Political Science","7":"Frankfurt"},{"1":"394","2":"3","3":"55","4":"1.0","5":"5","6":"Political Science","7":"Marburg"},{"1":"395","2":"7","3":"75","4":"3.8","5":"7","6":"Political Science","7":"Gießen"},{"1":"396","2":"1","3":"69","4":"2.0","5":"4","6":"Educational Science","7":"Gießen"},{"1":"397","2":"6","3":"39","4":"1.6","5":"10","6":"Educational Science","7":"Marburg"},{"1":"398","2":"1","3":"16","4":"1.0","5":"2","6":"Political Science","7":"Frankfurt"},{"1":"399","2":"5","3":"32","4":"2.8","5":"3","6":"Psychology","7":"Frankfurt"},{"1":"400","2":"2","3":"NA","4":"2.5","5":"3","6":"Psychology","7":"Marburg"},{"1":"401","2":"2","3":"58","4":"1.8","5":"6","6":"Educational Science","7":"Gießen"},{"1":"402","2":"1","3":"74","4":"3.9","5":"NA","6":"Sociology","7":"Gießen"},{"1":"403","2":"7","3":"52","4":"3.8","5":"8","6":"Psychology","7":"Marburg"},{"1":"404","2":"NA","3":"NA","4":"1.2","5":"NA","6":"Political Science","7":"Marburg"},{"1":"405","2":"2","3":"18","4":"2.6","5":"10","6":"Psychology","7":"Frankfurt"},{"1":"406","2":"3","3":"44","4":"2.2","5":"7","6":"Sociology","7":"Marburg"},{"1":"407","2":"9","3":"68","4":"1.6","5":"10","6":"Educational Science","7":"Gießen"},{"1":"408","2":"2","3":"14","4":"3.3","5":"2","6":"Psychology","7":"Frankfurt"},{"1":"409","2":"1","3":"NA","4":"3.9","5":"2","6":"Sociology","7":"Marburg"},{"1":"410","2":"3","3":"23","4":"3.9","5":"8","6":"Psychology","7":"Frankfurt"},{"1":"411","2":"4","3":"24","4":"2.7","5":"4","6":"Political Science","7":"Marburg"},{"1":"412","2":"7","3":"65","4":"1.5","5":"9","6":"Sociology","7":"Gießen"},{"1":"413","2":"5","3":"62","4":"1.2","5":"5","6":"Political Science","7":"Gießen"},{"1":"414","2":"5","3":"45","4":"2.5","5":"NA","6":"Political Science","7":"Frankfurt"},{"1":"415","2":"7","3":"43","4":"1.3","5":"2","6":"Political Science","7":"Marburg"},{"1":"416","2":"3","3":"56","4":"3.9","5":"NA","6":"Psychology","7":"Marburg"},{"1":"417","2":"1","3":"70","4":"1.0","5":"3","6":"Sociology","7":"Gießen"},{"1":"418","2":"4","3":"54","4":"3.1","5":"8","6":"Educational Science","7":"Gießen"},{"1":"419","2":"7","3":"36","4":"2.8","5":"NA","6":"Educational Science","7":"Frankfurt"},{"1":"420","2":"NA","3":"30","4":"2.9","5":"7","6":"Psychology","7":"Frankfurt"},{"1":"421","2":"1","3":"33","4":"3.1","5":"3","6":"Educational Science","7":"Frankfurt"},{"1":"422","2":"6","3":"76","4":"2.7","5":"10","6":"Educational Science","7":"Gießen"},{"1":"423","2":"3","3":"32","4":"1.6","5":"2","6":"Sociology","7":"Frankfurt"},{"1":"424","2":"NA","3":"87","4":"3.8","5":"7","6":"Psychology","7":"Gießen"},{"1":"425","2":"2","3":"51","4":"1.4","5":"9","6":"Political Science","7":"Marburg"},{"1":"426","2":"NA","3":"35","4":"3.6","5":"3","6":"Psychology","7":"Marburg"},{"1":"427","2":"9","3":"77","4":"1.3","5":"2","6":"Sociology","7":"Gießen"},{"1":"428","2":"6","3":"17","4":"3.0","5":"9","6":"Educational Science","7":"Frankfurt"},{"1":"429","2":"7","3":"NA","4":"1.3","5":"4","6":"Psychology","7":"Frankfurt"},{"1":"430","2":"4","3":"59","4":"2.6","5":"4","6":"Political Science","7":"Gießen"},{"1":"431","2":"1","3":"41","4":"1.1","5":"2","6":"Sociology","7":"Marburg"},{"1":"432","2":"0","3":"61","4":"3.9","5":"5","6":"Psychology","7":"Gießen"},{"1":"433","2":"0","3":"88","4":"1.1","5":"10","6":"Sociology","7":"Gießen"},{"1":"434","2":"9","3":"NA","4":"2.8","5":"7","6":"Psychology","7":"Marburg"},{"1":"435","2":"9","3":"40","4":"1.5","5":"3","6":"Political Science","7":"Frankfurt"},{"1":"436","2":"9","3":"53","4":"1.4","5":"3","6":"Political Science","7":"Gießen"},{"1":"437","2":"9","3":"69","4":"NA","5":"NA","6":"Political Science","7":"Gießen"},{"1":"438","2":"9","3":"56","4":"2.5","5":"5","6":"Sociology","7":"Marburg"},{"1":"439","2":"NA","3":"67","4":"2.4","5":"NA","6":"Sociology","7":"Gießen"},{"1":"440","2":"6","3":"52","4":"3.0","5":"8","6":"Sociology","7":"Marburg"},{"1":"441","2":"7","3":"57","4":"1.7","5":"5","6":"Political Science","7":"Gießen"},{"1":"442","2":"0","3":"34","4":"NA","5":"9","6":"Sociology","7":"Marburg"},{"1":"443","2":"1","3":"48","4":"2.3","5":"6","6":"Political Science","7":"Frankfurt"},{"1":"444","2":"2","3":"53","4":"3.6","5":"4","6":"Sociology","7":"Marburg"},{"1":"445","2":"9","3":"26","4":"NA","5":"5","6":"Sociology","7":"Frankfurt"},{"1":"446","2":"2","3":"72","4":"1.0","5":"4","6":"Sociology","7":"Gießen"},{"1":"447","2":"6","3":"93","4":"1.0","5":"10","6":"Psychology","7":"Gießen"},{"1":"448","2":"1","3":"NA","4":"3.3","5":"6","6":"Psychology","7":"Gießen"},{"1":"449","2":"6","3":"85","4":"2.8","5":"10","6":"Political Science","7":"Gießen"},{"1":"450","2":"NA","3":"47","4":"2.9","5":"2","6":"Political Science","7":"Frankfurt"},{"1":"451","2":"0","3":"NA","4":"NA","5":"8","6":"Political Science","7":"Marburg"},{"1":"452","2":"NA","3":"59","4":"2.4","5":"7","6":"Sociology","7":"Marburg"},{"1":"453","2":"4","3":"23","4":"2.5","5":"5","6":"Sociology","7":"Frankfurt"},{"1":"454","2":"NA","3":"32","4":"3.9","5":"3","6":"Educational Science","7":"Marburg"},{"1":"455","2":"9","3":"17","4":"1.7","5":"2","6":"Sociology","7":"Frankfurt"},{"1":"456","2":"4","3":"29","4":"NA","5":"8","6":"Psychology","7":"Frankfurt"},{"1":"457","2":"3","3":"90","4":"3.4","5":"9","6":"Political Science","7":"Gießen"},{"1":"458","2":"7","3":"32","4":"2.0","5":"3","6":"Political Science","7":"Frankfurt"},{"1":"459","2":"NA","3":"40","4":"3.6","5":"9","6":"Sociology","7":"Marburg"},{"1":"460","2":"NA","3":"53","4":"1.2","5":"9","6":"Sociology","7":"Marburg"},{"1":"461","2":"NA","3":"39","4":"3.6","5":"9","6":"Psychology","7":"Frankfurt"},{"1":"462","2":"2","3":"16","4":"3.6","5":"7","6":"Sociology","7":"Frankfurt"},{"1":"463","2":"7","3":"37","4":"1.1","5":"NA","6":"Psychology","7":"Marburg"},{"1":"464","2":"1","3":"NA","4":"2.9","5":"6","6":"Psychology","7":"Frankfurt"},{"1":"465","2":"9","3":"NA","4":"3.9","5":"4","6":"Political Science","7":"Gießen"},{"1":"466","2":"0","3":"39","4":"3.1","5":"6","6":"Sociology","7":"Marburg"},{"1":"467","2":"1","3":"46","4":"1.4","5":"10","6":"Educational Science","7":"Marburg"},{"1":"468","2":"8","3":"NA","4":"NA","5":"9","6":"Political Science","7":"Gießen"},{"1":"469","2":"3","3":"NA","4":"3.8","5":"8","6":"Educational Science","7":"Marburg"},{"1":"470","2":"9","3":"34","4":"3.6","5":"NA","6":"Political Science","7":"Frankfurt"},{"1":"471","2":"5","3":"62","4":"NA","5":"8","6":"Sociology","7":"Gießen"},{"1":"472","2":"7","3":"49","4":"NA","5":"3","6":"Educational Science","7":"Marburg"},{"1":"473","2":"9","3":"75","4":"NA","5":"3","6":"Educational Science","7":"Gießen"},{"1":"474","2":"3","3":"44","4":"3.7","5":"8","6":"Political Science","7":"Marburg"},{"1":"475","2":"9","3":"62","4":"3.5","5":"NA","6":"Psychology","7":"Marburg"},{"1":"476","2":"4","3":"63","4":"1.4","5":"8","6":"Educational Science","7":"Marburg"},{"1":"477","2":"9","3":"17","4":"3.0","5":"9","6":"Psychology","7":"Frankfurt"},{"1":"478","2":"7","3":"60","4":"3.3","5":"6","6":"Sociology","7":"Gießen"},{"1":"479","2":"2","3":"83","4":"NA","5":"10","6":"Psychology","7":"Gießen"},{"1":"480","2":"7","3":"NA","4":"3.6","5":"9","6":"Educational Science","7":"Gießen"},{"1":"481","2":"9","3":"74","4":"2.0","5":"10","6":"Psychology","7":"Gießen"},{"1":"482","2":"9","3":"53","4":"1.2","5":"10","6":"Sociology","7":"Marburg"},{"1":"483","2":"0","3":"NA","4":"3.9","5":"8","6":"Educational Science","7":"Gießen"},{"1":"484","2":"2","3":"17","4":"3.6","5":"8","6":"Psychology","7":"Marburg"},{"1":"485","2":"3","3":"40","4":"2.5","5":"7","6":"Educational Science","7":"Marburg"},{"1":"486","2":"NA","3":"39","4":"2.5","5":"8","6":"Educational Science","7":"Frankfurt"},{"1":"487","2":"6","3":"88","4":"3.7","5":"7","6":"Educational Science","7":"Gießen"},{"1":"488","2":"NA","3":"79","4":"3.6","5":"9","6":"Psychology","7":"Gießen"},{"1":"489","2":"NA","3":"NA","4":"1.3","5":"10","6":"Educational Science","7":"Gießen"},{"1":"490","2":"9","3":"58","4":"1.5","5":"7","6":"Political Science","7":"Frankfurt"},{"1":"491","2":"NA","3":"NA","4":"3.1","5":"NA","6":"Sociology","7":"Frankfurt"},{"1":"492","2":"5","3":"37","4":"2.4","5":"3","6":"Psychology","7":"Marburg"},{"1":"493","2":"8","3":"49","4":"3.6","5":"3","6":"Sociology","7":"Marburg"},{"1":"494","2":"2","3":"95","4":"3.9","5":"8","6":"Political Science","7":"Gießen"},{"1":"495","2":"1","3":"56","4":"1.5","5":"10","6":"Sociology","7":"Marburg"},{"1":"496","2":"4","3":"77","4":"1.8","5":"6","6":"Sociology","7":"Gießen"},{"1":"497","2":"NA","3":"70","4":"3.1","5":"5","6":"Sociology","7":"Marburg"},{"1":"498","2":"4","3":"NA","4":"NA","5":"4","6":"Sociology","7":"Marburg"},{"1":"499","2":"4","3":"54","4":"1.7","5":"NA","6":"Psychology","7":"Gießen"},{"1":"500","2":"5","3":"40","4":"2.7","5":"5","6":"Educational Science","7":"Frankfurt"},{"1":"501","2":"1","3":"67","4":"2.0","5":"NA","6":"Educational Science","7":"Gießen"},{"1":"502","2":"3","3":"90","4":"2.4","5":"NA","6":"Educational Science","7":"Gießen"},{"1":"503","2":"0","3":"66","4":"2.3","5":"7","6":"Psychology","7":"Gießen"},{"1":"504","2":"7","3":"32","4":"2.6","5":"4","6":"Educational Science","7":"Marburg"},{"1":"505","2":"7","3":"74","4":"2.1","5":"9","6":"Educational Science","7":"Gießen"},{"1":"506","2":"NA","3":"54","4":"1.8","5":"10","6":"Political Science","7":"Marburg"},{"1":"507","2":"6","3":"31","4":"2.5","5":"6","6":"Psychology","7":"Frankfurt"},{"1":"508","2":"NA","3":"37","4":"3.3","5":"3","6":"Psychology","7":"Marburg"},{"1":"509","2":"4","3":"59","4":"1.6","5":"NA","6":"Sociology","7":"Gießen"},{"1":"510","2":"7","3":"50","4":"2.4","5":"10","6":"Educational Science","7":"Marburg"},{"1":"511","2":"5","3":"81","4":"3.7","5":"5","6":"Psychology","7":"Gießen"},{"1":"512","2":"5","3":"45","4":"2.3","5":"10","6":"Educational Science","7":"Marburg"},{"1":"513","2":"3","3":"NA","4":"NA","5":"6","6":"Educational Science","7":"Marburg"},{"1":"514","2":"0","3":"36","4":"3.6","5":"10","6":"Political Science","7":"Gießen"},{"1":"515","2":"NA","3":"74","4":"3.4","5":"10","6":"Psychology","7":"Gießen"},{"1":"516","2":"5","3":"36","4":"1.2","5":"6","6":"Educational Science","7":"Frankfurt"},{"1":"517","2":"7","3":"84","4":"2.4","5":"8","6":"Psychology","7":"Gießen"},{"1":"518","2":"2","3":"49","4":"1.7","5":"2","6":"Educational Science","7":"Frankfurt"},{"1":"519","2":"3","3":"NA","4":"1.1","5":"3","6":"Educational Science","7":"Gießen"},{"1":"520","2":"4","3":"65","4":"1.3","5":"5","6":"Sociology","7":"Marburg"},{"1":"521","2":"3","3":"50","4":"NA","5":"5","6":"Psychology","7":"Marburg"},{"1":"522","2":"4","3":"23","4":"2.0","5":"5","6":"Sociology","7":"Frankfurt"},{"1":"523","2":"9","3":"58","4":"1.9","5":"10","6":"Psychology","7":"Gießen"},{"1":"524","2":"6","3":"27","4":"NA","5":"3","6":"Political Science","7":"Frankfurt"},{"1":"525","2":"0","3":"71","4":"2.7","5":"3","6":"Sociology","7":"Gießen"},{"1":"526","2":"7","3":"50","4":"2.1","5":"5","6":"Psychology","7":"Marburg"},{"1":"527","2":"6","3":"52","4":"2.4","5":"5","6":"Sociology","7":"Marburg"},{"1":"528","2":"9","3":"71","4":"1.8","5":"4","6":"Psychology","7":"Gießen"},{"1":"529","2":"0","3":"NA","4":"1.9","5":"9","6":"Sociology","7":"Gießen"},{"1":"530","2":"7","3":"65","4":"1.8","5":"3","6":"Educational Science","7":"Gießen"},{"1":"531","2":"9","3":"69","4":"1.2","5":"3","6":"Psychology","7":"Marburg"},{"1":"532","2":"6","3":"36","4":"3.4","5":"10","6":"Educational Science","7":"Frankfurt"},{"1":"533","2":"1","3":"17","4":"NA","5":"6","6":"Political Science","7":"Frankfurt"},{"1":"534","2":"7","3":"65","4":"1.1","5":"4","6":"Educational Science","7":"Gießen"},{"1":"535","2":"7","3":"37","4":"NA","5":"2","6":"Political Science","7":"Frankfurt"},{"1":"536","2":"5","3":"26","4":"3.8","5":"9","6":"Sociology","7":"Frankfurt"},{"1":"537","2":"4","3":"35","4":"NA","5":"4","6":"Psychology","7":"Frankfurt"},{"1":"538","2":"NA","3":"NA","4":"1.7","5":"8","6":"Sociology","7":"Gießen"},{"1":"539","2":"4","3":"65","4":"2.5","5":"10","6":"Educational Science","7":"Marburg"},{"1":"540","2":"0","3":"61","4":"3.4","5":"8","6":"Sociology","7":"Gießen"},{"1":"541","2":"3","3":"68","4":"2.9","5":"4","6":"Educational Science","7":"Gießen"},{"1":"542","2":"5","3":"62","4":"2.2","5":"NA","6":"Sociology","7":"Gießen"},{"1":"543","2":"9","3":"55","4":"2.9","5":"9","6":"Psychology","7":"Gießen"},{"1":"544","2":"8","3":"47","4":"1.9","5":"10","6":"Political Science","7":"Gießen"},{"1":"545","2":"0","3":"52","4":"3.7","5":"9","6":"Psychology","7":"Marburg"},{"1":"546","2":"9","3":"57","4":"3.0","5":"3","6":"Psychology","7":"Marburg"},{"1":"547","2":"8","3":"39","4":"2.0","5":"10","6":"Educational Science","7":"Frankfurt"},{"1":"548","2":"8","3":"NA","4":"3.4","5":"8","6":"Sociology","7":"Gießen"},{"1":"549","2":"0","3":"18","4":"1.5","5":"8","6":"Educational Science","7":"Frankfurt"},{"1":"550","2":"NA","3":"18","4":"3.3","5":"5","6":"Psychology","7":"Frankfurt"},{"1":"551","2":"3","3":"NA","4":"3.5","5":"6","6":"Educational Science","7":"Marburg"},{"1":"552","2":"7","3":"52","4":"3.8","5":"3","6":"Psychology","7":"Marburg"},{"1":"553","2":"2","3":"38","4":"3.1","5":"NA","6":"Political Science","7":"Frankfurt"},{"1":"554","2":"7","3":"59","4":"3.1","5":"NA","6":"Sociology","7":"Gießen"},{"1":"555","2":"6","3":"34","4":"1.6","5":"2","6":"Political Science","7":"Gießen"},{"1":"556","2":"4","3":"42","4":"NA","5":"7","6":"Sociology","7":"Frankfurt"},{"1":"557","2":"9","3":"57","4":"1.1","5":"4","6":"Sociology","7":"Marburg"},{"1":"558","2":"8","3":"60","4":"4.0","5":"5","6":"Psychology","7":"Gießen"},{"1":"559","2":"0","3":"18","4":"3.9","5":"4","6":"Sociology","7":"Frankfurt"},{"1":"560","2":"9","3":"46","4":"2.3","5":"7","6":"Educational Science","7":"Marburg"},{"1":"561","2":"4","3":"51","4":"1.2","5":"6","6":"Sociology","7":"Marburg"},{"1":"562","2":"NA","3":"77","4":"3.8","5":"3","6":"Sociology","7":"Gießen"},{"1":"563","2":"NA","3":"85","4":"1.8","5":"7","6":"Psychology","7":"Gießen"},{"1":"564","2":"8","3":"58","4":"2.6","5":"9","6":"Political Science","7":"Gießen"},{"1":"565","2":"4","3":"53","4":"3.0","5":"2","6":"Political Science","7":"Marburg"},{"1":"566","2":"7","3":"84","4":"2.8","5":"3","6":"Psychology","7":"Gießen"},{"1":"567","2":"1","3":"58","4":"2.6","5":"6","6":"Educational Science","7":"Gießen"},{"1":"568","2":"4","3":"66","4":"3.4","5":"2","6":"Psychology","7":"Gießen"},{"1":"569","2":"1","3":"47","4":"3.0","5":"3","6":"Sociology","7":"Gießen"},{"1":"570","2":"4","3":"72","4":"1.3","5":"7","6":"Political Science","7":"Gießen"},{"1":"571","2":"1","3":"42","4":"3.4","5":"8","6":"Political Science","7":"Marburg"},{"1":"572","2":"0","3":"39","4":"1.5","5":"8","6":"Educational Science","7":"Marburg"},{"1":"573","2":"7","3":"41","4":"2.5","5":"NA","6":"Psychology","7":"Marburg"},{"1":"574","2":"7","3":"55","4":"1.8","5":"10","6":"Psychology","7":"Marburg"},{"1":"575","2":"1","3":"43","4":"2.1","5":"10","6":"Political Science","7":"Gießen"},{"1":"576","2":"4","3":"45","4":"3.2","5":"9","6":"Political Science","7":"Marburg"},{"1":"577","2":"8","3":"19","4":"1.0","5":"4","6":"Psychology","7":"Frankfurt"},{"1":"578","2":"9","3":"38","4":"3.9","5":"4","6":"Psychology","7":"Marburg"},{"1":"579","2":"2","3":"74","4":"1.6","5":"8","6":"Psychology","7":"Gießen"},{"1":"580","2":"NA","3":"NA","4":"1.5","5":"3","6":"Psychology","7":"Marburg"},{"1":"581","2":"3","3":"30","4":"2.9","5":"NA","6":"Psychology","7":"Frankfurt"},{"1":"582","2":"9","3":"56","4":"1.1","5":"4","6":"Sociology","7":"Marburg"},{"1":"583","2":"5","3":"24","4":"2.6","5":"NA","6":"Educational Science","7":"Frankfurt"},{"1":"584","2":"3","3":"26","4":"2.2","5":"5","6":"Sociology","7":"Marburg"},{"1":"585","2":"0","3":"45","4":"1.5","5":"7","6":"Political Science","7":"Frankfurt"},{"1":"586","2":"0","3":"47","4":"2.8","5":"NA","6":"Political Science","7":"Marburg"},{"1":"587","2":"7","3":"45","4":"1.1","5":"9","6":"Psychology","7":"Marburg"},{"1":"588","2":"7","3":"52","4":"2.7","5":"10","6":"Political Science","7":"Marburg"},{"1":"589","2":"9","3":"78","4":"3.9","5":"9","6":"Sociology","7":"Gießen"},{"1":"590","2":"8","3":"55","4":"2.6","5":"6","6":"Sociology","7":"Marburg"},{"1":"591","2":"NA","3":"61","4":"3.8","5":"3","6":"Political Science","7":"Marburg"},{"1":"592","2":"6","3":"69","4":"1.5","5":"4","6":"Educational Science","7":"Gießen"},{"1":"593","2":"0","3":"44","4":"4.0","5":"2","6":"Educational Science","7":"Marburg"},{"1":"594","2":"9","3":"65","4":"4.0","5":"7","6":"Political Science","7":"Gießen"},{"1":"595","2":"9","3":"78","4":"2.6","5":"10","6":"Educational Science","7":"Gießen"},{"1":"596","2":"6","3":"21","4":"3.3","5":"3","6":"Educational Science","7":"Frankfurt"},{"1":"597","2":"2","3":"NA","4":"2.0","5":"10","6":"Sociology","7":"Frankfurt"},{"1":"598","2":"4","3":"54","4":"2.8","5":"NA","6":"Educational Science","7":"Marburg"},{"1":"599","2":"6","3":"76","4":"2.5","5":"NA","6":"Psychology","7":"Gießen"},{"1":"600","2":"7","3":"30","4":"3.7","5":"NA","6":"Sociology","7":"Marburg"},{"1":"601","2":"9","3":"40","4":"NA","5":"5","6":"Educational Science","7":"Frankfurt"},{"1":"602","2":"7","3":"NA","4":"1.8","5":"6","6":"Sociology","7":"Frankfurt"},{"1":"603","2":"2","3":"29","4":"2.3","5":"4","6":"Psychology","7":"Frankfurt"},{"1":"604","2":"1","3":"NA","4":"1.8","5":"4","6":"Educational Science","7":"Gießen"},{"1":"605","2":"5","3":"67","4":"2.9","5":"9","6":"Sociology","7":"Marburg"},{"1":"606","2":"6","3":"36","4":"NA","5":"2","6":"Political Science","7":"Marburg"},{"1":"607","2":"NA","3":"62","4":"3.0","5":"8","6":"Political Science","7":"Marburg"},{"1":"608","2":"6","3":"61","4":"3.9","5":"5","6":"Political Science","7":"Gießen"},{"1":"609","2":"7","3":"70","4":"2.3","5":"2","6":"Sociology","7":"Gießen"},{"1":"610","2":"9","3":"74","4":"NA","5":"10","6":"Psychology","7":"Gießen"},{"1":"611","2":"1","3":"51","4":"1.4","5":"7","6":"Educational Science","7":"Marburg"},{"1":"612","2":"3","3":"32","4":"2.0","5":"10","6":"Political Science","7":"Marburg"},{"1":"613","2":"3","3":"44","4":"2.5","5":"3","6":"Psychology","7":"Marburg"},{"1":"614","2":"6","3":"49","4":"1.8","5":"6","6":"Political Science","7":"Frankfurt"},{"1":"615","2":"4","3":"33","4":"1.9","5":"8","6":"Sociology","7":"Frankfurt"},{"1":"616","2":"7","3":"21","4":"3.5","5":"6","6":"Sociology","7":"Frankfurt"},{"1":"617","2":"7","3":"42","4":"1.7","5":"6","6":"Educational Science","7":"Marburg"},{"1":"618","2":"7","3":"62","4":"1.8","5":"4","6":"Political Science","7":"Marburg"},{"1":"619","2":"1","3":"35","4":"2.8","5":"7","6":"Psychology","7":"Frankfurt"},{"1":"620","2":"1","3":"20","4":"1.8","5":"2","6":"Political Science","7":"Frankfurt"},{"1":"621","2":"8","3":"69","4":"2.3","5":"4","6":"Sociology","7":"Gießen"},{"1":"622","2":"6","3":"76","4":"1.5","5":"6","6":"Psychology","7":"Gießen"},{"1":"623","2":"NA","3":"70","4":"1.4","5":"7","6":"Sociology","7":"Marburg"},{"1":"624","2":"NA","3":"21","4":"1.1","5":"10","6":"Psychology","7":"Frankfurt"},{"1":"625","2":"4","3":"45","4":"2.9","5":"6","6":"Political Science","7":"Marburg"},{"1":"626","2":"7","3":"43","4":"2.5","5":"7","6":"Political Science","7":"Frankfurt"},{"1":"627","2":"3","3":"63","4":"3.4","5":"9","6":"Psychology","7":"Gießen"},{"1":"628","2":"9","3":"48","4":"2.7","5":"5","6":"Psychology","7":"Frankfurt"},{"1":"629","2":"4","3":"81","4":"3.4","5":"3","6":"Sociology","7":"Gießen"},{"1":"630","2":"NA","3":"30","4":"3.7","5":"6","6":"Political Science","7":"Marburg"},{"1":"631","2":"2","3":"55","4":"3.6","5":"5","6":"Psychology","7":"Marburg"},{"1":"632","2":"4","3":"14","4":"4.0","5":"6","6":"Sociology","7":"Frankfurt"},{"1":"633","2":"6","3":"NA","4":"2.1","5":"8","6":"Sociology","7":"Marburg"},{"1":"634","2":"3","3":"32","4":"NA","5":"9","6":"Sociology","7":"Frankfurt"},{"1":"635","2":"2","3":"NA","4":"2.5","5":"3","6":"Educational Science","7":"Gießen"},{"1":"636","2":"4","3":"68","4":"2.1","5":"5","6":"Educational Science","7":"Gießen"},{"1":"637","2":"NA","3":"46","4":"3.0","5":"4","6":"Sociology","7":"Frankfurt"},{"1":"638","2":"0","3":"72","4":"3.1","5":"10","6":"Educational Science","7":"Gießen"},{"1":"639","2":"3","3":"42","4":"1.9","5":"4","6":"Sociology","7":"Marburg"},{"1":"640","2":"0","3":"33","4":"2.5","5":"10","6":"Psychology","7":"Frankfurt"},{"1":"641","2":"1","3":"44","4":"1.0","5":"4","6":"Educational Science","7":"Marburg"},{"1":"642","2":"8","3":"68","4":"3.2","5":"9","6":"Psychology","7":"Gießen"},{"1":"643","2":"5","3":"55","4":"4.0","5":"8","6":"Educational Science","7":"Gießen"},{"1":"644","2":"1","3":"67","4":"1.9","5":"2","6":"Sociology","7":"Gießen"},{"1":"645","2":"0","3":"32","4":"NA","5":"10","6":"Educational Science","7":"Frankfurt"},{"1":"646","2":"4","3":"60","4":"2.7","5":"6","6":"Political Science","7":"Gießen"},{"1":"647","2":"2","3":"32","4":"2.7","5":"3","6":"Political Science","7":"Frankfurt"},{"1":"648","2":"4","3":"42","4":"2.5","5":"7","6":"Sociology","7":"Marburg"},{"1":"649","2":"4","3":"42","4":"1.9","5":"9","6":"Psychology","7":"Marburg"},{"1":"650","2":"0","3":"66","4":"NA","5":"NA","6":"Educational Science","7":"Gießen"},{"1":"651","2":"3","3":"74","4":"3.8","5":"4","6":"Educational Science","7":"Gießen"},{"1":"652","2":"3","3":"29","4":"3.1","5":"7","6":"Educational Science","7":"Frankfurt"},{"1":"653","2":"1","3":"52","4":"3.0","5":"2","6":"Psychology","7":"Marburg"},{"1":"654","2":"7","3":"NA","4":"1.6","5":"2","6":"Political Science","7":"Marburg"},{"1":"655","2":"9","3":"46","4":"3.6","5":"5","6":"Sociology","7":"Marburg"},{"1":"656","2":"5","3":"67","4":"1.4","5":"3","6":"Political Science","7":"Gießen"},{"1":"657","2":"7","3":"37","4":"NA","5":"2","6":"Psychology","7":"Frankfurt"},{"1":"658","2":"0","3":"35","4":"3.1","5":"9","6":"Psychology","7":"Marburg"},{"1":"659","2":"0","3":"75","4":"2.6","5":"6","6":"Educational Science","7":"Gießen"},{"1":"660","2":"5","3":"62","4":"2.7","5":"6","6":"Psychology","7":"Gießen"},{"1":"661","2":"3","3":"36","4":"3.9","5":"6","6":"Sociology","7":"Marburg"},{"1":"662","2":"8","3":"NA","4":"2.8","5":"3","6":"Psychology","7":"Frankfurt"},{"1":"663","2":"3","3":"60","4":"2.4","5":"8","6":"Sociology","7":"Gießen"},{"1":"664","2":"9","3":"36","4":"1.3","5":"8","6":"Psychology","7":"Marburg"},{"1":"665","2":"8","3":"17","4":"2.0","5":"8","6":"Educational Science","7":"Frankfurt"},{"1":"666","2":"5","3":"50","4":"NA","5":"2","6":"Psychology","7":"Frankfurt"},{"1":"667","2":"7","3":"17","4":"NA","5":"5","6":"Psychology","7":"Frankfurt"},{"1":"668","2":"5","3":"NA","4":"2.8","5":"5","6":"Educational Science","7":"Marburg"},{"1":"669","2":"9","3":"75","4":"3.3","5":"3","6":"Educational Science","7":"Gießen"},{"1":"670","2":"9","3":"21","4":"2.0","5":"6","6":"Psychology","7":"Frankfurt"},{"1":"671","2":"5","3":"24","4":"1.7","5":"6","6":"Sociology","7":"Frankfurt"},{"1":"672","2":"NA","3":"NA","4":"2.5","5":"3","6":"Psychology","7":"Marburg"},{"1":"673","2":"9","3":"71","4":"NA","5":"9","6":"Psychology","7":"Gießen"},{"1":"674","2":"3","3":"46","4":"1.4","5":"3","6":"Political Science","7":"Marburg"},{"1":"675","2":"7","3":"78","4":"2.2","5":"9","6":"Sociology","7":"Gießen"},{"1":"676","2":"1","3":"28","4":"1.5","5":"NA","6":"Psychology","7":"Frankfurt"},{"1":"677","2":"7","3":"24","4":"1.6","5":"8","6":"Educational Science","7":"Marburg"},{"1":"678","2":"3","3":"67","4":"NA","5":"3","6":"Political Science","7":"Gießen"},{"1":"679","2":"0","3":"28","4":"1.9","5":"7","6":"Political Science","7":"Marburg"},{"1":"680","2":"9","3":"61","4":"4.0","5":"4","6":"Educational Science","7":"Marburg"},{"1":"681","2":"2","3":"22","4":"2.1","5":"6","6":"Political Science","7":"Frankfurt"},{"1":"682","2":"1","3":"55","4":"2.6","5":"2","6":"Sociology","7":"Gießen"},{"1":"683","2":"8","3":"24","4":"3.8","5":"5","6":"Sociology","7":"Frankfurt"},{"1":"684","2":"2","3":"57","4":"3.2","5":"4","6":"Sociology","7":"Marburg"},{"1":"685","2":"NA","3":"NA","4":"3.3","5":"10","6":"Educational Science","7":"Frankfurt"},{"1":"686","2":"9","3":"53","4":"1.5","5":"3","6":"Educational Science","7":"Marburg"},{"1":"687","2":"8","3":"38","4":"2.6","5":"6","6":"Educational Science","7":"Marburg"},{"1":"688","2":"1","3":"NA","4":"3.2","5":"8","6":"Psychology","7":"Marburg"},{"1":"689","2":"0","3":"77","4":"3.4","5":"NA","6":"Psychology","7":"Gießen"},{"1":"690","2":"2","3":"75","4":"2.0","5":"9","6":"Educational Science","7":"Gießen"},{"1":"691","2":"7","3":"49","4":"1.6","5":"7","6":"Sociology","7":"Frankfurt"},{"1":"692","2":"4","3":"70","4":"1.2","5":"9","6":"Educational Science","7":"Gießen"},{"1":"693","2":"1","3":"23","4":"2.6","5":"8","6":"Political Science","7":"Frankfurt"},{"1":"694","2":"0","3":"57","4":"3.0","5":"4","6":"Educational Science","7":"Frankfurt"},{"1":"695","2":"5","3":"27","4":"NA","5":"8","6":"Psychology","7":"Frankfurt"},{"1":"696","2":"7","3":"78","4":"1.1","5":"6","6":"Psychology","7":"Gießen"},{"1":"697","2":"4","3":"61","4":"1.8","5":"5","6":"Psychology","7":"Marburg"},{"1":"698","2":"NA","3":"37","4":"1.3","5":"4","6":"Psychology","7":"Frankfurt"},{"1":"699","2":"0","3":"67","4":"3.5","5":"6","6":"Educational Science","7":"Marburg"},{"1":"700","2":"6","3":"47","4":"2.6","5":"4","6":"Sociology","7":"Marburg"},{"1":"701","2":"8","3":"16","4":"NA","5":"NA","6":"Psychology","7":"Frankfurt"},{"1":"702","2":"NA","3":"64","4":"2.1","5":"3","6":"Political Science","7":"Gießen"},{"1":"703","2":"NA","3":"62","4":"1.0","5":"10","6":"Psychology","7":"Gießen"},{"1":"704","2":"2","3":"35","4":"2.8","5":"4","6":"Political Science","7":"Frankfurt"},{"1":"705","2":"7","3":"20","4":"1.9","5":"7","6":"Educational Science","7":"Frankfurt"},{"1":"706","2":"1","3":"77","4":"3.0","5":"10","6":"Educational Science","7":"Gießen"},{"1":"707","2":"9","3":"17","4":"2.7","5":"10","6":"Political Science","7":"Frankfurt"},{"1":"708","2":"8","3":"89","4":"2.8","5":"8","6":"Sociology","7":"Gießen"},{"1":"709","2":"4","3":"86","4":"1.8","5":"6","6":"Psychology","7":"Gießen"},{"1":"710","2":"6","3":"44","4":"1.5","5":"10","6":"Educational Science","7":"Marburg"},{"1":"711","2":"8","3":"70","4":"1.5","5":"NA","6":"Educational Science","7":"Gießen"},{"1":"712","2":"1","3":"45","4":"1.5","5":"2","6":"Educational Science","7":"Marburg"},{"1":"713","2":"6","3":"54","4":"1.2","5":"2","6":"Psychology","7":"Gießen"},{"1":"714","2":"2","3":"NA","4":"NA","5":"6","6":"Political Science","7":"Frankfurt"},{"1":"715","2":"8","3":"68","4":"1.3","5":"4","6":"Psychology","7":"Gießen"},{"1":"716","2":"NA","3":"31","4":"3.0","5":"5","6":"Sociology","7":"Frankfurt"},{"1":"717","2":"5","3":"51","4":"4.0","5":"3","6":"Political Science","7":"Frankfurt"},{"1":"718","2":"9","3":"45","4":"2.5","5":"10","6":"Political Science","7":"Gießen"},{"1":"719","2":"6","3":"42","4":"1.2","5":"10","6":"Political Science","7":"Marburg"},{"1":"720","2":"4","3":"79","4":"1.6","5":"9","6":"Sociology","7":"Gießen"},{"1":"721","2":"6","3":"54","4":"2.7","5":"3","6":"Psychology","7":"Marburg"},{"1":"722","2":"5","3":"51","4":"3.2","5":"NA","6":"Psychology","7":"Marburg"},{"1":"723","2":"6","3":"42","4":"3.6","5":"NA","6":"Psychology","7":"Marburg"},{"1":"724","2":"2","3":"33","4":"3.4","5":"NA","6":"Sociology","7":"Frankfurt"},{"1":"725","2":"5","3":"66","4":"2.9","5":"2","6":"Political Science","7":"Gießen"},{"1":"726","2":"5","3":"51","4":"3.6","5":"4","6":"Psychology","7":"Marburg"},{"1":"727","2":"6","3":"NA","4":"2.1","5":"NA","6":"Sociology","7":"Marburg"},{"1":"728","2":"3","3":"83","4":"2.7","5":"NA","6":"Educational Science","7":"Gießen"},{"1":"729","2":"0","3":"44","4":"2.4","5":"2","6":"Psychology","7":"Frankfurt"},{"1":"730","2":"8","3":"47","4":"3.3","5":"5","6":"Psychology","7":"Frankfurt"},{"1":"731","2":"7","3":"64","4":"1.7","5":"9","6":"Sociology","7":"Gießen"},{"1":"732","2":"0","3":"46","4":"3.4","5":"NA","6":"Psychology","7":"Marburg"},{"1":"733","2":"1","3":"46","4":"2.3","5":"5","6":"Sociology","7":"Marburg"},{"1":"734","2":"8","3":"85","4":"3.6","5":"2","6":"Sociology","7":"Gießen"},{"1":"735","2":"9","3":"65","4":"4.0","5":"5","6":"Psychology","7":"Gießen"},{"1":"736","2":"0","3":"70","4":"1.4","5":"5","6":"Political Science","7":"Gießen"},{"1":"737","2":"0","3":"36","4":"2.6","5":"6","6":"Educational Science","7":"Frankfurt"},{"1":"738","2":"3","3":"58","4":"2.3","5":"7","6":"Educational Science","7":"Marburg"},{"1":"739","2":"7","3":"47","4":"2.1","5":"5","6":"Political Science","7":"Marburg"},{"1":"740","2":"5","3":"78","4":"3.5","5":"2","6":"Political Science","7":"Marburg"},{"1":"741","2":"2","3":"20","4":"3.6","5":"5","6":"Psychology","7":"Frankfurt"},{"1":"742","2":"4","3":"33","4":"3.8","5":"5","6":"Sociology","7":"Marburg"},{"1":"743","2":"8","3":"32","4":"2.2","5":"2","6":"Sociology","7":"Frankfurt"},{"1":"744","2":"6","3":"52","4":"2.0","5":"7","6":"Educational Science","7":"Frankfurt"},{"1":"745","2":"5","3":"69","4":"1.8","5":"5","6":"Political Science","7":"Gießen"},{"1":"746","2":"9","3":"NA","4":"1.4","5":"2","6":"Political Science","7":"Gießen"},{"1":"747","2":"3","3":"79","4":"1.3","5":"6","6":"Political Science","7":"Gießen"},{"1":"748","2":"1","3":"67","4":"2.4","5":"5","6":"Sociology","7":"Gießen"},{"1":"749","2":"6","3":"51","4":"3.3","5":"NA","6":"Educational Science","7":"Marburg"},{"1":"750","2":"4","3":"64","4":"3.3","5":"10","6":"Political Science","7":"Marburg"},{"1":"751","2":"5","3":"70","4":"3.5","5":"7","6":"Educational Science","7":"Gießen"},{"1":"752","2":"5","3":"41","4":"2.3","5":"10","6":"Educational Science","7":"Marburg"},{"1":"753","2":"4","3":"36","4":"3.9","5":"4","6":"Political Science","7":"Frankfurt"},{"1":"754","2":"4","3":"56","4":"3.3","5":"8","6":"Educational Science","7":"Gießen"},{"1":"755","2":"2","3":"51","4":"3.3","5":"2","6":"Political Science","7":"Gießen"},{"1":"756","2":"9","3":"30","4":"2.7","5":"10","6":"Educational Science","7":"Frankfurt"},{"1":"757","2":"7","3":"37","4":"4.0","5":"7","6":"Psychology","7":"Marburg"},{"1":"758","2":"8","3":"38","4":"2.2","5":"6","6":"Sociology","7":"Frankfurt"},{"1":"759","2":"NA","3":"48","4":"2.1","5":"9","6":"Sociology","7":"Marburg"},{"1":"760","2":"6","3":"41","4":"1.3","5":"3","6":"Psychology","7":"Marburg"},{"1":"761","2":"6","3":"88","4":"2.2","5":"10","6":"Political Science","7":"Gießen"},{"1":"762","2":"9","3":"49","4":"3.9","5":"10","6":"Political Science","7":"Marburg"},{"1":"763","2":"9","3":"85","4":"3.5","5":"NA","6":"Educational Science","7":"Gießen"},{"1":"764","2":"5","3":"NA","4":"3.1","5":"6","6":"Educational Science","7":"Marburg"},{"1":"765","2":"4","3":"46","4":"3.1","5":"4","6":"Psychology","7":"Marburg"},{"1":"766","2":"7","3":"73","4":"3.2","5":"8","6":"Educational Science","7":"Gießen"},{"1":"767","2":"4","3":"43","4":"3.8","5":"4","6":"Psychology","7":"Frankfurt"},{"1":"768","2":"4","3":"63","4":"3.9","5":"2","6":"Educational Science","7":"Frankfurt"},{"1":"769","2":"9","3":"56","4":"3.2","5":"NA","6":"Sociology","7":"Gießen"},{"1":"770","2":"9","3":"29","4":"3.2","5":"10","6":"Psychology","7":"Frankfurt"},{"1":"771","2":"NA","3":"44","4":"1.4","5":"8","6":"Political Science","7":"Frankfurt"},{"1":"772","2":"7","3":"73","4":"3.9","5":"3","6":"Sociology","7":"Gießen"},{"1":"773","2":"1","3":"48","4":"1.2","5":"10","6":"Educational Science","7":"Marburg"},{"1":"774","2":"NA","3":"34","4":"2.5","5":"5","6":"Psychology","7":"Marburg"},{"1":"775","2":"6","3":"47","4":"1.7","5":"5","6":"Educational Science","7":"Marburg"},{"1":"776","2":"3","3":"66","4":"1.2","5":"9","6":"Educational Science","7":"Gießen"},{"1":"777","2":"8","3":"49","4":"2.5","5":"8","6":"Sociology","7":"Marburg"},{"1":"778","2":"0","3":"88","4":"2.6","5":"NA","6":"Political Science","7":"Gießen"},{"1":"779","2":"3","3":"44","4":"2.2","5":"4","6":"Educational Science","7":"Marburg"},{"1":"780","2":"NA","3":"31","4":"1.3","5":"4","6":"Sociology","7":"Marburg"},{"1":"781","2":"9","3":"74","4":"4.0","5":"9","6":"Psychology","7":"Gießen"},{"1":"782","2":"3","3":"67","4":"1.8","5":"5","6":"Sociology","7":"Gießen"},{"1":"783","2":"5","3":"29","4":"2.5","5":"6","6":"Psychology","7":"Frankfurt"},{"1":"784","2":"5","3":"57","4":"3.7","5":"3","6":"Political Science","7":"Marburg"},{"1":"785","2":"3","3":"34","4":"2.3","5":"NA","6":"Sociology","7":"Gießen"},{"1":"786","2":"6","3":"43","4":"3.3","5":"10","6":"Educational Science","7":"Marburg"},{"1":"787","2":"9","3":"48","4":"3.5","5":"9","6":"Psychology","7":"Marburg"},{"1":"788","2":"NA","3":"76","4":"2.6","5":"3","6":"Educational Science","7":"Gießen"},{"1":"789","2":"3","3":"NA","4":"3.9","5":"2","6":"Political Science","7":"Frankfurt"},{"1":"790","2":"4","3":"19","4":"2.0","5":"4","6":"Political Science","7":"Frankfurt"},{"1":"791","2":"6","3":"36","4":"3.2","5":"7","6":"Political Science","7":"Frankfurt"},{"1":"792","2":"9","3":"NA","4":"2.4","5":"2","6":"Sociology","7":"Gießen"},{"1":"793","2":"3","3":"70","4":"1.7","5":"7","6":"Educational Science","7":"Gießen"},{"1":"794","2":"8","3":"64","4":"1.2","5":"10","6":"Educational Science","7":"Marburg"},{"1":"795","2":"8","3":"43","4":"3.4","5":"6","6":"Psychology","7":"Marburg"},{"1":"796","2":"7","3":"35","4":"NA","5":"10","6":"Sociology","7":"Marburg"},{"1":"797","2":"4","3":"16","4":"3.8","5":"6","6":"Psychology","7":"Frankfurt"},{"1":"798","2":"4","3":"19","4":"3.0","5":"7","6":"Educational Science","7":"Frankfurt"},{"1":"799","2":"9","3":"52","4":"3.8","5":"6","6":"Educational Science","7":"Gießen"},{"1":"800","2":"NA","3":"49","4":"NA","5":"3","6":"Sociology","7":"Marburg"},{"1":"801","2":"2","3":"NA","4":"3.6","5":"9","6":"Educational Science","7":"Marburg"},{"1":"802","2":"9","3":"67","4":"1.9","5":"7","6":"Educational Science","7":"Gießen"},{"1":"803","2":"3","3":"59","4":"3.4","5":"8","6":"Psychology","7":"Marburg"},{"1":"804","2":"8","3":"37","4":"1.3","5":"10","6":"Political Science","7":"Marburg"},{"1":"805","2":"9","3":"28","4":"2.7","5":"10","6":"Sociology","7":"Frankfurt"},{"1":"806","2":"3","3":"57","4":"2.2","5":"7","6":"Educational Science","7":"Marburg"},{"1":"807","2":"5","3":"64","4":"1.6","5":"7","6":"Psychology","7":"Gießen"},{"1":"808","2":"6","3":"59","4":"3.0","5":"2","6":"Political Science","7":"Marburg"},{"1":"809","2":"3","3":"39","4":"4.0","5":"9","6":"Educational Science","7":"Frankfurt"},{"1":"810","2":"0","3":"24","4":"2.1","5":"9","6":"Sociology","7":"Frankfurt"},{"1":"811","2":"1","3":"59","4":"NA","5":"4","6":"Educational Science","7":"Gießen"},{"1":"812","2":"3","3":"97","4":"1.0","5":"5","6":"Educational Science","7":"Gießen"},{"1":"813","2":"NA","3":"66","4":"2.0","5":"3","6":"Educational Science","7":"Gießen"},{"1":"814","2":"4","3":"31","4":"NA","5":"5","6":"Sociology","7":"Frankfurt"},{"1":"815","2":"0","3":"30","4":"NA","5":"3","6":"Psychology","7":"Frankfurt"},{"1":"816","2":"7","3":"62","4":"3.5","5":"6","6":"Political Science","7":"Gießen"},{"1":"817","2":"0","3":"58","4":"1.0","5":"9","6":"Sociology","7":"Gießen"},{"1":"818","2":"8","3":"36","4":"2.9","5":"NA","6":"Psychology","7":"Marburg"},{"1":"819","2":"3","3":"42","4":"2.4","5":"10","6":"Political Science","7":"Frankfurt"},{"1":"820","2":"5","3":"19","4":"3.3","5":"6","6":"Political Science","7":"Frankfurt"},{"1":"821","2":"2","3":"58","4":"NA","5":"NA","6":"Educational Science","7":"Marburg"},{"1":"822","2":"5","3":"85","4":"2.6","5":"5","6":"Educational Science","7":"Gießen"},{"1":"823","2":"3","3":"64","4":"2.4","5":"8","6":"Educational Science","7":"Marburg"},{"1":"824","2":"7","3":"67","4":"4.0","5":"6","6":"Psychology","7":"Gießen"},{"1":"825","2":"0","3":"25","4":"2.2","5":"2","6":"Political Science","7":"Frankfurt"},{"1":"826","2":"5","3":"37","4":"1.0","5":"2","6":"Psychology","7":"Marburg"},{"1":"827","2":"6","3":"68","4":"1.3","5":"5","6":"Educational Science","7":"Gießen"},{"1":"828","2":"1","3":"66","4":"3.6","5":"4","6":"Psychology","7":"Gießen"},{"1":"829","2":"2","3":"52","4":"2.0","5":"5","6":"Educational Science","7":"Marburg"},{"1":"830","2":"8","3":"24","4":"3.7","5":"10","6":"Sociology","7":"Frankfurt"},{"1":"831","2":"8","3":"76","4":"3.3","5":"3","6":"Educational Science","7":"Gießen"},{"1":"832","2":"7","3":"77","4":"2.3","5":"4","6":"Psychology","7":"Gießen"},{"1":"833","2":"6","3":"81","4":"3.6","5":"10","6":"Educational Science","7":"Gießen"},{"1":"834","2":"8","3":"58","4":"1.5","5":"5","6":"Sociology","7":"Frankfurt"},{"1":"835","2":"3","3":"71","4":"2.1","5":"3","6":"Educational Science","7":"Gießen"},{"1":"836","2":"5","3":"62","4":"1.1","5":"6","6":"Psychology","7":"Gießen"},{"1":"837","2":"NA","3":"NA","4":"1.8","5":"6","6":"Sociology","7":"Marburg"},{"1":"838","2":"NA","3":"49","4":"3.8","5":"7","6":"Sociology","7":"Gießen"},{"1":"839","2":"9","3":"51","4":"2.7","5":"7","6":"Psychology","7":"Marburg"},{"1":"840","2":"3","3":"45","4":"1.0","5":"4","6":"Sociology","7":"Marburg"},{"1":"841","2":"5","3":"36","4":"1.7","5":"NA","6":"Sociology","7":"Frankfurt"},{"1":"842","2":"9","3":"28","4":"1.3","5":"5","6":"Educational Science","7":"Frankfurt"},{"1":"843","2":"1","3":"52","4":"1.4","5":"3","6":"Sociology","7":"Gießen"},{"1":"844","2":"2","3":"32","4":"1.9","5":"5","6":"Political Science","7":"Frankfurt"},{"1":"845","2":"8","3":"15","4":"2.4","5":"4","6":"Political Science","7":"Frankfurt"},{"1":"846","2":"7","3":"61","4":"2.0","5":"8","6":"Sociology","7":"Marburg"},{"1":"847","2":"2","3":"NA","4":"NA","5":"6","6":"Psychology","7":"Frankfurt"},{"1":"848","2":"4","3":"48","4":"3.9","5":"9","6":"Political Science","7":"Marburg"},{"1":"849","2":"4","3":"74","4":"3.7","5":"6","6":"Psychology","7":"Gießen"},{"1":"850","2":"4","3":"50","4":"1.6","5":"9","6":"Sociology","7":"Gießen"},{"1":"851","2":"0","3":"85","4":"2.8","5":"3","6":"Political Science","7":"Gießen"},{"1":"852","2":"4","3":"NA","4":"NA","5":"10","6":"Sociology","7":"Frankfurt"},{"1":"853","2":"5","3":"44","4":"3.1","5":"10","6":"Political Science","7":"Marburg"},{"1":"854","2":"7","3":"52","4":"2.8","5":"9","6":"Educational Science","7":"Marburg"},{"1":"855","2":"7","3":"65","4":"3.8","5":"4","6":"Psychology","7":"Gießen"},{"1":"856","2":"NA","3":"19","4":"2.2","5":"6","6":"Educational Science","7":"Frankfurt"},{"1":"857","2":"6","3":"73","4":"1.0","5":"6","6":"Psychology","7":"Gießen"},{"1":"858","2":"0","3":"44","4":"1.6","5":"4","6":"Political Science","7":"Marburg"},{"1":"859","2":"0","3":"56","4":"3.2","5":"10","6":"Psychology","7":"Marburg"},{"1":"860","2":"4","3":"25","4":"2.1","5":"7","6":"Sociology","7":"Frankfurt"},{"1":"861","2":"4","3":"38","4":"3.2","5":"3","6":"Educational Science","7":"Marburg"},{"1":"862","2":"9","3":"30","4":"2.5","5":"5","6":"Sociology","7":"Frankfurt"},{"1":"863","2":"0","3":"39","4":"NA","5":"2","6":"Sociology","7":"Frankfurt"},{"1":"864","2":"2","3":"53","4":"1.8","5":"2","6":"Political Science","7":"Marburg"},{"1":"865","2":"6","3":"30","4":"4.0","5":"6","6":"Political Science","7":"Frankfurt"},{"1":"866","2":"6","3":"NA","4":"1.8","5":"NA","6":"Psychology","7":"Gießen"},{"1":"867","2":"5","3":"67","4":"2.1","5":"4","6":"Political Science","7":"Marburg"},{"1":"868","2":"1","3":"31","4":"1.7","5":"3","6":"Educational Science","7":"Frankfurt"},{"1":"869","2":"3","3":"21","4":"NA","5":"7","6":"Sociology","7":"Frankfurt"},{"1":"870","2":"9","3":"47","4":"1.7","5":"5","6":"Sociology","7":"Marburg"},{"1":"871","2":"6","3":"72","4":"1.5","5":"9","6":"Sociology","7":"Gießen"},{"1":"872","2":"4","3":"50","4":"3.1","5":"2","6":"Psychology","7":"Gießen"},{"1":"873","2":"NA","3":"40","4":"2.6","5":"10","6":"Sociology","7":"Frankfurt"},{"1":"874","2":"4","3":"34","4":"2.2","5":"NA","6":"Psychology","7":"Frankfurt"},{"1":"875","2":"0","3":"45","4":"3.5","5":"4","6":"Sociology","7":"Frankfurt"},{"1":"876","2":"NA","3":"62","4":"NA","5":"NA","6":"Sociology","7":"Marburg"},{"1":"877","2":"9","3":"NA","4":"3.7","5":"3","6":"Educational Science","7":"Marburg"},{"1":"878","2":"NA","3":"63","4":"3.4","5":"8","6":"Sociology","7":"Gießen"},{"1":"879","2":"NA","3":"38","4":"1.0","5":"10","6":"Psychology","7":"Marburg"},{"1":"880","2":"8","3":"27","4":"2.0","5":"6","6":"Psychology","7":"Frankfurt"},{"1":"881","2":"2","3":"80","4":"NA","5":"8","6":"Educational Science","7":"Gießen"},{"1":"882","2":"1","3":"90","4":"2.7","5":"7","6":"Educational Science","7":"Gießen"},{"1":"883","2":"0","3":"42","4":"3.9","5":"NA","6":"Educational Science","7":"Frankfurt"},{"1":"884","2":"4","3":"47","4":"2.2","5":"3","6":"Sociology","7":"Gießen"},{"1":"885","2":"1","3":"41","4":"3.6","5":"6","6":"Psychology","7":"Frankfurt"},{"1":"886","2":"0","3":"43","4":"NA","5":"3","6":"Political Science","7":"Frankfurt"},{"1":"887","2":"8","3":"57","4":"3.2","5":"9","6":"Sociology","7":"Marburg"},{"1":"888","2":"2","3":"NA","4":"1.6","5":"10","6":"Sociology","7":"Gießen"},{"1":"889","2":"5","3":"44","4":"1.7","5":"6","6":"Political Science","7":"Frankfurt"},{"1":"890","2":"7","3":"59","4":"2.7","5":"6","6":"Educational Science","7":"Marburg"},{"1":"891","2":"NA","3":"NA","4":"1.5","5":"8","6":"Educational Science","7":"Frankfurt"},{"1":"892","2":"9","3":"64","4":"1.8","5":"10","6":"Psychology","7":"Gießen"},{"1":"893","2":"9","3":"41","4":"3.3","5":"6","6":"Psychology","7":"Frankfurt"},{"1":"894","2":"3","3":"51","4":"3.4","5":"3","6":"Educational Science","7":"Marburg"},{"1":"895","2":"NA","3":"49","4":"1.8","5":"8","6":"Educational Science","7":"Marburg"},{"1":"896","2":"1","3":"49","4":"1.7","5":"10","6":"Psychology","7":"Frankfurt"},{"1":"897","2":"0","3":"NA","4":"3.7","5":"9","6":"Sociology","7":"Frankfurt"},{"1":"898","2":"3","3":"NA","4":"4.0","5":"9","6":"Sociology","7":"Frankfurt"},{"1":"899","2":"7","3":"63","4":"3.9","5":"10","6":"Psychology","7":"Gießen"},{"1":"900","2":"NA","3":"32","4":"1.5","5":"6","6":"Political Science","7":"Marburg"},{"1":"901","2":"NA","3":"38","4":"NA","5":"10","6":"Political Science","7":"Frankfurt"},{"1":"902","2":"NA","3":"26","4":"3.1","5":"NA","6":"Educational Science","7":"Frankfurt"},{"1":"903","2":"9","3":"42","4":"3.7","5":"8","6":"Educational Science","7":"Frankfurt"},{"1":"904","2":"3","3":"55","4":"NA","5":"NA","6":"Political Science","7":"Marburg"},{"1":"905","2":"9","3":"31","4":"4.0","5":"NA","6":"Psychology","7":"Frankfurt"},{"1":"906","2":"NA","3":"49","4":"2.0","5":"3","6":"Psychology","7":"Marburg"},{"1":"907","2":"2","3":"64","4":"3.7","5":"5","6":"Psychology","7":"Gießen"},{"1":"908","2":"6","3":"52","4":"2.1","5":"8","6":"Educational Science","7":"Marburg"},{"1":"909","2":"3","3":"NA","4":"4.0","5":"9","6":"Sociology","7":"Gießen"},{"1":"910","2":"8","3":"77","4":"1.3","5":"2","6":"Political Science","7":"Gießen"},{"1":"911","2":"9","3":"26","4":"1.7","5":"3","6":"Political Science","7":"Frankfurt"},{"1":"912","2":"3","3":"41","4":"3.6","5":"8","6":"Educational Science","7":"Marburg"},{"1":"913","2":"5","3":"65","4":"1.5","5":"10","6":"Educational Science","7":"Gießen"},{"1":"914","2":"6","3":"53","4":"2.6","5":"3","6":"Sociology","7":"Frankfurt"},{"1":"915","2":"9","3":"29","4":"1.3","5":"4","6":"Educational Science","7":"Marburg"},{"1":"916","2":"5","3":"27","4":"2.3","5":"5","6":"Political Science","7":"Frankfurt"},{"1":"917","2":"3","3":"51","4":"3.9","5":"NA","6":"Sociology","7":"Marburg"},{"1":"918","2":"NA","3":"43","4":"1.0","5":"10","6":"Sociology","7":"Marburg"},{"1":"919","2":"7","3":"26","4":"3.6","5":"4","6":"Educational Science","7":"Frankfurt"},{"1":"920","2":"9","3":"73","4":"3.0","5":"4","6":"Political Science","7":"Gießen"},{"1":"921","2":"0","3":"71","4":"1.5","5":"6","6":"Political Science","7":"Gießen"},{"1":"922","2":"1","3":"NA","4":"1.8","5":"2","6":"Educational Science","7":"Marburg"},{"1":"923","2":"4","3":"NA","4":"2.4","5":"5","6":"Sociology","7":"Gießen"},{"1":"924","2":"8","3":"71","4":"1.8","5":"4","6":"Sociology","7":"Gießen"},{"1":"925","2":"3","3":"39","4":"1.1","5":"NA","6":"Educational Science","7":"Frankfurt"},{"1":"926","2":"5","3":"NA","4":"3.0","5":"10","6":"Psychology","7":"Marburg"},{"1":"927","2":"0","3":"41","4":"NA","5":"NA","6":"Sociology","7":"Marburg"},{"1":"928","2":"8","3":"48","4":"1.4","5":"6","6":"Sociology","7":"Marburg"},{"1":"929","2":"1","3":"43","4":"2.0","5":"5","6":"Psychology","7":"Frankfurt"},{"1":"930","2":"NA","3":"62","4":"2.8","5":"3","6":"Psychology","7":"Gießen"},{"1":"931","2":"7","3":"19","4":"3.3","5":"8","6":"Political Science","7":"Frankfurt"},{"1":"932","2":"9","3":"59","4":"2.6","5":"8","6":"Sociology","7":"Marburg"},{"1":"933","2":"9","3":"37","4":"2.5","5":"4","6":"Political Science","7":"Frankfurt"},{"1":"934","2":"NA","3":"54","4":"1.0","5":"9","6":"Psychology","7":"Gießen"},{"1":"935","2":"8","3":"74","4":"2.1","5":"10","6":"Educational Science","7":"Marburg"},{"1":"936","2":"0","3":"68","4":"3.0","5":"5","6":"Sociology","7":"Marburg"},{"1":"937","2":"9","3":"33","4":"2.0","5":"10","6":"Psychology","7":"Marburg"},{"1":"938","2":"0","3":"75","4":"1.6","5":"8","6":"Political Science","7":"Marburg"},{"1":"939","2":"4","3":"NA","4":"2.8","5":"7","6":"Political Science","7":"Frankfurt"},{"1":"940","2":"3","3":"70","4":"3.2","5":"5","6":"Educational Science","7":"Gießen"},{"1":"941","2":"9","3":"55","4":"1.1","5":"6","6":"Sociology","7":"Gießen"},{"1":"942","2":"5","3":"64","4":"1.7","5":"4","6":"Psychology","7":"Gießen"},{"1":"943","2":"NA","3":"NA","4":"3.6","5":"9","6":"Educational Science","7":"Gießen"},{"1":"944","2":"7","3":"NA","4":"3.9","5":"7","6":"Psychology","7":"Frankfurt"},{"1":"945","2":"4","3":"18","4":"NA","5":"6","6":"Educational Science","7":"Frankfurt"},{"1":"946","2":"2","3":"36","4":"2.1","5":"10","6":"Political Science","7":"Gießen"},{"1":"947","2":"3","3":"49","4":"3.1","5":"9","6":"Educational Science","7":"Marburg"},{"1":"948","2":"NA","3":"41","4":"3.0","5":"5","6":"Sociology","7":"Marburg"},{"1":"949","2":"4","3":"71","4":"2.2","5":"6","6":"Educational Science","7":"Gießen"},{"1":"950","2":"6","3":"58","4":"3.5","5":"2","6":"Psychology","7":"Gießen"},{"1":"951","2":"4","3":"59","4":"2.1","5":"8","6":"Psychology","7":"Marburg"},{"1":"952","2":"1","3":"50","4":"NA","5":"10","6":"Political Science","7":"Marburg"},{"1":"953","2":"7","3":"38","4":"4.0","5":"4","6":"Psychology","7":"Frankfurt"},{"1":"954","2":"0","3":"38","4":"1.8","5":"4","6":"Psychology","7":"Marburg"},{"1":"955","2":"4","3":"47","4":"2.0","5":"7","6":"Educational Science","7":"Marburg"},{"1":"956","2":"6","3":"73","4":"3.7","5":"9","6":"Psychology","7":"Gießen"},{"1":"957","2":"4","3":"30","4":"1.2","5":"5","6":"Political Science","7":"Frankfurt"},{"1":"958","2":"1","3":"51","4":"2.3","5":"NA","6":"Educational Science","7":"Frankfurt"},{"1":"959","2":"5","3":"NA","4":"NA","5":"NA","6":"Educational Science","7":"Frankfurt"},{"1":"960","2":"4","3":"40","4":"3.7","5":"10","6":"Sociology","7":"Frankfurt"},{"1":"961","2":"6","3":"50","4":"NA","5":"10","6":"Psychology","7":"Marburg"},{"1":"962","2":"4","3":"80","4":"1.8","5":"8","6":"Political Science","7":"Gießen"},{"1":"963","2":"7","3":"67","4":"NA","5":"5","6":"Educational Science","7":"Gießen"},{"1":"964","2":"4","3":"17","4":"2.9","5":"6","6":"Sociology","7":"Marburg"},{"1":"965","2":"1","3":"55","4":"2.4","5":"6","6":"Educational Science","7":"Marburg"},{"1":"966","2":"0","3":"47","4":"2.4","5":"4","6":"Educational Science","7":"Marburg"},{"1":"967","2":"7","3":"57","4":"2.7","5":"3","6":"Educational Science","7":"Gießen"},{"1":"968","2":"0","3":"NA","4":"2.3","5":"8","6":"Psychology","7":"Gießen"},{"1":"969","2":"9","3":"69","4":"3.5","5":"10","6":"Sociology","7":"Gießen"},{"1":"970","2":"7","3":"60","4":"3.5","5":"4","6":"Sociology","7":"Frankfurt"},{"1":"971","2":"0","3":"33","4":"3.8","5":"6","6":"Sociology","7":"Frankfurt"},{"1":"972","2":"0","3":"57","4":"3.6","5":"7","6":"Political Science","7":"Gießen"},{"1":"973","2":"NA","3":"72","4":"3.0","5":"9","6":"Psychology","7":"Marburg"},{"1":"974","2":"7","3":"NA","4":"2.4","5":"7","6":"Sociology","7":"Gießen"},{"1":"975","2":"3","3":"21","4":"3.3","5":"10","6":"Educational Science","7":"Frankfurt"},{"1":"976","2":"3","3":"16","4":"3.1","5":"6","6":"Educational Science","7":"Frankfurt"},{"1":"977","2":"NA","3":"NA","4":"3.9","5":"NA","6":"Educational Science","7":"Gießen"},{"1":"978","2":"0","3":"92","4":"2.4","5":"6","6":"Psychology","7":"Gießen"},{"1":"979","2":"0","3":"61","4":"1.7","5":"9","6":"Psychology","7":"Marburg"},{"1":"980","2":"4","3":"77","4":"2.5","5":"8","6":"Political Science","7":"Gießen"},{"1":"981","2":"5","3":"33","4":"1.7","5":"7","6":"Educational Science","7":"Frankfurt"},{"1":"982","2":"5","3":"34","4":"NA","5":"7","6":"Psychology","7":"Frankfurt"},{"1":"983","2":"8","3":"57","4":"2.6","5":"3","6":"Sociology","7":"Marburg"},{"1":"984","2":"9","3":"NA","4":"1.5","5":"10","6":"Political Science","7":"Marburg"},{"1":"985","2":"3","3":"52","4":"1.2","5":"NA","6":"Sociology","7":"Marburg"},{"1":"986","2":"1","3":"80","4":"4.0","5":"3","6":"Sociology","7":"Gießen"},{"1":"987","2":"8","3":"NA","4":"NA","5":"5","6":"Psychology","7":"Gießen"},{"1":"988","2":"2","3":"72","4":"2.2","5":"2","6":"Educational Science","7":"Gießen"},{"1":"989","2":"2","3":"39","4":"2.8","5":"5","6":"Sociology","7":"Marburg"},{"1":"990","2":"0","3":"87","4":"2.7","5":"5","6":"Political Science","7":"Gießen"},{"1":"991","2":"8","3":"66","4":"NA","5":"6","6":"Sociology","7":"Marburg"},{"1":"992","2":"9","3":"47","4":"NA","5":"8","6":"Sociology","7":"Gießen"},{"1":"993","2":"8","3":"47","4":"3.9","5":"2","6":"Psychology","7":"Marburg"},{"1":"994","2":"3","3":"75","4":"1.0","5":"3","6":"Psychology","7":"Gießen"},{"1":"995","2":"1","3":"NA","4":"3.6","5":"7","6":"Educational Science","7":"Gießen"},{"1":"996","2":"7","3":"59","4":"2.7","5":"NA","6":"Educational Science","7":"Marburg"},{"1":"997","2":"1","3":"63","4":"2.8","5":"7","6":"Sociology","7":"Gießen"},{"1":"998","2":"4","3":"17","4":"1.1","5":"5","6":"Political Science","7":"Frankfurt"},{"1":"999","2":"8","3":"53","4":"3.6","5":"6","6":"Sociology","7":"Marburg"},{"1":"1000","2":"5","3":"50","4":"3.1","5":"3","6":"Psychology","7":"Gießen"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[15],"max":[15]},"pages":{}}}
+  </script>
+</div>
+<p>Zuerst wollen wir nun die <em>missings</em> pro Variable darstellen. Dazu filtern wir zuerst den Datensatz auf die ID-Variable und die vier Variablen mit missings. Anschließend bringen wir den Datensatz in ein long-Format und schaffen eine dann dritte Spaltel, die angibt, ob es ein <em>missing</em>-Wert ist oder nicht. Dann gruppieren wir nach Variablen und der neuen ditten Spalte und zählen die <em>missings</em> pro Variable (bzw. auch die nicht-<em>missings</em>). Danach schließen wir die nicht-<em>missings</em> aus und sortieren die Tabelle absteigend. Wir sehen dann, wie viele <em>missings</em> in jeder der vier Variablen vorhanden ist.</p>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>missingValues <span class="ot">&lt;-</span> uniMis <span class="sc">%&gt;%</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="fu">everything</span>(),</span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>               <span class="at">names_to =</span> <span class="st">&quot;variable&quot;</span>,</span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>               <span class="at">values_to =</span> <span class="st">&quot;val&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">is.missing =</span> <span class="fu">is.na</span>(val)) <span class="sc">%&gt;%</span></span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(variable, </span>
+<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a>           is.missing) <span class="sc">%&gt;%</span></span>
+<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">num.missing =</span> <span class="fu">n</span>()) <span class="sc">%&gt;%</span></span>
+<span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(is.missing <span class="sc">==</span> <span class="cn">TRUE</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb20-11"><a href="#cb20-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span>is.missing) <span class="sc">%&gt;%</span></span>
+<span id="cb20-12"><a href="#cb20-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(num.missing))</span>
+<span id="cb20-13"><a href="#cb20-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-14"><a href="#cb20-14" aria-hidden="true" tabindex="-1"></a>missingValues</span></code></pre></div>
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":["variable"],"name":[1],"type":["chr"],"align":["left"]},{"label":["num.missing"],"name":[2],"type":["int"],"align":["right"]}],"data":[{"1":"distance","2":"114"},{"1":"mot","2":"104"},{"1":"term","2":"101"},{"1":"abi","2":"97"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[15],"max":[15]},"pages":{}}}
+  </script>
+</div>
+<p>Anschließend kann man sich ein einfaches Balkendiagramm ausgeben lassen mit diesem neuen Datensatz:</p>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>missingValues <span class="sc">%&gt;%</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="fu">aes</span>(variable, </span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>               num.missing), </span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>           <span class="at">stat =</span> <span class="st">&#39;identity&#39;</span>) <span class="sc">+</span></span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&#39;Variable&#39;</span>,</span>
+<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">&quot;Anzahl MV&quot;</span>, </span>
+<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a>       <span class="at">title =</span> <span class="st">&#39;Missing Values pro Variable&#39;</span>) <span class="sc">+</span></span>
+<span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">45</span>, </span>
+<span id="cb21-10"><a href="#cb21-10" aria-hidden="true" tabindex="-1"></a>                                   <span class="at">hjust =</span> <span class="dv">1</span>))</span></code></pre></div>
+<p><img src="ggplot-advanced_files/figure-html/missValBarplot-1.png" width="576" style="display: block; margin: auto;" /></p>
+<p>Hier kann man alle Spielereien von oben austesten. Wir wollen aber jetzt Prozente ausgeben, um zu sehen, wie viel Prozent der Variable <em>missings</em> sind. Dazu wiederholen wir die Schritte von zuvor, fügen aber einen <code>mutate</code>-Schritt ein, der uns die Prozent angibt.</p>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Prozente</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>missingValues <span class="ot">&lt;-</span> uniMis <span class="sc">%&gt;%</span></span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="fu">everything</span>(),</span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>               <span class="at">names_to =</span> <span class="st">&quot;key&quot;</span>,</span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a>               <span class="at">values_to =</span> <span class="st">&quot;val&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">isna =</span> <span class="fu">is.na</span>(val)) <span class="sc">%&gt;%</span></span>
+<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(key) <span class="sc">%&gt;%</span></span>
+<span id="cb22-9"><a href="#cb22-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">total =</span> <span class="fu">n</span>()) <span class="sc">%&gt;%</span></span>
+<span id="cb22-10"><a href="#cb22-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(key, </span>
+<span id="cb22-11"><a href="#cb22-11" aria-hidden="true" tabindex="-1"></a>           total,</span>
+<span id="cb22-12"><a href="#cb22-12" aria-hidden="true" tabindex="-1"></a>           isna) <span class="sc">%&gt;%</span></span>
+<span id="cb22-13"><a href="#cb22-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">num.isna =</span> <span class="fu">n</span>()) <span class="sc">%&gt;%</span></span>
+<span id="cb22-14"><a href="#cb22-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">pct =</span> num.isna <span class="sc">/</span> total <span class="sc">*</span> <span class="dv">100</span>)</span>
+<span id="cb22-15"><a href="#cb22-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-16"><a href="#cb22-16" aria-hidden="true" tabindex="-1"></a>levels <span class="ot">&lt;-</span> (missingValues  <span class="sc">%&gt;%</span> </span>
+<span id="cb22-17"><a href="#cb22-17" aria-hidden="true" tabindex="-1"></a>             <span class="fu">filter</span>(isna <span class="sc">==</span> T) <span class="sc">%&gt;%</span>     </span>
+<span id="cb22-18"><a href="#cb22-18" aria-hidden="true" tabindex="-1"></a>             <span class="fu">arrange</span>(<span class="fu">desc</span>(pct)))<span class="sc">$</span>key</span>
+<span id="cb22-19"><a href="#cb22-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-20"><a href="#cb22-20" aria-hidden="true" tabindex="-1"></a>percentage.plot <span class="ot">&lt;-</span> missingValues <span class="sc">%&gt;%</span></span>
+<span id="cb22-21"><a href="#cb22-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb22-22"><a href="#cb22-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">reorder</span>(key, </span>
+<span id="cb22-23"><a href="#cb22-23" aria-hidden="true" tabindex="-1"></a>                           <span class="fu">desc</span>(pct)), </span>
+<span id="cb22-24"><a href="#cb22-24" aria-hidden="true" tabindex="-1"></a>               <span class="at">y =</span> pct, </span>
+<span id="cb22-25"><a href="#cb22-25" aria-hidden="true" tabindex="-1"></a>               <span class="at">fill =</span> isna), </span>
+<span id="cb22-26"><a href="#cb22-26" aria-hidden="true" tabindex="-1"></a>           <span class="at">stat =</span> <span class="st">&#39;identity&#39;</span>,</span>
+<span id="cb22-27"><a href="#cb22-27" aria-hidden="true" tabindex="-1"></a>           <span class="at">alpha =</span> <span class="fl">0.8</span>) <span class="sc">+</span></span>
+<span id="cb22-28"><a href="#cb22-28" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_discrete</span>(<span class="at">limits =</span> levels) <span class="sc">+</span></span>
+<span id="cb22-29"><a href="#cb22-29" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_manual</span>(<span class="at">name =</span> <span class="st">&quot;&quot;</span>, </span>
+<span id="cb22-30"><a href="#cb22-30" aria-hidden="true" tabindex="-1"></a>                    <span class="at">values =</span> <span class="fu">c</span>(<span class="st">&#39;steelblue&#39;</span>, <span class="st">&#39;tomato3&#39;</span>), </span>
+<span id="cb22-31"><a href="#cb22-31" aria-hidden="true" tabindex="-1"></a>                    <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">&quot;vorhanden&quot;</span>, <span class="st">&quot;fehlend&quot;</span>)) <span class="sc">+</span></span>
+<span id="cb22-32"><a href="#cb22-32" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_flip</span>() <span class="sc">+</span></span>
+<span id="cb22-33"><a href="#cb22-33" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">&quot;Prozent von missing values&quot;</span>, </span>
+<span id="cb22-34"><a href="#cb22-34" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">&#39;Variable&#39;</span>, </span>
+<span id="cb22-35"><a href="#cb22-35" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">&quot;% missing values&quot;</span>)</span>
+<span id="cb22-36"><a href="#cb22-36" aria-hidden="true" tabindex="-1"></a>percentage.plot</span></code></pre></div>
+<p><img src="ggplot-advanced_files/figure-html/missValPercent-1.png" width="576" style="display: block; margin: auto;" /></p>
+<p>Alternativ kann man auch die <em>missings</em> so anzeigen, dass sichtbar wird, welcher Fall auf welcher Variable <em>missing</em> ist. Bei großen Datensätzen wird das aber schnell unübersichtlich.</p>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="co"># pro Fall (wird aber bei großen Datensätzen etwas schwer zu lesen)</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>row.plot <span class="ot">&lt;-</span> uniMis <span class="sc">%&gt;%</span></span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="sc">-</span><span class="fu">c</span>(<span class="st">&quot;ID&quot;</span>),</span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>               <span class="at">names_to =</span> <span class="st">&quot;key&quot;</span>,</span>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a>               <span class="at">values_to =</span> <span class="st">&quot;val&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">isna =</span> <span class="fu">is.na</span>(val)) <span class="sc">%&gt;%</span></span>
+<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(key, </span>
+<span id="cb23-9"><a href="#cb23-9" aria-hidden="true" tabindex="-1"></a>             ID, </span>
+<span id="cb23-10"><a href="#cb23-10" aria-hidden="true" tabindex="-1"></a>             <span class="at">fill =</span> isna)) <span class="sc">+</span></span>
+<span id="cb23-11"><a href="#cb23-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_raster</span>(<span class="at">alpha =</span> <span class="fl">0.8</span>) <span class="sc">+</span></span>
+<span id="cb23-12"><a href="#cb23-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_manual</span>(<span class="at">name =</span> <span class="st">&quot;&quot;</span>,</span>
+<span id="cb23-13"><a href="#cb23-13" aria-hidden="true" tabindex="-1"></a>                    <span class="at">values =</span> <span class="fu">c</span>(<span class="st">&#39;steelblue&#39;</span>, <span class="st">&#39;tomato3&#39;</span>),</span>
+<span id="cb23-14"><a href="#cb23-14" aria-hidden="true" tabindex="-1"></a>                    <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">&quot;vorhanden&quot;</span>, <span class="st">&quot;fehlend&quot;</span>)) <span class="sc">+</span></span>
+<span id="cb23-15"><a href="#cb23-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_discrete</span>(<span class="at">limits =</span> levels) <span class="sc">+</span></span>
+<span id="cb23-16"><a href="#cb23-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;Variable&quot;</span>,</span>
+<span id="cb23-17"><a href="#cb23-17" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">&quot;Row Number&quot;</span>,</span>
+<span id="cb23-18"><a href="#cb23-18" aria-hidden="true" tabindex="-1"></a>       <span class="at">title =</span> <span class="st">&quot;Missing values in rows&quot;</span>) <span class="sc">+</span></span>
+<span id="cb23-19"><a href="#cb23-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_flip</span>()</span>
+<span id="cb23-20"><a href="#cb23-20" aria-hidden="true" tabindex="-1"></a>row.plot</span></code></pre></div>
+<p><img src="ggplot-advanced_files/figure-html/missValCasewise-1.png" width="576" style="display: block; margin: auto;" /></p>
+</div>
+<div id="missing-values-mit-naniar-upsetr" class="section level2">
+<h2>Missing values mit <code>naniar</code> &amp; <code>UpSetR</code></h2>
+<p>Mit dem Paket <code>naniar</code> sind die oben dargestellten Schritte viel schneller und leichter darzustellen. Das Paket schafft dabei auch immer einen <code>ggplot</code>, so dass die oben gelernten Anpassungen auch hier möglich sind. Zuerst nutzen wir Funktionen, um uns Tabellen mithilfe von <code>naniar</code> ausgeben zu lassen. Die erste ist die Funktion <code>miss_var_summary()</code>, die uns die absolute und relative Häufigkeit von <em>missings</em> in den Variablen ausgibt.</p>
+<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>uniMis <span class="sc">%&gt;%</span></span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">miss_var_summary</span>()</span></code></pre></div>
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":["variable"],"name":[1],"type":["chr"],"align":["left"]},{"label":["n_miss"],"name":[2],"type":["int"],"align":["right"]},{"label":["pct_miss"],"name":[3],"type":["dbl"],"align":["right"]}],"data":[{"1":"distance","2":"114","3":"11.4"},{"1":"mot","2":"104","3":"10.4"},{"1":"term","2":"101","3":"10.1"},{"1":"abi","2":"97","3":"9.7"},{"1":"ID","2":"0","3":"0.0"},{"1":"study","2":"0","3":"0.0"},{"1":"city","2":"0","3":"0.0"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[15],"max":[15]},"pages":{}}}
+  </script>
+</div>
+<p>Dies können wir auch gruppieren:</p>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>uniMis <span class="sc">%&gt;%</span> </span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(city) <span class="sc">%&gt;%</span> </span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">miss_var_summary</span>()</span></code></pre></div>
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":["city"],"name":[1],"type":["fct"],"align":["left"]},{"label":["variable"],"name":[2],"type":["chr"],"align":["left"]},{"label":["n_miss"],"name":[3],"type":["int"],"align":["right"]},{"label":["pct_miss"],"name":[4],"type":["dbl"],"align":["right"]}],"data":[{"1":"Frankfurt","2":"abi","3":"47","4":"15.064103"},{"1":"Frankfurt","2":"distance","3":"41","4":"13.141026"},{"1":"Frankfurt","2":"term","3":"34","4":"10.897436"},{"1":"Frankfurt","2":"mot","3":"28","4":"8.974359"},{"1":"Frankfurt","2":"ID","3":"0","4":"0.000000"},{"1":"Frankfurt","2":"study","3":"0","4":"0.000000"},{"1":"Marburg","2":"mot","3":"42","4":"12.000000"},{"1":"Marburg","2":"distance","3":"39","4":"11.142857"},{"1":"Marburg","2":"term","3":"39","4":"11.142857"},{"1":"Marburg","2":"abi","3":"25","4":"7.142857"},{"1":"Marburg","2":"ID","3":"0","4":"0.000000"},{"1":"Marburg","2":"study","3":"0","4":"0.000000"},{"1":"Gießen","2":"mot","3":"34","4":"10.059172"},{"1":"Gießen","2":"distance","3":"34","4":"10.059172"},{"1":"Gießen","2":"term","3":"28","4":"8.284024"},{"1":"Gießen","2":"abi","3":"25","4":"7.396450"},{"1":"Gießen","2":"ID","3":"0","4":"0.000000"},{"1":"Gießen","2":"study","3":"0","4":"0.000000"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[15],"max":[15]},"pages":{}}}
+  </script>
+</div>
+<p>Zuerst können wir uns eine Verteilung der <em>missings</em> im Datensatz ausgeben lassen. Die Funktion <code>gg_miss_var_cumsum()</code> gibt uns die kumulierte Summe der <em>missings</em> pro Variable aus. Hieran kann man also ablesen, wie sich die <em>missings</em> auf die Variablen verteilen.</p>
+<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">gg_miss_var_cumsum</span>(uniMis)</span></code></pre></div>
+<p><img src="ggplot-advanced_files/figure-html/naniar0-1.png" width="576" style="display: block; margin: auto;" /></p>
+<p>Die Funktion <code>vis_miss()</code> visualisiert die <em>missings</em> eines gesamten Datensatzes (außer wir grenzen ein).</p>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">vis_miss</span>(uniMis)</span></code></pre></div>
+<p><img src="ggplot-advanced_files/figure-html/naniar1-1.png" width="576" style="display: block; margin: auto;" /></p>
+<p>Eine weitere ansprechende Alternative ist die Funktion <code>gg_miss_upset()</code> aus dem Paket <code>naniar</code>. Hierbei werden auch die Häufigkeiten der Kombination der <em>missings</em> zwischen den Variablen angezeigt. Aber auch dies wird bei allzu großen Datensätzen schnell unübersichtlich. Für Teilbereich kann das aber aufschlussreich sein (z.B. wenn man prüfen möchte, ob Personen nur Teile einer Itembatterie oder die Itembatterie komplett nicht beantwortet haben).</p>
+<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="fu">gg_miss_upset</span>(uniMis)</span></code></pre></div>
+<p><img src="ggplot-advanced_files/figure-html/naniar2-1.png" width="576" style="display: block; margin: auto;" /></p>
+<p>In der Grafik sieht man, dass die vier Variablen <code>abi</code>, <code>term</code>, <code>mot</code> und <code>distance</code> <code>NA's</code> haben. Insgesamt gibt es folgende Kombinationen:</p>
+<ul>
+<li>80 Fälle, die in <code>distance</code> <code>NA</code> haben,</li>
+<li>77 Fälle, die in <code>mot</code> <code>NA</code> haben,</li>
+<li>76 Fälle, die in <code>term</code> <code>NA</code> haben,</li>
+<li>66 Fälle, die in <code>abi</code> <code>NA</code> haben,</li>
+<li>13 Fälle, die in <code>mot</code> und <code>distance</code> <code>NA</code> haben,</li>
+<li>11 Fälle, die in <code>abi</code> und <code>term</code> <code>NA</code> haben,</li>
+<li>11 Fälle, die in <code>abi</code> und <code>distance</code> <code>NA</code> haben,</li>
+<li>5 Fälle, die in <code>abi</code> und <code>mot</code> <code>NA</code> haben,</li>
+<li>5 Fälle, die in <code>term</code> und <code>distance</code> <code>NA</code> haben,</li>
+<li>3 Fälle, die in <code>term</code> und <code>mot</code> <code>NA</code> haben,</li>
+<li>3 Fälle, die in <code>term</code>, <code>mot</code> und <code>distance</code> <code>NA</code> haben,</li>
+<li>2 Fälle, die in <code>abi</code>, <code>term</code> und <code>mot</code> <code>NA</code> haben,</li>
+<li>1 Fall, der in <code>abi</code>, <code>term</code> und <code>distance</code> <code>NA</code> hat,</li>
+<li>1 Fall, der in <code>abi</code>, <code>mot</code> und <code>distance</code> <code>NA</code> hat.</li>
+</ul>
+<p>Insgesamt gilt, dass die maximale Anzahl an Kombinationen wie folgt berechnet wird: <span class="math inline">\(2^{Anzahl Variabl} - 1\)</span>. In diesem Fall wären es 15 mögliche Kombinationen, angezeigt werden aber nur 14. Warum?</p>
+<p>Daneben können <em>missings</em> auch über die Funktion <code>geom_miss_point()</code> ganz leicht in einem <code>ggplot</code> dargestellt werden:</p>
+<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(uniMis,</span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">x =</span> mot,</span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>           <span class="at">y =</span> abi)) <span class="sc">+</span></span>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_miss_point</span>() </span></code></pre></div>
+<p><img src="ggplot-advanced_files/figure-html/missValggplot-1.png" width="576" style="display: block; margin: auto;" /></p>
+<p>So kann man ganz leicht sehen, ob die <em>missings</em> sich eventuell bei einer bestimmten Kombinatione häufen.</p>
+<p>Alternativ kann man auch noch die Funktionen <code>gg_miss_var()</code> und <code>gg_miss_fct()</code> nutzen.</p>
+<p>Mit der Funktion <code>gg_miss_var()</code> wird die Anzahl der <em>missings</em> dargestellt. Mit dem Argument <code>facet</code> kann man dies auch auf einzelne Ausprägungen runterbrechen. So kann man sehen, ob evtl. eine Gruppe deutlich mehr <em>missings</em> aufweist, als eine andere Gruppe.</p>
+<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="fu">gg_miss_var</span>(uniMis,</span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>            <span class="at">facet =</span> study)</span></code></pre></div>
+<p><img src="ggplot-advanced_files/figure-html/ggmissvar-1.png" width="576" style="display: block; margin: auto;" /> Mit der Funktion <code>gg_miss_fct()</code> können <em>missings</em> visuell sehr schön aufbereitet werden.</p>
+<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="fu">gg_miss_fct</span>(<span class="at">x =</span> uniMis, </span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>            <span class="at">fct =</span> study)</span></code></pre></div>
+<p><img src="ggplot-advanced_files/figure-html/ggmissfct-1.png" width="576" style="display: block; margin: auto;" /> Auch das kann man sich wieder nach Ausprägungen auf einer weiteren Variable ausgeben lassen, um zu sehen, ob es starke Gruppenunterschiede gibt:</p>
+<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="fu">gg_miss_fct</span>(<span class="at">x =</span> uniMis, </span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>            <span class="at">fct =</span> study) <span class="sc">+</span> </span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">&quot;NA in Uni-df nach Studienfach&quot;</span>)</span></code></pre></div>
+<p><img src="ggplot-advanced_files/figure-html/ggmissfct2-1.png" width="576" style="display: block; margin: auto;" /></p>
+</div>
+<div id="darstellungen-von-regressionsmodellen" class="section level2">
+<h2>Darstellungen von Regressionsmodellen</h2>
+<p>Oftmals ist es nicht nur das Ziel Regressionsmodelle in Tabellen darzustellen, sondern auch spezifische Effekte grafisch darzustellen. Dazu stellen wir hier eine Möglichkeit vor: manuell über eigene <strong>predictions</strong>.</p>
+<p>Es gibt zwar <em>packages</em> wie <code>ggiraphExtra</code>, diese können aber nur sehr eingeschränkt plotten.</p>
+<p>Bevor wir nun verschiedene lineare Modelle berechnen, berechnen wir ein paar Modelle.</p>
+<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>model1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(trstprl <span class="sc">~</span> <span class="dv">1</span> <span class="sc">+</span> trstprt, </span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>             pss)</span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a>model2 <span class="ot">&lt;-</span> <span class="fu">lm</span>(trstprl <span class="sc">~</span> <span class="dv">1</span> <span class="sc">+</span> trstprt <span class="sc">+</span> agea <span class="sc">+</span> stfdem,</span>
+<span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a>             pss)</span>
+<span id="cb33-6"><a href="#cb33-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-7"><a href="#cb33-7" aria-hidden="true" tabindex="-1"></a>model3 <span class="ot">&lt;-</span> <span class="fu">lm</span>(trstprl <span class="sc">~</span> <span class="dv">1</span> <span class="sc">+</span> trstprt <span class="sc">+</span> agea <span class="sc">+</span> stfdem <span class="sc">+</span> district,</span>
+<span id="cb33-8"><a href="#cb33-8" aria-hidden="true" tabindex="-1"></a>             pss)</span></code></pre></div>
+<p>Im bivariaten Trainingsfall kann man ganz einfach <code>ggplot</code> und die Funktion <code>stat_smooth()</code> verwenden (<code>model1</code>):</p>
+<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(pss,</span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">x =</span> trstprt, <span class="at">y =</span> trstprl)) <span class="sc">+</span>  </span>
+<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_jitter</span>(<span class="at">color =</span> <span class="st">&quot;darkblue&quot;</span>) <span class="sc">+</span> <span class="co"># observations</span></span>
+<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_smooth</span>(<span class="at">method =</span> <span class="st">&quot;lm&quot;</span>,       <span class="co"># regression line</span></span>
+<span id="cb34-5"><a href="#cb34-5" aria-hidden="true" tabindex="-1"></a>              <span class="at">color =</span> <span class="st">&quot;tomato&quot;</span>) <span class="sc">+</span>    </span>
+<span id="cb34-6"><a href="#cb34-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">&quot;Regression trstprl on trstprt&quot;</span>,  <span class="co"># titles</span></span>
+<span id="cb34-7"><a href="#cb34-7" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">&quot;Trust in Parties&quot;</span>,</span>
+<span id="cb34-8"><a href="#cb34-8" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">&quot;Trust in Parliament&quot;</span>)</span></code></pre></div>
+<p><img src="ggplot-advanced_files/figure-html/bivariat-1.png" width="576" style="display: block; margin: auto;" /></p>
+<p>Sobald wir aber ein multivariates Modell haben, ist dies nicht mehr direkt so möglich. Da wir die anderen Effekte konstanthalten müssen, um die Abbildung korrekt darzustellen. Aber es ist immer noch leicht umzusetzen, sobald man versteht, was <strong>Konstanthalten</strong> bedeutet.</p>
+<p>Wir möchten den Effekt von <code>trstprt</code> auf <code>trstprl</code> plotten, im <code>model2</code> haben wir aber zusätzlich noch die Variable <code>agea</code> und <code>stfdem</code>. Daher ist dieser Effekt immer mit den weiteren Effekten zu interpretieren. Um den Effekt plotten zu können, halten wir den (oder die) weiteren Effekt(e) konstant.</p>
+<p>Daher bilden wir nun eine neue Matrix (Schätzungs-Datensatz). Diese beinhaltet am Ende die Vorhersage unseres Schätzmodells. Zuvor müssen wir aber fiktive Werte der zwei Variablen generieren. Wir möchten den Effekt von <code>trstprt</code> plotten, daher halten wir <code>agea</code> und <code>stfdem</code> konstant (bei metrischen Variablen oftmals der <em>mean</em>). Mit der Funktion <code>list()</code> schaffen wir eine Liste mit drei Objekten (<code>trstprt</code>, <code>agea</code> und <code>stfdem</code>). Die Funktion <code>expand.grid()</code> macht aus dieser liste dann ein <code>data frame</code>:</p>
+<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>fakeDf <span class="ot">&lt;-</span> <span class="fu">expand.grid</span>(<span class="fu">list</span>(<span class="at">trstprt =</span> <span class="fu">seq</span>(<span class="dv">0</span>,   </span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>                                        <span class="dv">10</span>,  </span>
+<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a>                                        <span class="dv">1</span>),</span>
+<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a>                           <span class="at">agea =</span> <span class="fu">mean</span>(pss<span class="sc">$</span>agea, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb35-5"><a href="#cb35-5" aria-hidden="true" tabindex="-1"></a>                           <span class="at">stfdem =</span> <span class="fu">mean</span>(pss<span class="sc">$</span>stfdem, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)))  </span>
+<span id="cb35-6"><a href="#cb35-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-7"><a href="#cb35-7" aria-hidden="true" tabindex="-1"></a>fakeDf</span></code></pre></div>
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":["trstprt"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["agea"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["stfdem"],"name":[3],"type":["dbl"],"align":["right"]}],"data":[{"1":"0","2":"42.83006","3":"4.657492"},{"1":"1","2":"42.83006","3":"4.657492"},{"1":"2","2":"42.83006","3":"4.657492"},{"1":"3","2":"42.83006","3":"4.657492"},{"1":"4","2":"42.83006","3":"4.657492"},{"1":"5","2":"42.83006","3":"4.657492"},{"1":"6","2":"42.83006","3":"4.657492"},{"1":"7","2":"42.83006","3":"4.657492"},{"1":"8","2":"42.83006","3":"4.657492"},{"1":"9","2":"42.83006","3":"4.657492"},{"1":"10","2":"42.83006","3":"4.657492"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[15],"max":[15]},"pages":{}}}
+  </script>
+</div>
+<p>Anschließend wenden wir das lineare Modell auf diese Daten an:</p>
+<div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>predFakeDf <span class="ot">&lt;-</span> <span class="fu">predict</span>(model2,     </span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>                      <span class="at">newdata =</span> fakeDf,  <span class="co"># der fiktive Datensatz</span></span>
+<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a>                      <span class="at">se =</span> <span class="cn">TRUE</span>)       </span></code></pre></div>
+<ul>
+<li><p>Das Objekt ist eine Liste, die <code>fit</code> (<em>fitted values</em>), <code>se.fit</code> (<em>standard errors</em>), <code>df</code> (<em>degrees of freedom</em>) und <code>residual.scale</code> (<em>residual standard deviation</em>) beinhaltet.</p></li>
+<li><p>Wir sind an den ersten beiden Werten interessiert, die wir für das Plotten benötigen. Diese Werte binden wir im nächsten Schritt nun an die Anfangsmatrix.</p></li>
+</ul>
+<p>Jetzt übertragen wir die vorhergesagten Werte an die geschaffene Datenmatrix.</p>
+<div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>fakeDf<span class="sc">$</span>pred    <span class="ot">&lt;-</span> predFakeDf<span class="sc">$</span>fit</span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>fakeDf<span class="sc">$</span>pred_se <span class="ot">&lt;-</span> predFakeDf<span class="sc">$</span>se.fit</span></code></pre></div>
+<p>Nun können wir den Plot erstellen, wir haben alle Werte in einem Datenobjekt:</p>
+<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(fakeDf,</span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">x =</span> trstprt, </span>
+<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a>           <span class="at">y =</span> pred)) <span class="sc">+</span></span>
+<span id="cb38-4"><a href="#cb38-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">color =</span> <span class="st">&quot;darkgreen&quot;</span>) <span class="sc">+</span>              </span>
+<span id="cb38-5"><a href="#cb38-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">data =</span> fakeDf,                         </span>
+<span id="cb38-6"><a href="#cb38-6" aria-hidden="true" tabindex="-1"></a>            <span class="fu">aes</span>(<span class="at">x =</span> trstprt, </span>
+<span id="cb38-7"><a href="#cb38-7" aria-hidden="true" tabindex="-1"></a>                <span class="at">y =</span> pred <span class="sc">-</span> <span class="fl">1.96</span> <span class="sc">*</span> pred_se),   </span>
+<span id="cb38-8"><a href="#cb38-8" aria-hidden="true" tabindex="-1"></a>            <span class="at">linetype =</span> <span class="dv">3</span>) <span class="sc">+</span></span>
+<span id="cb38-9"><a href="#cb38-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">data =</span> fakeDf,                         </span>
+<span id="cb38-10"><a href="#cb38-10" aria-hidden="true" tabindex="-1"></a>            <span class="fu">aes</span>(<span class="at">x =</span> trstprt, </span>
+<span id="cb38-11"><a href="#cb38-11" aria-hidden="true" tabindex="-1"></a>                <span class="at">y =</span> pred <span class="sc">+</span> <span class="fl">1.96</span> <span class="sc">*</span> pred_se), </span>
+<span id="cb38-12"><a href="#cb38-12" aria-hidden="true" tabindex="-1"></a>            <span class="at">linetype =</span> <span class="dv">3</span>) <span class="sc">+</span></span>
+<span id="cb38-13"><a href="#cb38-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">&quot;Linear relationship between trstprl and trstprt (others constant)&quot;</span>, </span>
+<span id="cb38-14"><a href="#cb38-14" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">&quot;Predicted value of Trust in Parliament&quot;</span>,</span>
+<span id="cb38-15"><a href="#cb38-15" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">&quot;Trust in Parties&quot;</span>) </span></code></pre></div>
+<p><img src="ggplot-advanced_files/figure-html/predggplot-1.png" width="576" style="display: block; margin: auto;" /></p>
+<p>Als nächstes fahren wir genauso fort mit <code>model3</code>. Hier haben wir allerdings eine kategorielle Variable (<code>district</code>) und diese lässt sich nicht konstant halten. Daher machen wir so viele <em>fake</em>-Datensätze wie es Ausprägungen auf der Variable gibt: also <strong>5</strong>. Diese fügen wir dann zusammen. Beginnen wir mit dem <code>Distrikt 1</code> Datensatz:</p>
+<div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>fakeDfD1 <span class="ot">&lt;-</span> <span class="fu">expand.grid</span>(<span class="fu">list</span>(<span class="at">trstprt =</span> <span class="fu">seq</span>(<span class="dv">0</span>,   </span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a>                                           <span class="dv">10</span>,  </span>
+<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a>                                           <span class="dv">1</span>),</span>
+<span id="cb39-4"><a href="#cb39-4" aria-hidden="true" tabindex="-1"></a>                             <span class="at">agea =</span> <span class="fu">mean</span>(pss<span class="sc">$</span>agea, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb39-5"><a href="#cb39-5" aria-hidden="true" tabindex="-1"></a>                             <span class="at">stfdem =</span> <span class="fu">mean</span>(pss<span class="sc">$</span>stfdem, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb39-6"><a href="#cb39-6" aria-hidden="true" tabindex="-1"></a>                             <span class="at">district =</span> <span class="st">&quot;Distrikt 1&quot;</span>)) </span>
+<span id="cb39-7"><a href="#cb39-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-8"><a href="#cb39-8" aria-hidden="true" tabindex="-1"></a>fakeDfD2 <span class="ot">&lt;-</span> <span class="fu">expand.grid</span>(<span class="fu">list</span>(<span class="at">trstprt =</span> <span class="fu">seq</span>(<span class="dv">0</span>,   </span>
+<span id="cb39-9"><a href="#cb39-9" aria-hidden="true" tabindex="-1"></a>                                           <span class="dv">10</span>,  </span>
+<span id="cb39-10"><a href="#cb39-10" aria-hidden="true" tabindex="-1"></a>                                           <span class="dv">1</span>),</span>
+<span id="cb39-11"><a href="#cb39-11" aria-hidden="true" tabindex="-1"></a>                             <span class="at">agea =</span> <span class="fu">mean</span>(pss<span class="sc">$</span>agea, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb39-12"><a href="#cb39-12" aria-hidden="true" tabindex="-1"></a>                             <span class="at">stfdem =</span> <span class="fu">mean</span>(pss<span class="sc">$</span>stfdem, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb39-13"><a href="#cb39-13" aria-hidden="true" tabindex="-1"></a>                             <span class="at">district =</span> <span class="st">&quot;Distrikt 5&quot;</span>)) </span>
+<span id="cb39-14"><a href="#cb39-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-15"><a href="#cb39-15" aria-hidden="true" tabindex="-1"></a>fakeDfD3 <span class="ot">&lt;-</span> <span class="fu">expand.grid</span>(<span class="fu">list</span>(<span class="at">trstprt =</span> <span class="fu">seq</span>(<span class="dv">0</span>,   </span>
+<span id="cb39-16"><a href="#cb39-16" aria-hidden="true" tabindex="-1"></a>                                           <span class="dv">10</span>,  </span>
+<span id="cb39-17"><a href="#cb39-17" aria-hidden="true" tabindex="-1"></a>                                           <span class="dv">1</span>),</span>
+<span id="cb39-18"><a href="#cb39-18" aria-hidden="true" tabindex="-1"></a>                             <span class="at">agea =</span> <span class="fu">mean</span>(pss<span class="sc">$</span>agea, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb39-19"><a href="#cb39-19" aria-hidden="true" tabindex="-1"></a>                             <span class="at">stfdem =</span> <span class="fu">mean</span>(pss<span class="sc">$</span>stfdem, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb39-20"><a href="#cb39-20" aria-hidden="true" tabindex="-1"></a>                             <span class="at">district =</span> <span class="st">&quot;Distrikt 7&quot;</span>)) </span>
+<span id="cb39-21"><a href="#cb39-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-22"><a href="#cb39-22" aria-hidden="true" tabindex="-1"></a>fakeDfD4 <span class="ot">&lt;-</span> <span class="fu">expand.grid</span>(<span class="fu">list</span>(<span class="at">trstprt =</span> <span class="fu">seq</span>(<span class="dv">0</span>,   </span>
+<span id="cb39-23"><a href="#cb39-23" aria-hidden="true" tabindex="-1"></a>                                           <span class="dv">10</span>,  </span>
+<span id="cb39-24"><a href="#cb39-24" aria-hidden="true" tabindex="-1"></a>                                           <span class="dv">1</span>),</span>
+<span id="cb39-25"><a href="#cb39-25" aria-hidden="true" tabindex="-1"></a>                             <span class="at">agea =</span> <span class="fu">mean</span>(pss<span class="sc">$</span>agea, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb39-26"><a href="#cb39-26" aria-hidden="true" tabindex="-1"></a>                             <span class="at">stfdem =</span> <span class="fu">mean</span>(pss<span class="sc">$</span>stfdem, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb39-27"><a href="#cb39-27" aria-hidden="true" tabindex="-1"></a>                             <span class="at">district =</span> <span class="st">&quot;Distrikt 10&quot;</span>)) </span>
+<span id="cb39-28"><a href="#cb39-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-29"><a href="#cb39-29" aria-hidden="true" tabindex="-1"></a>fakeDfD5 <span class="ot">&lt;-</span> <span class="fu">expand.grid</span>(<span class="fu">list</span>(<span class="at">trstprt =</span> <span class="fu">seq</span>(<span class="dv">0</span>,   </span>
+<span id="cb39-30"><a href="#cb39-30" aria-hidden="true" tabindex="-1"></a>                                           <span class="dv">10</span>,  </span>
+<span id="cb39-31"><a href="#cb39-31" aria-hidden="true" tabindex="-1"></a>                                           <span class="dv">1</span>),</span>
+<span id="cb39-32"><a href="#cb39-32" aria-hidden="true" tabindex="-1"></a>                             <span class="at">agea =</span> <span class="fu">mean</span>(pss<span class="sc">$</span>agea, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb39-33"><a href="#cb39-33" aria-hidden="true" tabindex="-1"></a>                             <span class="at">stfdem =</span> <span class="fu">mean</span>(pss<span class="sc">$</span>stfdem, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb39-34"><a href="#cb39-34" aria-hidden="true" tabindex="-1"></a>                             <span class="at">district =</span> <span class="st">&quot;Distrikt 12&quot;</span>)) </span></code></pre></div>
+<p>Jetzt fügen wir diese Datensätze erst in einem Datensatz zusammen, da wir ansonsten mit dem Vorgehen wie oben unnötig weitere Objekte erstellen würden. Und anschließend schätzen wir die Werte von <code>trstprl</code>:</p>
+<div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a>fakeDfbyDistrict <span class="ot">&lt;-</span> <span class="fu">rbind</span>(fakeDfD1, </span>
+<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a>                          fakeDfD2, </span>
+<span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a>                          fakeDfD3, </span>
+<span id="cb40-4"><a href="#cb40-4" aria-hidden="true" tabindex="-1"></a>                          fakeDfD4, </span>
+<span id="cb40-5"><a href="#cb40-5" aria-hidden="true" tabindex="-1"></a>                          fakeDfD5)</span>
+<span id="cb40-6"><a href="#cb40-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb40-7"><a href="#cb40-7" aria-hidden="true" tabindex="-1"></a>predFakeDfbyDistrict <span class="ot">&lt;-</span> <span class="fu">predict</span>(model3,     </span>
+<span id="cb40-8"><a href="#cb40-8" aria-hidden="true" tabindex="-1"></a>                                <span class="at">newdata =</span> fakeDfbyDistrict,  <span class="co"># der fiktive Datensatz</span></span>
+<span id="cb40-9"><a href="#cb40-9" aria-hidden="true" tabindex="-1"></a>                                <span class="at">se =</span> <span class="cn">TRUE</span>) </span>
+<span id="cb40-10"><a href="#cb40-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb40-11"><a href="#cb40-11" aria-hidden="true" tabindex="-1"></a>fakeDfbyDistrict<span class="sc">$</span>pred    <span class="ot">&lt;-</span> predFakeDfbyDistrict<span class="sc">$</span>fit</span>
+<span id="cb40-12"><a href="#cb40-12" aria-hidden="true" tabindex="-1"></a>fakeDfbyDistrict<span class="sc">$</span>pred_se <span class="ot">&lt;-</span> predFakeDfbyDistrict<span class="sc">$</span>se.fit</span></code></pre></div>
+<p>Anschließend können wir das ganze dann mit <code>ggplot</code> plotten:</p>
+<div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(fakeDfbyDistrict,</span>
+<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">x =</span> trstprt, </span>
+<span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a>           <span class="at">y =</span> pred,</span>
+<span id="cb41-4"><a href="#cb41-4" aria-hidden="true" tabindex="-1"></a>           <span class="at">color =</span> district,</span>
+<span id="cb41-5"><a href="#cb41-5" aria-hidden="true" tabindex="-1"></a>           <span class="at">shape =</span> district</span>
+<span id="cb41-6"><a href="#cb41-6" aria-hidden="true" tabindex="-1"></a>           )) <span class="sc">+</span></span>
+<span id="cb41-7"><a href="#cb41-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span></span>
+<span id="cb41-8"><a href="#cb41-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">&quot;Predicted value of Trust in Parliament&quot;</span>) <span class="sc">+</span></span>
+<span id="cb41-9"><a href="#cb41-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">&quot;Trust in Parties&quot;</span>) <span class="sc">+</span></span>
+<span id="cb41-10"><a href="#cb41-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">&quot;Linear relationship between trstprl and trstprt (others constant)&quot;</span>,</span>
+<span id="cb41-11"><a href="#cb41-11" aria-hidden="true" tabindex="-1"></a>       <span class="at">color =</span> <span class="st">&quot;Distrikte&quot;</span>) </span></code></pre></div>
+<p><img src="ggplot-advanced_files/figure-html/ggplot-districts-1.png" width="576" style="display: block; margin: auto;" /> Somit haben wir die Regressionslinie zwischen <code>trstprl</code> und <code>trstprt</code> unter Konstanthalten von Alter, Zufriedenheit mit der Demokratie für Personen nach Distrikten dargestellt.</p>
+<p>Oftmals möchte man aber eine Linie besonders hervorheben und zum Beispiel die Datenpunkte des hervorgehobenen Distrikts einzeichnen. Prüfe den Code zu dem vorherigen und überlege, was an welchen Stellen geändert wurde!</p>
+<div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a>fakeDistrict12 <span class="ot">&lt;-</span> fakeDfbyDistrict <span class="sc">%&gt;%</span> </span>
+<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(district <span class="sc">==</span> <span class="st">&quot;Distrikt 12&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb42-3"><a href="#cb42-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span>district)</span>
+<span id="cb42-4"><a href="#cb42-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-5"><a href="#cb42-5" aria-hidden="true" tabindex="-1"></a>district12 <span class="ot">&lt;-</span> pss <span class="sc">%&gt;%</span> </span>
+<span id="cb42-6"><a href="#cb42-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(district <span class="sc">==</span> <span class="st">&quot;Distrikt 12&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb42-7"><a href="#cb42-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span>district)</span>
+<span id="cb42-8"><a href="#cb42-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-9"><a href="#cb42-9" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(fakeDistrict12,</span>
+<span id="cb42-10"><a href="#cb42-10" aria-hidden="true" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">x =</span> trstprt, </span>
+<span id="cb42-11"><a href="#cb42-11" aria-hidden="true" tabindex="-1"></a>           <span class="at">y =</span> pred</span>
+<span id="cb42-12"><a href="#cb42-12" aria-hidden="true" tabindex="-1"></a>           )) <span class="sc">+</span></span>
+<span id="cb42-13"><a href="#cb42-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">color =</span> <span class="st">&quot;tomato&quot;</span>) <span class="sc">+</span> </span>
+<span id="cb42-14"><a href="#cb42-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">data =</span> district12,</span>
+<span id="cb42-15"><a href="#cb42-15" aria-hidden="true" tabindex="-1"></a>             <span class="fu">aes</span>(<span class="at">y =</span> trstprl),</span>
+<span id="cb42-16"><a href="#cb42-16" aria-hidden="true" tabindex="-1"></a>             <span class="at">color =</span> <span class="st">&quot;tomato&quot;</span>,</span>
+<span id="cb42-17"><a href="#cb42-17" aria-hidden="true" tabindex="-1"></a>             <span class="at">position =</span> <span class="st">&quot;jitter&quot;</span>,</span>
+<span id="cb42-18"><a href="#cb42-18" aria-hidden="true" tabindex="-1"></a>             <span class="at">size =</span> <span class="fl">0.7</span>,</span>
+<span id="cb42-19"><a href="#cb42-19" aria-hidden="true" tabindex="-1"></a>             <span class="at">alpha =</span> <span class="fl">0.5</span>) <span class="sc">+</span> </span>
+<span id="cb42-20"><a href="#cb42-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">&quot;Predicted value of Trust in Parliament&quot;</span>) <span class="sc">+</span></span>
+<span id="cb42-21"><a href="#cb42-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">&quot;Trust in Parties&quot;</span>) <span class="sc">+</span></span>
+<span id="cb42-22"><a href="#cb42-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">&quot;Linear relationship between trstprl and trstprt (others constant)&quot;</span>,</span>
+<span id="cb42-23"><a href="#cb42-23" aria-hidden="true" tabindex="-1"></a>       <span class="at">lty =</span> <span class="st">&quot;Distrikte&quot;</span>,</span>
+<span id="cb42-24"><a href="#cb42-24" aria-hidden="true" tabindex="-1"></a>       <span class="at">caption =</span> <span class="st">&quot;Highlighted District 12.&quot;</span>)</span></code></pre></div>
+<p><img src="ggplot-advanced_files/figure-html/ggplot-districts2-1.png" width="576" style="display: block; margin: auto;" /></p>
+<p>Wir könnten zusätzlich auch noch die anderen Datenpunkte in das Bild einfügen. Man sollte aber immer aufpassen, dass ein Plot nicht zu unübersichtlich wird.</p>
+<div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a>districts <span class="ot">&lt;-</span> pss <span class="sc">%&gt;%</span> </span>
+<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(district <span class="sc">!=</span> <span class="st">&quot;Distrikt 12&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb43-3"><a href="#cb43-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span>district)</span>
+<span id="cb43-4"><a href="#cb43-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-5"><a href="#cb43-5" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(fakeDistrict12,</span>
+<span id="cb43-6"><a href="#cb43-6" aria-hidden="true" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">x =</span> trstprt, </span>
+<span id="cb43-7"><a href="#cb43-7" aria-hidden="true" tabindex="-1"></a>           <span class="at">y =</span> pred</span>
+<span id="cb43-8"><a href="#cb43-8" aria-hidden="true" tabindex="-1"></a>           )) <span class="sc">+</span></span>
+<span id="cb43-9"><a href="#cb43-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">color =</span> <span class="st">&quot;tomato&quot;</span>) <span class="sc">+</span> </span>
+<span id="cb43-10"><a href="#cb43-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">data =</span> district12,</span>
+<span id="cb43-11"><a href="#cb43-11" aria-hidden="true" tabindex="-1"></a>             <span class="fu">aes</span>(<span class="at">y =</span> trstprl),</span>
+<span id="cb43-12"><a href="#cb43-12" aria-hidden="true" tabindex="-1"></a>             <span class="at">color =</span> <span class="st">&quot;tomato&quot;</span>,</span>
+<span id="cb43-13"><a href="#cb43-13" aria-hidden="true" tabindex="-1"></a>             <span class="at">position =</span> <span class="st">&quot;jitter&quot;</span>,</span>
+<span id="cb43-14"><a href="#cb43-14" aria-hidden="true" tabindex="-1"></a>             <span class="at">size =</span> <span class="fl">0.7</span>,</span>
+<span id="cb43-15"><a href="#cb43-15" aria-hidden="true" tabindex="-1"></a>             <span class="at">alpha =</span> <span class="fl">0.85</span>) <span class="sc">+</span> </span>
+<span id="cb43-16"><a href="#cb43-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">data =</span> districts,</span>
+<span id="cb43-17"><a href="#cb43-17" aria-hidden="true" tabindex="-1"></a>             <span class="fu">aes</span>(<span class="at">y =</span> trstprl),</span>
+<span id="cb43-18"><a href="#cb43-18" aria-hidden="true" tabindex="-1"></a>             <span class="at">color =</span> <span class="st">&quot;darkgray&quot;</span>,</span>
+<span id="cb43-19"><a href="#cb43-19" aria-hidden="true" tabindex="-1"></a>             <span class="at">position =</span> <span class="st">&quot;jitter&quot;</span>,</span>
+<span id="cb43-20"><a href="#cb43-20" aria-hidden="true" tabindex="-1"></a>             <span class="at">size =</span> <span class="fl">0.7</span>,</span>
+<span id="cb43-21"><a href="#cb43-21" aria-hidden="true" tabindex="-1"></a>             <span class="at">alpha =</span> <span class="fl">0.3</span>) <span class="sc">+</span> </span>
+<span id="cb43-22"><a href="#cb43-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">&quot;Predicted value of Trust in Parliament&quot;</span>) <span class="sc">+</span></span>
+<span id="cb43-23"><a href="#cb43-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">&quot;Trust in Parties&quot;</span>) <span class="sc">+</span></span>
+<span id="cb43-24"><a href="#cb43-24" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">&quot;Linear relationship between trstprl and trstprt (others constant)&quot;</span>,</span>
+<span id="cb43-25"><a href="#cb43-25" aria-hidden="true" tabindex="-1"></a>       <span class="at">lty =</span> <span class="st">&quot;Distrikte&quot;</span>,</span>
+<span id="cb43-26"><a href="#cb43-26" aria-hidden="true" tabindex="-1"></a>       <span class="at">caption =</span> <span class="st">&quot;Highlighted District 12.&quot;</span>) <span class="sc">+</span></span>
+<span id="cb43-27"><a href="#cb43-27" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">&quot;darkgray&quot;</span>, <span class="st">&quot;darkgray&quot;</span>, <span class="st">&quot;darkgray&quot;</span>, <span class="st">&quot;darkgray&quot;</span>, <span class="st">&quot;tomato&quot;</span>)) <span class="sc">+</span></span>
+<span id="cb43-28"><a href="#cb43-28" aria-hidden="true" tabindex="-1"></a>  <span class="fu">guides</span>(<span class="at">color =</span> <span class="st">&quot;none&quot;</span>)</span></code></pre></div>
+<p><img src="ggplot-advanced_files/figure-html/ggplot-districts3-1.png" width="576" style="display: block; margin: auto;" /></p>
+<div id="koeffizienten-darstellen" class="section level3">
+<h3>Koeffizienten darstellen</h3>
+<p>Wenn wir aber das Modell grafisch darstellen wollen, also die Koeffizienten (anstatt oder zusätzlich zu einer Tabelle), hilft das <em>package</em> <code>dotwhisker</code>. Mithilfe dieses <em>packages</em> können Objekte aus <code>lm()</code>-Funktionen direkt geplottet werden.</p>
+<p>Zuerst installieren und laden wir das Paket:</p>
+<div class="sourceCode" id="cb44"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;dotwhisker&quot;</span>)</span>
+<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-3"><a href="#cb44-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;dotwhisker&quot;</span>)</span></code></pre></div>
+<p>Anschließend ruft man die Funktion <code>dwplot()</code> auf, die die Koeffizienten grafisch darstellt. Dies ist ebenfalls ein <code>ggplot</code>, so dass man es im Anschluss beliebig bearbeiten kann.</p>
+<div class="sourceCode" id="cb45"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dwplot</span>(model3)</span></code></pre></div>
+<p><img src="ggplot-advanced_files/figure-html/coefplot-1.png" width="576" style="display: block; margin: auto;" /></p>
+<p>Das sieht noch etwas unschön aus und wir bearbeiten dies nun in <code>ggplot</code>: Wir fügen bei <strong>0</strong> eine Linie ein (Signifikanz), wir ändern die Achsenbeschriftung auf der y-Achese und wir ändern die Skala auf der x-Achse und fügen Titel ein.</p>
+<div class="sourceCode" id="cb46"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dwplot</span>(model3) <span class="sc">+</span></span>
+<span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="dv">0</span>,</span>
+<span id="cb46-3"><a href="#cb46-3" aria-hidden="true" tabindex="-1"></a>             <span class="at">linetype =</span> <span class="st">&quot;dashed&quot;</span>) <span class="sc">+</span></span>
+<span id="cb46-4"><a href="#cb46-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_discrete</span>(<span class="at">labels =</span> <span class="fu">rev</span>(<span class="fu">c</span>(<span class="st">&quot;Trust Parties&quot;</span>, </span>
+<span id="cb46-5"><a href="#cb46-5" aria-hidden="true" tabindex="-1"></a>                                  <span class="st">&quot;Age&quot;</span>, </span>
+<span id="cb46-6"><a href="#cb46-6" aria-hidden="true" tabindex="-1"></a>                                  <span class="st">&quot;Satisfaction w/ Democracy&quot;</span>,</span>
+<span id="cb46-7"><a href="#cb46-7" aria-hidden="true" tabindex="-1"></a>                                  <span class="st">&quot;District 5&quot;</span>, </span>
+<span id="cb46-8"><a href="#cb46-8" aria-hidden="true" tabindex="-1"></a>                                  <span class="st">&quot;District 7&quot;</span>, </span>
+<span id="cb46-9"><a href="#cb46-9" aria-hidden="true" tabindex="-1"></a>                                  <span class="st">&quot;District 10&quot;</span>, </span>
+<span id="cb46-10"><a href="#cb46-10" aria-hidden="true" tabindex="-1"></a>                                  <span class="st">&quot;District 12&quot;</span></span>
+<span id="cb46-11"><a href="#cb46-11" aria-hidden="true" tabindex="-1"></a>                                  ))) <span class="sc">+</span> </span>
+<span id="cb46-12"><a href="#cb46-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">breaks =</span> <span class="fu">seq</span>(<span class="sc">-</span><span class="dv">2</span>, <span class="dv">1</span> , <span class="fl">0.2</span>)) <span class="sc">+</span></span>
+<span id="cb46-13"><a href="#cb46-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">&quot;Lin. Regression on Trust in Parliament (ref: District 1)&quot;</span>,</span>
+<span id="cb46-14"><a href="#cb46-14" aria-hidden="true" tabindex="-1"></a>       <span class="at">caption =</span> <span class="st">&quot;Data: Panem Social Survey.&quot;</span>)</span></code></pre></div>
+<p><img src="ggplot-advanced_files/figure-html/coefplot2-1.png" width="576" style="display: block; margin: auto;" /> ## Labs 1. Prediciton machen und korrekte Werte mit eintragen. 2. Lineare Regression mit Income als group-Variablen und prediction darstellen</p>
+</div>
+</div>
+
+<br><br>
+<hr />
+<center>
+<p style="font-size:10px">
+  Copyright: <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png" /></a>
+<br/>Benedikt Philipp Kleer, Justus-Liebig-Universität Gießen.
+</p>
+</center>
+
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+
+<script>
+$(document).ready(function ()  {
+
+    // temporarily add toc-ignore selector to headers for the consistency with Pandoc
+    $('.unlisted.unnumbered').addClass('toc-ignore')
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
