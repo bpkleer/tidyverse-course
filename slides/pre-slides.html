@@ -210,7 +210,7 @@ B. Philipp Kleer
 <li>forcats</li>
 <li>tibble</li>
 <li>readr</li>
-<li>stringr</li>
+<li><strong>stringr</strong></li>
 <li><strong>tidyr</strong></li>
 <li>purrr</li>
 </ul>
@@ -227,7 +227,16 @@ B. Philipp Kleer
 <h1>Drei Pakete im Fokus</h1>
 <div class="flex-container">
 <div class="flex-text">
-<p><strong>dplyr</strong> beinhaltet eine Grammatik, um Datenmanipulationen zu machen. Es besticht dabei durch seine Einfachheit und der Kombinationsmöglichkeit der Grundbefehle. Für eine erste Dateneinsicht ist dies meist hilfreich zu nutzen, oder um die Daten umzustrukturieren (manipulieren).</p>
+<p><strong>tidyr</strong> beinhaltet eine Grammatik, um Datensätze in ein <em>tidy</em> Format zu bringen. Ziel ist es, dass jede Spalte eine Variable ist, jede Zeile eine Beobachtung und jede Zelle einen Wert beinhaltet. Hier gibt es das <a href="https://github.com/rstudio/cheatsheets/blob/master/data-import.pdf">Cheat-Sheet</a> zu <code>tidyr</code>.</p>
+</div>
+<div class="flex-picture">
+<div class="figure">
+<img src="pics/tidyr.png" width="300" alt="" />
+<p class="caption">stringr</p>
+</div>
+</div>
+<div class="flex-text">
+<p><strong>dplyr</strong> beinhaltet eine Grammatik, um Datenmanipulationen zu machen. Es besticht dabei durch seine Einfachheit und der Kombinationsmöglichkeit der Grundbefehle. Für eine erste Dateneinsicht ist dies meist hilfreich zu nutzen, oder um die Daten umzustrukturieren (manipulieren). Hier gibt es das <a href="https://github.com/rstudio/cheatsheets/blob/master/data-transformation.pdf">Cheat-Sheet</a>.</p>
 </div>
 <div class="flex-picture">
 <div class="figure">
@@ -236,7 +245,7 @@ B. Philipp Kleer
 </div>
 </div>
 <div class="flex-text">
-<p><strong>ggplot2</strong> ist <strong>das</strong> Grafikpaket in R. Es bietet die Möglichkeit Grafiken genauestens den eigenen Präferenzen anzupassen und darzustellen. Dazu gibt es viele Erweiterungspakete, die ebenfalls auf der Syntax von <strong>ggplot2</strong> aufbauen.</p>
+<p><strong>ggplot2</strong> ist <strong>das</strong> Grafikpaket in R. Es bietet die Möglichkeit Grafiken genauestens den eigenen Präferenzen anzupassen und darzustellen. Dazu gibt es viele Erweiterungspakete, die ebenfalls auf der Syntax von <strong>ggplot2</strong> aufbauen. Hier gibt es das <a href="https://github.com/rstudio/cheatsheets/blob/master/data-visualization-2.1.pdf">Cheat-Sheet</a>.</p>
 </div>
 <div class="flex-picture">
 <div class="figure">
@@ -245,7 +254,7 @@ B. Philipp Kleer
 </div>
 </div>
 <div class="flex-text">
-<p><strong>stringr</strong> ist ein Paket um <code>string</code>-Variablen vernünftig in R bearbeiten zu können. Es gibt einige Alternativen, aber dennoch bleibt <strong>stringr</strong> ein beliebtes Paket zur Bearbeitung von <code>string</code>-Variablen. Insbesondere bei Textanalysen muss man im Vorfeld die <code>string</code>-Variablen bearbeiten.</p>
+<p><strong>stringr</strong> ist ein Paket um <code>string</code>-Variablen vernünftig in R bearbeiten zu können. Es gibt einige Alternativen, aber dennoch bleibt <strong>stringr</strong> ein beliebtes Paket zur Bearbeitung von <code>string</code>-Variablen. Insbesondere bei Textanalysen muss man im Vorfeld die <code>string</code>-Variablen bearbeiten. Hier gibt es das <a href="https://github.com/rstudio/cheatsheets/blob/master/strings.pdf">Cheat-Sheet</a>.</p>
 </div>
 <div class="flex-picture">
 <div class="figure">
@@ -268,13 +277,20 @@ B. Philipp Kleer
 <div id="ziel-des-workshops-1" class="slide section level2">
 <h1>Ziel des Workshops</h1>
 <p>Es geht in diesem kurzen 1-Tages-Kurs vor allem um <strong>Readbility-Skills</strong>. Ziel ist es, dass man neue Probleme mit dem hier gezeigten lösen kann. Dafür sollte der Inhalt aber während des Workshops gut aufbereitet bzw. nachbereitet werden (eigene Notizen in den Skripten etc.).</p>
+<p>In meinen Kursen gilt immer folgendes Prinzip: <strong>Was man nicht schreibt, lernt man auch nicht!</strong></p>
+<p>Es ist also eine didaktische Entscheidung von mir, dass es keine fertige Skripts gibt. Selbst programmieren heißt eben auch selbst Code schreiben und nicht nur einzelnen Felder austauschen (wie bei Click and Play mit SPSS). Ebenso wird meiner Meinung nach das Verständnis von Funktionen viel besser vermittelt.</p>
+<p>Die Slides bzw. HTML-Dokumente haben aber kopierbaren Code (ein bisschen Erleichterung). Wenn man in diesen Dokumenten über den Code geht, erscheint oben rechts ein <em>Clipboard</em>, mit dem man den Code in die Zwischenablage kopiert.</p>
+<div class="figure">
+<img src="pics/code.png" style="width:50.0%" alt="" />
+<p class="caption">Beispiel Kopieren von Code</p>
+</div>
 </div>
 <div id="wer-ich-bin-und-wie-ich-workshops-leite" class="slide section level2">
 <h1>Wer ich bin und wie ich Workshops leite?</h1>
 <p><strong>Wer bin ich?</strong></p>
 <ul class="incremental">
 <li>seit 2015 Mitarbeiter an der Professur für Methoden (viele praktische Methoden-/Projektkurse bisher gegeben)</li>
-<li>nutze seit mehreren Jahren bereits R</li>
+<li>nutze seit mehreren Jahren bereits R bzw. RStudio (vor allem Projekt-Funktion</li>
 <li>derzeit: gefördertes Lehrprojekt, in dem R-Kursmaterial für Personen aufbereitet wird, die keine Computer-/Programmierkenntnisse haben</li>
 </ul>
 <p><strong>Wie ich meine Rolle als Workshopleiter sehe?</strong></p>
@@ -283,16 +299,16 @@ B. Philipp Kleer
 <li>Interesse daran, anderen zu helfen/zu unterstützen</li>
 <li>in der Ansprache ziehe ich das Du vor</li>
 <li>Kurz-Inputs und dann eigenes <em>trial-and-error</em></li>
-<li>meine Rolle: Unterstützer/Helfer, aber nicht Motivator, Erzieher oder allwissender Guru</li>
+<li>Unterstützung beim Code-Crashing</li>
 <li>gebe Input, aktive Mitarbeit aber erforderlich</li>
 </ol>
 <ul class="incremental">
-<li>alle Kursmaterialien sind entweder auf <a href="https://ilias.uni-giessen.de/ilias/goto.php?target=grp_247939&amp;client_id=JLUG">ILIAS</a>, auf <a href="https://gitlab.com/bpkleer/mtg-21-tidyverse">gitlab</a> oder in der <a href="">R Studio Cloud</a> runterzuladen.</li>
+<li>alle Kursmaterialien sind entweder auf <a href="https://gitlab.com/bpkleer/mtg-21-tidyverse">gitlab</a> oder in der <a href="https://rstudio.cloud/spaces/146374/join?access_code=xfg7axLLy1bVgItjpH869s1Jg3Lmd9ajntRdEKMH">R Studio Cloud</a> runterzuladen. In <a href="https://ilias.uni-giessen.de/ilias/goto.php?target=grp_247939&amp;client_id=JLUG">ILIAS</a> finden sich Links an die betreffenden Stellen.</li>
 </ul>
 </div>
 <div id="arbeiten-mit-r" class="slide section level2">
 <h1>Arbeiten mit R</h1>
-<p>Arbeiten mit R heißt in der Regel immer wieder auf Probleme zu stoßen und willens zu sein, diese Probleme zu lösen. In meiner jetzt fast 10-jährigen Arbeit mit R bin ich noch nie auf ein Problem gestoßen, dass man nicht lösen konnte.</p>
+<p>Arbeiten mit R heißt in der Regel immer wieder auf Probleme zu stoßen und willens zu sein, diese Probleme zu lösen. In meiner jetzt fast zehnjährigen Arbeit mit R bin ich noch nie auf ein Problem gestoßen, dass man nicht lösen konnte (auch wenn es manchmal umständlich war).</p>
 <p><strong>Wichtig dafür:</strong> Lesefähigkeit von Code. Also das Verständnis von Code. Dies ist auch das primäre Ziel des heutigen Tages.</p>
 </div>
 <div id="kursmaterialien" class="slide section level2">
@@ -307,6 +323,31 @@ B. Philipp Kleer
 <p><code>s</code>, <code>&lt;</code>, <code>-</code>: Text wird kleiner</p>
 <p><code>f</code>: Fußzeile zeigen/verstecken</p>
 <p><code>c</code>, <code>t</code>: Inhaltsverzeichnis (springen auf andere Seite möglich)</p>
+</div>
+<div id="coding-konvention" class="slide section level2">
+<h1>Coding Konvention</h1>
+<p>Jede Person hat eigene Vorlieben, was den geschriebenen Code angeht. Im Folgenden möchte ich nur kurz meine Präferenzen darlegen.</p>
+<p>Für neue Variablen oder Dataframes nutze ich in der Regel das Format <code>lowerCamelCase</code>:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>df<span class="sc">$</span>newVar <span class="ot">&lt;-</span> <span class="cn">NA</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>newDf <span class="ot">&lt;-</span> <span class="fu">subset</span>(df, </span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>                <span class="fu">is.na</span>(newVar</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>                      )</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>                )</span></code></pre></div>
+<p>Selbst geschrieben Funktionen schreibe ich mit <code>_</code>:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>own_mean <span class="ot">&lt;-</span> <span class="cf">function</span>(x){</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  mean <span class="ot">=</span> <span class="fu">sum</span>(x) <span class="sc">/</span> <span class="fu">length</span>(x)</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(mean) </span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  }</span></code></pre></div>
+<p>Wie im ersten Fall bereits sichtbar, trenne ich Argumente mit <code>Enter</code> (Zeilenumbruch) und setze Klammern ebenfalls in neue Zeilen. Das hat den Vorteil, dass die Kommentierung einfacher erfolgen kann. Hat eine Funktion nur ein einziges Argument bleibt die Klammer in der gleichen Zeile.</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># einzelnes Argument</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="co"># mehrere Argumente</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="fu">str_sub</span>(tweet<span class="sc">$</span>text[<span class="dv">23</span>], <span class="co"># Quelle</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>        <span class="sc">-</span><span class="dv">20</span>,  <span class="co"># Beginn 20. Buchstaben vom Ende</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>        <span class="sc">-</span><span class="dv">2</span>    <span class="co"># vorletzter Buchstabe vom Ende</span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>        )</span></code></pre></div>
 </div>
 <div id="start" class="slide section level2 break">
 <h1 class="break">Start</h1>

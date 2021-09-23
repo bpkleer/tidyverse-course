@@ -79,11 +79,22 @@ Dazu schaffen wir uns zuerst nochmal ein ggplot-Objekt mit unserem Scatterplot a
 ``` {r base-scatter, eval=TRUE}
 scatter <- ggplot(pss, 
                   aes(stfeco, 
-                      stfdem)) +  
+                      stfdem
+                      )
+                  ) +  
   geom_jitter(alpha = .2, 
-              col = "blue") +
-  scale_x_continuous(breaks = seq(0, 10, 1)) +
-  scale_y_continuous(breaks = seq(0, 10, 1))
+              col = "blue"
+              ) +
+  scale_x_continuous(breaks = seq(0, 
+                                  10, 
+                                  1
+                                  )
+                     ) +
+  scale_y_continuous(breaks = seq(0, 
+                                  10, 
+                                  1
+                                  )
+                     )
 
 scatter
 ``` 
@@ -94,18 +105,19 @@ scatterLeg <- scatter +
   labs(x = "Satisfaction with Economy",
        y = "Satisfaction with Democracy",
        title = "Correlation Plot",
-       caption = "Data: Panem Social Survey.\n Data jittered.")
+       caption = "Data: Panem Social Survey.\n Data jittered."
+       )
 
 scatterLeg
 ```
 
 Innerhalb der Funktion ```theme()``` können wir Teilbereiche des Plots ansprechen und ändern. Dies umfasst u.a. folgende Eigenschaften des Plots:
 
-- plot.title
-- axis.title.x / axis.title.y
-- axis.text.x / axis.text.y
-- panel.grid / panel.grid.minor / panel.grid.major
-- plot.background / panel.background
+- ```plot.title```
+- ```axis.title.x``` / ```axis.title.y```
+- ```axis.text.x``` / ```axis.text.y```
+- ```panel.grid``` / ```panel.grid.minor``` / ```panel.grid.major```
+- ```plot.background``` / ```panel.background```
 
 Eine komplette Übersicht aller Einstellungen die in ```theme()``` genutzt werden können findet sich in der [User-Dokumentation](https://ggplot2.tidyverse.org/reference/theme.html).
 
@@ -114,7 +126,9 @@ Wir werden jetzt nach und nach Veränderungen vornehmen. Zuerst werden wir die S
 scatterLeg +
   theme(plot.title = element_text(size = 25,
                                   face = "italic",
-                                  hjust = 0.5))
+                                  hjust = 0.5
+                                  )
+        )
 ```
 
 Dazu haben wir die drei Argumente ```size``` (Schriftgröße), ```face``` (Erscheinungsbild) und ```hjust``` (Position) genutzt. 
@@ -125,15 +139,22 @@ Als nächstes wollen wir die Achsentitel bearbeiten.
 scatterAxes <- scatterLeg +
   theme(plot.title = element_text(size = 25,
                                   face = "italic",
-                                  hjust = 0.5),
+                                  hjust = 0.5
+                                  ),
         axis.title.x = element_text(size = 16, 
                                     color = "seagreen", 
-                                    hjust = 0),
+                                    hjust = 0
+                                    ),
         axis.title.y = element_text(size = 8, 
-                                    color = rgb(0, 105, 179, maxColorValue = 255), 
+                                    color = rgb(0, 
+                                                105, 
+                                                179, 
+                                                maxColorValue = 255
+                                                ), 
                                     hjust = 1, 
-                                    face = "bold")
-  )
+                                    face = "bold"
+                                    )
+        )
 
 scatterAxes
 ```
@@ -144,15 +165,18 @@ Anstatt eine Farbe anzugeben, kann man mit der Funktion```rgb()``` auch den Farb
 scatterLeg +
   theme(plot.title = element_text(size = 25,
                                   face = "italic",
-                                  hjust = 0.5),
+                                  hjust = 0.5
+                                  ),
         axis.title.x = element_text(size = 16, 
                                     color = "seagreen", 
-                                    hjust = 0),
+                                    hjust = 0
+                                    ),
         axis.title.y = element_text(size = 8, 
                                     color = "#0069B3", 
                                     hjust = 1, 
-                                    face = "bold")
-  )
+                                    face = "bold"
+                                    )
+        )
 ```
 
 Nun möchten wir weiter experimentieren und die Achsenticks bearbeiten. Dazu nutzen wir ```axis.ticks.x``` bzw. ```axis.ticks.y```.
@@ -161,10 +185,13 @@ Nun möchten wir weiter experimentieren und die Achsenticks bearbeiten. Dazu nut
 scatterTicks <- scatterAxes +
   theme(axis.text.x = element_text(size = 12, 
                                     angle = 45,
-                                    color = "darkgrey"),
+                                    color = "darkgrey"
+                                   ),
         axis.text.y = element_text(size = 11, 
                                    hjust = 0,
-                                   vjust = 1))
+                                   vjust = 1
+                                   )
+        )
 
 scatterTicks
 ```
@@ -176,7 +203,8 @@ Als nächstes möchten wir das Grid des Plots ändern, also die Linien. Dazu nut
 scatterGrid <- scatterTicks +
   theme(panel.grid = element_line(color = "green",
                                   size = 1,
-                                  linetype = "solid") # blank, solid, dashed, dotted, dotdash, longdash, twodash
+                                  linetype = "solid" # blank, solid, dashed, dotted, dotdash, longdash, twodash 
+                                  )
         )
 
 scatterGrid
@@ -186,8 +214,9 @@ Mit den Argumenten ```panel.grid.major``` und ```panel.grid.minor``` können die
 ```{r grid2, eval=TRUE}
 scatterGrid <- scatterTicks +
   theme(panel.grid.major = element_line(color = "green",
-                                  size = 1,
-                                  linetype = "solid"), # blank, solid, dashed, dotted, dotdash, longdash, twodash
+                                        size = 1,
+                                        linetype = "solid" # blank, solid, dashed, dotted, dotdash, longdash, twodash 
+                                        ),
         panel.grid.minor = element_blank()
         )
 
@@ -202,8 +231,10 @@ Zuletzt kann man noch den Hintergrund des Plots bzw. des Panels ändern. Dies ge
 scatterGrid +
   theme(plot.background = element_rect(color ="darkgray",
                                        size = 2,
-                                       fill = "lightpink"),
-        panel.background = element_rect(fill = "moccasin")
+                                       fill = "lightpink"
+                                       ),
+        panel.background = element_rect(fill = "moccasin"
+                                        )
         )
 ```
  
@@ -217,10 +248,20 @@ Hierzu gibt es die Funktionen ```geom_text()``` und ```annotate()```, die mit ``
 ``` {r base-scatter2, eval=TRUE}
 scatter2 <- ggplot(pss[1:15,], 
                   aes(stfeco, 
-                      stfdem)) +  
+                      stfdem
+                      )
+                  ) +  
   geom_point(col = "blue") +
-  scale_x_continuous(breaks = seq(0, 10, 1)) +
-  scale_y_continuous(breaks = seq(0, 10, 1))
+  scale_x_continuous(breaks = seq(0, 
+                                  10,
+                                  1
+                                  )
+                     ) +
+  scale_y_continuous(breaks = seq(0, 
+                                  10, 
+                                  1
+                                  )
+                     )
 
 scatter2
 ``` 
@@ -236,21 +277,34 @@ Innerhalb von ```geom_text()``` kann man nun weitere Einstellungen vornehmen. Ei
 scatter2 +
   geom_text(aes(label = idno),
             size = 2, 
-            nudge_y = -.15)
+            nudge_y = -.15
+            )
 ``` 
 
 Wenn man nun trotzdem alle Datenpunkte abbilden möchte und nur spezifische Datenpunkte hervorheben möchte, ist dies ganz leicht möglich: Wir möchten nur die ersten zehn Fälle anzeigen und begrenzen daher die Daten in ```geom_text()```. Dies ist auch über ```subset()``` mit mehreren Verknüpfungen möglich.
 
 ``` {r addtext3, eval=TRUE}
 ggplot(pss, 
-                  aes(stfeco, 
-                      stfdem)) +  
+       aes(stfeco, 
+           stfdem
+           )
+       ) +  
   geom_point(alpha = .2, 
-              col = "blue") +
-  scale_x_continuous(breaks = seq(0, 10, 1)) +
-  scale_y_continuous(breaks = seq(0, 10, 1)) +
+             col = "blue"
+             ) +
+  scale_x_continuous(breaks = seq(0, 
+                                  10,
+                                  1
+                                  )
+                     ) +
+  scale_y_continuous(breaks = seq(0, 
+                                  10,
+                                  1
+                                  )
+                     ) +
   geom_text(aes(label = idno), 
-            data = pss[1:10,])
+            data = pss[1:10,]
+            )
 ``` 
 
 Weitaus größere Möglichkeiten bietet ```annotate()```. Mit dieser können nicht nur Beschriftungen, sondern auch bestimmte Bereiche innerhalb eines Plots hervorgehoben werden. Nehmen wir wieder das gejitterte Plot und markieren einen bestimmten Bereich im Plot:
@@ -262,62 +316,70 @@ scatter +
            ymin = 8.5,
            ymax = 10.5,
            colour = "darkgreen",
-           fill = "lightgreen")
+           fill = "lightgreen"
+           )
 ```
 
 Der Nachteil wird direkt ersichtlich! Da ```ggplot``` über Layer angesprochen wird, muss der ```annotate()```-Layer vor dem ```geom_jitter()```-Layer stehen. Oder wir fügen ```alpha``` hinzu, um die Sichtbarkeit zu verändrn:
 
 ``` {r annotated2, eval=TRUE}
 scatter +
-    annotate("rect", 
+  annotate("rect", 
            xmin = 8.5, # this corresponds to the axis scale!
            xmax = 9.5,
            ymin = 8.5,
            ymax = 10.5,
            colour = "darkgreen",
            fill = "lightgreen",
-           alpha = .1)
+           alpha = .1
+           )
 ```
 Jetzt möchten wir in der Grafik noch eine Beschriftung hinzufügen, damit der Leser:in klar wird, welchen Bereich wir hier markiert haben:
 ``` {r annotated3, eval=TRUE}
 scatter +
-    annotate("rect", 
+  annotate("rect", 
            xmin = 8.5, 
            xmax = 9.5,
            ymin = 8.5,
            ymax = 10.5,
            colour = "darkgreen",
            fill = "lightgreen",
-           alpha = .1) +
+           alpha = .1
+           ) +
   annotate("text", 
            x = 1, 
            y = 9, 
            label = "highlighted area", # with \n you get a new line
-           colour = "darkgreen") 
+           colour = "darkgreen"
+           ) 
 ```
+
 Als weitere Möglichkeit bietet ```annotate()``` die Möglichkeit Linien zu erstellen, so dass wir unseren Text auf das Feld zeigen lassen können:
 ``` {r annotated4, eval=TRUE}
 scatter +
-    annotate("rect", 
+  annotate("rect", 
            xmin = 8.5, 
            xmax = 9.5,
            ymin = 8.5,
            ymax = 10.5,
            colour = "darkgreen",
            fill = "lightgreen",
-           alpha = .1) +
+           alpha = .1
+           ) +
   annotate("text", 
            x = 1, 
            y = 9, 
            label = "highlighted area", # with \n you get a new line
-           color = "darkgreen") +
+           color = "darkgreen"
+           ) +
   annotate("segment", 
            x = 2,
            xend = 8.5, 
            y = 9, 
            yend = 9,
            color = "darkgreen",
-           arrow = arrow())
+           arrow = arrow()
+           )
 ```
 
 ## Grafikpakete zur Darstellung von *missing values*
@@ -344,11 +406,14 @@ missingValues <- uniMis %>%
   select(c(1:5)) %>% 
   pivot_longer(everything(),
                names_to = "variable",
-               values_to = "val") %>%
+               values_to = "val"
+               ) %>%
   mutate(is.missing = is.na(val)) %>%
   group_by(variable, 
-           is.missing) %>%
-  summarize(num.missing = n()) %>%
+           is.missing
+           ) %>%
+  summarize(num.missing = n()
+            ) %>%
   filter(is.missing == TRUE) %>%
   select(-is.missing) %>%
   arrange(desc(num.missing))
@@ -361,13 +426,18 @@ Anschließend kann man sich ein einfaches Balkendiagramm ausgeben lassen mit die
 missingValues %>%
   ggplot() +
   geom_bar(aes(variable, 
-               num.missing), 
-           stat = 'identity') +
+               num.missing
+               ), 
+           stat = 'identity'
+           ) +
   labs(x = 'Variable',
        y = "Anzahl MV", 
-       title = 'Missing Values pro Variable') +
+       title = 'Missing Values pro Variable'
+       ) +
   theme(axis.text.x = element_text(angle = 45, 
-                                   hjust = 1))
+                                   hjust = 1
+                                   )
+        )
 ```
 
 Hier kann man alle Spielereien von oben austesten. Wir wollen aber jetzt Prozente ausgeben, um zu sehen, wie viel Prozent der Variable *missings* sind. Dazu wiederholen wir die Schritte von zuvor, fügen aber einen ```mutate```-Schritt ein, der uns die Prozent angibt.
@@ -378,36 +448,47 @@ missingValues <- uniMis %>%
   select(c(1:4)) %>% 
   pivot_longer(everything(),
                names_to = "key",
-               values_to = "val") %>%
+               values_to = "val"
+               ) %>%
   mutate(isna = is.na(val)) %>%
   group_by(key) %>%
   mutate(total = n()) %>%
   group_by(key, 
            total,
-           isna) %>%
+           isna
+           ) %>%
   summarise(num.isna = n()) %>%
   mutate(pct = num.isna / total * 100)
 
 levels <- (missingValues  %>% 
              filter(isna == T) %>%     
-             arrange(desc(pct)))$key
+             arrange(desc(pct))
+           )$key
 
 percentage.plot <- missingValues %>%
   ggplot() +
   geom_bar(aes(x = reorder(key, 
-                           desc(pct)), 
+                           desc(pct)
+                           ), 
                y = pct, 
-               fill = isna), 
+               fill = isna
+               ), 
            stat = 'identity',
            alpha = 0.8) +
   scale_x_discrete(limits = levels) +
   scale_fill_manual(name = "", 
-                    values = c('steelblue', 'tomato3'), 
-                    labels = c("vorhanden", "fehlend")) +
+                    values = c('steelblue', 
+                               'tomato3'
+                               ), 
+                    labels = c("vorhanden",
+                               "fehlend"
+                               )
+                    ) +
   coord_flip() +
   labs(title = "Prozent von missing values", 
        x = 'Variable', 
-       y = "% missing values")
+       y = "% missing values"
+       )
 percentage.plot
 ```
 
@@ -418,19 +499,26 @@ row.plot <- uniMis %>%
   select(c(1:4)) %>% 
   pivot_longer(-c("ID"),
                names_to = "key",
-               values_to = "val") %>%
+               values_to = "val"
+               ) %>%
   mutate(isna = is.na(val)) %>%
   ggplot(aes(key, 
              ID, 
              fill = isna)) +
   geom_raster(alpha = 0.8) +
   scale_fill_manual(name = "",
-                    values = c('steelblue', 'tomato3'),
-                    labels = c("vorhanden", "fehlend")) +
+                    values = c("steelblue", 
+                               "tomato3"
+                               ),
+                    labels = c("vorhanden",
+                               "fehlend"
+                               )
+                    ) +
   scale_x_discrete(limits = levels) +
   labs(x = "Variable",
        y = "Row Number",
-       title = "Missing values in rows") +
+       title = "Missing values in rows"
+       ) +
   coord_flip()
 row.plot
 ```
@@ -491,7 +579,9 @@ Daneben können *missings* auch über die Funktion ```geom_miss_point()``` ganz 
 ``` {r missValggplot, eval=TRUE}
 ggplot(uniMis,
        aes(x = mot,
-           y = abi)) +
+           y = abi
+           )
+       ) +
   geom_miss_point() 
 ```
 
@@ -502,19 +592,22 @@ Alternativ kann man auch noch die Funktionen ```gg_miss_var()``` und ```gg_miss_
 Mit der Funktion ```gg_miss_var()``` wird die Anzahl der *missings* dargestellt. Mit dem Argument ```facet``` kann man dies auch auf einzelne Ausprägungen runterbrechen. So kann man sehen, ob evtl. eine Gruppe deutlich mehr *missings* aufweist, als eine andere Gruppe.
 ```{r ggmissvar, eval=TRUE}
 gg_miss_var(uniMis,
-            facet = study)
+            facet = study
+            )
 
 ```
 Mit der Funktion ```gg_miss_fct()``` können *missings* visuell sehr schön aufbereitet werden. 
 
 ``` {r ggmissfct, eval=TRUE}
 gg_miss_fct(x = uniMis, 
-            fct = study)
+            fct = study
+            )
 ```
 Auch das kann man sich wieder nach Ausprägungen auf einer weiteren Variable ausgeben lassen, um zu sehen, ob es starke Gruppenunterschiede gibt:
 ``` {r ggmissfct2, eval=TRUE}
 gg_miss_fct(x = uniMis, 
-            fct = study) + 
+            fct = study
+            ) + 
   labs(title = "NA in Uni-df nach Studienfach")
 ```
 
@@ -527,25 +620,33 @@ Bevor wir nun verschiedene lineare Modelle berechnen, berechnen wir ein paar Mod
 
 ``` {r regmodels, eval=TRUE}
 model1 <- lm(trstprl ~ 1 + trstprt, 
-             pss)
+             pss
+             )
 
 model2 <- lm(trstprl ~ 1 + trstprt + agea + stfdem,
-             pss)
+             pss
+             )
 
 model3 <- lm(trstprl ~ 1 + trstprt + agea + stfdem + district,
-             pss)
+             pss
+             )
 ```
 
 Im bivariaten Trainingsfall kann man ganz einfach ```ggplot``` und die Funktion ```stat_smooth()``` verwenden (```model1```):
 ```{r bivariat, eval=TRUE}
 ggplot(pss,
-       aes(x = trstprt, y = trstprl)) +  
+       aes(x = trstprt, 
+           y = trstprl
+           )
+       ) +  
   geom_jitter(color = "darkblue") + # observations
   stat_smooth(method = "lm",       # regression line
-              color = "tomato") +    
+              color = "tomato"
+              ) +    
   labs(title = "Regression trstprl on trstprt",  # titles
        x = "Trust in Parties",
-       y = "Trust in Parliament")
+       y = "Trust in Parliament"
+       )
 ```
 
 
@@ -558,9 +659,16 @@ Daher bilden wir nun eine neue Matrix (Schätzungs-Datensatz). Diese beinhaltet 
 ``` {r expand grid, eval=TRUE}
 fakeDf <- expand.grid(list(trstprt = seq(0,   
                                         10,  
-                                        1),
-                           agea = mean(pss$agea, na.rm = TRUE),
-                           stfdem = mean(pss$stfdem, na.rm = TRUE)))  
+                                        1
+                                        ),
+                           agea = mean(pss$agea, 
+                                       na.rm = TRUE
+                                       ),
+                           stfdem = mean(pss$stfdem, 
+                                         na.rm = TRUE
+                                         )
+                           )
+                      )  
 
 fakeDf
 ``` 
@@ -569,7 +677,8 @@ Anschließend wenden wir das lineare Modell auf diese Daten an:
 ``` {r prediction, eval=TRUE}
 predFakeDf <- predict(model2,     
                       newdata = fakeDf,  # der fiktive Datensatz
-                      se = TRUE)       
+                      se = TRUE
+                      )       
 ```
 
 - Das Objekt ist eine Liste, die ```fit``` (*fitted values*), ```se.fit``` (*standard errors*), ```df``` (*degrees of freedom*) und ```residual.scale``` (*residual standard deviation*) beinhaltet.
@@ -587,19 +696,26 @@ Nun können wir den Plot erstellen, wir haben alle Werte in einem Datenobjekt:
 ```{r predggplot, eval=TRUE}
 ggplot(fakeDf,
        aes(x = trstprt, 
-           y = pred)) +
+           y = pred
+           )
+       ) +
   geom_line(color = "darkgreen") +              
   geom_line(data = fakeDf,                         
             aes(x = trstprt, 
-                y = pred - 1.96 * pred_se),   
-            linetype = 3) +
+                y = pred - 1.96 * pred_se
+                ),   
+            linetype = 3
+            ) +
   geom_line(data = fakeDf,                         
             aes(x = trstprt, 
-                y = pred + 1.96 * pred_se), 
-            linetype = 3) +
+                y = pred + 1.96 * pred_se
+                ), 
+            linetype = 3
+            ) +
   labs(title = "Linear relationship between trstprl and trstprt (others constant)", 
        y = "Predicted value of Trust in Parliament",
-       x = "Trust in Parties") 
+       x = "Trust in Parties"
+       ) 
 ```
 
 Als nächstes fahren wir genauso fort mit ```model3```. Hier haben wir allerdings eine kategorielle Variable (```district```) und diese lässt sich nicht konstant halten. Daher machen wir so viele *fake*-Datensätze wie es Ausprägungen auf der Variable gibt: also **5**. Diese fügen wir dann zusammen. Beginnen wir mit dem ```Distrikt 1``` Datensatz:
@@ -607,38 +723,73 @@ Als nächstes fahren wir genauso fort mit ```model3```. Hier haben wir allerding
 ``` {r gndr-regression, eval=TRUE}
 fakeDfD1 <- expand.grid(list(trstprt = seq(0,   
                                            10,  
-                                           1),
-                             agea = mean(pss$agea, na.rm = TRUE),
-                             stfdem = mean(pss$stfdem, na.rm = TRUE),
-                             district = "Distrikt 1")) 
+                                           1
+                                           ),
+                             agea = mean(pss$agea,
+                                         na.rm = TRUE
+                                         ),
+                             stfdem = mean(pss$stfdem, 
+                                           na.rm = TRUE
+                                           ),
+                             district = "Distrikt 1"
+                             )
+                        ) 
 
 fakeDfD2 <- expand.grid(list(trstprt = seq(0,   
                                            10,  
-                                           1),
-                             agea = mean(pss$agea, na.rm = TRUE),
-                             stfdem = mean(pss$stfdem, na.rm = TRUE),
-                             district = "Distrikt 5")) 
+                                           1
+                                           ),
+                             agea = mean(pss$agea, 
+                                         na.rm = TRUE
+                                         ),
+                             stfdem = mean(pss$stfdem, 
+                                           na.rm = TRUE
+                                           ),
+                             district = "Distrikt 5"
+                             )
+                        ) 
 
 fakeDfD3 <- expand.grid(list(trstprt = seq(0,   
                                            10,  
-                                           1),
-                             agea = mean(pss$agea, na.rm = TRUE),
-                             stfdem = mean(pss$stfdem, na.rm = TRUE),
-                             district = "Distrikt 7")) 
+                                           1
+                                           ),
+                             agea = mean(pss$agea, 
+                                         na.rm = TRUE
+                                         ),
+                             stfdem = mean(pss$stfdem, 
+                                           na.rm = TRUE
+                                           ),
+                             district = "Distrikt 7"
+                             )
+                        ) 
 
 fakeDfD4 <- expand.grid(list(trstprt = seq(0,   
                                            10,  
-                                           1),
-                             agea = mean(pss$agea, na.rm = TRUE),
-                             stfdem = mean(pss$stfdem, na.rm = TRUE),
-                             district = "Distrikt 10")) 
+                                           1
+                                           ),
+                             agea = mean(pss$agea, 
+                                         na.rm = TRUE
+                                         ),
+                             stfdem = mean(pss$stfdem, 
+                                           na.rm = TRUE
+                                           ),
+                             district = "Distrikt 10"
+                             )
+                        ) 
 
 fakeDfD5 <- expand.grid(list(trstprt = seq(0,   
                                            10,  
-                                           1),
-                             agea = mean(pss$agea, na.rm = TRUE),
-                             stfdem = mean(pss$stfdem, na.rm = TRUE),
-                             district = "Distrikt 12")) 
+                                           1
+                                           ),
+                             agea = mean(pss$agea, 
+                                         na.rm = TRUE
+                                         ),
+                             stfdem = mean(pss$stfdem, 
+                                           na.rm = TRUE
+                                           ),
+                             district = "Distrikt 12"
+                             )
+                        ) 
 ```
 
 Jetzt fügen wir diese Datensätze erst in einem Datensatz zusammen, da wir ansonsten mit dem Vorgehen wie oben unnötig weitere Objekte erstellen würden. Und anschließend schätzen wir die Werte von ```trstprl```: 
@@ -648,11 +799,13 @@ fakeDfbyDistrict <- rbind(fakeDfD1,
                           fakeDfD2, 
                           fakeDfD3, 
                           fakeDfD4, 
-                          fakeDfD5)
+                          fakeDfD5
+                          )
 
 predFakeDfbyDistrict <- predict(model3,     
                                 newdata = fakeDfbyDistrict,  # der fiktive Datensatz
-                                se = TRUE) 
+                                se = TRUE
+                                ) 
 
 fakeDfbyDistrict$pred    <- predFakeDfbyDistrict$fit
 fakeDfbyDistrict$pred_se <- predFakeDfbyDistrict$se.fit
@@ -665,12 +818,14 @@ ggplot(fakeDfbyDistrict,
            y = pred,
            color = district,
            shape = district
-           )) +
+           )
+       ) +
   geom_line() +
   ylab("Predicted value of Trust in Parliament") +
   xlab("Trust in Parties") +
   labs(title = "Linear relationship between trstprl and trstprt (others constant)",
-       color = "Distrikte") 
+       color = "Distrikte"
+       ) 
 ```
 Somit haben wir die Regressionslinie zwischen ```trstprl``` und ```trstprt``` unter Konstanthalten von Alter, Zufriedenheit mit der Demokratie für Personen nach Distrikten dargestellt. 
 
@@ -688,19 +843,22 @@ district12 <- pss %>%
 ggplot(fakeDistrict12,
        aes(x = trstprt, 
            y = pred
-           )) +
+           )
+       ) +
   geom_line(color = "tomato") + 
   geom_point(data = district12,
              aes(y = trstprl),
              color = "tomato",
              position = "jitter",
              size = 0.7,
-             alpha = 0.5) + 
+             alpha = 0.5
+             ) + 
   ylab("Predicted value of Trust in Parliament") +
   xlab("Trust in Parties") +
   labs(title = "Linear relationship between trstprl and trstprt (others constant)",
        lty = "Distrikte",
-       caption = "Highlighted District 12.")
+       caption = "Highlighted District 12."
+       )
 ```
 
 Wir könnten zusätzlich auch noch die anderen Datenpunkte in das Bild einfügen. Man sollte aber immer aufpassen, dass ein Plot nicht zu unübersichtlich wird. 
@@ -713,26 +871,36 @@ districts <- pss %>%
 ggplot(fakeDistrict12,
        aes(x = trstprt, 
            y = pred
-           )) +
+           )
+       ) +
   geom_line(color = "tomato") + 
   geom_point(data = district12,
              aes(y = trstprl),
              color = "tomato",
              position = "jitter",
              size = 0.7,
-             alpha = 0.85) + 
+             alpha = 0.85
+             ) + 
   geom_point(data = districts,
              aes(y = trstprl),
              color = "darkgray",
              position = "jitter",
              size = 0.7,
-             alpha = 0.3) + 
+             alpha = 0.3
+             ) + 
   ylab("Predicted value of Trust in Parliament") +
   xlab("Trust in Parties") +
   labs(title = "Linear relationship between trstprl and trstprt (others constant)",
        lty = "Distrikte",
-       caption = "Highlighted District 12.") +
-  scale_color_manual(values = c("darkgray", "darkgray", "darkgray", "darkgray", "tomato")) +
+       caption = "Highlighted District 12."
+       ) +
+  scale_color_manual(values = c("darkgray", 
+                                "darkgray", 
+                                "darkgray", 
+                                "darkgray", 
+                                "tomato"
+                                )
+                     ) +
   guides(color = "none")
 ```
 
@@ -761,7 +929,8 @@ Das sieht noch etwas unschön aus und wir bearbeiten dies nun in ```ggplot```: W
 ```{r coefplot2, eval=TRUE}
 dwplot(model3) +
   geom_vline(xintercept = 0,
-             linetype = "dashed") +
+             linetype = "dashed"
+             ) +
   scale_y_discrete(labels = rev(c("Trust Parties", 
                                   "Age", 
                                   "Satisfaction w/ Democracy",
@@ -769,11 +938,18 @@ dwplot(model3) +
                                   "District 7", 
                                   "District 10", 
                                   "District 12"
-                                  ))) + 
-  scale_x_continuous(breaks = seq(-2, 1 , 0.2)) +
+                                  )
+                                )
+                   ) + 
+  scale_x_continuous(breaks = seq(-2, 
+                                  1,
+                                  0.2
+                                  )
+                     ) +
   labs(title = "Lin. Regression on Trust in Parliament (ref: District 1)",
-       caption = "Data: Panem Social Survey.")
+       caption = "Data: Panem Social Survey."
+       )
 ```
-## Labs
-1. Prediciton machen und korrekte Werte mit eintragen.
-2. Lineare Regression mit Income als group-Variablen und prediction darstellen
+
+#### Das war's!
+Übungsaufgaben findet ihr in der Cloud. 

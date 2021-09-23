@@ -76,7 +76,7 @@ Es bietet somit einen sehr großen Funktionsumfang und wird daher auch viel genu
 - forcats
 - tibble
 - readr
-- stringr
+- **stringr**
 - **tidyr**
 - purrr
 
@@ -92,7 +92,17 @@ Es bietet somit einen sehr großen Funktionsumfang und wird daher auch viel genu
 :::: {class="flex-container"}
 
 ::: {class="flex-text"}
-**dplyr** beinhaltet eine Grammatik, um Datenmanipulationen zu machen. Es besticht dabei durch seine Einfachheit und der Kombinationsmöglichkeit der Grundbefehle. Für eine erste Dateneinsicht ist dies meist hilfreich zu nutzen, oder um die Daten umzustrukturieren (manipulieren).
+**tidyr** beinhaltet eine Grammatik, um Datensätze in ein *tidy* Format zu bringen. Ziel ist es, dass jede 
+Spalte eine Variable ist, jede Zeile eine Beobachtung und jede Zelle einen Wert beinhaltet. Hier gibt es das [Cheat-Sheet](https://github.com/rstudio/cheatsheets/blob/master/data-import.pdf) zu ```tidyr```.
+:::
+
+
+::: {class="flex-picture"}
+![stringr](pics/tidyr.png){width="300px"}
+:::
+
+::: {class="flex-text"}
+**dplyr** beinhaltet eine Grammatik, um Datenmanipulationen zu machen. Es besticht dabei durch seine Einfachheit und der Kombinationsmöglichkeit der Grundbefehle. Für eine erste Dateneinsicht ist dies meist hilfreich zu nutzen, oder um die Daten umzustrukturieren (manipulieren). Hier gibt es das [Cheat-Sheet](https://github.com/rstudio/cheatsheets/blob/master/data-transformation.pdf).
 :::
 
 ::: {class="flex-picture"}
@@ -100,7 +110,7 @@ Es bietet somit einen sehr großen Funktionsumfang und wird daher auch viel genu
 :::
 
 ::: {class="flex-text"}
-**ggplot2** ist **das** Grafikpaket in R. Es bietet die Möglichkeit Grafiken genauestens den eigenen Präferenzen anzupassen und darzustellen. Dazu gibt es viele Erweiterungspakete, die ebenfalls auf der Syntax von **ggplot2** aufbauen.
+**ggplot2** ist **das** Grafikpaket in R. Es bietet die Möglichkeit Grafiken genauestens den eigenen Präferenzen anzupassen und darzustellen. Dazu gibt es viele Erweiterungspakete, die ebenfalls auf der Syntax von **ggplot2** aufbauen. Hier gibt es das [Cheat-Sheet](https://github.com/rstudio/cheatsheets/blob/master/data-visualization-2.1.pdf).
 
 :::
 
@@ -109,7 +119,7 @@ Es bietet somit einen sehr großen Funktionsumfang und wird daher auch viel genu
 :::
 
 ::: {class="flex-text"}
-**stringr** ist ein Paket um ```string```-Variablen vernünftig in R bearbeiten zu können. Es gibt einige Alternativen, aber dennoch bleibt **stringr** ein beliebtes Paket zur Bearbeitung von ```string```-Variablen. Insbesondere bei Textanalysen muss man im Vorfeld die ```string```-Variablen bearbeiten. 
+**stringr** ist ein Paket um ```string```-Variablen vernünftig in R bearbeiten zu können. Es gibt einige Alternativen, aber dennoch bleibt **stringr** ein beliebtes Paket zur Bearbeitung von ```string```-Variablen. Insbesondere bei Textanalysen muss man im Vorfeld die ```string```-Variablen bearbeiten. Hier gibt es das [Cheat-Sheet](https://github.com/rstudio/cheatsheets/blob/master/strings.pdf).
 
 :::
 
@@ -131,11 +141,19 @@ Die Teilnehmenden können am Ende des Workshops ...
 ## Ziel des Workshops
 Es geht in diesem kurzen 1-Tages-Kurs vor allem um **Readbility-Skills**. Ziel ist es, dass man neue Probleme mit dem hier gezeigten lösen kann. Dafür sollte der Inhalt aber während des Workshops gut aufbereitet bzw. nachbereitet werden (eigene Notizen in den Skripten etc.).
 
+In meinen Kursen gilt immer folgendes Prinzip: **Was man nicht schreibt, lernt man auch nicht!**
+
+Es ist also eine didaktische Entscheidung von mir, dass es keine fertige Skripts gibt. Selbst programmieren heißt eben auch selbst Code schreiben und nicht nur einzelnen Felder austauschen (wie bei Click and Play mit SPSS). Ebenso wird meiner Meinung nach das Verständnis von Funktionen viel besser vermittelt. 
+
+Die Slides bzw. HTML-Dokumente haben aber kopierbaren Code (ein bisschen Erleichterung). Wenn man in diesen Dokumenten über den Code geht, erscheint oben rechts ein *Clipboard*, mit dem man den Code in die Zwischenablage kopiert. 
+
+![Beispiel Kopieren von Code](./pics/code.png){width=50%}
+
 ## Wer ich bin und wie ich Workshops leite?
 **Wer bin ich?**
 
 > - seit 2015 Mitarbeiter an der Professur für Methoden (viele praktische Methoden-/Projektkurse bisher gegeben)
-> - nutze seit mehreren Jahren bereits R
+> - nutze seit mehreren Jahren bereits R bzw. RStudio (vor allem Projekt-Funktion
 > - derzeit: gefördertes Lehrprojekt, in dem R-Kursmaterial für Personen aufbereitet wird, die keine Computer-/Programmierkenntnisse haben
 
 **Wie ich meine Rolle als Workshopleiter sehe?**
@@ -144,14 +162,14 @@ Es geht in diesem kurzen 1-Tages-Kurs vor allem um **Readbility-Skills**. Ziel i
 > 2. Interesse daran, anderen zu helfen/zu unterstützen
 > 3. in der Ansprache ziehe ich das Du vor
 > 4. Kurz-Inputs und dann eigenes *trial-and-error*
-> 5. meine Rolle: Unterstützer/Helfer, aber nicht Motivator, Erzieher oder allwissender Guru
+> 5. Unterstützung beim Code-Crashing
 > 6. gebe Input, aktive Mitarbeit aber erforderlich
 
 
-> * alle Kursmaterialien sind entweder auf [ILIAS](https://ilias.uni-giessen.de/ilias/goto.php?target=grp_247939&client_id=JLUG), auf [gitlab](https://gitlab.com/bpkleer/mtg-21-tidyverse) oder in der [R Studio Cloud]() runterzuladen.
+> * alle Kursmaterialien sind entweder auf [gitlab](https://gitlab.com/bpkleer/mtg-21-tidyverse) oder in der [R Studio Cloud](https://rstudio.cloud/spaces/146374/join?access_code=xfg7axLLy1bVgItjpH869s1Jg3Lmd9ajntRdEKMH) runterzuladen. In [ILIAS](https://ilias.uni-giessen.de/ilias/goto.php?target=grp_247939&client_id=JLUG) finden sich Links an die betreffenden Stellen.
 
 ## Arbeiten mit R
-Arbeiten mit R heißt in der Regel immer wieder auf Probleme zu stoßen und willens zu sein, diese Probleme zu lösen. In meiner jetzt fast 10-jährigen Arbeit mit R bin ich noch nie auf ein Problem gestoßen, dass man nicht lösen konnte. 
+Arbeiten mit R heißt in der Regel immer wieder auf Probleme zu stoßen und willens zu sein, diese Probleme zu lösen. In meiner jetzt fast zehnjährigen Arbeit mit R bin ich noch nie auf ein Problem gestoßen, dass man nicht lösen konnte (auch wenn es manchmal umständlich war). 
 
 **Wichtig dafür:** Lesefähigkeit von Code. Also das Verständnis von Code. Dies ist auch das primäre Ziel des heutigen Tages.
 
@@ -177,6 +195,41 @@ install.packages("tidyverse",
 
 ```c```, ```t```: Inhaltsverzeichnis (springen auf andere Seite möglich)
 
+
+## Coding Konvention
+Jede Person hat eigene Vorlieben, was den geschriebenen Code angeht. Im Folgenden möchte ich nur kurz meine Präferenzen darlegen.
+
+Für neue Variablen oder Dataframes nutze ich in der Regel das Format ```lowerCamelCase```:
+``` {r format}
+df$newVar <- NA
+
+newDf <- subset(df, 
+                is.na(newVar
+                      )
+                )
+```
+
+Selbst geschrieben Funktionen schreibe ich mit ```_```:
+```{r format2}
+own_mean <- function(x){
+  mean = sum(x) / length(x)
+  print(mean) 
+  }
+```
+
+Wie im ersten Fall bereits sichtbar, trenne ich Argumente mit ```Enter``` (Zeilenumbruch) und setze Klammern ebenfalls in neue Zeilen. Das hat den Vorteil, dass die Kommentierung einfacher erfolgen kann. Hat eine Funktion nur ein einziges Argument bleibt die Klammer in der gleichen Zeile.
+
+```{r format3}
+# einzelnes Argument
+library(tidyverse)
+
+# mehrere Argumente
+str_sub(tweet$text[23], # Quelle
+        -20,  # Beginn 20. Buchstaben vom Ende
+        -2    # vorletzter Buchstabe vom Ende
+        )
+
+```
 
 ## Start {.break}
 Der Kurs setzt Grundkenntnisse voraus. Ihr lernt euch jetzt in Breakout-Rooms kennen. In den Breakout-Rooms sollt ihr euch kennenlernen und ein paar Grundaufgaben in R lösen. Dies dient auch der Auffrischung. Ich schaue abwechselnd in den Breakout-Rooms nach. Ihr könnte mich aber auch rufen. 

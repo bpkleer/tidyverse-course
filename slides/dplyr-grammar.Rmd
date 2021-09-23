@@ -68,7 +68,7 @@ library("tidyverse")
 Anschließend laden wir den Datensatz ```uni``` ins *environment*.
 
 ``` {r uni-load}
-uni <- readRDS("yourpath/uni.rds")
+uni <- readRDS("../datasets/uni.rds") #oder eigener Pfad, wenn nicht in der Cloud
 ```
 
 Wir verschaffen uns einen Überblick über den Datensatz:
@@ -92,13 +92,13 @@ In **dplyr** gibt es nicht viele Vokabeln, die aber effektiv miteinander verbund
 
 Die Grundvokabeln lernen wir jetzt im Folgenden erstmal ohne *piping* kennen:
 
-- select()
-- slice()
-- filter()
-- arrange()
-- mutate()
-- summarise() / summarize()
-- group_by()
+- ```select()```
+- ```slice()```
+- ```filter()```
+- ```arrange()```
+- ```mutate()```
+- ```summarise()``` / ```summarize()```
+- ```group_by()```
 
 ## select()
 Mit **select()** wählen wir Spalten aus, die uns angezeigt werden 
@@ -106,14 +106,17 @@ Mit **select()** wählen wir Spalten aus, die uns angezeigt werden
 ``` {r select, eval=TRUE}
 select(uni,   # Datenquelle
        c(mot, # ausgewählte Spalten
-         term))
+         term
+         )
+       )
 ```
 
 ## slice()
 Demgegenüber können wir mit **slice()** Zeilen auswählen, also Fälle:
 ``` {r slice, eval=TRUE}
 slice(uni,    # Datenquelle
-      50:55)  # ausgewählte Zahlen
+      50:55
+      )  # ausgewählte Zahlen
 ```
 
 ## filter()
@@ -130,12 +133,14 @@ Mit **filter()** können wir spezifische Fälle des Datensatzes auswählen. Zur 
 
 ``` {r filter, eval = TRUE}
 filter(uni,  # Datenquelle
-       city == "Giessen") # Filtervariable
+       city == "Giessen" # Filtervariable
+       )
 ```
 
 ```{r filter2, eval=TRUE}
 filter(uni,
-       city == "Frankfurt" & study == "Political Science")
+       city == "Frankfurt" & study == "Political Science"
+       )
 ```
 
 
@@ -144,20 +149,23 @@ Mit **arrange()** können wir den Datensatz sortieren.
 
 ``` {r arrange, eval=TRUE}
 arrange(uni, 
-        abi)
+        abi
+        )
 ```
 
 Die Sortierung ist dabei immer aufsteigend. Dies kann man über die Funktion ```desc()``` ändert (***desc**ending*):
 ``` {r arrange2, eval=TRUE}
 arrange(uni,
-        desc(abi))
+        desc(abi)
+        )
 ```
 
 Alternativ kann man auch einfach ein Minuszeichen vor die Variable, nach der sortiert werden soll, setzen:
 
 ``` {r arrange3, eval=TRUE}
 arrange(uni, 
-        -abi)
+        -abi
+        )
 ```
 
 
@@ -168,7 +176,9 @@ Zum Beispiel könnten wir eine Variable schaffen, die den Abstand zum Mittelwert
 ``` {r mutate, eval=TRUE}
 mutate(uni, 
        abiDist = abi - mean(abi,
-                             na.rm = TRUE))
+                             na.rm = TRUE
+                            )
+       )
 ```
 
 **Wichtig:** Wir haben zwar hier die Variable ```abiDist``` gespeichert, aber diese nicht im Datensatz gespeichert. 
@@ -187,7 +197,9 @@ case_when(Fallauswahl ~ neuer Codewert)
 mutate(uni,
        dum.pum = case_when(city == "Marburg" ~ 1, # "Fallauswahl" ~ "neuer Codewert"
                            city == "Gießen" ~ 0, 
-                           city == "Frankfurt" ~ 0))
+                           city == "Frankfurt" ~ 0
+                           )
+       )
 ```
 
 Auch hier könnten mehrere Bedingungen verknüpft werden: So möchten wir einen Dummy schaffen, der anzeigt, ob eine Person in Marburg Erziehungswissenschaften studiert. 
@@ -195,14 +207,18 @@ Auch hier könnten mehrere Bedingungen verknüpft werden: So möchten wir einen 
 Wir würden wie folgt beginnen:
 ``` {r mutate3}
 mutate(uni, 
-       dum.pum.es = case_when(city == "Marburg" & study == "Educational Science" ~ 1))
+       dum.pum.es = case_when(city == "Marburg" & study == "Educational Science" ~ 1
+                              )
+       )
 ```
 
 Wenn man nicht alle verschiedenen Kombinationen eingeben möchte und zum Beispiel nur eine von Interesse ist, kann man mit ```TRUE ~ 0``` allen restlichen Fällen direkt einen Wert zuordnen (aber nur denselben Wert!). Alle Kombinationen, die nicht vor ```TRUE ~ 0``` definiert wurden, erhalten automatisch den in der ```TRUE```-Zeile definierten Wert.
 ``` {r mutate4, eval=TRUE}
 mutate(uni, 
        dum.pum.es = case_when(city == "Marburg" & study == "Educational Science" ~ 1,
-                              TRUE ~ 0))
+                              TRUE ~ 0
+                              )
+       )
 ```
 
 ## summarize()
@@ -210,14 +226,16 @@ Mit **summarize()** können vereinfacht erste Einblicke in die Daten erfolgen. S
 
 ```{r summarize, eval=TRUE}
 summarize(uni, 
-          mean(term))
+          mean(term)
+          )
 ```
 
 In **summarize()** können verschiedene Funktionen genutzt werden, die auf die Variablen im Datensatz angewendet werden können. Auch können direkt mehrere Werte ausgegeben werden. **Wichtig:** Das Ausgabe-Format ist immer ein *tibble*.
 ```{r summarize2, eval=TRUE}
 summarize(uni,
           mean(term),
-          mean(mot))
+          mean(mot)
+          )
 ```
 
 Die Unterfunktion **summarize_if()** bietet dazu die Möglichkeit leicht auf eine Gruppe von Variablen Funktionen anzuwenden, also zum Beispiel auf alle numerischen Variablen:
@@ -225,7 +243,9 @@ Die Unterfunktion **summarize_if()** bietet dazu die Möglichkeit leicht auf ein
 summarize_if(uni,
              is.numeric, 
              list(mean = mean, 
-                  sd = sd))
+                  sd = sd
+                  )
+             )
 ```
 
 Wer weiß, warum hier teils ```NA``` angezeigt wird?
@@ -233,16 +253,22 @@ Wer weiß, warum hier teils ```NA``` angezeigt wird?
 Die Unterfunktion **summarise_at()** bietet die Möglichkeit nur bei bestimmten Variablen die Funktion anzuwenden:
 ``` {r summarize4, eval=TRUE}
 summarize_at(uni,
-             vars(mot, abi, term),
+             vars(mot,
+                  abi,
+                  term
+                  ),
              list(mean = mean, 
-                  sd = sd))
+                  sd = sd
+                  )
+             )
 ```
 
 ## group_by()
 Mit **group_by()** kann der Datensatz gruppiert werden, also zum Beispiel nach eine kategoriellen Variable. In ```uni```-Datensatz zum Beispiel nach ```study```:
 ``` {r groupby, eval=TRUE}
 group_by(uni,
-         study)
+         study
+         )
 ```
 
 Was sehen wir? **Nichts!** 
@@ -251,8 +277,10 @@ Was sehen wir? **Nichts!**
 
 ```{r groupby2, eval=TRUE}
 summarize(group_by(uni, 
-                   study), 
-          mean(term))
+                   study
+                   ), 
+          mean(term)
+          )
 ```
 
 Jetzt haben wir für jeden Studienort einen Mittelwert für das Fachsemester (```term```).
@@ -280,10 +308,13 @@ Die Schritte, die wir hierbei machen, sind folgende:
 uni <- uni %>%     # Schritt 1 / Schritt 5/0
   group_by(city) %>%  # Schritt 2
   mutate(abiMean = mean(abi, 
-                         na.rm = TRUE)) %>% # Schritt 4
+                         na.rm = TRUE
+                        )
+         ) %>% # Schritt 4
   ungroup() #Schritt 5
 
-table(uni$city, uni$abiMean)
+table(uni$city, 
+      uni$abiMean)
 ```
 
 Alternativ könnten wir uns dies auch erstmal nur ausgeben lassen.
@@ -291,7 +322,9 @@ Alternativ könnten wir uns dies auch erstmal nur ausgeben lassen.
 uni %>% 
   group_by(city) %>% 
   summarize(mean = mean(abi, 
-                        na.rm = TRUE))
+                        na.rm = TRUE
+                        )
+            )
 ```
 
 Ein weiteres Beispiel: Wir möchten Studierende nach der Anzahl des Fachsemesters kategorisieren. Die neue Variable ```termg``` soll zwischen:
@@ -306,7 +339,9 @@ unterscheiden.
 uni <- uni %>%
   mutate(termg = case_when(term <= 2 ~ "Anfänger:in", 
                            term > 2 & term <= 6 ~ "Erfahrene", 
-                           term > 6 ~ "Langzeit"))
+                           term > 6 ~ "Langzeit"
+                           )
+         )
 table(uni$termg)
 str(uni$termg)
 ```
@@ -324,7 +359,9 @@ uni[, c("ID",
         "abi",
         "city", 
         "abigm", 
-        "abid")]
+        "abid"
+        )
+    ]
 ```
 
 Alternativ könnten wir die Daten auch hierarchisch nach Standort und Studienfach gruppieren und uns dann einfach die unterschiedlichen Mittelwerte mit **summarize()** ausgeben lassen:
@@ -332,7 +369,8 @@ Alternativ könnten wir die Daten auch hierarchisch nach Standort und Studienfac
 ```{r pipe5, eval=TRUE}
 mCityStudy <- uni %>%
   group_by(city,
-           study) %>%
+           study
+           ) %>%
   summarize(mean(abi))
 
 mCityStudy
@@ -364,3 +402,5 @@ Nutzt dazu den Datensatz ```pss``` (Panem Social Survey).
 
 6. Gruppiere den Datensatz nach Distrikten und lasse dir deskriptive Werte für die Links-Rechts-Selbsteinschätzung ausgeben. 
 7. Zeigen sich, gruppiert nach Alter (!), deskriptive Differenzen auf der Links-Rechts-Selbsteinschätzung.
+
+## Das war's!

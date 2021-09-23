@@ -69,7 +69,7 @@ library("tidyverse")
 Anschließend laden wir den Datensatz ```pss``` ins *environment*.
 
 ``` {r uni-load}
-pss <- readRDS("yourpath/pss.rds")
+pss <- readRDS("../datasets/pss.rds") #oder eigener Pfad, wenn nicht in Cloud
 ```
 
 Wir machen **gplot2** ist sehr umfangreich, wir machen heute einen Einstieg in die Grammatik. Da die Grafiken aber als Layer aufgebaut sind, können mithilfe des Verständnisses der Grafikgrammatik auch aufwendigere Grafiken erstellt werden. 
@@ -90,14 +90,16 @@ Ein Balkendiagramm ist ein Plot einer einzelnen kategorialen Variable. Es gibt z
 ``` {r ggplot1, eval=TRUE}
 # direkter Output
 ggplot(data = pss,
-       mapping = aes(x = edu))
+       mapping = aes(x = edu)
+       )
 ```
 
 
 ``` {r ggplot2, eval=TRUE}
 # oder speichern als Objekt
 mfPlot <- ggplot(data = pss,
-                 mapping = aes(x = edu))
+                 mapping = aes(x = edu)
+                 )
 mfPlot
 ```
 
@@ -110,7 +112,8 @@ Um nun ein Balkendiagramm aus dem Plot zu machen, benötigen wir einen weiteren 
 
 ``` {r bar, eval=TRUE}
 ggplot(data = pss,
-       mapping = aes(x = edu)) +
+       mapping = aes(x = edu)
+       ) +
   geom_bar()
 
 # oder:
@@ -123,7 +126,9 @@ Jetzt haben wir ein Balkendiagramm mit Häufigkeiten. Manchmal möchte man liebe
 ggplot(data = pss, 
        mapping = aes(x = edu, 
                      y = ..prop..,  #Einstellung Prozente
-                     group = 1)) +  # Einstellung nur eine Gruppe, sonst wäre jeder Balken 100 %
+                     group = 1   # Einstellung nur eine Gruppe, sonst wäre jeder Balken 100 %
+                     )
+       ) + 
   geom_bar()
 ```
 
@@ -140,7 +145,9 @@ In der Regel wollen wir Grafiken ansprechend gestalten, dafür gibt es verschied
 ``` {r bar4, eval=TRUE}
 eduPlot <- ggplot(pss, 
                   aes(edu, 
-                      color = edu)) +
+                      color = edu
+                      )
+                  ) +
   geom_bar()
 eduPlot
 ```
@@ -150,7 +157,9 @@ eduPlot
 ```{r bar5, eval=TRUE}
 eduPlot <- ggplot(pss, 
                   aes(edu, 
-                      fill = edu)) +
+                      fill = edu
+                      )
+                  ) +
   geom_bar()
 eduPlot
 
@@ -163,11 +172,14 @@ cntryCol = c("steelblue",
               "red4", 
               "orange",
               "pink",
-              "lightgray")
+              "lightgray"
+             )
 
 ggplot(pss, 
        aes(x = edu, 
-           fill = edu)) +
+           fill = edu
+           )
+       ) +
    geom_bar(fill = cntryCol) 
 ```
 
@@ -175,14 +187,24 @@ Neben dieser Möglichkeit können auch Farbpaletten genutzt werden, die eine bel
 
 ``` {r bar7, eval=TRUE}
 # a colourblind-friendly palettes
-cbp1 <- c("#999999", "#E69F00", "#56B4E9", "#009E73",
-          "#F0E442", "#0072B2", "#D55E00", "#CC79A7")
+cbp1 <- c("#999999", 
+          "#E69F00",
+          "#56B4E9",
+          "#009E73",
+          "#F0E442",
+          "#0072B2",
+          "#D55E00",
+          "#CC79A7"
+          )
 
 eduPlotCb<- ggplot(pss, 
                    aes(edu, 
-                       fill = edu)) + 
+                       fill = edu
+                       )
+                   ) + 
   geom_bar() +
   scale_fill_manual(values = cbp1)
+
 eduPlotCb
 ```
 
@@ -190,7 +212,9 @@ Für einen kostensparenden Druck kann man auch einfach direkt ```scale_fill_gray
 ``` {r bar8, eval=TRUE}
 ggplot(pss, 
        aes(district, 
-           fill = district)) + 
+           fill = district
+           )
+       ) + 
   geom_bar() +
   scale_fill_grey()
 ```
@@ -200,6 +224,7 @@ Ein solche Paket ist zum Beispiel ```RColorBrewer```:
 ``` {r brewer, eval=TRUE}
 # if(!require("RColorBrewer")) install.packages("RColorBrewer")
 library("RColorBrewer")
+
 display.brewer.all()
 ```
 
@@ -220,10 +245,15 @@ Als nächsten Schritt passen wir die Achsen an, da die Standardeinstellungen daf
 Was ist mit unseren Achsen?
 ``` {r axes, eval=TRUE}
 eduPlot2 <- eduPlot + 
-  coord_cartesian(ylim = c(0, 1500)) +
+  coord_cartesian(ylim = c(0,
+                           1500
+                           )
+                  ) +
   scale_y_continuous(breaks = seq(0, 
                                   1500, 
-                                  100))
+                                  100
+                                  )
+                     )
 eduPlot2
 ```
 
@@ -234,7 +264,10 @@ eduPlot3 <- eduPlot2 +
                               "ES-ISCED II", 
                               "ES-ISCED III", 
                               "ES-ISCED IV",
-                              "ES-ISCED V"))
+                              "ES-ISCED V"
+                              )
+                   )
+
 eduPlot3
 ```
 
@@ -253,7 +286,9 @@ eduPlot4 <- eduPlot3 +
   labs(x = "Education level",
        y = "Frequency",
        title = "my first shot at ggplot2",
-       caption = "Data: Panem Social Survey.")
+       caption = "Data: Panem Social Survey."
+       )
+
 eduPlot4
 ```
 
@@ -267,9 +302,11 @@ eduPlot5 <- eduPlot4 +
                                "niedrig", 
                                "mittel",
                                "hoch",
-                               "sehr hoch"))
-eduPlot5
+                               "sehr hoch"
+                               )
+                    )
 
+eduPlot5
 ```
 
 Über die Funktion ```theme()``` können viele Feineinstellungen vorgenommen werden. Diese können wir nicht im einzelnen hier besprechen, aber es kann wirklich jedes Detail eingestellt werden. Mehr dazu machen die Personen, die am Nachmittag nochmal vertieft mit **ggplot()** arbeiten. 
@@ -280,8 +317,10 @@ Gehen wir nun über zu Histogrammen. Diese nutzen wir für metrische Variablen. 
 
 ``` {r hist1, eval=TRUE}
 agePlot <- ggplot(pss,
-                  aes(agea)) + 
+                  aes(agea)
+                  ) + 
   geom_histogram()  
+
 agePlot
 ```
 
@@ -289,41 +328,53 @@ Auch hier können wir ganz einfach Anpassungen von oben übernehmen und den Plot
 ``` {r hist2, eval=TRUE}
 agePlot2 <- agePlot +
   geom_histogram(color = "lightgray", 
-                 fill = "gray") + 
+                 fill = "gray"
+                 ) + 
   labs(x = "Age in years", 
        y = "Frequency", 
-       title = "Histogram of Age (PSS)")
+       title = "Histogram of Age (PSS)"
+       )
+
 agePlot2
 ```
 
 Oftmals fügen wir auch die Dichte hinzu, um einfacher beurteilen zu können, ob annähernd eine Normalverteilung vorliegt. Hierzu bestimmen wir, dass die y-Achse die Dichte anzeig (```y = ..density..```) und fügen ```geom_density()``` hinzu. Mit ```alpha``` stellen wir Durchsichtigkeit ein und mit ```fill``` die Farbe der Fläche. 
 ``` {r hist3, eval=TRUE}
 ageDensPlot <- ggplot(pss, 
-                      aes(agea)) + 
+                      aes(agea)
+                      ) + 
   geom_histogram(aes(y = ..density..), 
                  color = "lightgray", 
-                 fill = "gray") + 
+                 fill = "gray"
+                 ) + 
   geom_density(alpha = 0.2, 
-               fill = "lightblue") +
+               fill = "lightblue"
+               ) +
   labs(x = "Age in years", 
        y = "Density", 
-       title = "Histogram of Age (PSS)")
+       title = "Histogram of Age (PSS)"
+       )
+
 ageDensPlot
 ```
 
 ```geom_histogram()``` wählt automatisch die Breite der ```bin``` (Säulen), was irreführend sein kann. Hier könnten wir zum Beispiel so einstellen, dass wir so viele ```bins``` erhalten, wie es auch tatsächliche Alterskategorien gibt. Man kann einfach die Breite der ```bins``` mit ```binwidth()``` festlegen. Hier wählen wir den realen Abstand zwischen zwei Einträgen in dem Vektor/Variable (hier 1).
 ```{r hist5, eval=TRUE}
 ggplot(pss, 
-       aes(agea)) + 
+       aes(agea)
+       ) + 
   geom_histogram(aes(y = ..density..), 
                  color = "lightgray", 
                  fill = "gray",
-                 binwidth = 1) + 
+                 binwidth = 1
+                 ) + 
   geom_density(alpha = 0.2, 
-               fill = "lightblue") +
+               fill = "lightblue"
+               ) +
   labs(x = "Age in years", 
        y = "Density", 
-       title = "Histogram of Age (PSS)")
+       title = "Histogram of Age (PSS)"
+       )
 
 ```
 
@@ -335,8 +386,11 @@ Um Scatterplots darzustellen nutzen wir ```geom_point()```. Wir geben jetzt zwei
 ```{r scatter1, eval=TRUE}
 scatter1 <- ggplot(pss, 
                    aes(stfeco, 
-                       stfdem)) + 
+                       stfdem
+                       )
+                   ) + 
    geom_point()
+
 scatter1
 ```
 
@@ -348,12 +402,17 @@ Um pseudo-metrische Variablen korrekt darzustellen, benötigen wir ```geom_jitte
 ``` {r scatter2, eval=TRUE}
 scatter2 <- ggplot(pss, 
                    aes(stfeco, 
-                       stfdem)) +
+                       stfdem
+                       )
+                   ) +
    geom_jitter(width = 0.3,
-               height = 0.3) +
+               height = 0.3
+               ) +
   labs(x = "Satisfaction with Economy",
        y = "Satisfaction with Democracy",
-       caption = "Data jittered.")
+       caption = "Data jittered."
+       )
+
 scatter2
 ```
 
@@ -362,9 +421,12 @@ Weitergehend können wir mit ```alpha``` in ```geom_jitter()``` (oder auch in ``
 ``` {r scatter3, eval=TRUE}
 ggplot(pss, 
        aes(stfeco, 
-           stfdem)) +  
+           stfdem
+           )
+       ) +  
   geom_jitter(alpha = .2, 
-              col = "blue")
+              col = "blue"
+              )
 ``` 
 
 Als weitere Argumente können sowohl in ```geom_jitter()``` als auch in ```geom_point()``` mit ```shape``` das Erscheinungsbild geändert werden. Das Cheat Sheet findet man [hier](https://github.com/rstudio/cheatsheets/raw/master/data-visualization.pdf).
@@ -382,8 +444,11 @@ Wir möchten gerne wissen, wie viele Befragte in den fünf ausgewählten Distrik
 ```{r bargroup, eval=TRUE}
 barg <- ggplot(pss, 
                aes(district, 
-                   fill = gndr)) +
+                   fill = gndr
+                   )
+               ) +
   geom_bar()
+
 barg
 ```
 
@@ -391,8 +456,11 @@ Will man dies nun etwas übersichtlicher nebeneinander haben, geschieht dies ein
 ```{r barg2, eval=TRUE}
 barg2 <- ggplot(pss, 
                aes(district, 
-                   fill = gndr)) +
+                   fill = gndr
+                   )
+               ) +
   geom_bar(position = position_dodge())
+
 barg2
 ```
 
@@ -401,9 +469,12 @@ Alternativ kann man ```facets``` innerhalb eines **ggplots** erstellen. Dies geh
 ``` {r facet1, eval=TRUE}
 barg2 <- ggplot(pss, 
                aes(district, 
-                   fill = gndr)) +
+                   fill = gndr
+                   )
+               ) +
   geom_bar() +
   facet_wrap(vars(gndr))
+
 barg2
 ```
 
@@ -416,9 +487,12 @@ Wir möchten nun das Scatterplot von vorher nach Distrikten ausgeben lassen. Daz
 ggplot(pss, 
        aes(stfeco, 
            stfdem,
-           shape = district)) +  
+           shape = district
+           )
+       ) +  
   geom_jitter(alpha = .2, 
-              col = "blue")
+              col = "blue"
+              )
 ```
 
 Das ist jetzt noch nicht ganz so übersichtlich. Jetzt könnte man noch zusätzlich die Farbe in Abhängigkeit des Distrikts ändern. Dazu nutzt man das ```color```-Argument in ```aes()``` und entfernt es aus ```geom_jitter()```. Lässt man das ```color```-Argument in ```geom_jitter()``` bestehen, wird dies als zuletzt definierte Einstellung verwendet und alles bleibt blau.
@@ -428,7 +502,9 @@ ggplot(pss,
        aes(stfeco, 
            stfdem,
            shape = district,
-           color = district)) +  
+           color = district
+           )
+       ) +  
   geom_jitter(alpha = .2)
 ```
 
@@ -441,7 +517,9 @@ ggplot(pss,
        aes(stfeco, 
            stfdem,
            shape = district,
-           color = district)) +  
+           color = district
+           )
+       ) +  
   geom_jitter(alpha = .2) +
   facet_wrap(vars(district))
 ```
@@ -452,7 +530,9 @@ ggplot(pss,
        aes(stfeco, 
            stfdem,
            shape = district,
-           color = district)) +  
+           color = district
+           )
+       ) +  
   geom_jitter(alpha = .2) +
   facet_grid(district ~ gndr)
 ```

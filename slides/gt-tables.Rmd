@@ -72,7 +72,7 @@ htmltools::tagList(
 
 
 ## Tabellen publizierbar erstellen mit ```gt```
-Das *package* ```gt``` inkludiert hilfreiche Funktionen, um Tabellen aus R in ein Format zu exportieren, das in wissenschaftlichen Arbeiten oder bei Präsentationen genutzt werden kann. 
+Das *package* ```gt``` (*grammar of tables*) inkludiert hilfreiche Funktionen, um Tabellen aus R in ein Format zu exportieren, das in wissenschaftlichen Arbeiten oder bei Präsentationen genutzt werden kann. 
 
 Das Paket ist umfassend und hier werden nur einführende Schritte dargestellt, die aber für erste Projekte im BA-Studium hilfreich sind. Die genaue Dokumentation findet sich in der [Benutzerdokumentation](https://gt.rstudio.com/).
 
@@ -89,9 +89,12 @@ Bevor wir nun mit den Beispielen starten, müssen wir das *package* selbst laden
 ```{r install-packages}
 # falls noch nicht installiert
 # install.packages("gt", 
-#                 dependencies = TRUE)
+#                  dependencies = TRUE
+#                  )
+
 # install.packages("tidyverse",
-#                  dependencies = TRUE)
+#                  dependencies = TRUE
+#                  )
 
 library("gt")
 library("tidyverse")
@@ -105,6 +108,7 @@ table(uni$mot)
 ```
 
 Zuerst müssen wir mit ```tidyverse``` ein *tibble* schaffen, dass wir an ```gt``` übergeben können. Dazu wählen wir aus dem Datensatz die Variable ```mot``` aus, gruppieren die Daten nach ```mot``` und bilden dann mit summarize die jeweilige Summe unter den Ausprägungen der Variable ```mot``` (Funktion ```n()```). Mit ```gt()``` erstellen wir dann die Tabelle:
+
 ```{r gt-table1, eval=TRUE}
 uni %>% 
   select(mot) %>%  
@@ -121,7 +125,8 @@ uni %>%
   group_by(mot) %>% 
   summarise(n = n()) %>% 
   pivot_wider(names_from = mot,
-              values_from = n) %>% 
+              values_from = n
+              ) %>% 
   gt()
 ```
 
@@ -140,23 +145,35 @@ Hierbei greifen wir auf das Paket ```tidyverse``` zurück, in dem wir die Daten 
 
 ```{r crosstable, eval=TRUE}
 uni %>% 
-  select(study, city) %>% 
-  group_by(city, study) %>% 
+  select(study,
+         city
+         ) %>% 
+  group_by(city, 
+           study
+           ) %>% 
   summarise(n = n()) %>%
   pivot_wider(names_from = city,
-              values_from = n)
+              values_from = n
+              )
 ```
+
 Wir sehen, dass wir nun ein *tibble* haben, der in der ersten Spalte die Ausprägungen von ```study``` hat, und die zweite bis vierte Spalte stellen die Ausprägungen von ```city``` dar. In den einzelnen Feldern befindet sich die Summe der einzelnen Paare. 
 
 ## Kreuztabelle mit ```gt```
 Als nächstes werden wir jetzt dann die Funktion ```gt()``` aufrufen:
+
 ```{r gt-crosstable1, eval=TRUE}
 uni %>% 
-  select(study, city) %>% 
-  group_by(city, study) %>% 
+  select(study, 
+         city
+         ) %>% 
+  group_by(city, 
+           study
+           ) %>% 
   summarise(n = n()) %>%
   pivot_wider(names_from = city, 
-              values_from = n) %>% 
+              values_from = n
+              ) %>% 
   gt()
 ```
 
@@ -164,12 +181,17 @@ Nun sehen wir die erste mit ```gt``` erzeugte Kreuztabelle. Bevor wir nun in die
 
 ```{r gt-crosstable-percent, eval = TRUE}
 uni %>%
-  select(study, city) %>% 
-  group_by(city, study) %>%
+  select(study,
+         city
+         ) %>% 
+  group_by(city,
+           study
+           ) %>%
   summarise(n = n()) %>%
   mutate(prop = n / sum(n))%>%   # neue prozentualer Anteil nach Spalten!
   pivot_wider(names_from = city, 
-              values_from = prop) %>% 
+              values_from = prop
+              ) %>% 
   gt()
 ```
 
@@ -177,13 +199,22 @@ Das Ergebnis irritiert etwas, denn wir haben doppelte Spalten. Dies liegt daran,
 
 ```{r gt-crosstable-percent2, eval=TRUE}
 uni %>%
-  select(study, city) %>% 
-  group_by(city, study) %>%
+  select(study, 
+         city
+         ) %>% 
+  group_by(city,
+           study
+           ) %>%
   summarise(n = n()) %>%
   mutate(prop = n / sum(n))%>%   # neue prozentualer Anteil nach Spalten!
-  subset(select = c("city", "study", "prop")) %>% # die zwei Variablen und prop! 
+  subset(select = c("city", 
+                    "study",
+                    "prop"
+                    )
+         ) %>% # die zwei Variablen und prop! 
   pivot_wider(names_from = city, 
-              values_from = prop) %>% 
+              values_from = prop
+              ) %>% 
   gt()
 ```
 
@@ -197,16 +228,27 @@ single <- uni %>%
   group_by(mot) %>% 
   summarise(n = n()) %>% 
   pivot_wider(names_from = mot,
-              values_from = n) %>% 
+              values_from = n
+              ) %>% 
   gt()
 
 cross <- uni %>%
-  select(study, city) %>% 
-  group_by(city, study) %>%
+  select(study,
+         city
+         ) %>% 
+  group_by(city, 
+           study
+           ) %>%
   summarise(n = n()) %>%
   mutate(prop = n / sum(n))%>%    
-  subset(select = c("city", "study", "prop")) %>% 
-  pivot_wider(names_from = city, values_from = prop) %>% 
+  subset(select = c("city", 
+                    "study",
+                    "prop"
+                    )
+         ) %>% 
+  pivot_wider(names_from = city,
+              values_from = prop
+              ) %>% 
   gt()
 ```
 
@@ -244,10 +286,13 @@ single %>%
   tab_source_note(source_note = "Quelle: eigene Erhebung.") %>%
   tab_source_note(source_note = md("Anmerkungen: Mit *md()* können Textformatierungen vorgenommen **werden**.")) %>% 
   tab_footnote(footnote = md("Ein Wert von *0* bedeutet **keinerlei Studienmotivation**."),
-               locations = cells_column_labels(columns = "0")) %>% 
+               locations = cells_column_labels(columns = "0")
+               ) %>% 
   tab_footnote(footnote = md("***Dies ist einfach nur ein Test.***"),
                locations = cells_body(columns = 7,
-                                      rows = 1))
+                                      rows = 1
+                                      )
+               )
 ```
 
 ## Spaltenbreite ändern
@@ -259,10 +304,13 @@ single %>%
   tab_source_note(source_note = "Quelle: eigene Erhebung.") %>%
   tab_source_note(source_note = md("Anmerkungen: Mit *md()* können Textformatierungen vorgenommen **werden**.")) %>% 
   tab_footnote(footnote = md("Ein Wert von *0* bedeutet **keinerlei Studienmotivation**."),
-               locations = cells_column_labels(columns = "0")) %>% 
+               locations = cells_column_labels(columns = "0")
+               ) %>% 
   tab_footnote(footnote = md("***Dies ist einfach nur ein Test.***"),
                locations = cells_body(columns = 7,
-                                      rows = 1)) %>% 
+                                      rows = 1
+                                      )
+               ) %>% 
   cols_width(4 ~ px(80))
 ```
 
@@ -274,10 +322,13 @@ single %>%
   tab_source_note(source_note = "Quelle: eigene Erhebung.") %>%
   tab_source_note(source_note = md("Anmerkungen: Mit *md()* können Textformatierungen vorgenommen **werden**.")) %>% 
   tab_footnote(footnote = md("Ein Wert von *0* bedeutet **keinerlei Studienmotivation**."),
-               locations = cells_column_labels(columns = "0")) %>% 
+               locations = cells_column_labels(columns = "0")
+               ) %>% 
   tab_footnote(footnote = md("***Dies ist einfach nur ein Test.***"),
                locations = cells_body(columns = 7,
-                                      rows = 1)) %>% 
+                                      rows = 1
+                                      )
+               ) %>% 
   cols_width(everything() ~ px(45))
 ```
 
@@ -286,7 +337,8 @@ Innerhalb von ```tab_options()``` gibt es eine Vielzahl von Optionen. Um Schrift
 
 ```{r extrafont}
 install.packages("extrafont", 
-                 dependencies = TRUE)
+                 dependencies = TRUE
+                 )
 
 library("extrafont")
 
@@ -294,8 +346,9 @@ library("extrafont")
 loadfonts(quiet = TRUE)
 
 # for windows
-loadfonts(device = "win",
-          quiet = TRUE)
+loadfonts(device = "pdf",  #windows user use "win"
+          quiet = TRUE
+          )
 ```
 
 So könnten wir die folgenden Anpassungen zum Beispiel vornehmen. Verändere den Code in der Funktion ```tab_options()``` einfach stellenweise, um zu sehen, was sich in der Darstellung ändert:
@@ -306,13 +359,19 @@ single %>%
   tab_source_note(source_note = "Quelle: eigene Erhebung.") %>%
   tab_source_note(source_note = md("Anmerkungen: Mit *md()* können Textformatierungen vorgenommen **werden**.")) %>% 
   tab_footnote(footnote = md("Ein Wert von *0* bedeutet **keinerlei Studienmotivation**"),
-               locations = cells_body(columns = c(1, 5), rows = 1)) %>% 
+               locations = cells_body(columns = c(1, 
+                                                  5
+                                                  ),
+                                      rows = 1
+                                      )
+               ) %>% 
   cols_width(everything() ~ px(45)) %>% 
   tab_options(table.font.names = "Candara",
               table.font.size = 12,
               heading.title.font.size = 14,
               column_labels.font.size = 13,
-              source_notes.font.size = 9)
+              source_notes.font.size = 9
+              )
 
 ```
 
@@ -325,12 +384,18 @@ Nun wollen wir abschließend noch die Kreuztablle anpassen. Wir übernehmen die 
 cross %>% 
   tab_header(title = md("Studienort & Studienwahl")) %>% 
   cols_align(align = "left",
-             columns = study) %>% 
+             columns = study
+             ) %>% 
   cols_align(align = "center",
-             columns = c("Gießen", "Marburg", 'Frankfurt')) %>%  
+             columns = c("Gießen", 
+                         "Marburg",
+                         "Frankfurt"
+                         )
+             ) %>%  
   tab_source_note(source_note = "Quelle: eigene Erhebung.") %>% 
   cols_width(study ~ px(150),
-             everything() ~ px(100)) 
+             everything() ~ px(100)
+             ) 
 ```
 
 Was wir an dieser Stelle noch anpassen wollen, ist das die Zellen jeweils auf zwei Nachkommastellen gerundet werden. Dazu nutzen wir ```fmt()```. Mit dem Argument ```columns``` bestimmen wir in welchen Zeilen gerundet werden soll, mit dem Argument ```decimals``` legen wir die Dezimalstellen fest und wer das Dezimalzeichen ändern möchte, kann dies im Argument ```dec_mark``` machen (dann auch ```sep_mark``` (Tausenderzeichen)  ändern:
@@ -338,17 +403,23 @@ Was wir an dieser Stelle noch anpassen wollen, ist das die Zellen jeweils auf zw
 cross %>% 
   tab_header(title = md("Studienort & Studienwahl")) %>% 
   cols_align(align = "left",
-             columns = study) %>% 
+             columns = study
+             ) %>% 
   cols_align(align = "center",
-             columns = c("Gießen", "Marburg", 'Frankfurt')) %>%  
+             columns = c("Gießen", 
+                         "Marburg",
+                         "Frankfurt"
+                         )
+             ) %>%  
   tab_source_note(source_note = "Quelle: eigene Erhebung.") %>% 
   cols_width(study ~ px(150),
-             everything() ~ px(100)) %>% 
+             everything() ~ px(100)
+             ) %>% 
   fmt_number(columns = c(2:4), 
              decimals = 2,
              dec_mark = ",",
              sep_mark = "."
-          )
+             )
 ```
 
 Bevor wir die Einführung ändern möchten wir noch den *Header* in der ersten Spalte ändern. Dies können wir über ```cols_label()```:
@@ -356,16 +427,23 @@ Bevor wir die Einführung ändern möchten wir noch den *Header* in der ersten S
 cross %>% 
   tab_header(title = md("Studienort & Studienwahl")) %>% 
   cols_align(align = "left",
-             columns = study) %>% 
+             columns = study
+             ) %>% 
   cols_align(align = "center",
-             columns = c("Gießen", "Marburg", 'Frankfurt')) %>%  
+             columns = c("Gießen", 
+                         "Marburg",
+                         "Frankfurt"
+                         )
+             ) %>%  
   tab_source_note(source_note = "Quelle: eigene Erhebung.") %>% 
   cols_width(study ~ px(150),
-             everything() ~ px(100)) %>% 
+             everything() ~ px(100)
+             ) %>% 
   fmt_number(columns = c(2:4), 
              decimals = 2,
              dec_mark = ",",
-             sep_mark = ".") %>% 
+             sep_mark = "."
+             ) %>% 
   cols_label(study = "Studienfach")
 ```
 
@@ -374,16 +452,23 @@ Auch dabei können mit ```md()``` Formatierungen vorgenommen werden:
 cross %>% 
   tab_header(title = md("Studienort & Studienwahl")) %>% 
   cols_align(align = "left",
-             columns = study) %>% 
+             columns = study
+             ) %>% 
   cols_align(align = "center",
-             columns = c("Gießen", "Marburg", 'Frankfurt')) %>%  
+             columns = c("Gießen", 
+                         "Marburg",
+                         "Frankfurt"
+                         )
+             ) %>%  
   tab_source_note(source_note = "Quelle: eigene Erhebung.") %>% 
   cols_width(study ~ px(150),
-             everything() ~ px(100)) %>% 
+             everything() ~ px(100)
+             ) %>% 
   fmt_number(columns = c(2:4), 
              decimals = 2,
              dec_mark = ",",
-             sep_mark = ".") %>% 
+             sep_mark = "."
+             ) %>% 
   cols_label(study = md("**Studien-**<br>*fach*"))
 ```
 
@@ -395,26 +480,28 @@ Anstatt aus dem Viewer die Dateien zu speichern, kann man diese auch direkt übe
 cross %>% 
   tab_header(title = md("Studienort & Studienwahl")) %>% 
   cols_align(align = "left",
-             columns = study) %>% 
+             columns = study
+             ) %>% 
   cols_align(align = "center",
              columns = c("Gießen", "Marburg", 'Frankfurt')) %>%  
   tab_source_note(source_note = "Quelle: eigene Erhebung.") %>% 
   cols_width(study ~ px(150),
-             everything() ~ px(100)) %>% 
+             everything() ~ px(100)
+             ) %>% 
   fmt_number(columns = c(2:4), 
-             decimals = 2) %>% 
+             decimals = 2
+             ) %>% 
   cols_label(study = md("**Studien-**<br>*fach*")) %>% 
   gtsave("mein-erster-gt-plot.png") # auch .html -Table möglich
 ```
 
-## Labs
-Ihr sehr hier drei verschiedene Tabellendarstellungen. Sucht euch eine Tabellendarstellung heraus und stellt diese mithilfe des ```gt```-*packages* nach. 
+### Das war's!
+Die Labs findet ihr auch in der Cloud.
+
+Ihr sehr hier drei verschiedene Tabellendarstellungen. Sucht euch eine Tabellendarstellung heraus und stellt diese mithilfe des ```gt```-*package* nach. 
 
 ![gt Task 1](./pics/gt-task1.png)
 
 ![gt Task 2](./pics/gt-task2.png)
 
 ![gt Task 3](./pics/gt-task3.png)
-
-
-## Das war's! 
