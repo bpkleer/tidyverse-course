@@ -44,6 +44,10 @@ h3 {
   font-family: Fira Sans !important
 }
 
+h3.code{
+  font-size: 20px;
+  color:rgb(69, 130, 236)
+}
 p {
 	font-size: 20px;
 	font-family: Fira Sans !important
