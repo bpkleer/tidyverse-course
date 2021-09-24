@@ -496,7 +496,7 @@ cross %>%
 ```
 
 ### Das war's!
-Die Labs findet ihr auch in der Cloud.
+Die Labs findet ihr in der RStudio Cloud unter ```task gt```.
 
 Ihr sehr hier drei verschiedene Tabellendarstellungen. Sucht euch eine Tabellendarstellung heraus und stellt diese mithilfe des ```gt```-*package* nach. 
 

@@ -638,3 +638,4 @@ showcase(statistics$grade2)
 ```
 
 #### Das war's!
+Die Übungsaufgaben finden sich in der RStudio Cloud im Projekt ```tasks if-loop-functions```.

@@ -550,3 +550,6 @@ ggplot(pss,
 - Karten bearbeiten
 
 - Zusammenfügen von Plots
+
+### Lab
+Die Übungsaufgaben findet ihr als ```task ggplot``` in RStudio Cloud.

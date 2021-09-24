@@ -600,4 +600,4 @@ Jetzt ist der Text bereinigt und wir haben in der Variable ```cleanText``` den r
 #### Das war's
 Das waren die Grundfunktionen aus dem Paket mit ```stringr```. 
 
-Die Übungsaufgaben finden sich in der RStudio Cloud oder in gitlab. 
+Die Übungsaufgaben finden sich in der RStudio Cloud im Projekt ```task stringr```.
