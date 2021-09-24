@@ -335,7 +335,7 @@ single %>%
 ## Schriftart \& Schriftgröße ändern
 Innerhalb von ```tab_options()``` gibt es eine Vielzahl von Optionen. Um Schriftarten zu ändern, muss man zuvor das *package* ```extrafont``` laden. 
 
-```{r extrafont}
+```{r extrafont, eval=FALSE}
 install.packages("extrafont", 
                  dependencies = TRUE
                  )
@@ -492,7 +492,7 @@ cross %>%
              decimals = 2
              ) %>% 
   cols_label(study = md("**Studien-**<br>*fach*")) %>% 
-  gtsave("mein-erster-gt-plot.png") # auch .html -Table möglich
+  gtsave("./pics/mein-erster-gt-plot.png") # auch .html -Table möglich
 ```
 
 ### Das war's!
