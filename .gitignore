@@ -5,3 +5,5 @@
 *.Rproj
 .DS_Store
 README.html
+*.html
+/slides/*_files/
