@@ -20,9 +20,9 @@ Am Nachmittag können die Workshopteilnehmende eigene Schwerpunkte wählen und s
 
 | Schwerpunkt  | Html-/Rmd-File |
 |---|---|
-|ggplot advanced   |ggplot-advanced.html/.Rmd   |
-|Textdaten mit stringr   |stringr-grammar.html/.Rmd   |
-|Tabellen publizieren | gt-grammar.html/.Rmd |
+|**ggplot** advanced  |ggplot-advanced.html/.Rmd   |
+|Textdaten mit **stringr**   |stringr-grammar.html/.Rmd   |
+|Tabellen publizieren mit **gt** | gt-grammar.html/.Rmd |
 |if-Ausdrücken, Schleifen & Funktionen   |if-loops-functions.html/.Rmd |
 
 ### Übungsaufgaben
