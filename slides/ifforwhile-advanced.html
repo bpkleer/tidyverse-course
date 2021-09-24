@@ -1,0 +1,1074 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+
+
+<title>ifforwhile-advanced.knit</title>
+
+<script src="ifforwhile-advanced_files/header-attrs-2.11/header-attrs.js"></script>
+<script src="ifforwhile-advanced_files/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="ifforwhile-advanced_files/bootstrap-3.3.5/css/readable.min.css" rel="stylesheet" />
+<script src="ifforwhile-advanced_files/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="ifforwhile-advanced_files/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="ifforwhile-advanced_files/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="ifforwhile-advanced_files/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<link href="ifforwhile-advanced_files/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="ifforwhile-advanced_files/tocify-1.9.1/jquery.tocify.js"></script>
+<script src="ifforwhile-advanced_files/navigation-1.1/tabsets.js"></script>
+<link href="ifforwhile-advanced_files/pagedtable-1.1/css/pagedtable.css" rel="stylesheet" />
+<script src="ifforwhile-advanced_files/pagedtable-1.1/js/pagedtable.js"></script>
+<script src="ifforwhile-advanced_files/clipboard-2.0.6/clipboard.min.js"></script>
+<link href="ifforwhile-advanced_files/xaringanExtra-clipboard-0.2.6/xaringanExtra-clipboard.css" rel="stylesheet" />
+<script src="ifforwhile-advanced_files/xaringanExtra-clipboard-0.2.6/xaringanExtra-clipboard.js"></script>
+<script>window.xaringanExtraClipboard(null, {"button":"<i class=\"fa fa-clipboard\"><\/i>","success":"<i class=\"fa fa-check\" style=\"color: #90BE6D\"><\/i>","error":"<i class=\"fa fa-times-circle\" style=\"color: #F94144\"><\/i>"})</script>
+<link href="ifforwhile-advanced_files/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
+<link href="ifforwhile-advanced_files/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+
+<style type="text/css">
+  code {
+    white-space: pre;
+  }
+  .sourceCode {
+    overflow: visible;
+  }
+</style>
+<style type="text/css" data-origin="pandoc">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+
+</style>
+<script>
+// apply pandoc div.sourceCode style to pre.sourceCode instead
+(function() {
+  var sheets = document.styleSheets;
+  for (var i = 0; i < sheets.length; i++) {
+    if (sheets[i].ownerNode.dataset["origin"] !== "pandoc") continue;
+    try { var rules = sheets[i].cssRules; } catch (e) { continue; }
+    for (var j = 0; j < rules.length; j++) {
+      var rule = rules[j];
+      // check if there is a div.sourceCode rule
+      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") continue;
+      var style = rule.style.cssText;
+      // check if color or background-color is set
+      if (rule.style.color === '' && rule.style.backgroundColor === '') continue;
+      // replace div.sourceCode by a pre.sourceCode rule
+      sheets[i].deleteRule(j);
+      sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
+    }
+  }
+})();
+</script>
+
+
+
+
+<link rel="stylesheet" href="styles/style.css" type="text/css" />
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+pre code {
+  padding: 0;
+}
+</style>
+
+
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+@media print {
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
+
+<br><br>
+
+<center>
+<p style="font-size: 26px; font-weight:bold; align:center;color:rgb(69, 130, 236)"> Datensätze bändigen & visualisieren mit R</p>
+<br>
+<p style="font-size: 24px; align:center"> Benedikt Philipp Kleer <br> 11. Oktober 2021</p>
+<hr />
+<br>
+</center>
+
+<div id="header">
+
+
+
+
+</div>
+
+
+<div id="bedingungen-schleifen-eigene-funktionen" class="section level2">
+<h2>Bedingungen, Schleifen &amp; eigene Funktionen</h2>
+<p>In diesem Teil des Workshops werden zuerst <strong>if</strong>-Ausdrücke wiederholt (bzw. eingeführt) und anschließend die Nutzung von <strong>Schleifen</strong> vorgestellt. Schleifen haben den Vorteil, dass man einen Codierungsschritt auf eine bestimmte Anzahl bzw. Fälle (in Kombination mit <strong>if</strong>) wiederholen kann. Somit erspart man sich Code-Schreibarbeit. Als letztes werden <strong>Funktionen</strong> eingeführt.</p>
+</div>
+<div id="if-bedingung" class="section level2">
+<h2>If-Bedingung</h2>
+<p>Der <strong>if</strong>-Ausdruck wird dann genutzt, wenn man einen Befehl unter bestimmten Bedingungen ausführen möchte. Dabei wird eine Bedingung (<em>condition</em>) überprüft und sofern diese zutrifft (<code>TRUE</code>), wird die angegebene Operation durchgeführt.</p>
+<p>Die Logik des einfachen <strong>if</strong>-Ausdrucks ist im Schaubild dargestellt:</p>
+<center>
+<img src="pics/if.PNG" title="fig:" style="width:50.0%" alt="Logik der If-Bedingung" />
+</center>
+<p>Nehmen wir folgendes Beispiel: Wir haben die Studienmotivation eines Studierenden und möchten (ein Vektor <code>mot</code> mit einem einzigen Wert), sofern dieser auf der Skala (<span class="math inline">\(0\)</span>-<span class="math inline">\(10\)</span>) einen Wert größer gleich <span class="math inline">\(7\)</span> angegeben hat, die Bemerkung <em>sehr motiviert</em> ausgeben.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>mot <span class="ot">&lt;-</span> <span class="dv">9</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (mot <span class="sc">&gt;=</span> <span class="dv">7</span>) {</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(<span class="st">&quot;sehr motiviert&quot;</span>)</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<pre><code>[1] &quot;sehr motiviert&quot;</code></pre>
+<p>Der einfache <strong>if</strong>-Ausdruck folgt also einem ganz klaren Muster:</p>
+<ol style="list-style-type: decimal">
+<li><p>es wird <strong>if</strong> aufgerufen und in Klammern die Bedingung gesetzt: <code>if (mot &gt;= 7)</code></p></li>
+<li><p>in geschweiften Klammern folgen die Anweisungen, die ausgeführt werden sollen, wenn die Bedingung zutrifft:<code>{ print("sehr motiviert") }</code></p></li>
+</ol>
+<p>Der einfache <strong>if</strong>-Ausdruck kann also ganz leicht umgesetzt werden.</p>
+<p><br></p>
+<div id="else-if-ausdruck" class="section level3">
+<h3>else if Ausdruck</h3>
+<p>Neben dem einfachen <strong>if</strong>-Ausdruck gibt es auch noch die <strong>else if</strong>-Ausdrücke, mit denen man weitere Bedingungen prüfen kann, falls die vorherige Bedingung nicht zutrifft. Hier durchläuft der Prüfprozess also mehrere Bedingungen. Dies ist im Schaubild dargestellt:</p>
+<center>
+<img src="pics/ifelse.PNG" title="fig:" style="width:50.0%" alt="Logik der If-Bedingung" />
+</center>
+<p>Für einen weiteren Fall eines Studierenden, der auf der Motivation nur <span class="math inline">\(5\)</span> angegeben hat, könnten wir folgende <strong>else if</strong>-Ausdruck schreiben:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>mot <span class="ot">&lt;-</span> <span class="dv">5</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (mot <span class="sc">&gt;=</span> <span class="dv">7</span>) {</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(<span class="st">&quot;sehr motiviert&quot;</span>)</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>} <span class="cf">else</span> <span class="cf">if</span> (mot <span class="sc">&gt;=</span> <span class="dv">4</span> <span class="sc">&amp;</span> mot <span class="sc">&lt;</span> <span class="dv">7</span>) {</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(<span class="st">&quot;motiviert&quot;</span>)</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<pre><code>[1] &quot;motiviert&quot;</code></pre>
+<p>Das heißt, die einfache <strong>if</strong>-Syntax wird hier nur um folgende Punkte ergänzt:</p>
+<ol style="list-style-type: decimal">
+<li><p>eine weitere Anweisung, die mit <strong>else if</strong> eine weitere Bedingung prüft: <code>else if (mot &gt;= 4 &amp; mot &lt; 7)</code></p></li>
+<li><p>einen weiteren Anweisungsblock für die weitere Bedingung: <code>{ print("motiviert")}</code></p></li>
+</ol>
+<p>Auch dies ist also sehr leicht umzusetzen. <strong>Wichtig ist hierbei</strong>: Die zweite Bedingung wird nur geprüft, falls die erste Bedingung <code>FALSE</code> ist. Man kann beliebig viele <code>else if</code>-Prüfungen programmieren. Nehmen wir ein weiteres Beispiel:</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>mot <span class="ot">&lt;-</span> <span class="dv">3</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (mot <span class="sc">&gt;=</span> <span class="dv">7</span>) {</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(<span class="st">&quot;sehr motiviert&quot;</span>)</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>} <span class="cf">else</span> <span class="cf">if</span> (mot <span class="sc">&gt;=</span> <span class="dv">4</span> <span class="sc">&amp;</span> mot <span class="sc">&lt;</span> <span class="dv">7</span>) {</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(<span class="st">&quot;motiviert&quot;</span>)</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>} <span class="cf">else</span> <span class="cf">if</span> (mot <span class="sc">&gt;=</span> <span class="dv">0</span> <span class="sc">&amp;</span> mot <span class="sc">&lt;</span> <span class="dv">4</span>) {</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(<span class="st">&quot;nicht motiviert&quot;</span>)</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<pre><code>[1] &quot;nicht motiviert&quot;</code></pre>
+<p>Das einzige, was wir hier verändert haben, ist dass wir eine dritte Prüfbedingung hinzugefügt haben. Wie zuvor wird diese dritte Bedingung erst geprüft, wenn die erste und die zweite Bedingung beide <code>FALSE</code> sind. <strong>else if</strong>-Ausdrücke haben also eine <strong>hierarchische</strong> Struktur.</p>
+</div>
+<div id="else-ausdruck" class="section level3">
+<h3>else Ausdruck</h3>
+<p>Man kann auch dichotome Entscheidungen treffen. Nehmen wir an, wir möchten nur nach <em>motiviert</em> und <em>nicht motiviert</em> unterscheiden und entscheiden uns, Personen, die einen Wert über <span class="math inline">\(7\)</span> angegeben haben, als motiviert zu bewerten und Personen mit niedrigeren Skalenwerten als nicht motiviert. Wir prüfen hier nur die Bedingung, ob der Wert größer <span class="math inline">\(7\)</span> ist. Falls dies nicht zutrifft, entscheiden wir mit <strong>else</strong> (in allen anderen Fällen), dass <em>nicht motiviert</em> ausgegeben wird.<strong>Else</strong> beinhaltet also eine Anweisung, die ausgeführt wird für alle Fälle, auf denen die zuvor genannte <strong>if</strong>-Bedingung nicht zutrifft (also <code>FALSE</code> ergibt).</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>mot <span class="ot">&lt;-</span> <span class="dv">5</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (mot <span class="sc">&gt;=</span> <span class="dv">7</span>) {</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(<span class="st">&quot;sehr motiviert&quot;</span>)</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>} <span class="cf">else</span> {</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(<span class="st">&quot;nicht motiviert&quot;</span>)</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<pre><code>[1] &quot;nicht motiviert&quot;</code></pre>
+<p>Auch hier ist der Aufbau recht einfach:</p>
+<ol style="list-style-type: decimal">
+<li><p>wir fügen nach der <strong>if</strong>-Bedingung mit <strong>else</strong> eine weitere Anweisung hinzu, die aber keine Bedingung mehr hat: <code>else</code>. Zur Erinnerung: Bei **else ist die Bedingung inhärent, da es alle <code>FALSE</code>-Fälle der vorigen Bedingung beinhaltet.</p></li>
+<li><p>Wir geben auch hier wieder in geschweiften Klammern die Anweisung an: <code>{ print("nicht motiviert)}</code></p></li>
+</ol>
+<p>Dies waren einfache Beispiele von <strong>if</strong> und <strong>else if</strong>-Ausdrücken. In der Regel werden diese aber innerhalb von Schleifen genutzt (z.B. wenn man Entscheidungen für alle Beobachtungen innerhalb eines Datensatzes treffen möchte). Dies wird im Nachfolgenden gezeigt.</p>
+</div>
+</div>
+<div id="loops" class="section level2">
+<h2>Loops</h2>
+<p>Mit <strong>Loops</strong> (<em>Iterationen</em>) kann man Operationen wiederholen. Die Wiederholungen geschehen dabei <em>n</em>-Mal, wobei <em>n</em> ein ganzzahliger Laufwert ist (<em>integer</em>). Für die Wiederholungen gibt man einen Startwert fest. Wie oben bereits erwähnt, wendet man dies z.B. an, wenn man eigene Rekodierungen schreiben will ohne bereits bestehende Funktionen verwenden zu wollen.</p>
+<p>Wir können folgende Arten von Iterationen unterscheiden:</p>
+<ol style="list-style-type: decimal">
+<li><p><strong>for</strong></p></li>
+<li><p><strong>while</strong></p></li>
+<li><p><strong>repeat</strong> (<strong>do while</strong>)</p></li>
+</ol>
+<p><br></p>
+<div id="for" class="section level3">
+<h3>for</h3>
+<p>In der <strong>for</strong>-Loop werden Operationen so lange durchgeführt, bis das Ende einer vordefinierten Sequenz erreicht ist (z.B. über alle Beobachtungen eines Datensatzes). Mit dieser Schleife setzen wir einen Beginn und ein Ende fest und die Operation werden innerhalb dieser Sequenz ausgeführt.</p>
+<p>Im Schaubild ist die Logik des <strong>for-loops</strong> dargestellt.</p>
+<center>
+<img src="pics/for.PNG" title="fig:" style="width:50.0%" alt="for-loop" />
+</center>
+<p><br></p>
+<div id="syntax" class="section level4">
+<h4>Syntax</h4>
+<p>Die allgemeine Syntax sieht wie folgt aus:</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">0</span><span class="sc">:</span><span class="dv">5</span>) {</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(i)</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<pre><code>[1] 0
+[1] 1
+[1] 2
+[1] 3
+[1] 4
+[1] 5</code></pre>
+<p>Die Struktur ist ähnlich zur <strong>if</strong>-Struktur:</p>
+<ol style="list-style-type: decimal">
+<li><p>Wir initiieren die Schleife und setzen die gewünschte Sequenz in Klammern: <code>for (i in 0:5)</code></p></li>
+<li><p>Anschließend setzen wir wieder in geschweiften Klammern die Anweisungen, die für jeden Durchgang ausgeführt werden sollen: <code>{ print(i) }</code></p></li>
+</ol>
+<p>Die Sequenz beinhaltet einen sich ändernden Zählindex (<code>i</code>), der mit jedem Durchgang der Schleife steigt und dann die Sequenzangabe (<code>in 0:n</code>). Im Beispiel soll die Schleife also sechsmal durchgeführt werden, von <strong>0</strong> bis <strong>5</strong>. <code>i</code> beginnt mit dem Wert <strong>0</strong> und sobald der Wert <strong>6</strong> erreicht, wird die Schleife beendet. <strong>Wichtig</strong>: In <strong>for</strong>-Schleifen steigt <code>i</code> iterativ immer um <strong>1</strong>.</p>
+<p>Man kann alternativ Objekte als Beginn oder Ende angeben. Dafür muss man diese zuvor deklarieren und kann diese anschließend nutzen. Zuerst schaffen wir mit ```n &lt;-5```` einen Zielwert, den wir dann über das Objekt in der Schleife aufgreifen.</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Beispiel Zielwert</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">5</span></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">0</span><span class="sc">:</span>n) {</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(i)</span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<pre><code>[1] 0
+[1] 1
+[1] 2
+[1] 3
+[1] 4
+[1] 5</code></pre>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Beispiel Startwert</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>start <span class="ot">&lt;-</span> <span class="dv">3</span></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> start<span class="sc">:</span>n) {</span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(i)</span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<pre><code>[1] 3
+[1] 4
+[1] 5</code></pre>
+<p><br></p>
+</div>
+<div id="beispiel-for-loop" class="section level4">
+<h4>Beispiel for-loop</h4>
+<p>Wir schaffen eine einfache <strong>for</strong>-loop und geben dabei immer den Wert eines Vektors <code>teacher</code> aus, der die:den Dozentin:en für einen Kurs beinhaltet. Insgesamt haben wir <span class="math inline">\(5\)</span> Dozent:innen. Im Beispiel bestimmen wir das Ende der Schleife einfach über die Länge des Vektors, den wir nutzen. Denn wir möchten, dass alle Fälle durchgegangen werden. Wir geben nacheinander die Namen der Dozent:innen aus:</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>teacher <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;Baecker&quot;</span>, </span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>             <span class="st">&quot;Mueller&quot;</span>,</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>             <span class="st">&quot;Kaufmann&quot;</span>,</span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>             <span class="st">&quot;Bauer&quot;</span>,</span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>             <span class="st">&quot;Schuster&quot;</span></span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>             )</span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(teacher)) {</span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(<span class="fu">paste0</span>(<span class="st">&quot;Dozent:in &quot;</span>, </span>
+<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a>               i, </span>
+<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a>               <span class="st">&quot; ist &quot;</span>,</span>
+<span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a>               teacher[i]</span>
+<span id="cb15-13"><a href="#cb15-13" aria-hidden="true" tabindex="-1"></a>               )</span>
+<span id="cb15-14"><a href="#cb15-14" aria-hidden="true" tabindex="-1"></a>        )</span>
+<span id="cb15-15"><a href="#cb15-15" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<pre><code>[1] &quot;Dozent:in 1 ist Baecker&quot;
+[1] &quot;Dozent:in 2 ist Mueller&quot;
+[1] &quot;Dozent:in 3 ist Kaufmann&quot;
+[1] &quot;Dozent:in 4 ist Bauer&quot;
+[1] &quot;Dozent:in 5 ist Schuster&quot;</code></pre>
+<p>Wir bedienen uns hierbei der Funktion <code>paste0()</code>, die Text mit Objekten als Ausgabe verbinden kann. Die Funktion <code>paste0()</code> hat zwischen den Elementen in der Funktion keine Leerstelle (die Funktion <code>paste()</code> setzt zwischen allen Elementen ein Leerzeichen (oder ein im Argument <code>sep</code> angegebenes Trennzeichen.)</p>
+<p><br></p>
+</div>
+<div id="for-loop-mit-else-if-ausdruck" class="section level4">
+<h4>for-loop mit else if-Ausdruck</h4>
+<p>Nehmen wir das Beispiel aus den <strong>if</strong>-Ausdrücken. Wir möchten nun eine neue Variable im Datensatz schaffen, die eine Wertebeschreibung nutzt. Wir benötigen also die <strong>else if</strong>-Bedingung aus dem vorherigen Kapitel und bilden nun um diese einen <strong>for</strong>-loop durch die Länge des Datensatzes. Das Ergebnis speichern wir in einer neuen Variable <code>motText</code> und lassen es für jeden Fall einzeln ausgeben (<code>print()</code>). Zur Anschaulichkeit gehen wir hier zwei Schritte: Wir speichern erst die Beschreibung in <code>motivation</code> und übertragen es dann an den Wert in <code>statistics$motText</code>. <strong>Wichtig ist</strong>, dass wir nicht den Laufindex bei <code>statistics$motText</code> vergessen, da wir ja nur den spezifischen Fall mit dem neuen Wert belegen möchten.</p>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(statistics<span class="sc">$</span>mot)) {</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (statistics<span class="sc">$</span>mot[i] <span class="sc">&gt;=</span> <span class="dv">7</span>) {</span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>    motivation <span class="ot">&lt;-</span> <span class="st">&quot;sehr motiviert&quot;</span></span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>    statistics<span class="sc">$</span>motText[i] <span class="ot">&lt;-</span>  motivation</span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>  } <span class="cf">else</span> <span class="cf">if</span> (statistics<span class="sc">$</span>mot[i] <span class="sc">&gt;=</span> <span class="dv">4</span> <span class="sc">&amp;</span> statistics<span class="sc">$</span>mot[i] <span class="sc">&lt;</span> <span class="dv">7</span>) {</span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>    motivation <span class="ot">&lt;-</span> <span class="st">&quot;motiviert&quot;</span></span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>    statistics<span class="sc">$</span>motText[i] <span class="ot">&lt;-</span>  motivation</span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a>  } <span class="cf">else</span> <span class="cf">if</span> (statistics<span class="sc">$</span>mot[i] <span class="sc">&gt;=</span> <span class="dv">0</span> <span class="sc">&amp;</span> statistics<span class="sc">$</span>mot[i] <span class="sc">&lt;</span> <span class="dv">4</span>) {</span>
+<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a>    motivation <span class="ot">&lt;-</span> <span class="st">&quot;nicht motiviert&quot;</span></span>
+<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a>    statistics<span class="sc">$</span>motText[i] <span class="ot">&lt;-</span>  motivation</span>
+<span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb17-12"><a href="#cb17-12" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb17-13"><a href="#cb17-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(<span class="fu">paste0</span>(<span class="st">&quot;Student:in &quot;</span>, </span>
+<span id="cb17-14"><a href="#cb17-14" aria-hidden="true" tabindex="-1"></a>               i, </span>
+<span id="cb17-15"><a href="#cb17-15" aria-hidden="true" tabindex="-1"></a>               <span class="st">&quot; ist &quot;</span>,</span>
+<span id="cb17-16"><a href="#cb17-16" aria-hidden="true" tabindex="-1"></a>               motivation</span>
+<span id="cb17-17"><a href="#cb17-17" aria-hidden="true" tabindex="-1"></a>               )</span>
+<span id="cb17-18"><a href="#cb17-18" aria-hidden="true" tabindex="-1"></a>        )</span>
+<span id="cb17-19"><a href="#cb17-19" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<pre><code>[1] &quot;Student:in 1 ist motiviert&quot;
+[1] &quot;Student:in 2 ist sehr motiviert&quot;
+[1] &quot;Student:in 3 ist sehr motiviert&quot;
+[1] &quot;Student:in 4 ist sehr motiviert&quot;
+[1] &quot;Student:in 5 ist motiviert&quot;
+[1] &quot;Student:in 6 ist motiviert&quot;
+[1] &quot;Student:in 7 ist sehr motiviert&quot;
+[1] &quot;Student:in 8 ist nicht motiviert&quot;
+[1] &quot;Student:in 9 ist motiviert&quot;
+[1] &quot;Student:in 10 ist motiviert&quot;
+[1] &quot;Student:in 11 ist motiviert&quot;
+[1] &quot;Student:in 12 ist motiviert&quot;
+[1] &quot;Student:in 13 ist sehr motiviert&quot;
+[1] &quot;Student:in 14 ist sehr motiviert&quot;
+[1] &quot;Student:in 15 ist motiviert&quot;
+[1] &quot;Student:in 16 ist motiviert&quot;
+[1] &quot;Student:in 17 ist sehr motiviert&quot;
+[1] &quot;Student:in 18 ist sehr motiviert&quot;
+[1] &quot;Student:in 19 ist sehr motiviert&quot;
+[1] &quot;Student:in 20 ist motiviert&quot;
+[1] &quot;Student:in 21 ist motiviert&quot;
+[1] &quot;Student:in 22 ist sehr motiviert&quot;
+[1] &quot;Student:in 23 ist sehr motiviert&quot;
+[1] &quot;Student:in 24 ist motiviert&quot;
+[1] &quot;Student:in 25 ist motiviert&quot;
+[1] &quot;Student:in 26 ist sehr motiviert&quot;
+[1] &quot;Student:in 27 ist motiviert&quot;
+[1] &quot;Student:in 28 ist motiviert&quot;
+[1] &quot;Student:in 29 ist motiviert&quot;
+[1] &quot;Student:in 30 ist nicht motiviert&quot;
+[1] &quot;Student:in 31 ist motiviert&quot;
+[1] &quot;Student:in 32 ist motiviert&quot;
+[1] &quot;Student:in 33 ist motiviert&quot;
+[1] &quot;Student:in 34 ist motiviert&quot;
+[1] &quot;Student:in 35 ist sehr motiviert&quot;
+[1] &quot;Student:in 36 ist nicht motiviert&quot;
+[1] &quot;Student:in 37 ist motiviert&quot;
+[1] &quot;Student:in 38 ist nicht motiviert&quot;
+[1] &quot;Student:in 39 ist sehr motiviert&quot;
+[1] &quot;Student:in 40 ist motiviert&quot;
+[1] &quot;Student:in 41 ist motiviert&quot;
+[1] &quot;Student:in 42 ist sehr motiviert&quot;
+[1] &quot;Student:in 43 ist sehr motiviert&quot;
+[1] &quot;Student:in 44 ist motiviert&quot;
+[1] &quot;Student:in 45 ist sehr motiviert&quot;
+[1] &quot;Student:in 46 ist motiviert&quot;
+[1] &quot;Student:in 47 ist nicht motiviert&quot;
+[1] &quot;Student:in 48 ist motiviert&quot;
+[1] &quot;Student:in 49 ist motiviert&quot;
+[1] &quot;Student:in 50 ist sehr motiviert&quot;
+[1] &quot;Student:in 51 ist motiviert&quot;
+[1] &quot;Student:in 52 ist sehr motiviert&quot;
+[1] &quot;Student:in 53 ist motiviert&quot;
+[1] &quot;Student:in 54 ist motiviert&quot;
+[1] &quot;Student:in 55 ist nicht motiviert&quot;
+[1] &quot;Student:in 56 ist sehr motiviert&quot;
+[1] &quot;Student:in 57 ist sehr motiviert&quot;
+[1] &quot;Student:in 58 ist sehr motiviert&quot;
+[1] &quot;Student:in 59 ist motiviert&quot;
+[1] &quot;Student:in 60 ist sehr motiviert&quot;
+[1] &quot;Student:in 61 ist motiviert&quot;
+[1] &quot;Student:in 62 ist motiviert&quot;
+[1] &quot;Student:in 63 ist sehr motiviert&quot;
+[1] &quot;Student:in 64 ist motiviert&quot;
+[1] &quot;Student:in 65 ist motiviert&quot;
+[1] &quot;Student:in 66 ist motiviert&quot;
+[1] &quot;Student:in 67 ist motiviert&quot;
+[1] &quot;Student:in 68 ist nicht motiviert&quot;
+[1] &quot;Student:in 69 ist motiviert&quot;
+[1] &quot;Student:in 70 ist motiviert&quot;
+[1] &quot;Student:in 71 ist sehr motiviert&quot;
+[1] &quot;Student:in 72 ist sehr motiviert&quot;
+[1] &quot;Student:in 73 ist motiviert&quot;
+[1] &quot;Student:in 74 ist sehr motiviert&quot;
+[1] &quot;Student:in 75 ist motiviert&quot;
+[1] &quot;Student:in 76 ist sehr motiviert&quot;
+[1] &quot;Student:in 77 ist motiviert&quot;
+[1] &quot;Student:in 78 ist sehr motiviert&quot;
+[1] &quot;Student:in 79 ist sehr motiviert&quot;
+[1] &quot;Student:in 80 ist motiviert&quot;
+[1] &quot;Student:in 81 ist motiviert&quot;
+[1] &quot;Student:in 82 ist motiviert&quot;
+[1] &quot;Student:in 83 ist nicht motiviert&quot;
+[1] &quot;Student:in 84 ist motiviert&quot;
+[1] &quot;Student:in 85 ist motiviert&quot;
+[1] &quot;Student:in 86 ist nicht motiviert&quot;
+[1] &quot;Student:in 87 ist motiviert&quot;
+[1] &quot;Student:in 88 ist sehr motiviert&quot;
+[1] &quot;Student:in 89 ist motiviert&quot;
+[1] &quot;Student:in 90 ist motiviert&quot;
+[1] &quot;Student:in 91 ist motiviert&quot;
+[1] &quot;Student:in 92 ist motiviert&quot;
+[1] &quot;Student:in 93 ist nicht motiviert&quot;
+[1] &quot;Student:in 94 ist motiviert&quot;
+[1] &quot;Student:in 95 ist nicht motiviert&quot;
+[1] &quot;Student:in 96 ist motiviert&quot;
+[1] &quot;Student:in 97 ist nicht motiviert&quot;
+[1] &quot;Student:in 98 ist motiviert&quot;
+[1] &quot;Student:in 99 ist motiviert&quot;
+[1] &quot;Student:in 100 ist sehr motiviert&quot;</code></pre>
+<p><strong>Eine kleine Aufgabe</strong>: Wie oben genannt, haben wir unnötig viele Zeilen hier geschrieben. Probiere einmal die Schleife zu verschlanken!</p>
+<p><br></p>
+</div>
+<div id="for-loop-mit-next" class="section level4">
+<h4>for-loop mit next</h4>
+<p>Als zweites Beispiel möchten wir nun eine neue Variable schaffen, die Beschreibungen von <code>grade2</code> in Abhängigkeit des Notenwertes inkludiert. Zur Erinnerung: Die Variable <code>grade2</code> weist <code>NA's</code> auf. Dies ist nur ein Funktionsbeispiel für die Kombination von <strong>for</strong>-loops und <strong>if</strong>-Ausdrücken. Es empfiehlt sich zum Rekodieren die Funktionen aus dem Paket <code>dplyr</code> (<code>case_when()</code>) oder <code>car</code> (<code>recode()</code>) zu nutzen.</p>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(statistics<span class="sc">$</span>grade2, </span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>      <span class="at">useNA =</span> <span class="st">&quot;ifany&quot;</span></span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>      )</span></code></pre></div>
+<pre><code>
+   2    3    5    6    8    9   11   12   13   14   15 &lt;NA&gt; 
+   3    5    4    2    3    2    2    2    1    1    2   73 </code></pre>
+<p>In der <strong>for</strong>-loop möchten wir nur Beschriftungen in einer neuen Variable einfügen, sofern kein <code>NA</code> vorliegt. Dies können wir über einen <strong>else if</strong>-Ausdruck steuern.</p>
+<p>Im Beispiel sieht man, dass wir zwei <strong>if</strong>-Ausdrücke genutzt haben. Zuerst prüfen wir, ob die Beobachtung <code>NA</code> in <code>grade2</code> aufweist. Die Funktion <code>is.na()</code> liefert einen logischen Wert (<code>TRUE</code>, <code>FALSE</code>). Trifft das zu (<code>TRUE</code>), weisen wir <code>NA</code> auf der neuen Variable zu und springen mit dem Befehl <code>next</code> zum nächsten Fall (Schleife beginnt mit nächstem <code>i</code> von vorne). Mit <code>next</code> überspringen wir die nächsten Anweisungen und die Schleife beginnt mit der nächsten Iteration wieder von vorne. Wenn kein <code>NA</code> vorliegt, wird der zweite <strong>if</strong>-Ausdruck durchgeprüft, in dem wir mit mehreren <strong>else if</strong>-Ausdrücken die Textbeschriftungen zuweisen.</p>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(statistics<span class="sc">$</span>grade2)) {</span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (<span class="fu">is.na</span>(statistics<span class="sc">$</span>grade2[i])) {</span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>    statistics<span class="sc">$</span>g2text[i] <span class="ot">&lt;-</span> <span class="cn">NA</span></span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">next</span></span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>  } </span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (statistics<span class="sc">$</span>grade2[i] <span class="sc">&gt;=</span> <span class="dv">13</span>) {</span>
+<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a>    statistics<span class="sc">$</span>g2text[i] <span class="ot">&lt;-</span> <span class="st">&quot;sehr gut&quot;</span></span>
+<span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a>  } <span class="cf">else</span> <span class="cf">if</span> (statistics<span class="sc">$</span>grade2[i] <span class="sc">&gt;=</span> <span class="dv">10</span> <span class="sc">&amp;</span> statistics<span class="sc">$</span>grade2[i] <span class="sc">&lt;</span> <span class="dv">13</span>) {</span>
+<span id="cb21-10"><a href="#cb21-10" aria-hidden="true" tabindex="-1"></a>    statistics<span class="sc">$</span>g2text[i] <span class="ot">&lt;-</span> <span class="st">&quot;gut&quot;</span></span>
+<span id="cb21-11"><a href="#cb21-11" aria-hidden="true" tabindex="-1"></a>  } <span class="cf">else</span> <span class="cf">if</span> (statistics<span class="sc">$</span>grade2[i] <span class="sc">&gt;=</span> <span class="dv">7</span> <span class="sc">&amp;</span> statistics<span class="sc">$</span>grade2[i] <span class="sc">&lt;</span> <span class="dv">10</span>) {</span>
+<span id="cb21-12"><a href="#cb21-12" aria-hidden="true" tabindex="-1"></a>    statistics<span class="sc">$</span>g2text[i] <span class="ot">&lt;-</span> <span class="st">&quot;befriedigend&quot;</span></span>
+<span id="cb21-13"><a href="#cb21-13" aria-hidden="true" tabindex="-1"></a>  } <span class="cf">else</span> <span class="cf">if</span> (statistics<span class="sc">$</span>grade2[i] <span class="sc">&gt;=</span> <span class="dv">5</span> <span class="sc">&amp;</span> statistics<span class="sc">$</span>grade2[i] <span class="sc">&lt;</span> <span class="dv">7</span>) {</span>
+<span id="cb21-14"><a href="#cb21-14" aria-hidden="true" tabindex="-1"></a>    statistics<span class="sc">$</span>g2text[i] <span class="ot">&lt;-</span> <span class="st">&quot;ausreichend&quot;</span></span>
+<span id="cb21-15"><a href="#cb21-15" aria-hidden="true" tabindex="-1"></a>  } <span class="cf">else</span> {</span>
+<span id="cb21-16"><a href="#cb21-16" aria-hidden="true" tabindex="-1"></a>    statistics<span class="sc">$</span>g2text[i] <span class="ot">&lt;-</span> <span class="st">&quot;nicht bestanden&quot;</span></span>
+<span id="cb21-17"><a href="#cb21-17" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb21-18"><a href="#cb21-18" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb21-19"><a href="#cb21-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-20"><a href="#cb21-20" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(statistics<span class="sc">$</span>g2text)</span></code></pre></div>
+<pre><code>
+    ausreichend    befriedigend             gut nicht bestanden        sehr gut 
+              6               5               4               8               4 </code></pre>
+<p><strong>Eine kleine Aufgabe</strong>: Anstatt <code>next</code> zu verwenden, könnte man hier auch mit nur mit <strong>if</strong>-Ausdrücken zum selben Ergebnis kommen. Schreibe die Schleife so um, dass diese ohne <code>next</code> auskommt.</p>
+<p><br></p>
+</div>
+<div id="vor--nachteile" class="section level4">
+<h4>Vor- &amp; Nachteile</h4>
+<p><strong>for</strong>-loops werden recht häufig genutzt und können auch verschachtelt werden. Nicht angewendet werden können <strong>for</strong>-loops, wenn die Anzahl der Durchläufe nicht bestimmbar ist (<span class="math inline">\(\rightarrow\)</span> <strong>while</strong>-loop). Ein Nachteil von <strong>for</strong>-loops ist, dass diese in der Regel sehr langsam sind. Auch ist es in verschachtelten <strong>for</strong>-loops oft nur schwer nachvollziehbar, was genau gemacht wird. Das heißt auch, dass die Fehlersuche manchmal mühsam sein kann.</p>
+<p>Als Alternativen zu <strong>for</strong>-loops kann man die <code>apply()</code>-Funktionen nutzen (Funktionalität ist durch Entwickler geprüft). Nähere Informationen zu den <code>apply()</code>-Funktionen finden sich <a href="https://de.wikibooks.org/wiki/GNU_R:_apply">hier</a>. Dennoch können in manchen Situationen eigene geschrieben Funktionen auf <strong>for</strong>-loops zurückgreifen, so dass es sinnvoll ist, diese Grundfunktionen auch zu kennen.</p>
+<p><br></p>
+</div>
+</div>
+<div id="while" class="section level3">
+<h3>while</h3>
+<p>In der <strong>while</strong>-loop werden Instruktionen ausgeführt, solange eine Bedingung (<em>condition</em>) zutrifft. Man nennt dies auch <strong>kopfgesteuert</strong>: Denn bei jedem Durchlauf wird am Schleifenkopf die Bedingung neu geprüft. Wenn diese Bedingung (<em>condition</em>) nicht mehr zutrifft (<code>FALSE</code>), dann wird die <strong>while</strong>-loop beendet. Der Durchlauf von Code ist also abhängig von einer Bedingung. Sollte die Bedingung direkt zu Beginn nicht mehr zutreffen, wird der <strong>while</strong>-loop direkt beendet ohne auch nur eine Instruktion einmalig ausgeführt zu haben.</p>
+<center>
+<img src="pics/while.PNG" title="fig:" style="width:50.0%" alt="while-loop" />
+</center>
+<p><br></p>
+<div id="syntax-1" class="section level4">
+<h4>Syntax</h4>
+<p>Die allgemeine Syntax einer <strong>while</strong>-loop sieht wie folgt aus:</p>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Startwert</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>i <span class="ot">&lt;-</span> <span class="dv">0</span></span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a><span class="cf">while</span> (i <span class="sc">&lt;</span> <span class="dv">5</span>) {</span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(i)  <span class="co"># Anweisung</span></span>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a>  i <span class="ot">&lt;-</span> i <span class="sc">+</span> <span class="dv">1</span> <span class="co"># Inkrement</span></span>
+<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<pre><code>[1] 0
+[1] 1
+[1] 2
+[1] 3
+[1] 4</code></pre>
+<p>Auch hier ist die Syntax wieder ähnlich zum <strong>if</strong>-Ausdruck:</p>
+<ol style="list-style-type: decimal">
+<li><p>Wir initiieren die Schleife und fügen in Klammern die Bedingung ein: <code>while (i &lt; 5)</code></p></li>
+<li><p>Wir setzen in geschweiften Klammern die Instruktionen, die ausgeführt werden, bis die Bedingung zutrifft: <code>{ i &lt;- i +1     print(i)}</code></p></li>
+</ol>
+<p>Wichtiger Unterschied zur <strong>for</strong>-loop: Die Sequenz wird hier nicht angegeben, es muss also innerhalb der Schleife das Inkrement angegeben werden (<code>i &lt;- i + 1</code>). Passiert dies nicht, dreht sich die Schleife unendlich und man muss einen Programmabsturz erzwingen. Im Unterschied zur <strong>for</strong>-loop ist der Inkrement aber beliebig. Wir können also auch</p>
+<p><br></p>
+</div>
+<div id="beispiel-while-loop" class="section level4">
+<h4>Beispiel while-loop</h4>
+<p>Nehmen wir das Beispiel aus dem <strong>for</strong>-loop, das sich auch als <strong>while</strong>-loop darstellen lässt:</p>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>teacher <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;Baecker&quot;</span>,</span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>             <span class="st">&quot;Mueller&quot;</span>,</span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>             <span class="st">&quot;Kaufmann&quot;</span>, </span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>             <span class="st">&quot;Bauer&quot;</span>,</span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>             <span class="st">&quot;Schuster&quot;</span></span>
+<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a>             )</span>
+<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a>pos <span class="ot">&lt;-</span> <span class="dv">1</span></span>
+<span id="cb25-9"><a href="#cb25-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-10"><a href="#cb25-10" aria-hidden="true" tabindex="-1"></a><span class="cf">while</span> (pos <span class="sc">&lt;=</span> <span class="fu">length</span>(teacher)) {</span>
+<span id="cb25-11"><a href="#cb25-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(<span class="fu">paste0</span>(<span class="st">&quot;Dozent:in &quot;</span>,</span>
+<span id="cb25-12"><a href="#cb25-12" aria-hidden="true" tabindex="-1"></a>               pos, </span>
+<span id="cb25-13"><a href="#cb25-13" aria-hidden="true" tabindex="-1"></a>               <span class="st">&quot; ist &quot;</span>,</span>
+<span id="cb25-14"><a href="#cb25-14" aria-hidden="true" tabindex="-1"></a>               teacher[pos]</span>
+<span id="cb25-15"><a href="#cb25-15" aria-hidden="true" tabindex="-1"></a>               )</span>
+<span id="cb25-16"><a href="#cb25-16" aria-hidden="true" tabindex="-1"></a>        )</span>
+<span id="cb25-17"><a href="#cb25-17" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb25-18"><a href="#cb25-18" aria-hidden="true" tabindex="-1"></a>  pos <span class="ot">&lt;-</span> pos <span class="sc">+</span> <span class="dv">1</span></span>
+<span id="cb25-19"><a href="#cb25-19" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<pre><code>[1] &quot;Dozent:in 1 ist Baecker&quot;
+[1] &quot;Dozent:in 2 ist Mueller&quot;
+[1] &quot;Dozent:in 3 ist Kaufmann&quot;
+[1] &quot;Dozent:in 4 ist Bauer&quot;
+[1] &quot;Dozent:in 5 ist Schuster&quot;</code></pre>
+<p>In der <strong>while</strong>-loop geben wir die Abbruch-Bedingung bekannt und diese wird vor dem ersten Ausführen bereits das erste Mal kontrolliert. Wenn wir <code>pos</code> auf <code>6</code> setzen, passiert gar nichts, da der <strong>while-loop</strong> direkt beendet wird.</p>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>teacher <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;Baecker&quot;</span>, </span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>             <span class="st">&quot;Mueller&quot;</span>,</span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>             <span class="st">&quot;Kaufmann&quot;</span>, </span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>             <span class="st">&quot;Bauer&quot;</span>,</span>
+<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a>             <span class="st">&quot;Schuster&quot;</span></span>
+<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a>             )</span>
+<span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-8"><a href="#cb27-8" aria-hidden="true" tabindex="-1"></a>pos <span class="ot">&lt;-</span> <span class="dv">6</span></span>
+<span id="cb27-9"><a href="#cb27-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-10"><a href="#cb27-10" aria-hidden="true" tabindex="-1"></a><span class="cf">while</span> (pos <span class="sc">&lt;=</span> <span class="fu">length</span>(teacher)) {</span>
+<span id="cb27-11"><a href="#cb27-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(<span class="fu">paste0</span>(<span class="st">&quot;Dozent:in &quot;</span>, </span>
+<span id="cb27-12"><a href="#cb27-12" aria-hidden="true" tabindex="-1"></a>               pos, </span>
+<span id="cb27-13"><a href="#cb27-13" aria-hidden="true" tabindex="-1"></a>               <span class="st">&quot; ist &quot;</span>,</span>
+<span id="cb27-14"><a href="#cb27-14" aria-hidden="true" tabindex="-1"></a>               teacher[pos]</span>
+<span id="cb27-15"><a href="#cb27-15" aria-hidden="true" tabindex="-1"></a>               )</span>
+<span id="cb27-16"><a href="#cb27-16" aria-hidden="true" tabindex="-1"></a>        )</span>
+<span id="cb27-17"><a href="#cb27-17" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb27-18"><a href="#cb27-18" aria-hidden="true" tabindex="-1"></a>  pos <span class="ot">&lt;-</span> pos <span class="sc">+</span> <span class="dv">1</span></span>
+<span id="cb27-19"><a href="#cb27-19" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<p>Hier erhalten wir keine Ausgabe, da der <strong>while</strong>-loop direkt beendet wird.</p>
+<p><br></p>
+</div>
+</div>
+<div id="repeat" class="section level3">
+<h3>repeat</h3>
+<p>Im <strong>repeat</strong>-loop werden die Instruktionen mindestens einmal ausgeführt und zwar unabhängig davon, was die Bedingung ist. Die Bedingung (<em>condition</em>) wird nach Ausführung der Instruktionen geprüft. Dies nennt man <strong>fußgesteuert</strong>. Trifft sie zu (<code>TRUE</code>), wird der <strong>repeat</strong>-loop beendet. Trifft sie nicht zu (<code>FALSE</code>), erfolgt der nächste Durchlauf. Es ist sozusagen das Gegenteil der <strong>while</strong>-loop</p>
+<center>
+<img src="pics/repeat.PNG" title="fig:" style="width:50.0%" alt="repeat-loop" />
+</center>
+<p><br></p>
+<div id="syntax-2" class="section level4">
+<h4>Syntax</h4>
+<p>Der Unterschied zur <strong>while</strong>-loop liegt darin, dass der <strong>repeat</strong>-loop (oder auch <strong>do while</strong>-loop) <strong>fußgesteuert</strong> ist (Bedingung wird nach jedem Durchgang geprüft).</p>
+<p>Die allgemeine Syntax ist ähnlich der Syntax zuvor mit einer kleinen Änderung:</p>
+<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>i <span class="ot">&lt;-</span> <span class="dv">0</span></span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a><span class="cf">repeat</span> {</span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(i)</span>
+<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a>  i <span class="ot">&lt;-</span> i <span class="sc">+</span> <span class="dv">1</span></span>
+<span id="cb28-7"><a href="#cb28-7" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb28-8"><a href="#cb28-8" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (i <span class="sc">&gt;</span> <span class="dv">5</span>) {</span>
+<span id="cb28-9"><a href="#cb28-9" aria-hidden="true" tabindex="-1"></a>    <span class="cf">break</span></span>
+<span id="cb28-10"><a href="#cb28-10" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb28-11"><a href="#cb28-11" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<pre><code>[1] 0
+[1] 1
+[1] 2
+[1] 3
+[1] 4
+[1] 5</code></pre>
+<p>Auch hier gehen wir die Syntax wieder durch:</p>
+<ol style="list-style-type: decimal">
+<li><p>Wir initiieren die Schleife, hierfür brauchen wir nun keine Bedingung oder Sequenz: <code>repeat {</code></p></li>
+<li><p>Wir setzen Anweisungen in geschweiften Klammern fest: <code>{print (i)}</code></p></li>
+<li><p>Wir setzen am <strong>Fuß</strong> der Schleife, bevor die geschweifte Klammer der Anweisungen kommt, die Abbruchbedingung der Schleife mit einem <strong>if</strong>-Ausdruck: <code>if (i &gt; 5) { break }</code></p></li>
+</ol>
+<p>Es wird also geprüft, ob <code>i</code> größer 5 ist: Trifft dies nicht zu, beginnt die Schleife von vorne, <em>repeated</em> sich also. Trifft dies zu, erfolgt die Anweisung zum Verlassen des loops mit <code>break</code>. Vergisst man <code>break</code> zu setzen, läuft auch diese Schleife unendlich. In komplexeren <strong>while</strong>-loops kann <code>break</code> ebenfalls zum Abbruch der Schleife genutzt werden.</p>
+<p><br></p>
+</div>
+<div id="beispiel" class="section level4">
+<h4>Beispiel</h4>
+<p>Auch hier nehmen wir wieder das Beispiel aus der <strong>for</strong>-loop:</p>
+<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>teacher <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;Baecker&quot;</span>, </span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>             <span class="st">&quot;Mueller&quot;</span>,</span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>             <span class="st">&quot;Kaufmann&quot;</span>,</span>
+<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a>             <span class="st">&quot;Bauer&quot;</span>,</span>
+<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a>             <span class="st">&quot;Schuster&quot;</span></span>
+<span id="cb30-6"><a href="#cb30-6" aria-hidden="true" tabindex="-1"></a>             )</span>
+<span id="cb30-7"><a href="#cb30-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-8"><a href="#cb30-8" aria-hidden="true" tabindex="-1"></a>pos <span class="ot">&lt;-</span> <span class="dv">1</span></span>
+<span id="cb30-9"><a href="#cb30-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-10"><a href="#cb30-10" aria-hidden="true" tabindex="-1"></a><span class="cf">repeat</span> {</span>
+<span id="cb30-11"><a href="#cb30-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(<span class="fu">paste0</span>(<span class="st">&quot;Dozent:in &quot;</span>, </span>
+<span id="cb30-12"><a href="#cb30-12" aria-hidden="true" tabindex="-1"></a>               pos, </span>
+<span id="cb30-13"><a href="#cb30-13" aria-hidden="true" tabindex="-1"></a>               <span class="st">&quot; ist &quot;</span>,</span>
+<span id="cb30-14"><a href="#cb30-14" aria-hidden="true" tabindex="-1"></a>               teacher[pos]</span>
+<span id="cb30-15"><a href="#cb30-15" aria-hidden="true" tabindex="-1"></a>               )</span>
+<span id="cb30-16"><a href="#cb30-16" aria-hidden="true" tabindex="-1"></a>        )</span>
+<span id="cb30-17"><a href="#cb30-17" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb30-18"><a href="#cb30-18" aria-hidden="true" tabindex="-1"></a>  pos <span class="ot">&lt;-</span> pos <span class="sc">+</span> <span class="dv">1</span></span>
+<span id="cb30-19"><a href="#cb30-19" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb30-20"><a href="#cb30-20" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (pos <span class="sc">&gt;</span> <span class="fu">length</span>(teacher)) {</span>
+<span id="cb30-21"><a href="#cb30-21" aria-hidden="true" tabindex="-1"></a>    <span class="cf">break</span></span>
+<span id="cb30-22"><a href="#cb30-22" aria-hidden="true" tabindex="-1"></a>  } </span>
+<span id="cb30-23"><a href="#cb30-23" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<pre><code>[1] &quot;Dozent:in 1 ist Baecker&quot;
+[1] &quot;Dozent:in 2 ist Mueller&quot;
+[1] &quot;Dozent:in 3 ist Kaufmann&quot;
+[1] &quot;Dozent:in 4 ist Bauer&quot;
+[1] &quot;Dozent:in 5 ist Schuster&quot;</code></pre>
+<p><strong>Zum Merken</strong>: Im Unterschied zum <strong>while</strong>-loop geben wir die Abbruchbedingung mit <strong>if</strong> an. Ebenso müssen wir hier noch das Ende der <strong>repeat</strong>-loop mit <code>break</code> aufrufen. Andernfalls würde die Schleife unendlich (bzw. bis zum Programmabbruch durch den User) ohne Operationen weiterlaufen.</p>
+</div>
+</div>
+</div>
+<div id="funktionen-in-r-schreiben" class="section level2">
+<h2>Funktionen in R schreiben</h2>
+<p>In R können nicht nur die aus <em>packages</em> zur Verfügung gestellten Funktionen genutzt werden, es können auch sehr leicht eigene Funktionen geschrieben werden. Dazu werden wir zuerst eine eigene Funktion für die Berechnung des Mittelwertes anlegen und anschliessend eine Funktion zur Ausgabe des Interquartilsabstands berechnen.</p>
+<p><br></p>
+<div id="syntax-3" class="section level3">
+<h3>Syntax</h3>
+<p>Im Folgenden werden wir eigene Funktionen schreiben. Der grundlegende Aufbau des Codes ist wie folgt:</p>
+<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>my_function <span class="ot">&lt;-</span> <span class="cf">function</span>(arg1, arg2, ..., argn){</span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Anweisungen</span></span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<p>Zuerst definieren wir einen Namen für die Funktion (<code>my_function</code>) und weisen dieser eine Funktion zu. In den runden Klammen <code>()</code> werden Argumente an die Funktion übergeben, die in den Anweisungen (alles in geschweiften Klammern <code>{}</code>) genutzt werden. Dies können Datensätze, Variablen oder einzelne Werte sein. Es ist in Abängigkeit, wie man das Argument in den Anweisungen nutzt.</p>
+</div>
+<div id="eigene-funktion-mittelwert" class="section level3">
+<h3>Eigene Funktion: Mittelwert</h3>
+<p>Wir wollen nun mit einer selbstgeschriebenen Funktion den Mittelwert einer Variable berechnen. Dazu sollte der Datensatz <code>statistics</code> (oder ein beliebig anderer Datensatz mit einer metrischen Variable in das <strong>environment</strong> geladen werden). Wir schaffen eine Funktion, in der wir ein Argument übergeben: Die Variable, von der der Mittelwert berechnet werden soll. Dieses Argument benennen wir in der Funktion mit <code>x</code>. Überall in den Anweisungen, wo wir <code>x</code> setzen, wird bei Aufruf der Funktion <code>own_mean()</code> das übergebene Argument genutzt.</p>
+<p>Anschliessend berechnen wir in der ersten Anweisung der neuen Funktion den Mittelwert. Hierbei greifen wir das übergebene Argument (<code>x</code>) auf. Mit der zweiten Anweisung lassen wir diesen Wert ausgeben. Danach können wir die selbst geschaffene Funktion aufrufen und müssen hierbei das eine geforderte Argument (Variable der Berechnung) angeben. Der Mittelwert wird berechnet und mit <code>return</code> ausgegeben.</p>
+<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>own_mean <span class="ot">&lt;-</span> <span class="cf">function</span>(x){</span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>  mean <span class="ot">=</span> <span class="fu">sum</span>(x) <span class="sc">/</span> <span class="fu">length</span>(x)</span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(mean) </span>
+<span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb33-6"><a href="#cb33-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-7"><a href="#cb33-7" aria-hidden="true" tabindex="-1"></a><span class="fu">own_mean</span>(statistics<span class="sc">$</span>grade)</span></code></pre></div>
+<pre><code>[1] 7.13</code></pre>
+<p>Somit haben wir die erste eigene Funktion geschrieben! <br></p>
+</div>
+<div id="eigene-funktion-interquartilsabstand" class="section level3">
+<h3>Eigene Funktion: Interquartilsabstand</h3>
+<p>Nun wollen wir eine Funktion schreiben, die uns das untere und das obere Quartil ausgibt, sowie den Interquartilsabstand. Wir benötigen also <strong>drei Anweisungen</strong> in der Funktion:</p>
+<ol style="list-style-type: decimal">
+<li><p>die Berechnung des unteren Quartils,</p></li>
+<li><p>die Berechnung des oberen Quartils und</p></li>
+<li><p>die Berechnung des Interquartilsabstands.</p></li>
+</ol>
+<p>Zusätzlich lassen wir diese drei Werte mit der Funktion <code>print()</code> noch ausgeben.</p>
+<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>own_iqr <span class="ot">&lt;-</span> <span class="cf">function</span>(x){</span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>  uGrenze <span class="ot">&lt;-</span>  <span class="fu">quantile</span>(x,</span>
+<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a>                       <span class="at">probs =</span> <span class="fl">0.25</span>,</span>
+<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a>                       <span class="at">na.rm =</span> <span class="cn">TRUE</span></span>
+<span id="cb35-5"><a href="#cb35-5" aria-hidden="true" tabindex="-1"></a>                       )</span>
+<span id="cb35-6"><a href="#cb35-6" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb35-7"><a href="#cb35-7" aria-hidden="true" tabindex="-1"></a>  oGrenze <span class="ot">&lt;-</span> <span class="fu">quantile</span>(x,</span>
+<span id="cb35-8"><a href="#cb35-8" aria-hidden="true" tabindex="-1"></a>                      <span class="at">probs =</span> <span class="fl">0.75</span>,</span>
+<span id="cb35-9"><a href="#cb35-9" aria-hidden="true" tabindex="-1"></a>                      <span class="at">na.rm =</span> <span class="cn">TRUE</span></span>
+<span id="cb35-10"><a href="#cb35-10" aria-hidden="true" tabindex="-1"></a>                      )</span>
+<span id="cb35-11"><a href="#cb35-11" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb35-12"><a href="#cb35-12" aria-hidden="true" tabindex="-1"></a>  abstand <span class="ot">&lt;-</span> oGrenze <span class="sc">-</span> uGrenze</span>
+<span id="cb35-13"><a href="#cb35-13" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb35-14"><a href="#cb35-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(<span class="fu">paste</span>(<span class="st">&quot;Das untere Quartil liegt bei:&quot;</span>,</span>
+<span id="cb35-15"><a href="#cb35-15" aria-hidden="true" tabindex="-1"></a>              uGrenze</span>
+<span id="cb35-16"><a href="#cb35-16" aria-hidden="true" tabindex="-1"></a>              )</span>
+<span id="cb35-17"><a href="#cb35-17" aria-hidden="true" tabindex="-1"></a>        )</span>
+<span id="cb35-18"><a href="#cb35-18" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb35-19"><a href="#cb35-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(<span class="fu">paste</span>(<span class="st">&quot;Das obere Quartil liegt bei:&quot;</span>,</span>
+<span id="cb35-20"><a href="#cb35-20" aria-hidden="true" tabindex="-1"></a>              oGrenze</span>
+<span id="cb35-21"><a href="#cb35-21" aria-hidden="true" tabindex="-1"></a>              )</span>
+<span id="cb35-22"><a href="#cb35-22" aria-hidden="true" tabindex="-1"></a>        )</span>
+<span id="cb35-23"><a href="#cb35-23" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb35-24"><a href="#cb35-24" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(<span class="fu">paste</span>(<span class="st">&quot;Der Interquartilsabstand beträgt:&quot;</span>,</span>
+<span id="cb35-25"><a href="#cb35-25" aria-hidden="true" tabindex="-1"></a>              abstand</span>
+<span id="cb35-26"><a href="#cb35-26" aria-hidden="true" tabindex="-1"></a>              )</span>
+<span id="cb35-27"><a href="#cb35-27" aria-hidden="true" tabindex="-1"></a>        )</span>
+<span id="cb35-28"><a href="#cb35-28" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb35-29"><a href="#cb35-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-30"><a href="#cb35-30" aria-hidden="true" tabindex="-1"></a><span class="fu">own_iqr</span>(statistics<span class="sc">$</span>grade)</span></code></pre></div>
+<pre><code>[1] &quot;Das untere Quartil liegt bei: 4&quot;
+[1] &quot;Das obere Quartil liegt bei: 9&quot;
+[1] &quot;Der Interquartilsabstand beträgt: 5&quot;</code></pre>
+<p>Wenn wir jetzt aber die errechneten Werte der Funktion in einem neuen Objekt speichern möchten, müssen wir wie oben <code>return</code> nutzen. Zuerst schaffen wir eine neue Liste <code>results</code>, sodass wir als Ziel ein Listenobjekt mit den einzelnen Werten haben. Die einzelnen Listenteile benennen wir wie in der Funktion auch <code>$uGrenze</code>, <code>$oGrenze</code> und <code>$abstand</code>. Die Funktion <code>quantile()</code> speichert automatisch einen <em>named numeric</em>, wir möchten aber nur den Zahlenwert speichern. Daher indexieren wir die Übergabe an unsere Liste mit <code>[[1]]</code>.</p>
+<div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>own_iqr_return <span class="ot">&lt;-</span> <span class="cf">function</span>(x){</span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>  uGrenze <span class="ot">&lt;-</span>  <span class="fu">quantile</span>(x,</span>
+<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a>                       <span class="at">probs =</span> <span class="fl">0.25</span>,</span>
+<span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a>                       <span class="at">na.rm =</span> <span class="cn">TRUE</span></span>
+<span id="cb37-5"><a href="#cb37-5" aria-hidden="true" tabindex="-1"></a>                       )</span>
+<span id="cb37-6"><a href="#cb37-6" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb37-7"><a href="#cb37-7" aria-hidden="true" tabindex="-1"></a>  oGrenze <span class="ot">&lt;-</span> <span class="fu">quantile</span>(x,</span>
+<span id="cb37-8"><a href="#cb37-8" aria-hidden="true" tabindex="-1"></a>                      <span class="at">probs =</span> <span class="fl">0.75</span>,</span>
+<span id="cb37-9"><a href="#cb37-9" aria-hidden="true" tabindex="-1"></a>                      <span class="at">na.rm =</span> <span class="cn">TRUE</span></span>
+<span id="cb37-10"><a href="#cb37-10" aria-hidden="true" tabindex="-1"></a>                      )</span>
+<span id="cb37-11"><a href="#cb37-11" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb37-12"><a href="#cb37-12" aria-hidden="true" tabindex="-1"></a>  abstand <span class="ot">&lt;-</span> oGrenze <span class="sc">-</span> uGrenze</span>
+<span id="cb37-13"><a href="#cb37-13" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb37-14"><a href="#cb37-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(<span class="fu">paste</span>(<span class="st">&quot;Das untere Quartil liegt bei:&quot;</span>,</span>
+<span id="cb37-15"><a href="#cb37-15" aria-hidden="true" tabindex="-1"></a>              uGrenze</span>
+<span id="cb37-16"><a href="#cb37-16" aria-hidden="true" tabindex="-1"></a>              )</span>
+<span id="cb37-17"><a href="#cb37-17" aria-hidden="true" tabindex="-1"></a>        )</span>
+<span id="cb37-18"><a href="#cb37-18" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb37-19"><a href="#cb37-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(<span class="fu">paste</span>(<span class="st">&quot;Das obere Quartil liegt bei:&quot;</span>,</span>
+<span id="cb37-20"><a href="#cb37-20" aria-hidden="true" tabindex="-1"></a>              oGrenze</span>
+<span id="cb37-21"><a href="#cb37-21" aria-hidden="true" tabindex="-1"></a>              )</span>
+<span id="cb37-22"><a href="#cb37-22" aria-hidden="true" tabindex="-1"></a>        )</span>
+<span id="cb37-23"><a href="#cb37-23" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb37-24"><a href="#cb37-24" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(<span class="fu">paste</span>(<span class="st">&quot;Der Interquartilsabstand beträgt:&quot;</span>,</span>
+<span id="cb37-25"><a href="#cb37-25" aria-hidden="true" tabindex="-1"></a>              abstand</span>
+<span id="cb37-26"><a href="#cb37-26" aria-hidden="true" tabindex="-1"></a>              )</span>
+<span id="cb37-27"><a href="#cb37-27" aria-hidden="true" tabindex="-1"></a>        )</span>
+<span id="cb37-28"><a href="#cb37-28" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb37-29"><a href="#cb37-29" aria-hidden="true" tabindex="-1"></a>  results <span class="ot">&lt;-</span> <span class="fu">list</span>()</span>
+<span id="cb37-30"><a href="#cb37-30" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb37-31"><a href="#cb37-31" aria-hidden="true" tabindex="-1"></a>  results<span class="sc">$</span>uGrenze <span class="ot">&lt;-</span> uGrenze[[<span class="dv">1</span>]]</span>
+<span id="cb37-32"><a href="#cb37-32" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb37-33"><a href="#cb37-33" aria-hidden="true" tabindex="-1"></a>  results<span class="sc">$</span>oGrenze <span class="ot">&lt;-</span>oGrenze[[<span class="dv">1</span>]]</span>
+<span id="cb37-34"><a href="#cb37-34" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb37-35"><a href="#cb37-35" aria-hidden="true" tabindex="-1"></a>  results<span class="sc">$</span>abstand <span class="ot">&lt;-</span> abstand[[<span class="dv">1</span>]]</span>
+<span id="cb37-36"><a href="#cb37-36" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb37-37"><a href="#cb37-37" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(results) </span>
+<span id="cb37-38"><a href="#cb37-38" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb37-39"><a href="#cb37-39" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-40"><a href="#cb37-40" aria-hidden="true" tabindex="-1"></a>test <span class="ot">&lt;-</span> <span class="fu">own_iqr</span>(statistics<span class="sc">$</span>grade)</span></code></pre></div>
+<pre><code>[1] &quot;Das untere Quartil liegt bei: 4&quot;
+[1] &quot;Das obere Quartil liegt bei: 9&quot;
+[1] &quot;Der Interquartilsabstand beträgt: 5&quot;</code></pre>
+<div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>test</span></code></pre></div>
+<pre><code>[1] &quot;Der Interquartilsabstand beträgt: 5&quot;</code></pre>
+<p>Das Schreiben eigener Funktionen ist in R leicht umzusetzen und ist in vielen Schritten der Datenanalyse hilfreich, wenn es keine bereits existenten Funktionen für spezifische Anwendungen gibt.</p>
+</div>
+<div id="funktionen-und-schleifen" class="section level3">
+<h3>Funktionen und Schleifen</h3>
+<p>Wir können Schleifen auch gut in Funktionen nutzen. Wir könnten uns zum Beispiel eine Funktion schreiben, die uns die Abweichung vom Mittelwert und den Wert aus einer Variable anzeigen lässt. Dazu nehmen wir wieder den Beispieldatensatz <code>statistics</code>.</p>
+<p>Wir verknüpfen jetzt die Funktion mit einem <strong>for</strong>-loop und einem <strong>if</strong>-Ausdruck. Wir benennen die Funktion <code>showcase</code> und übergeben ein Argument (die Variable, die genutzt werden soll). Anschliessend wird der <strong>for</strong>-loop gestartet. Wenn kein Wert vorliegt, wird eine Nachricht ausgegeben, dass kein Wert vorliegt. Wenn ein Wert vorliegt, wird der Abstand zum <em>mean</em> berechnet und dieser zusammen mit dem erreichten Wert ausgegeben.</p>
+<div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a>showcase <span class="ot">&lt;-</span> <span class="cf">function</span>(x){</span>
+<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(x)) {</span>
+<span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (<span class="fu">is.na</span>(x[i])) {</span>
+<span id="cb41-4"><a href="#cb41-4" aria-hidden="true" tabindex="-1"></a>      <span class="fu">print</span>(<span class="fu">paste</span>(<span class="st">&quot;Für Student&quot;</span>, </span>
+<span id="cb41-5"><a href="#cb41-5" aria-hidden="true" tabindex="-1"></a>                  i, </span>
+<span id="cb41-6"><a href="#cb41-6" aria-hidden="true" tabindex="-1"></a>                  <span class="st">&quot;liegt kein Wert vor.&quot;</span></span>
+<span id="cb41-7"><a href="#cb41-7" aria-hidden="true" tabindex="-1"></a>                  )</span>
+<span id="cb41-8"><a href="#cb41-8" aria-hidden="true" tabindex="-1"></a>            )</span>
+<span id="cb41-9"><a href="#cb41-9" aria-hidden="true" tabindex="-1"></a>      <span class="cf">next</span></span>
+<span id="cb41-10"><a href="#cb41-10" aria-hidden="true" tabindex="-1"></a>    } <span class="cf">else</span> {</span>
+<span id="cb41-11"><a href="#cb41-11" aria-hidden="true" tabindex="-1"></a>      abstand <span class="ot">=</span> <span class="fu">mean</span>(x, </span>
+<span id="cb41-12"><a href="#cb41-12" aria-hidden="true" tabindex="-1"></a>                     <span class="at">na.rm =</span> <span class="cn">TRUE</span></span>
+<span id="cb41-13"><a href="#cb41-13" aria-hidden="true" tabindex="-1"></a>                     ) <span class="sc">-</span> x[i]</span>
+<span id="cb41-14"><a href="#cb41-14" aria-hidden="true" tabindex="-1"></a>      <span class="fu">print</span>(<span class="fu">paste0</span>(<span class="st">&quot;Student &quot;</span>,</span>
+<span id="cb41-15"><a href="#cb41-15" aria-hidden="true" tabindex="-1"></a>                  i, </span>
+<span id="cb41-16"><a href="#cb41-16" aria-hidden="true" tabindex="-1"></a>                  <span class="st">&quot; hat folgenden Wert: &quot;</span>,</span>
+<span id="cb41-17"><a href="#cb41-17" aria-hidden="true" tabindex="-1"></a>                  x[i], </span>
+<span id="cb41-18"><a href="#cb41-18" aria-hidden="true" tabindex="-1"></a>                  <span class="st">&quot; (Abweichung zum Mean: &quot;</span>,</span>
+<span id="cb41-19"><a href="#cb41-19" aria-hidden="true" tabindex="-1"></a>                  <span class="fu">round</span>(abstand, </span>
+<span id="cb41-20"><a href="#cb41-20" aria-hidden="true" tabindex="-1"></a>                        <span class="dv">2</span></span>
+<span id="cb41-21"><a href="#cb41-21" aria-hidden="true" tabindex="-1"></a>                        ),</span>
+<span id="cb41-22"><a href="#cb41-22" aria-hidden="true" tabindex="-1"></a>                  <span class="st">&quot;)&quot;</span></span>
+<span id="cb41-23"><a href="#cb41-23" aria-hidden="true" tabindex="-1"></a>                  )</span>
+<span id="cb41-24"><a href="#cb41-24" aria-hidden="true" tabindex="-1"></a>            )</span>
+<span id="cb41-25"><a href="#cb41-25" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb41-26"><a href="#cb41-26" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb41-27"><a href="#cb41-27" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<p>Nun können wir uns beispielhaft für die Variable <code>grade</code> und <code>grade2</code> aus dem <code>statistics</code> Datensatz ausgeben lassen.</p>
+<div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="fu">showcase</span>(statistics<span class="sc">$</span>grade)</span></code></pre></div>
+<div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="fu">showcase</span>(statistics<span class="sc">$</span>grade2)</span></code></pre></div>
+<div id="das-wars" class="section level4">
+<h4>Das war’s!</h4>
+</div>
+</div>
+</div>
+
+<br><br>
+<hr />
+<center>
+<p style="font-size:10px">
+  Copyright: <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png" /></a>
+<br/>Benedikt Philipp Kleer, Justus-Liebig-Universität Gießen.
+</p>
+</center>
+
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+
+<script>
+$(document).ready(function ()  {
+
+    // temporarily add toc-ignore selector to headers for the consistency with Pandoc
+    $('.unlisted.unnumbered').addClass('toc-ignore')
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
