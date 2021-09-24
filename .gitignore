@@ -4,5 +4,4 @@
 .Ruserdata
 *.Rproj
 .DS_Store
-slides/*_files/
 README.html
