@@ -5,17 +5,12 @@ author: "B. Philipp Kleer"
 date: "11. Oktober 2021"
 output: 
   slidy_presentation:
-      footer: "CC BY-SA 4.0, B. Philipp Kleer"
-      slide_level: 3
-      widescreen: true
-      highlight: pygments
-      theme: readable
-      css: ./styles/style-slides.css
-      df_print: paged
-      mathjax: default
-      self_contained: false
-      incremental: false #True  dann jedes Bullet einzeln
-      collapse: true # means the text output will be merged into the R source code block
+    slide_level: 3
+    footer: "Copyright: CC BY-SA 4.0, B. Philipp Kleer"
+    css: styles/style-slides.css
+    df_print: paged
+    highlight: espresso
+    theme: readable
 ---
 
 ```{r setup, include=FALSE}

@@ -4,17 +4,12 @@ subtitle: "Daten bändigen & visualisieren"
 author: "B. Philipp Kleer"
 date: "11. Oktober 2021"
 output: 
-  slidy_presentation:
-      footer: "Copyright: CC BY-SA 4.0, B. Philipp Kleer"
-      widescreen: true
-      highlight: pygments
-      theme: readable
-      css: styles/style-slides.css
-      df_print: paged
-      mathjax: default
-      self_contained: false
-      incremental: false #True  dann jedes Bullet einzeln
-      collapse: true # means the text output will be merged into the R source code block
+  slidy_presentation: 
+    slide_level: 3
+    footer: "Copyright: CC BY-SA 4.0, B. Philipp Kleer"
+    css: styles/style-slides.css
+    df_print: paged
+    highlight: espresso
 ---
 
 ```{r setup, include=FALSE}
@@ -24,9 +19,9 @@ library("tidyverse")
 
 uni <- readRDS("../datasets/uni.rds")
 
-opts_chunk$set(fig.path = 'pics/s6-', # path for calculated figures
-               fig.align = 'center',  # alignment of figure (also possible right, left, default)
-               fig.show = 'hold', # how to show figures: hold -> direct at the end of code chunk; animate: all plots in an animation
+opts_chunk$set(fig.path = "pics/s6-", # path for calculated figures
+               fig.align = "center",  # alignment of figure (also possible right, left, default)
+               fig.show = "hold", # how to show figures: hold -> direct at the end of code chunk; animate: all plots in an animation
                fig.width = 3,   # figure width
                fig.height = 4,  # figure height
                echo = TRUE,     # Code is printed
@@ -403,4 +398,4 @@ Nutzt dazu den Datensatz ```pss``` (Panem Social Survey).
 6. Gruppiere den Datensatz nach Distrikten und lasse dir deskriptive Werte für die Links-Rechts-Selbsteinschätzung ausgeben. 
 7. Zeigen sich, gruppiert nach Alter (!), deskriptive Differenzen auf der Links-Rechts-Selbsteinschätzung.
 
-## Das war's!
+## Das war"s!

@@ -1,6 +1,8 @@
 
 div.blue { background-color:#DCE6EB; border-radius: 5px; padding: 20px;}
 
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Fira+Sans">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Fira+Mono">
 
 title {
   font-size: 30px;
@@ -114,6 +116,7 @@ body {
 
 code.r{
   font-size: 24px;
+  font-family: Fira Mono;
 }
 
 table {
