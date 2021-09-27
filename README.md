@@ -27,3 +27,23 @@ Am Nachmittag können die Workshopteilnehmende eigene Schwerpunkte wählen und s
 
 ### Übungsaufgaben
 Zu den Themen am Vor- und am Nachmittag finden sich in der RStudio Cloud Übungsaufgaben. Die RStudio Cloud steht Teilnehmer:innen bis zum 31. Oktober 2021 zur Verfügung. Die Inhalten können auch von dort heruntergeladen werden.
+
+## Running RMDs
+Um die *.rmd*-Dateien durchlaufen lassen zu können, muss man die Pakete `xaringan` und `xaringanExtra` installieren.
+
+Hierzu müssen folgende Zeilen ausgeführt werden:
+```{r eval=FALSE}
+# install.packages("remotes")
+remotes::install_github("yihui/xaringan")
+
+# install.packages("devtools")
+devtools::install_github("gadenbuie/xaringanExtra")
+
+```
+
+Für die Darstllung von Tabellen wird dazu noch das Paket `DT` benötigt:
+
+```{r}
+install.packages("DT", dependencies = TRUE)
+```
+
