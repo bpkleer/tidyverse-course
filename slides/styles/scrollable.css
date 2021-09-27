@@ -1,0 +1,70 @@
+/* Font size scrollable ändern
+verschiede pull-left machen
+*/
+
+.scrollable{
+  height: 50vh;
+  overflow-y: auto;
+}
+
+/*Progress bar*/
+.remark-slide-number {
+  position: inherit;
+}
+
+.remark-slide-number .progress-bar-container {
+  position: absolute;
+  bottom: 0;
+  height: 4px;
+  display: block;
+  left: 0;
+  right: 0;
+}
+
+.remark-slide-number .progress-bar {
+  height: 100%;
+  background-color: #EB811B;
+}
+
+/* 
+New pull-lefts
+*/
+.pull-left{
+  float: left;
+  width: 44%;
+  }
+
+.pull-right{
+  float: right;
+  width: 44%;
+   }
+
+.pull-left-wide{
+  float: left;
+  width: 54%;
+    }
+
+.pull-left-narrow{
+  float: left;
+  width: 34%;
+}
+
+.pull-right-wide{
+  float: right;
+  width: 64%;
+}
+
+.pull-right-narrow{
+  float: right;
+  width: 24%;
+}
+
+/* Font bold */
+b, strong {
+  color: #EB811B;
+}
+
+/* Code highlight color*/
+.remark-code-line-highlighted	{
+	  background-color: rgba(235, 129, 27, .2);
+	}
