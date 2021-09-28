@@ -1,14 +1,18 @@
 ---
+title: "Tabellen publizierbar erstellen mit `gt`"
+
 output: 
   html_document:
       toc: true
       toc_float:
         toc_collapsed: true
         smooth_scroll: true
+      toc_depth: 3
       widescreen: true
-      highlight: pygments
-      theme: readable
-      css: ./styles/style.css
+      highlightStyle: github
+      highlightLines: true
+      highlightLanguage: ["r"]
+      css: styles/htmlbook.css
       df_print: paged
       mathjax: default
       self_contained: false
@@ -71,7 +75,8 @@ htmltools::tagList(
 ```
 
 
-## Tabellen publizierbar erstellen mit ```gt```
+# Start
+
 Das *package* ```gt``` (*grammar of tables*) inkludiert hilfreiche Funktionen, um Tabellen aus R in ein Format zu exportieren, das in wissenschaftlichen Arbeiten oder bei Präsentationen genutzt werden kann. 
 
 Das Paket ist umfassend und hier werden nur einführende Schritte dargestellt, die aber für erste Projekte im BA-Studium hilfreich sind. Die genaue Dokumentation findet sich in der [Benutzerdokumentation](https://gt.rstudio.com/).
@@ -100,7 +105,8 @@ library("gt")
 library("tidyverse")
 ```
 
-## Eine einfache Tabelle
+# Eine einfache Tabelle
+
 Bevor wir nun Kreuztabellen darstellen, machen wir eine einfache Tabelle. Wir wollen zum Beispiel die Häufigkeiten für die *Studienmotivation* ausgeben lassen (```mot```).
 
 ```{r r-table, eval=TRUE}
@@ -132,7 +138,8 @@ uni %>%
 
 Fertig ist die Darstellung der absoluten Häufigkeiten der Variable ```mot```. Dies sieht schon viel schöner aus als in der R Konsole (und ist auch als Bild exportierbar, dazu später mehr). Bevor nun einzelne Formatierungsmöglichkeiten in ```gt``` gezeigt werden, gehen wir über zu Kreuztabellen und zur Ausgabe prozentualer Häufigkeiten.
 
-## Kreuztabelle
+# Kreuztabelle
+
 Wir nehmen wieder ein Beispiel aus dem Trainingsdatensatz ```uni```. Wir möchten eine Kreuztabelle zwischen Studienort (```city```) und Studienfach (```study```) erstellen. Wir möchten wissen, wie viele Personen jeweils in den einzelnen Städten die spezifischen Fächer studieren. 
 
 ``` {r example-crosstable, eval=TRUE}
@@ -160,6 +167,7 @@ uni %>%
 Wir sehen, dass wir nun ein *tibble* haben, der in der ersten Spalte die Ausprägungen von ```study``` hat, und die zweite bis vierte Spalte stellen die Ausprägungen von ```city``` dar. In den einzelnen Feldern befindet sich die Summe der einzelnen Paare. 
 
 ## Kreuztabelle mit ```gt```
+
 Als nächstes werden wir jetzt dann die Funktion ```gt()``` aufrufen:
 
 ```{r gt-crosstable1, eval=TRUE}
@@ -220,7 +228,8 @@ uni %>%
 
 Nun haben wir also eine Kreuztabelle mit absoluten Häufigkeiten und eine mit relativen Häufigkeiten. In den nächsten Schritten wird die Tabelle formatiert. 
 
-## Formatierungen in ```gt```
+# Formatierungen in ```gt```
+
 Um die Tabellen nun zu formatieren, speichern wir diese zuerst in einem Objekt: Denn R ist objektorientiert! Wir nehmen die absolute Häufigkeitstabelle der Variable ```mot``` und die prozentuale Kreuztabelle ziwschen ```city``` und ```study```. **Wichtig hierbei**: Erinnere dich an die Abbildung zu Beginn, in der alle einzelnen Bereiche einer ```gt```-Tabelle benannt waren!
 ```{r gt-objects, eval=TRUE}
 single <- uni %>% 
@@ -253,6 +262,7 @@ cross <- uni %>%
 ```
 
 ## Titel ändern
+
 Zuerst fügen wir der Häufigkeitstabelle nun einen Titel hinzu, damit klar ist, um was für Daten es sich handelt.
 ```{r gt-single1, eval= TRUE}
 single %>% 
@@ -260,6 +270,7 @@ single %>%
 ```
 
 ## Alignment ändern
+
 Wie wir sehen, sind die Spalten rechts ausgerichtet, dies können wir ebenfalls ändern und zentrieren es nun:
 ```{r gt-single2, eval = TRUE}
 single %>% 
@@ -268,6 +279,7 @@ single %>%
 ```
 
 ## Quelle \& Fußnote hinzufügen
+
 Oft werden unter Tabellen Quellen oder Anmerkungen angegeben, dies können wir auch ganz einfach mit ```gt```machen:
 ```{r gt-single3, eval=TRUE}
 single %>%
@@ -296,6 +308,7 @@ single %>%
 ```
 
 ## Spaltenbreite ändern
+
 Als kleineres Manko sehen wir jetzt noch, dass die Spalten unterschiedlich breit sind. Dies können wir über ```cols_width()``` ändern. Hierbei können wir einzelnen Spalten aufrufen oder einen Bereich an Spalten festlegen. Wir könnten z.B. die Breite von Spalte 4 erhöhen. Hierzu nutzen wir die Hilfsfunktion ```px()```, die die Größe in Pixel angibt. 
 ```{r gt-single-colwidth, eval=TRUE}
 single %>%
@@ -333,6 +346,7 @@ single %>%
 ```
 
 ## Schriftart \& Schriftgröße ändern
+
 Innerhalb von ```tab_options()``` gibt es eine Vielzahl von Optionen. Um Schriftarten zu ändern, muss man zuvor das *package* ```extrafont``` laden. 
 
 ```{r extrafont, eval=FALSE}
@@ -377,7 +391,8 @@ single %>%
 
 Dies stellt nur einen Ausschnitt der Funktionsmöglichkeiten von ```gt``` dar. Es können auch einzelne Zellen spezifisch farbig gestaltet werden und auch nach einer weiteren Variable dargestellt werden. Dazu ist ein Blick in die [Benutzerdokumentation](https://gt.rstudio.com/) hilfreich.
 
-## Anpassungen bei Kreuztabellen
+### Anpassungen bei Kreuztabellen
+
 Nun wollen wir abschließend noch die Kreuztablle anpassen. Wir übernehmen die oben eingeführten Anpassungen für den Title, die Spaltenbreite und die Quelle. Die erste Spalte machen wir nun aber breiter als die anderen. Auch richten wir die erste Spalte links aus (wie nach Konvention üblich).
 
 ```{r gt-crosstable-adaptions, eval=TRUE}
@@ -497,11 +512,3 @@ cross %>%
 
 ### Das war's!
 Die Labs findet ihr in der RStudio Cloud unter ```task gt```.
-
-Ihr sehr hier drei verschiedene Tabellendarstellungen. Sucht euch eine Tabellendarstellung heraus und stellt diese mithilfe des ```gt```-*package* nach. 
-
-![gt Task 1](./pics/gt-task1.png)
-
-![gt Task 2](./pics/gt-task2.png)
-
-![gt Task 3](./pics/gt-task3.png)

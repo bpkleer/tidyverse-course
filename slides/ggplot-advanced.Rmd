@@ -1,14 +1,18 @@
 ---
+title: "Weiterführende Darstellungen in `ggplot2`"
+
 output: 
   html_document:
       toc: true
       toc_float:
         toc_collapsed: true
         smooth_scroll: true
+      toc_depth: 3
       widescreen: true
-      highlight: pygments
-      theme: readable
-      css: ./styles/style.css
+      highlightStyle: github
+      highlightLines: true
+      highlightLanguage: ["r"]
+      css: styles/htmlbook.css
       df_print: paged
       mathjax: default
       self_contained: false
@@ -39,10 +43,7 @@ opts_chunk$set(#fig.path = 'pics/s6-', # path for calculated figures
                eval = FALSE,    # Code is NOT evaluated
                warning = FALSE, # warnings are NOT displayed
                message = FALSE, # messages are NOT displayed
-               size = "tiny",  # latex-size of code chunks
-               background = "#E7E7E7", # background color of code chunks
                comment = "", # no hashtags before output
-               options(width = 80),
                results = "markdown",
                rows.print = 15
 )
@@ -57,7 +58,8 @@ htmltools::tagList(
 )
 ```
 
-## Weiterführende Darstellungen in ```ggplot2```
+# Start
+
 In diesem Teil des Kurses werden weiterführende Einstellungen innerhalb des Pakets ```ggplot2``` dargestellt. Aufbauend auf die Einführung in die Grammatik von ```ggplot``` werden folgende Teile dargestellt:
 
 - Schriftarten bearbeiten bzw. Darstellung des Plots
@@ -72,7 +74,8 @@ In diesem Teil des Kurses werden weiterführende Einstellungen innerhalb des Pak
 
 Eine gute Übersicht bietet auch folgendes [Online-Lernbuch](https://r-graphics.org) (auf Englisch). 
 
-## Weitere Layout-Fragen
+# Weitere Layout-Fragen
+
 Innerhalb eines ```ggplots``` können nahezu alle dargestellten Teilbereiche verändert und angepasst werden. Einige dieser Änderungen werden wie im nachfolgenden besprechen.
 
 Dazu schaffen wir uns zuerst nochmal ein ggplot-Objekt mit unserem Scatterplot aus der Einführung in ```ggplot```:
@@ -240,7 +243,8 @@ scatterGrid +
  
 Es gibt ebenso eine ganze Reihe an vorgefertigten Themes, die dann wiederum individuell angepasst werden können. Eine Übersicht über vorhandene Themes gibt es [hier](https://ggplot2.tidyverse.org/reference/ggtheme.html).
 
-## Annotations
+# Annotations
+
 Neben den ganzen Spielereien möchte man manchmal auch einzelne Bereiche einer Grafik besonders hervorheben oder aber zum Beispiel Beschriftungen der Fälle hinzufügen (bei kleinem n). 
 
 Hierzu gibt es die Funktionen ```geom_text()``` und ```annotate()```, die mit ```ggplot``` genutzt werden können. Dazu nehmen wir wieder das Scatterplot vom Beginn, begrenzen aber diesmal die Anzahl auf 15, damit wir eine klare Darstellung bekommen. **Wichtig**: ```geom_jitter()``` kann nicht genutzt werden, da die Datenbeschriftungen am Datenpunkt und nicht am gejitterten Datenpunkt auftauchen!
@@ -382,7 +386,8 @@ scatter +
            )
 ```
 
-## Grafikpakete zur Darstellung von *missing values*
+# Grafikpakete zur Darstellung von *missing values*
+
 Oftmals möchte man bevor man die eigentliche Datenanalyse beginnt, zuerst die Daten inspizieren und vor allem die **missing values** prüfen. Dazu gibt es zwei umfangreiche Pakete, die auf ```ggplot2``` aufbauen. Dies sind: ```naniar``` und ```UpSetR```.
 
 Zuerst installieren bzw. laden wir die Pakete:
@@ -611,7 +616,7 @@ gg_miss_fct(x = uniMis,
   labs(title = "NA in Uni-df nach Studienfach")
 ```
 
-## Darstellungen von Regressionsmodellen
+# Darstellungen von Regressionsmodellen
 Oftmals ist es nicht nur das Ziel Regressionsmodelle in Tabellen darzustellen, sondern auch spezifische Effekte grafisch darzustellen. Dazu stellen wir hier eine Möglichkeit vor: manuell über eigene **predictions**. 
 
 Es gibt zwar *packages* wie ```ggiraphExtra```, diese können aber nur sehr eingeschränkt plotten. 

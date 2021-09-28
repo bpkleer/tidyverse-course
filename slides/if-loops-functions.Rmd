@@ -1,14 +1,18 @@
 ---
+title: "Bedingungen, Schleifen & eigene Funktionen"
+
 output: 
   html_document:
       toc: true
       toc_float:
         toc_collapsed: true
         smooth_scroll: true
+      toc_depth: 3
       widescreen: true
-      highlight: pygments
-      theme: readable
-      css: ./styles/style.css
+      highlightStyle: github
+      highlightLines: true
+      highlightLanguage: ["r"]
+      css: styles/htmlbook.css
       df_print: paged
       mathjax: default
       self_contained: false
@@ -56,11 +60,11 @@ htmltools::tagList(
 )
 ```
 
-## Bedingungen, Schleifen & eigene Funktionen
+# Start
 In diesem Teil des Workshops werden zuerst **if**-Ausdrücke wiederholt (bzw. eingeführt) und anschließend die Nutzung von **Schleifen** vorgestellt. Schleifen haben den Vorteil, dass man einen Codierungsschritt auf eine bestimmte Anzahl bzw. Fälle (in Kombination mit **if**) wiederholen kann. Somit erspart man sich Code-Schreibarbeit. Als letztes werden **Funktionen** eingeführt. 
 
 
-## If-Bedingung
+# If-Bedingung
 Der **if**-Ausdruck wird dann genutzt, wenn man einen Befehl unter bestimmten Bedingungen ausführen möchte. Dabei wird eine Bedingung (*condition*) überprüft und sofern diese zutrifft (```TRUE```), wird die angegebene Operation durchgeführt. 
 
 Die Logik des einfachen **if**-Ausdrucks ist im Schaubild dargestellt:
@@ -87,9 +91,7 @@ Der einfache **if**-Ausdruck folgt also einem ganz klaren Muster:
 
 Der einfache **if**-Ausdruck kann also ganz leicht umgesetzt werden. 
 
-<br>
-
-### else if Ausdruck
+## else if Ausdruck
 
 Neben dem einfachen **if**-Ausdruck gibt es auch noch die **else if**-Ausdrücke, mit denen man weitere Bedingungen prüfen kann, falls die vorherige Bedingung nicht zutrifft. Hier durchläuft der Prüfprozess also mehrere Bedingungen. Dies ist im Schaubild dargestellt:
 
@@ -131,7 +133,8 @@ if (mot >= 7) {
 
 Das einzige, was wir hier verändert haben, ist dass wir eine dritte Prüfbedingung hinzugefügt haben. Wie zuvor wird diese dritte Bedingung erst geprüft, wenn die erste und die zweite Bedingung beide ```FALSE``` sind. **else if**-Ausdrücke haben also eine **hierarchische** Struktur.
 
-### else Ausdruck
+## else Ausdruck
+
 Man kann auch dichotome Entscheidungen treffen. Nehmen wir an, wir möchten nur nach *motiviert* und *nicht motiviert* unterscheiden und entscheiden uns, Personen, die einen Wert über $7$ angegeben haben, als motiviert zu bewerten und Personen mit niedrigeren Skalenwerten als nicht motiviert. Wir prüfen hier nur die Bedingung, ob der Wert größer $7$ ist. Falls dies nicht zutrifft, entscheiden wir mit **else** (in allen anderen Fällen), dass *nicht motiviert* ausgegeben wird.**Else** beinhaltet also eine Anweisung, die ausgeführt wird für alle Fälle, auf denen die zuvor genannte **if**-Bedingung nicht zutrifft (also ```FALSE``` ergibt).
 
 ``` {r else, eval=TRUE}
@@ -152,7 +155,8 @@ Auch hier ist der Aufbau recht einfach:
 
 Dies waren einfache Beispiele von **if** und **else if**-Ausdrücken. In der Regel werden diese aber innerhalb von Schleifen genutzt (z.B. wenn man Entscheidungen für alle Beobachtungen innerhalb eines Datensatzes treffen möchte). Dies wird im Nachfolgenden gezeigt.
 
-## Loops
+# Loops
+
 Mit **Loops** (*Iterationen*) kann man Operationen wiederholen. Die Wiederholungen geschehen dabei *n*-Mal, wobei *n* ein ganzzahliger Laufwert ist (*integer*). Für die Wiederholungen gibt man einen Startwert fest. Wie oben bereits erwähnt, wendet man dies z.B. an, wenn man eigene Rekodierungen schreiben will ohne bereits bestehende Funktionen verwenden zu wollen.
 
 Wir können folgende Arten von Iterationen unterscheiden:
@@ -163,9 +167,8 @@ Wir können folgende Arten von Iterationen unterscheiden:
 
 3. **repeat** (**do while**)
 
-<br>
+## for
 
-### for
 In der **for**-Loop werden Operationen so lange durchgeführt, bis das Ende einer vordefinierten Sequenz erreicht ist (z.B. über alle Beobachtungen eines Datensatzes). Mit dieser Schleife setzen wir einen Beginn und ein Ende fest und die Operation werden innerhalb dieser Sequenz ausgeführt.
 
 Im Schaubild ist die Logik des **for-loops** dargestellt. 
@@ -174,9 +177,8 @@ Im Schaubild ist die Logik des **for-loops** dargestellt.
 ![for-loop](pics/for.PNG){width=50%}
 </center>
 
-<br>
+### Syntax
 
-#### Syntax
 Die allgemeine Syntax sieht wie folgt aus:
 ```{r for, eval=TRUE}
 for (i in 0:5) {
@@ -209,9 +211,8 @@ for (i in start:n) {
 }
 ```
 
-<br>
+### Beispiel for-loop
 
-#### Beispiel for-loop
 Wir schaffen eine einfache **for**-loop und geben dabei immer den Wert eines Vektors ```teacher``` aus, der die:den Dozentin:en für einen Kurs beinhaltet. Insgesamt haben wir $5$ Dozent:innen. Im Beispiel bestimmen wir das Ende der Schleife einfach über die Länge des Vektors, den wir nutzen. Denn wir möchten, dass alle Fälle durchgegangen werden. Wir geben nacheinander die Namen der Dozent:innen aus:
 
 ``` {r for3, eval=TRUE}
@@ -233,9 +234,8 @@ for (i in 1:length(teacher)) {
 ```
 Wir bedienen uns hierbei der Funktion ```paste0()```, die Text mit Objekten als Ausgabe verbinden kann. Die Funktion ```paste0()``` hat zwischen den Elementen in der Funktion keine Leerstelle (die Funktion ```paste()``` setzt zwischen allen Elementen ein Leerzeichen (oder ein im Argument ```sep``` angegebenes Trennzeichen.)
 
-<br>
+### for-loop mit else if-Ausdruck
 
-#### for-loop mit else if-Ausdruck
 Nehmen wir das Beispiel aus den **if**-Ausdrücken. Wir möchten nun eine neue Variable im Datensatz schaffen, die eine Wertebeschreibung nutzt. Wir benötigen also die **else if**-Bedingung aus dem vorherigen Kapitel und bilden nun um diese einen **for**-loop durch die Länge des Datensatzes. Das Ergebnis speichern wir in einer neuen Variable ```motText``` und lassen es für jeden Fall einzeln ausgeben (```print()```). Zur Anschaulichkeit gehen wir hier zwei Schritte: Wir speichern erst die Beschreibung in ```motivation``` und übertragen es dann an den Wert in ```statistics$motText```. **Wichtig ist**, dass wir nicht den Laufindex bei ```statistics$motText``` vergessen, da wir ja nur den spezifischen Fall mit dem neuen Wert belegen möchten.
 
 ```{r for-elseif, eval=TRUE}
@@ -262,9 +262,8 @@ for (i in 1:length(statistics$mot)) {
 
 **Eine kleine Aufgabe**: Wie oben genannt, haben wir unnötig viele Zeilen hier geschrieben. Probiere einmal die Schleife zu verschlanken!
 
-<br>
+### for-loop mit next
 
-#### for-loop mit next
 Als zweites Beispiel möchten wir nun eine neue Variable schaffen, die Beschreibungen von ```grade2``` in Abhängigkeit des Notenwertes inkludiert. Zur Erinnerung: Die Variable ```grade2``` weist ```NA's``` auf. Dies ist nur ein Funktionsbeispiel für die Kombination von **for**-loops und **if**-Ausdrücken. Es empfiehlt sich zum Rekodieren die Funktionen aus dem Paket ```dplyr``` (```case_when()```) oder ```car``` (```recode()```) zu nutzen. 
 
 ``` {r table, eval=TRUE}
@@ -303,25 +302,21 @@ table(statistics$g2text)
 
 **Eine kleine Aufgabe**: Anstatt ```next``` zu verwenden, könnte man hier auch mit nur mit **if**-Ausdrücken zum selben Ergebnis kommen. Schreibe die Schleife so um, dass diese ohne ```next``` auskommt.
 
-<br>
+### Vor- & Nachteile
 
-#### Vor- & Nachteile
 **for**-loops werden recht häufig genutzt und können auch verschachtelt werden. Nicht angewendet werden können **for**-loops, wenn die Anzahl der Durchläufe nicht bestimmbar ist ($\rightarrow$ **while**-loop). Ein Nachteil von **for**-loops ist, dass diese in der Regel sehr langsam sind. Auch ist es in verschachtelten **for**-loops oft nur schwer nachvollziehbar, was genau gemacht wird. Das heißt auch, dass die Fehlersuche manchmal mühsam sein kann. 
 
 Als Alternativen zu **for**-loops kann man die ```apply()```-Funktionen nutzen (Funktionalität ist durch Entwickler geprüft). Nähere Informationen zu den ```apply()```-Funktionen finden sich [hier](https://de.wikibooks.org/wiki/GNU_R:_apply). Dennoch können in manchen Situationen eigene geschrieben Funktionen auf **for**-loops zurückgreifen, so dass es sinnvoll ist, diese Grundfunktionen auch zu kennen.  
 
-<br>
-
-### while
+## while
 In der **while**-loop werden Instruktionen ausgeführt, solange eine Bedingung (*condition*) zutrifft. Man nennt dies auch **kopfgesteuert**: Denn bei jedem Durchlauf wird am Schleifenkopf die Bedingung neu geprüft. Wenn diese Bedingung (*condition*) nicht mehr zutrifft (```FALSE```), dann wird die **while**-loop beendet. Der Durchlauf von Code ist also abhängig von einer Bedingung. Sollte die Bedingung direkt zu Beginn nicht mehr zutreffen, wird der **while**-loop direkt beendet ohne auch nur eine Instruktion einmalig ausgeführt zu haben. 
 
 <center>
 ![while-loop](pics/while.PNG){width=50%}
 </center>
 
-<br>
+### Syntax
 
-#### Syntax
 Die allgemeine Syntax einer **while**-loop sieht wie folgt aus: 
 
 ```{r while, eval=TRUE}
@@ -342,9 +337,8 @@ Auch hier ist die Syntax wieder ähnlich zum **if**-Ausdruck:
 
 Wichtiger Unterschied zur **for**-loop: Die Sequenz wird hier nicht angegeben, es muss also innerhalb der Schleife das Inkrement angegeben werden (```i <- i + 1```). Passiert dies nicht, dreht sich die Schleife unendlich und man muss einen Programmabsturz erzwingen. Im Unterschied zur **for**-loop ist der Inkrement aber beliebig. Wir können also auch 
 
-<br>
+### Beispiel while-loop
 
-#### Beispiel while-loop
 Nehmen wir das Beispiel aus dem **for**-loop, das sich auch als **while**-loop darstellen lässt: 
 
 ``` {r while2, eval=TRUE}
@@ -394,18 +388,16 @@ while (pos <= length(teacher)) {
 
 Hier erhalten wir keine Ausgabe, da der **while**-loop direkt beendet wird. 
 
-<br>
+## repeat
 
-### repeat
 Im **repeat**-loop werden die Instruktionen mindestens einmal ausgeführt und zwar unabhängig davon, was die Bedingung ist. Die Bedingung (*condition*) wird nach Ausführung der Instruktionen geprüft. Dies nennt man **fußgesteuert**. Trifft sie zu (```TRUE```), wird der **repeat**-loop beendet. Trifft sie nicht zu (```FALSE```), erfolgt der nächste Durchlauf. Es ist sozusagen das Gegenteil der **while**-loop
 
 <center>
 ![repeat-loop](pics/repeat.PNG){width=50%}
 </center>
 
-<br>
+### Syntax
 
-#### Syntax
 Der Unterschied zur **while**-loop liegt darin, dass der **repeat**-loop (oder auch **do while**-loop) **fußgesteuert** ist (Bedingung wird nach jedem Durchgang geprüft).
 
 Die allgemeine Syntax ist ähnlich der Syntax zuvor mit einer kleinen Änderung: 
@@ -435,9 +427,8 @@ Auch hier gehen wir die Syntax wieder durch:
 
 Es wird also geprüft, ob ```i``` größer 5 ist: Trifft dies nicht zu, beginnt die Schleife von vorne, *repeated* sich also. Trifft dies zu, erfolgt die Anweisung zum Verlassen des loops mit ```break```. Vergisst man ```break``` zu setzen, läuft auch diese Schleife unendlich. In komplexeren **while**-loops kann ```break``` ebenfalls zum Abbruch der Schleife genutzt werden.
 
-<br>
+### Beispiel
 
-#### Beispiel
 Auch hier nehmen wir wieder das Beispiel aus der **for**-loop:
 ``` {r repeat2, eval=TRUE}
 teacher <- c("Baecker", 
@@ -467,12 +458,12 @@ repeat {
 
 **Zum Merken**: Im Unterschied zum **while**-loop geben wir die Abbruchbedingung mit **if** an. Ebenso müssen wir hier noch das Ende der **repeat**-loop mit ```break``` aufrufen. Andernfalls würde die Schleife unendlich (bzw. bis zum Programmabbruch durch den User) ohne Operationen weiterlaufen.
 
-## Funktionen in R schreiben
+# Funktionen in R schreiben
+
 In R können nicht nur die aus *packages* zur Verfügung gestellten Funktionen genutzt werden, es können auch sehr leicht eigene Funktionen geschrieben werden. Dazu werden wir zuerst eine eigene Funktion für die Berechnung des Mittelwertes anlegen und anschliessend eine Funktion zur Ausgabe des Interquartilsabstands berechnen. 
 
-<br> 
+## Syntax
 
-### Syntax
 Im Folgenden werden wir eigene Funktionen schreiben. Der grundlegende Aufbau des Codes ist wie folgt: 
 ```{r function}
 my_function <- function(arg1, arg2, ..., argn){
@@ -482,7 +473,7 @@ my_function <- function(arg1, arg2, ..., argn){
 
 Zuerst definieren wir einen Namen für die Funktion (```my_function```) und weisen dieser eine Funktion zu. In den runden Klammen ```()``` werden Argumente an die Funktion übergeben, die in den Anweisungen (alles in geschweiften Klammern ```{}```) genutzt werden. Dies können Datensätze, Variablen oder einzelne Werte sein. Es ist in Abängigkeit, wie man das Argument in den Anweisungen nutzt.
 
-### Eigene Funktion: Mittelwert
+## Eigene Funktion: Mittelwert
 Wir wollen nun mit einer selbstgeschriebenen Funktion den Mittelwert einer Variable berechnen. Dazu sollte der Datensatz ```statistics``` (oder ein beliebig anderer Datensatz mit einer metrischen Variable in das **environment** geladen werden). Wir schaffen eine Funktion, in der wir ein Argument übergeben: Die Variable, von der der Mittelwert berechnet werden soll. Dieses Argument benennen wir in der Funktion mit ```x```. Überall in den Anweisungen, wo wir ```x``` setzen, wird bei Aufruf der Funktion ```own_mean()``` das übergebene Argument genutzt. 
 
 Anschliessend berechnen wir in der ersten Anweisung der neuen Funktion den Mittelwert. Hierbei greifen wir das übergebene Argument (```x```) auf. Mit der zweiten Anweisung lassen wir diesen Wert ausgeben. Danach können wir die selbst geschaffene Funktion aufrufen und müssen hierbei das eine geforderte Argument (Variable der Berechnung) angeben. Der Mittelwert wird berechnet und mit ```return``` ausgegeben.
@@ -497,9 +488,9 @@ own_mean(statistics$grade)
 ```
 
 Somit haben wir die erste eigene Funktion geschrieben!
-<br>
 
-### Eigene Funktion: Interquartilsabstand
+## Eigene Funktion: Interquartilsabstand
+
 Nun wollen wir eine Funktion schreiben, die uns das untere und das obere Quartil ausgibt, sowie den Interquartilsabstand. Wir benötigen also **drei Anweisungen** in der Funktion: 
 
 1. die Berechnung des unteren Quartils,
@@ -592,7 +583,7 @@ test
 
 Das Schreiben eigener Funktionen ist in R leicht umzusetzen und ist in vielen Schritten der Datenanalyse hilfreich, wenn es keine bereits existenten Funktionen für spezifische Anwendungen gibt. 
 
-### Funktionen und Schleifen
+# Funktionen & Schleifen
 Wir können Schleifen auch gut in Funktionen nutzen. Wir könnten uns zum Beispiel eine Funktion schreiben, die uns die Abweichung vom Mittelwert und den Wert aus einer Variable anzeigen lässt. Dazu nehmen wir wieder den Beispieldatensatz ```statistics```.
 
 Wir verknüpfen jetzt die Funktion mit einem **for**-loop und einem **if**-Ausdruck. Wir benennen die Funktion ```showcase``` und übergeben ein Argument (die Variable, die genutzt werden soll). Anschliessend wird der **for**-loop gestartet. Wenn kein Wert vorliegt, wird eine Nachricht ausgegeben, dass kein Wert vorliegt. Wenn ein Wert vorliegt, wird der Abstand zum *mean* berechnet und dieser zusammen mit dem erreichten Wert ausgegeben.

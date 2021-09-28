@@ -1,7 +1,6 @@
 ---
 title: "Textdaten bearbeiten mit **stringr**"
-author: "B. Philipp Kleer"
-date: "11. Oktober 2021"
+
 output: 
   html_document:
       toc: true
@@ -10,9 +9,10 @@ output:
         smooth_scroll: true
       toc_depth: 3
       widescreen: true
-      highlight: pygments
-      theme: readable
-      css: styles/style.css
+      highlightStyle: github
+      highlightLines: true
+      highlightLanguage: ["r"]
+      css: styles/htmlbook.css
       df_print: paged
       mathjax: default
       self_contained: false
@@ -62,7 +62,7 @@ htmltools::tagList(
 :::: {class="flex-container"}
 
 ::: {class="flex-text"}
-In diesen Slides wollen wir uns mit Textdaten beschäftigen. Hieru lernen wir grundlegende Funktionen im Umgang mit Textdaten kennen. Eins vorweg: Textdaten sind immer schwieriger zu händeln als numerische Daten. Hierz werden im späteren Teil auch **regular expressions** eingeführt. Dies bleibt aber auf einem Grundlevel, weiterführend wird dazu sicherlich im Workshop zur quantitativen Textanalyse eingegangen.
+In diesen Slides wollen wir uns mit Textdaten beschäftigen. Hieru lernen wir grundlegende Funktionen im Umgang mit Textdaten kennen. Eins vorweg: Textdaten sind immer schwieriger zu händeln als numerische Daten. Hierzu werden im späteren Teil auch **regular expressions** eingeführt. Dies bleibt aber auf einem Grundlevel, weiterführend wird dazu sicherlich im Workshop zur quantitativen Textanalyse eingegangen.
 
 In R gibt es innerhalb des **tidyverse** ein spezielles Paket zur Bearbeitung von Textdaten: **stringr**. Gemeinsam mit *regular expressions* können viele Transformationen und Bereinigungen durchgeführt werden.
 
