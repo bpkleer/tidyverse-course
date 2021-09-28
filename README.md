@@ -32,7 +32,8 @@ Zu den Themen am Vor- und am Nachmittag finden sich in der RStudio Cloud Übungs
 Um die *.rmd*-Dateien durchlaufen lassen zu können, muss man die Pakete `xaringan` und `xaringanExtra` installieren.
 
 Hierzu müssen folgende Zeilen ausgeführt werden:
-```{r eval=FALSE}
+
+```{r}
 # install.packages("remotes")
 remotes::install_github("yihui/xaringan")
 
@@ -41,9 +42,9 @@ devtools::install_github("gadenbuie/xaringanExtra")
 
 ```
 
-Für die Darstllung von Tabellen wird dazu noch das Paket `DT` benötigt:
+Für die Darstllung von Tabellen wird dazu noch das Paket `DT` und `icons` benötigt:
 
 ```{r}
-install.packages("DT", dependencies = TRUE)
+install.packages(c("DT","icons"), dependencies = TRUE)
 ```
 
