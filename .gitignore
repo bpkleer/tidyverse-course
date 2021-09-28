@@ -7,3 +7,4 @@
 README.html
 *.html
 /slides/*_files/
+/slides/*.html
