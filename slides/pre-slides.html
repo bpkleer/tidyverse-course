@@ -1,387 +1,436 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
- "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-  <meta http-equiv="Content-Style-Type" content="text/css" />
-  <meta name="generator" content="pandoc" />
-  <meta name="author" content="B. Philipp Kleer" />
-  <meta name="copyright" content="CC BY-SA 4.0, B. Philipp Kleer"/>
-  <title>Lasset die Spiele beginnen!</title>
-  <style type="text/css">
-    code{white-space: pre-wrap;}
-    span.smallcaps{font-variant: small-caps;}
-    span.underline{text-decoration: underline;}
-    div.column{display: inline-block; vertical-align: top; width: 50%;}
-    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
-    ul.task-list{list-style: none;}
-            pre > code.sourceCode { white-space: pre; position: relative; }
-            pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
-            pre > code.sourceCode > span:empty { height: 1.2em; }
-            .sourceCode { overflow: visible; }
-            code.sourceCode > span { color: inherit; text-decoration: inherit; }
-            div.sourceCode { margin: 1em 0; }
-            pre.sourceCode { margin: 0; }
-            @media screen {
-            div.sourceCode { overflow: auto; }
-            }
-            @media print {
-            pre > code.sourceCode { white-space: pre-wrap; }
-            pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
-            }
-            pre.numberSource code
-              { counter-reset: source-line 0; }
-            pre.numberSource code > span
-              { position: relative; left: -4em; counter-increment: source-line; }
-            pre.numberSource code > span > a:first-child::before
-              { content: counter(source-line);
-                position: relative; left: -1em; text-align: right; vertical-align: baseline;
-                border: none; display: inline-block;
-                -webkit-touch-callout: none; -webkit-user-select: none;
-                -khtml-user-select: none; -moz-user-select: none;
-                -ms-user-select: none; user-select: none;
-                padding: 0 4px; width: 4em;
-                color: #aaaaaa;
-              }
-            pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
-            div.sourceCode
-              {   }
-            @media screen {
-            pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
-            }
-            code span.al { color: #ff0000; font-weight: bold; } /* Alert */
-            code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
-            code span.at { color: #7d9029; } /* Attribute */
-            code span.bn { color: #40a070; } /* BaseN */
-            code span.bu { } /* BuiltIn */
-            code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
-            code span.ch { color: #4070a0; } /* Char */
-            code span.cn { color: #880000; } /* Constant */
-            code span.co { color: #60a0b0; font-style: italic; } /* Comment */
-            code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
-            code span.do { color: #ba2121; font-style: italic; } /* Documentation */
-            code span.dt { color: #902000; } /* DataType */
-            code span.dv { color: #40a070; } /* DecVal */
-            code span.er { color: #ff0000; font-weight: bold; } /* Error */
-            code span.ex { } /* Extension */
-            code span.fl { color: #40a070; } /* Float */
-            code span.fu { color: #06287e; } /* Function */
-            code span.im { } /* Import */
-            code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
-            code span.kw { color: #007020; font-weight: bold; } /* Keyword */
-            code span.op { color: #666666; } /* Operator */
-            code span.ot { color: #007020; } /* Other */
-            code span.pp { color: #bc7a00; } /* Preprocessor */
-            code span.sc { color: #4070a0; } /* SpecialChar */
-            code span.ss { color: #bb6688; } /* SpecialString */
-            code span.st { color: #4070a0; } /* String */
-            code span.va { color: #19177c; } /* Variable */
-            code span.vs { color: #4070a0; } /* VerbatimString */
-            code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
-          </style>
-  <style type="text/css">
-pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
-pre > code.sourceCode > span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-div.sourceCode { margin: 1em 0; }
-pre.sourceCode { margin: 0; }
-@media screen {
-div.sourceCode { overflow: auto; }
-}
-@media print {
-pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
-}
-pre.numberSource code
-  { counter-reset: source-line 0; }
-pre.numberSource code > span
-  { position: relative; left: -4em; counter-increment: source-line; }
-pre.numberSource code > span > a:first-child::before
-  { content: counter(source-line);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; display: inline-block;
-    -webkit-touch-callout: none; -webkit-user-select: none;
-    -khtml-user-select: none; -moz-user-select: none;
-    -ms-user-select: none; user-select: none;
-    padding: 0 4px; width: 4em;
-    color: #aaaaaa;
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>pre-slides.knit</title>
+    <meta charset="utf-8" />
+    <script src="pre-slides_files/header-attrs-2.11/header-attrs.js"></script>
+    <script src="pre-slides_files/clipboard-2.0.6/clipboard.min.js"></script>
+    <link href="pre-slides_files/xaringanExtra-clipboard-0.2.6/xaringanExtra-clipboard.css" rel="stylesheet" />
+    <script src="pre-slides_files/xaringanExtra-clipboard-0.2.6/xaringanExtra-clipboard.js"></script>
+    <script>window.xaringanExtraClipboard(null, {"button":"<i class=\"fa fa-clipboard\"><\/i>","success":"<i class=\"fa fa-check\" style=\"color: #90BE6D\"><\/i>","error":"<i class=\"fa fa-times-circle\" style=\"color: #F94144\"><\/i>"})</script>
+    <link href="pre-slides_files/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
+    <link href="pre-slides_files/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
+    <link rel="stylesheet" href="styles/slides.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+
+
+
+
+class: center, title-slide, middle
+
+# Daten bändigen &amp; visualisieren
+
+## Was wir machen und wie wir uns organisieren
+
+### B. Philipp Kleer
+
+### Methodentage 2021
+
+### 11. Oktober 2021
+
+.social[
+   [&lt;svg viewBox="0 0 512 512" style="position:relative;display:inline-block;top:.1em;fill:#EB811B;height:1em;" xmlns="http://www.w3.org/2000/svg"&gt;  &lt;path d="M294.75 188.19h-45.92V342h47.47c67.62 0 83.12-51.34 83.12-76.91 0-41.64-26.54-76.9-84.67-76.9zM256 8C119 8 8 119 8 256s111 248 248 248 248-111 248-248S393 8 256 8zm-80.79 360.76h-29.84v-207.5h29.84zm-14.92-231.14a19.57 19.57 0 1 1 19.57-19.57 19.64 19.64 0 0 1-19.57 19.57zM300 369h-81V161.26h80.6c76.73 0 110.44 54.83 110.44 103.85C410 318.39 368.38 369 300 369z"&gt;&lt;/path&gt;&lt;/svg&gt;](https://orcid.org/0000-0003-1935-387X)   [&lt;svg viewBox="0 0 512 512" style="position:relative;display:inline-block;top:.1em;fill:#EB811B;height:1em;" xmlns="http://www.w3.org/2000/svg"&gt;  &lt;path d="M105.2 24.9c-3.1-8.9-15.7-8.9-18.9 0L29.8 199.7h132c-.1 0-56.6-174.8-56.6-174.8zM.9 287.7c-2.6 8 .3 16.9 7.1 22l247.9 184-226.2-294zm160.8-88l94.3 294 94.3-294zm349.4 88l-28.8-88-226.3 294 247.9-184c6.9-5.1 9.7-14 7.2-22zM425.7 24.9c-3.1-8.9-15.7-8.9-18.9 0l-56.6 174.8h132z"&gt;&lt;/path&gt;&lt;/svg&gt;](https://gitlab.com/bpkleer)   [&lt;svg viewBox="0 0 512 512" style="position:relative;display:inline-block;top:.1em;fill:#EB811B;height:1em;" xmlns="http://www.w3.org/2000/svg"&gt;  &lt;path d="M496 128v16a8 8 0 0 1-8 8h-24v12c0 6.627-5.373 12-12 12H60c-6.627 0-12-5.373-12-12v-12H24a8 8 0 0 1-8-8v-16a8 8 0 0 1 4.941-7.392l232-88a7.996 7.996 0 0 1 6.118 0l232 88A8 8 0 0 1 496 128zm-24 304H40c-13.255 0-24 10.745-24 24v16a8 8 0 0 0 8 8h464a8 8 0 0 0 8-8v-16c0-13.255-10.745-24-24-24zM96 192v192H60c-6.627 0-12 5.373-12 12v20h416v-20c0-6.627-5.373-12-12-12h-36V192h-64v192h-64V192h-64v192h-64V192H96z"&gt;&lt;/path&gt;&lt;/svg&gt;](https://www.uni-giessen.de/faculties/f03/departments/dps/staff/researchers/kleer?set_language=en)   [&lt;svg viewBox="0 0 448 512" style="position:relative;display:inline-block;top:.1em;fill:#EB811B;height:1em;" xmlns="http://www.w3.org/2000/svg"&gt;  &lt;path d="M0 32v448h448V32H0zm262.2 334.4c-6.6 3-33.2 6-50-14.2-9.2-10.6-25.3-33.3-42.2-63.6-8.9 0-14.7 0-21.4-.6v46.4c0 23.5 6 21.2 25.8 23.9v8.1c-6.9-.3-23.1-.8-35.6-.8-13.1 0-26.1.6-33.6.8v-8.1c15.5-2.9 22-1.3 22-23.9V225c0-22.6-6.4-21-22-23.9V193c25.8 1 53.1-.6 70.9-.6 31.7 0 55.9 14.4 55.9 45.6 0 21.1-16.7 42.2-39.2 47.5 13.6 24.2 30 45.6 42.2 58.9 7.2 7.8 17.2 14.7 27.2 14.7v7.3zm22.9-135c-23.3 0-32.2-15.7-32.2-32.2V167c0-12.2 8.8-30.4 34-30.4s30.4 17.9 30.4 17.9l-10.7 7.2s-5.5-12.5-19.7-12.5c-7.9 0-19.7 7.3-19.7 19.7v26.8c0 13.4 6.6 23.3 17.9 23.3 14.1 0 21.5-10.9 21.5-26.8h-17.9v-10.7h30.4c0 20.5 4.7 49.9-34 49.9zm-116.5 44.7c-9.4 0-13.6-.3-20-.8v-69.7c6.4-.6 15-.6 22.5-.6 23.3 0 37.2 12.2 37.2 34.5 0 21.9-15 36.6-39.7 36.6z"&gt;&lt;/path&gt;&lt;/svg&gt;](https://www.researchgate.net/profile/Benedikt_Kleer)
+]
+
+---
+
+# Was ist tidyverse?
+
+.pull-left[
+**Tidyverse** ist ein Paket, dass mehrere Pakete beinhaltet, die alle nach ähnlicher Syntax funktionieren und untereinander kompatibel sind. 
+
+Es bietet somit einen sehr großen Funktionsumfang und wird daher auch viel genutzt.
+]
+
+
+.pull-right[
+.center[
+![The tidyverse](pics/tidyverse.png)
+]
+]
+
+---
+
+# The Core tidyverse
+
+.pull-left[
+**Tidyverse** beinhaltet Kernpakete, die allesamt mit dem Befehl `library("tidyverse")` geladen werden. Dies sind:
+
+- **dplyr** (Datenbereinigung)
+ 
+- **ggplot2** (Grafiken)
+ 
+- **stringr** (Umgang mit Textdaten)
+
+- **tidyr** (Umgang mit Datensätzen)
+
+- forcats (Umgang mit Faktoren)
+
+- tibble (Tabellentool)
+
+- readr (Import von Daten)
+
+- purrr (Umgang mit Funktionen und Vektoren)
+
+]
+
+.pull-right[
+.center[
+![The core tidyverse](pics/coretidy.png) 
+]
+]
+
+---
+
+# Vier Pakete im Fokus
+
+.pull-left[
+.pull-left[
+.center[
+![stringr](pics/tidyr.png) 
+
+[Cheat-Sheet](https://github.com/rstudio/cheatsheets/blob/master/data-import.pdf) 
+]
+]
+
+.pull-right[
+.center[
+![dplyr](pics/dplyr.png) 
+
+[Cheat-Sheet](https://github.com/rstudio/cheatsheets/blob/master/data-transformation.pdf)
+]
+]
+]
+
+.pull-right[
+.pull-left[
+.center[
+![ggplot2](pics/ggplot2.png) 
+
+[Cheat-Sheet](https://github.com/rstudio/cheatsheets/blob/master/data-visualization-2.1.pdf)
+]
+]
+
+.pull-right[
+.center[
+![stringr](pics/stringr.png) 
+
+[Cheat-Sheet](https://github.com/rstudio/cheatsheets/blob/master/strings.pdf)
+]
+]
+]
+
+???
+
+**tidyr** beinhaltet eine Grammatik, um Datensätze in ein *tidy* Format zu bringen. Ziel ist es, dass jede 
+Spalte eine Variable ist, jede Zeile eine Beobachtung und jede Zelle einen Wert beinhaltet. Hier gibt es das zu `tidyr`.
+
+**dplyr** beinhaltet eine Grammatik, um Datenmanipulationen zu machen. Es besticht dabei durch seine Einfachheit und der Kombinationsmöglichkeit der Grundbefehle. Für eine erste Dateneinsicht ist dies meist hilfreich zu nutzen, oder um die Daten umzustrukturieren (manipulieren). Hier gibt es das 
+
+**ggplot2** ist **das** Grafikpaket in R. Es bietet die Möglichkeit Grafiken genauestens den eigenen Präferenzen anzupassen und darzustellen. Dazu gibt es viele Erweiterungspakete, die ebenfalls auf der Syntax von **ggplot2** aufbauen. Hier gibt es das 
+
+**stringr** ist ein Paket um `string`-Variablen vernünftig in R bearbeiten zu können. Es gibt einige Alternativen, aber dennoch bleibt **stringr** ein beliebtes Paket zur Bearbeitung von `string`-Variablen. Insbesondere bei Textanalysen muss man im Vorfeld die p`string`-Variablen bearbeiten.
+
+
+---
+
+# Ziel des Workshops 
+
+Die Teilnehmenden können am Ende des Workshops ...
+
+--
+
+- ... die Grammatik der Pakete ggplot2 und tidyverse verstehen und auf eigene Zwecke anwenden.
+
+--
+
+- ... Daten zielführend aufbereiten.
+
+--
+
+- ... Daten und Ergebnisse sinnvoll darstellen.
+
+--
+
+- ... erste eigene Funktionen programmieren.
+
+---
+
+# Ziel des Workshops
+Es geht in diesem kurzen 1-Tages-Kurs vor allem um **Readbility-Skills**. Ziel ist es, dass man neue Probleme mit dem hier gezeigten lösen kann. Dafür sollte der Inhalt aber während des Workshops gut aufbereitet bzw. nachbereitet werden (eigene Notizen in den Skripten etc.).
+
+--
+
+In meinen Kursen gilt immer folgendes Prinzip: **Was man nicht schreibt, lernt man auch nicht!**
+
+--
+
+Es ist also eine didaktische Entscheidung von mir, dass es keine fertige Skripts gibt. Selbst programmieren heißt eben auch selbst Code schreiben und nicht nur einzelnen Felder austauschen (wie bei *Click and Play* mit SPSS). Ebenso wird meiner Meinung nach das Verständnis von Funktionen viel besser vermittelt. 
+
+--
+
+Die Slides bzw. HTML-Dokumente haben aber kopierbaren Code (ein bisschen Erleichterung). Wenn man in diesen Dokumenten über den Code geht, erscheint oben rechts ein *Clipboard*, mit dem man den Code in die Zwischenablage kopiert. 
+
+--
+ 
+![Beispiel Kopieren von Code](./pics/code.png)  
+
+---
+
+# Wer ich bin und wie ich Workshops leite?
+
+.pull-left[
+**Wer bin ich?**
+
+- seit 2015 Mitarbeiter an der Professur für Methoden (viele praktische Methoden-/Projektkurse bisher gegeben)
+- nutze seit mehreren Jahren bereits R bzw. RStudio (vor allem Projekt-Funktion
+- derzeit: gefördertes Lehrprojekt, in dem R-Kursmaterial für Personen aufbereitet wird, die keine Computer-/Programmierkenntnisse haben
+]
+
+--
+
+.pull-right[
+**Wie ich meine Rolle als Workshopleiter sehe?**
+
+1. kollegiales, respektvolles Mitaneinander
+2. Interesse daran, anderen zu helfen/zu unterstützen
+3. in der Ansprache ziehe ich das Du vor
+4. Kurz-Inputs und dann eigenes *trial-and-error*
+5. Unterstützung beim Code-Crashing
+6. gebe Input, aktive Mitarbeit aber erforderlich
+]
+
+--
+
+Alle Kursmaterialien sind entweder auf [gitlab](https://gitlab.com/bpkleer/mtg-21-tidyverse) oder in der [R Studio Cloud](https://rstudio.cloud/spaces/146374/join?access_code=xfg7axLLy1bVgItjpH869s1Jg3Lmd9ajntRdEKMH) runterzuladen. In [ILIAS](https://ilias.uni-giessen.de/ilias/goto.php?target=grp_247939&amp;client_id=JLUG) finden sich Links an die betreffenden Stellen.
+
+
+---
+
+# Arbeiten mit R
+Arbeiten mit R heißt in der Regel immer wieder auf Probleme zu stoßen und willens zu sein, diese Probleme zu lösen. In meiner jetzt fast zehnjährigen Arbeit mit R bin ich noch nie auf ein Problem gestoßen, dass man nicht lösen konnte (auch wenn es manchmal umständlich war). 
+
+--
+
+**Wichtig dafür:** Lesefähigkeit von Code. Also das Verständnis von Code. Dies ist auch das primäre Ziel des heutigen Tages.
+
+
+---
+
+# Kursmaterialien
+Wie gesagt, sind die Kursmaterialien direkt in der [RStudio Cloud](https://rstudio.cloud/spaces/146374/join?access_code=xfg7axLLy1bVgItjpH869s1Jg3Lmd9ajntRdEKMH) verlinkt, aber auch in [gitlab](https://gitlab.com/bpkleer/mtg-21-tidyverse).
+
+Die `code chunks` haben ein integriertes *Clipboard*, mit dem der Code direkt in ein R Skript kopiert werden kann. Dafür geht man einfach beim betreffenden Code oben rechts auf das *Clipboard*-Zeichen. 
+
+
+```r
+install.packages("tidyverse",
+                 dependencies = TRUE)
+```
+
+--
+
+**Wichtig**: Es handelt sich um *.html*-Präsentationen, die grafisch nur dann korrekt angezeigt werden, wenn eben auch die anderen Ordner relativ genauso lokal gespeichert sind, wie es beim Download entsteht. 
+
+---
+
+# Coding Konvention
+Jede Person hat eigene Vorlieben, was den geschriebenen Code angeht. Im Folgenden möchte ich nur kurz meine Präferenzen darlegen.
+
+Für neue Variablen oder Dataframes nutze ich in der Regel das Format `lowerCamelCase`:
+
+```r
+df$newVar &lt;- NA
+
+newDf &lt;- subset(df, 
+                is.na(newVar
+                      )
+                )
+```
+
+--
+
+Selbst geschrieben Funktionen schreibe ich mit `_`:
+
+```r
+own_mean &lt;- function(x){
+  mean = sum(x) / length(x)
+  print(mean) 
   }
-pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
-div.sourceCode
-  {   }
-@media screen {
-pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+```
+
+
+---
+
+# Code Konvention
+Wie im ersten Fall bereits sichtbar, trenne ich Argumente mit `Enter` (Zeilenumbruch) und setze Klammern ebenfalls in neue Zeilen. Das hat den Vorteil, dass die Kommentierung einfacher erfolgen kann. Hat eine Funktion nur ein einziges Argument bleibt die Klammer in der gleichen Zeile.
+
+
+```r
+# einzelnes Argument
+library(tidyverse)
+
+# mehrere Argumente
+str_sub(tweet$text[23], # Quelle
+        -20,  # Beginn 20. Buchstaben vom Ende
+        -2    # vorletzter Buchstabe vom Ende
+        )
+```
+
+---
+
+# Start 
+Der Kurs setzt Grundkenntnisse voraus. Ihr lernt euch jetzt in Breakout-Rooms kennen. In den Breakout-Rooms sollt ihr euch kennenlernen und ein paar Grundaufgaben in R lösen. Dies dient auch der Auffrischung. Ich schaue abwechselnd in den Breakout-Rooms nach. Ihr könnte mich aber auch rufen. 
+
+Folgende Aufgaben sind zu erledigen:
+
+1. Den Datensatz `pss.rds` in das environment laden (fiktiver Datensatz Panem Social Survey)
+
+2. Die Variable `agea` deskriptiv beschreiben.
+
+3. Schafft eine neue Variable, die dem Datensatz hinzugefügt werden soll. Diese Variable soll `socgroup` heißen und einfach eine Sequenz von `1, 2, 3, 4` über die Länge des Datensatzes beinhalten. **Wichtig**: Jede Zahl soll gleich oft vorkommen. Ob sich die Sequenz immer wiederholt (also Reihenfolge `1, 2, 3, 4, 1, 2, 3, 4, ...`), oder ihr erst alle `1`, dann alle `2` etc. abbildet, ist euch überlassen.
+
+4. Vergesst nicht, euch gegenseitig vorzustellen!
+
+**Zeit:** 30 Minuten. 
+
+Wenn jemand nicht seine lokale R-Installation nutzen möchte, kann er einfach auf die **RStudio Cloud** zurückgreifen. Dort sind die Datensätze, Skripte &amp; Folien auch bereits hinterlegt und müssen nicht direkt runtergeladen werden.
+
+---
+
+class: inverse2, mline, center, middle
+
+# Das war's!
+
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"seal": false,
+"highlightStyle": "github",
+"highlightLines": true,
+"highlightLanguage": "r",
+"countIncrementalSlides": false,
+"ratio": "16:9",
+"slideNumberFormat": "<div class=\"progress-bar-container\">\n  <div class=\"progress-bar\" style=\"width: calc(%current% / %total% * 100%);\">\n  </div>\n</div>`\n",
+"navigation": {
+"scroll": false
 }
-code span.al { color: #ff0000; font-weight: bold; } /* Alert */
-code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
-code span.at { color: #7d9029; } /* Attribute */
-code span.bn { color: #40a070; } /* BaseN */
-code span.bu { } /* BuiltIn */
-code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
-code span.ch { color: #4070a0; } /* Char */
-code span.cn { color: #880000; } /* Constant */
-code span.co { color: #60a0b0; font-style: italic; } /* Comment */
-code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
-code span.do { color: #ba2121; font-style: italic; } /* Documentation */
-code span.dt { color: #902000; } /* DataType */
-code span.dv { color: #40a070; } /* DecVal */
-code span.er { color: #ff0000; font-weight: bold; } /* Error */
-code span.ex { } /* Extension */
-code span.fl { color: #40a070; } /* Float */
-code span.fu { color: #06287e; } /* Function */
-code span.im { } /* Import */
-code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
-code span.kw { color: #007020; font-weight: bold; } /* Keyword */
-code span.op { color: #666666; } /* Operator */
-code span.ot { color: #007020; } /* Other */
-code span.pp { color: #bc7a00; } /* Preprocessor */
-code span.sc { color: #4070a0; } /* SpecialChar */
-code span.ss { color: #bb6688; } /* SpecialString */
-code span.st { color: #4070a0; } /* String */
-code span.va { color: #19177c; } /* Variable */
-code span.vs { color: #4070a0; } /* VerbatimString */
-code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
-  </style>
-  <script src="pre-slides_files/header-attrs-2.11/header-attrs.js"></script>
-  <script src="pre-slides_files/jquery-3.6.0/jquery-3.6.0.min.js"></script>
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <link href="pre-slides_files/bootstrap-3.3.5/css/readable.min.css" rel="stylesheet" />
-  <script src="pre-slides_files/bootstrap-3.3.5/js/bootstrap.min.js"></script>
-  <script src="pre-slides_files/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
-  <script src="pre-slides_files/bootstrap-3.3.5/shim/respond.min.js"></script>
-  <style>h1 {font-size: 34px;}
-         h1.title {font-size: 38px;}
-         h2 {font-size: 30px;}
-         h3 {font-size: 24px;}
-         h4 {font-size: 18px;}
-         h5 {font-size: 16px;}
-         h6 {font-size: 12px;}
-         code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
-         pre:not([class]) { background-color: white }</style>
-  <link href="pre-slides_files/slidy-2/styles/slidy.css" rel="stylesheet" />
-  <script src="pre-slides_files/slidy-2/scripts/slidy.js"></script>
-  <script src="pre-slides_files/slidy_shiny-1/slidy_shiny.js"></script>
-  <link href="pre-slides_files/pagedtable-1.1/css/pagedtable.css" rel="stylesheet" />
-  <script src="pre-slides_files/pagedtable-1.1/js/pagedtable.js"></script>
-  <script src="pre-slides_files/clipboard-2.0.6/clipboard.min.js"></script>
-  <link href="pre-slides_files/xaringanExtra-clipboard-0.2.6/xaringanExtra-clipboard.css" rel="stylesheet" />
-  <script src="pre-slides_files/xaringanExtra-clipboard-0.2.6/xaringanExtra-clipboard.js"></script>
-  <script>window.xaringanExtraClipboard(null, {"button":"<i class=\"fa fa-clipboard\"><\/i>","success":"<i class=\"fa fa-check\" style=\"color: #90BE6D\"><\/i>","error":"<i class=\"fa fa-times-circle\" style=\"color: #F94144\"><\/i>"})</script>
-  <link href="pre-slides_files/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
-  <link href="pre-slides_files/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
-  <link rel="stylesheet" type="text/css" media="screen, projection, print"
-   href="styles/style-slides.css" />
-</head>
-<body>
-<div class="slide titlepage">
-  <h1 class="title">Lasset die Spiele beginnen!</h1>
-  <h1 class="subtitle">Daten bändigen &amp; visualisieren Methodentage 2021</h1>
-  <p class="author">
-B. Philipp Kleer
-  </p>
-  <p class="date">11. Oktober 2021</p>
-</div>
-<div id="was-ist-tidyverse" class="slide section level2">
-<h1>Was ist tidyverse?</h1>
-<div class="flex-container">
-<div style="text-align: left; flex-grow:1; flex-basis: 30%">
-<p><strong>Tidyverse</strong> ist ein Paket, dass mehrere Pakete beinhaltet, die alle nach ähnlicher Syntax funktionieren und untereinander kompatibel sind.</p>
-<p>Es bietet somit einen sehr großen Funktionsumfang und wird daher auch viel genutzt.</p>
-</div>
-<div style="text-align: center; flex-grow:1">
-<div class="figure">
-<img src="pics/tidyverse.png" alt="" />
-<p class="caption">The tidyverse</p>
-</div>
-</div>
-</div>
-</div>
-<div id="the-core-tidyverse" class="slide section level2">
-<h1>The Core tidyverse</h1>
-<div class="flex-container">
-<div style="text-align: left; flex-grow:1; flex-basis: 30%">
-<p><strong>Tidyverse</strong> beinhaltet Kernpakete, die allesamt mit dem Befehl <code>library("tidyverse")</code> geladen werden. Dies sind:</p>
-<ul>
-<li><strong>dplyr</strong></li>
-<li><strong>ggplot2</strong></li>
-<li>forcats</li>
-<li>tibble</li>
-<li>readr</li>
-<li><strong>stringr</strong></li>
-<li><strong>tidyr</strong></li>
-<li>purrr</li>
-</ul>
-</div>
-<div style="text-align: center; flex-grow:1">
-<div class="figure">
-<img src="pics/coretidy.png" width="300" alt="" />
-<p class="caption">The core tidyverse</p>
-</div>
-</div>
-</div>
-</div>
-<div id="drei-pakete-im-fokus" class="slide section level2">
-<h1>Drei Pakete im Fokus</h1>
-<div class="flex-container">
-<div class="flex-text">
-<p><strong>tidyr</strong> beinhaltet eine Grammatik, um Datensätze in ein <em>tidy</em> Format zu bringen. Ziel ist es, dass jede Spalte eine Variable ist, jede Zeile eine Beobachtung und jede Zelle einen Wert beinhaltet. Hier gibt es das <a href="https://github.com/rstudio/cheatsheets/blob/master/data-import.pdf">Cheat-Sheet</a> zu <code>tidyr</code>.</p>
-</div>
-<div class="flex-picture">
-<div class="figure">
-<img src="pics/tidyr.png" width="300" alt="" />
-<p class="caption">stringr</p>
-</div>
-</div>
-<div class="flex-text">
-<p><strong>dplyr</strong> beinhaltet eine Grammatik, um Datenmanipulationen zu machen. Es besticht dabei durch seine Einfachheit und der Kombinationsmöglichkeit der Grundbefehle. Für eine erste Dateneinsicht ist dies meist hilfreich zu nutzen, oder um die Daten umzustrukturieren (manipulieren). Hier gibt es das <a href="https://github.com/rstudio/cheatsheets/blob/master/data-transformation.pdf">Cheat-Sheet</a>.</p>
-</div>
-<div class="flex-picture">
-<div class="figure">
-<img src="pics/dplyr.png" width="300" alt="" />
-<p class="caption">dplyr</p>
-</div>
-</div>
-<div class="flex-text">
-<p><strong>ggplot2</strong> ist <strong>das</strong> Grafikpaket in R. Es bietet die Möglichkeit Grafiken genauestens den eigenen Präferenzen anzupassen und darzustellen. Dazu gibt es viele Erweiterungspakete, die ebenfalls auf der Syntax von <strong>ggplot2</strong> aufbauen. Hier gibt es das <a href="https://github.com/rstudio/cheatsheets/blob/master/data-visualization-2.1.pdf">Cheat-Sheet</a>.</p>
-</div>
-<div class="flex-picture">
-<div class="figure">
-<img src="pics/ggplot2.png" width="300" alt="" />
-<p class="caption">ggplot2</p>
-</div>
-</div>
-<div class="flex-text">
-<p><strong>stringr</strong> ist ein Paket um <code>string</code>-Variablen vernünftig in R bearbeiten zu können. Es gibt einige Alternativen, aber dennoch bleibt <strong>stringr</strong> ein beliebtes Paket zur Bearbeitung von <code>string</code>-Variablen. Insbesondere bei Textanalysen muss man im Vorfeld die <code>string</code>-Variablen bearbeiten. Hier gibt es das <a href="https://github.com/rstudio/cheatsheets/blob/master/strings.pdf">Cheat-Sheet</a>.</p>
-</div>
-<div class="flex-picture">
-<div class="figure">
-<img src="pics/stringr.png" width="300" alt="" />
-<p class="caption">stringr</p>
-</div>
-</div>
-</div>
-</div>
-<div id="ziel-des-workshops" class="slide section level2">
-<h1>Ziel des Workshops</h1>
-<p>Die Teilnehmenden können am Ende des Workshops …</p>
-<ul class="incremental">
-<li>… die Grammatik der Pakete ggplot2 und tidyverse verstehen und auf eigene Zwecke anwenden.</li>
-<li>… Daten zielführend aufbereiten.</li>
-<li>… Daten und Ergebnisse sinnvoll darstellen.</li>
-<li>… erste eigene Funktionen programmieren.</li>
-</ul>
-</div>
-<div id="ziel-des-workshops-1" class="slide section level2">
-<h1>Ziel des Workshops</h1>
-<p>Es geht in diesem kurzen 1-Tages-Kurs vor allem um <strong>Readbility-Skills</strong>. Ziel ist es, dass man neue Probleme mit dem hier gezeigten lösen kann. Dafür sollte der Inhalt aber während des Workshops gut aufbereitet bzw. nachbereitet werden (eigene Notizen in den Skripten etc.).</p>
-<p>In meinen Kursen gilt immer folgendes Prinzip: <strong>Was man nicht schreibt, lernt man auch nicht!</strong></p>
-<p>Es ist also eine didaktische Entscheidung von mir, dass es keine fertige Skripts gibt. Selbst programmieren heißt eben auch selbst Code schreiben und nicht nur einzelnen Felder austauschen (wie bei Click and Play mit SPSS). Ebenso wird meiner Meinung nach das Verständnis von Funktionen viel besser vermittelt.</p>
-<p>Die Slides bzw. HTML-Dokumente haben aber kopierbaren Code (ein bisschen Erleichterung). Wenn man in diesen Dokumenten über den Code geht, erscheint oben rechts ein <em>Clipboard</em>, mit dem man den Code in die Zwischenablage kopiert.</p>
-<div class="figure">
-<img src="pics/code.png" style="width:50.0%" alt="" />
-<p class="caption">Beispiel Kopieren von Code</p>
-</div>
-</div>
-<div id="wer-ich-bin-und-wie-ich-workshops-leite" class="slide section level2">
-<h1>Wer ich bin und wie ich Workshops leite?</h1>
-<p><strong>Wer bin ich?</strong></p>
-<ul class="incremental">
-<li>seit 2015 Mitarbeiter an der Professur für Methoden (viele praktische Methoden-/Projektkurse bisher gegeben)</li>
-<li>nutze seit mehreren Jahren bereits R bzw. RStudio (vor allem Projekt-Funktion</li>
-<li>derzeit: gefördertes Lehrprojekt, in dem R-Kursmaterial für Personen aufbereitet wird, die keine Computer-/Programmierkenntnisse haben</li>
-</ul>
-<p><strong>Wie ich meine Rolle als Workshopleiter sehe?</strong></p>
-<ol class="incremental" style="list-style-type: decimal">
-<li>kollegiales, respektvolles Mitaneinander</li>
-<li>Interesse daran, anderen zu helfen/zu unterstützen</li>
-<li>in der Ansprache ziehe ich das Du vor</li>
-<li>Kurz-Inputs und dann eigenes <em>trial-and-error</em></li>
-<li>Unterstützung beim Code-Crashing</li>
-<li>gebe Input, aktive Mitarbeit aber erforderlich</li>
-</ol>
-<ul class="incremental">
-<li>alle Kursmaterialien sind entweder auf <a href="https://gitlab.com/bpkleer/mtg-21-tidyverse">gitlab</a> oder in der <a href="https://rstudio.cloud/spaces/146374/join?access_code=xfg7axLLy1bVgItjpH869s1Jg3Lmd9ajntRdEKMH">R Studio Cloud</a> runterzuladen. In <a href="https://ilias.uni-giessen.de/ilias/goto.php?target=grp_247939&amp;client_id=JLUG">ILIAS</a> finden sich Links an die betreffenden Stellen.</li>
-</ul>
-</div>
-<div id="arbeiten-mit-r" class="slide section level2">
-<h1>Arbeiten mit R</h1>
-<p>Arbeiten mit R heißt in der Regel immer wieder auf Probleme zu stoßen und willens zu sein, diese Probleme zu lösen. In meiner jetzt fast zehnjährigen Arbeit mit R bin ich noch nie auf ein Problem gestoßen, dass man nicht lösen konnte (auch wenn es manchmal umständlich war).</p>
-<p><strong>Wichtig dafür:</strong> Lesefähigkeit von Code. Also das Verständnis von Code. Dies ist auch das primäre Ziel des heutigen Tages.</p>
-</div>
-<div id="kursmaterialien" class="slide section level2">
-<h1>Kursmaterialien</h1>
-<p>Wie gesagt, sind die Kursmaterialien direkt in der <a href="https://rstudio.cloud/spaces/146374/join?access_code=xfg7axLLy1bVgItjpH869s1Jg3Lmd9ajntRdEKMH">RStudio Cloud</a> verlinkt, aber auch in <a href="https://gitlab.com/bpkleer/mtg-21-tidyverse">gitlab</a>.</p>
-<p>Die <code>code chunks</code> haben ein integriertes <em>Clipboard</em>, mit dem der Code direkt in ein R Skript kopiert werden kann. Dafür geht man einfach beim betreffenden Code oben rechts auf das <em>Clipboard</em>-Zeichen.</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;tidyverse&quot;</span>,</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>                 <span class="at">dependencies =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
-<p><strong>Wichtig</strong>: Bei den HTML-Präsentationen führt ein Mausklick immer zur nächsten Slide. Dies einfach deaktiveren, in dem man die Taste <code>k</code> drückt. Dann kann man in Ruhe den Code kopieren und mit den Pfeiltasten durch die Slide navigieren. In den HTML-Dokumenten am Nachmittag kann man einfach klicken, da es keine Präsentationen mehr sind.</p>
-<p><strong>Weitere Shortcuts für die Präsentationen:</strong></p>
-<p><code>b</code>, <code>&gt;</code>, <code>+</code>: Text wird größer</p>
-<p><code>s</code>, <code>&lt;</code>, <code>-</code>: Text wird kleiner</p>
-<p><code>f</code>: Fußzeile zeigen/verstecken</p>
-<p><code>c</code>, <code>t</code>: Inhaltsverzeichnis (springen auf andere Seite möglich)</p>
-</div>
-<div id="coding-konvention" class="slide section level2">
-<h1>Coding Konvention</h1>
-<p>Jede Person hat eigene Vorlieben, was den geschriebenen Code angeht. Im Folgenden möchte ich nur kurz meine Präferenzen darlegen.</p>
-<p>Für neue Variablen oder Dataframes nutze ich in der Regel das Format <code>lowerCamelCase</code>:</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>df<span class="sc">$</span>newVar <span class="ot">&lt;-</span> <span class="cn">NA</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>newDf <span class="ot">&lt;-</span> <span class="fu">subset</span>(df, </span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>                <span class="fu">is.na</span>(newVar</span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>                      )</span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>                )</span></code></pre></div>
-<p>Selbst geschrieben Funktionen schreibe ich mit <code>_</code>:</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>own_mean <span class="ot">&lt;-</span> <span class="cf">function</span>(x){</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  mean <span class="ot">=</span> <span class="fu">sum</span>(x) <span class="sc">/</span> <span class="fu">length</span>(x)</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(mean) </span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  }</span></code></pre></div>
-<p>Wie im ersten Fall bereits sichtbar, trenne ich Argumente mit <code>Enter</code> (Zeilenumbruch) und setze Klammern ebenfalls in neue Zeilen. Das hat den Vorteil, dass die Kommentierung einfacher erfolgen kann. Hat eine Funktion nur ein einziges Argument bleibt die Klammer in der gleichen Zeile.</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># einzelnes Argument</span></span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="co"># mehrere Argumente</span></span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="fu">str_sub</span>(tweet<span class="sc">$</span>text[<span class="dv">23</span>], <span class="co"># Quelle</span></span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>        <span class="sc">-</span><span class="dv">20</span>,  <span class="co"># Beginn 20. Buchstaben vom Ende</span></span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>        <span class="sc">-</span><span class="dv">2</span>    <span class="co"># vorletzter Buchstabe vom Ende</span></span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>        )</span></code></pre></div>
-</div>
-<div id="start" class="slide section level2 break">
-<h1 class="break">Start</h1>
-<p>Der Kurs setzt Grundkenntnisse voraus. Ihr lernt euch jetzt in Breakout-Rooms kennen. In den Breakout-Rooms sollt ihr euch kennenlernen und ein paar Grundaufgaben in R lösen. Dies dient auch der Auffrischung. Ich schaue abwechselnd in den Breakout-Rooms nach. Ihr könnte mich aber auch rufen.</p>
-<p>Folgende Aufgaben sind zu erledigen:</p>
-<ol class="incremental" style="list-style-type: decimal">
-<li>Den Datensatz <code>pss.rds</code> in das environment laden (fiktiver Datensatz Panem Social Survey)</li>
-</ol>
-<ol class="incremental" start="2" style="list-style-type: decimal">
-<li>Die Variable <code>agea</code> deskriptiv beschreiben.</li>
-</ol>
-<ol class="incremental" start="3" style="list-style-type: decimal">
-<li>Schafft eine neue Variable, die dem Datensatz hinzugefügt werden soll. Diese Variable soll <code>socgroup</code> heißen und einfach eine Sequenz von <code>1, 2, 3, 4</code> über die Länge des Datensatzes beinhalten. <strong>Wichtig</strong>: Jede Zahl soll gleich oft vorkommen. Ob sich die Sequenz immer wiederholt (also Reihenfolge <code>1, 2, 3, 4, 1, 2, 3, 4, ...</code>), oder ihr erst alle <code>1</code>, dann alle <code>2</code> etc. abbildet, ist euch überlassen.</li>
-</ol>
-<ol class="incremental" start="4" style="list-style-type: decimal">
-<li>Vergesst nicht, euch gegenseitig vorzustellen!</li>
-</ol>
-<p><strong>Zeit:</strong> 30 Minuten.</p>
-<p>Wenn jemand nicht seine lokale R-Installation nutzen möchte, kann er einfach auf die <strong>RStudio Cloud</strong> zurückgreifen. Dort sind die Datensätze, Skripte &amp; Folien auch bereits hinterlegt und müssen nicht direkt runtergeladen werden.</p>
-</div>
-<div id="viel-spaß" class="title-slide slide section level1">
-<h1>Viel Spaß!</h1>
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
 
-</div>
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
 
-  <!-- dynamically load mathjax for compatibility with self-contained -->
-  <script>
-    (function () {
-      var script = document.createElement("script");
-      script.type = "text/javascript";
-      script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
-      document.getElementsByTagName("head")[0].appendChild(script);
-    })();
-  </script>
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
 
-</body>
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
 </html>

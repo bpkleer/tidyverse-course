@@ -1,612 +1,1258 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
- "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-  <meta http-equiv="Content-Style-Type" content="text/css" />
-  <meta name="generator" content="pandoc" />
-  <meta name="author" content="B. Philipp Kleer" />
-  <meta name="copyright" content="CC BY-SA 4.0, B. Philipp Kleer"/>
-  <title>Einführung in ggplot2-Grammatik</title>
-  <style type="text/css">
-    code{white-space: pre-wrap;}
-    span.smallcaps{font-variant: small-caps;}
-    span.underline{text-decoration: underline;}
-    div.column{display: inline-block; vertical-align: top; width: 50%;}
-    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
-    ul.task-list{list-style: none;}
-            pre > code.sourceCode { white-space: pre; position: relative; }
-            pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
-            pre > code.sourceCode > span:empty { height: 1.2em; }
-            .sourceCode { overflow: visible; }
-            code.sourceCode > span { color: inherit; text-decoration: inherit; }
-            div.sourceCode { margin: 1em 0; }
-            pre.sourceCode { margin: 0; }
-            @media screen {
-            div.sourceCode { overflow: auto; }
-            }
-            @media print {
-            pre > code.sourceCode { white-space: pre-wrap; }
-            pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
-            }
-            pre.numberSource code
-              { counter-reset: source-line 0; }
-            pre.numberSource code > span
-              { position: relative; left: -4em; counter-increment: source-line; }
-            pre.numberSource code > span > a:first-child::before
-              { content: counter(source-line);
-                position: relative; left: -1em; text-align: right; vertical-align: baseline;
-                border: none; display: inline-block;
-                -webkit-touch-callout: none; -webkit-user-select: none;
-                -khtml-user-select: none; -moz-user-select: none;
-                -ms-user-select: none; user-select: none;
-                padding: 0 4px; width: 4em;
-                color: #aaaaaa;
-              }
-            pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
-            div.sourceCode
-              {   }
-            @media screen {
-            pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
-            }
-            code span.al { color: #ff0000; font-weight: bold; } /* Alert */
-            code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
-            code span.at { color: #7d9029; } /* Attribute */
-            code span.bn { color: #40a070; } /* BaseN */
-            code span.bu { } /* BuiltIn */
-            code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
-            code span.ch { color: #4070a0; } /* Char */
-            code span.cn { color: #880000; } /* Constant */
-            code span.co { color: #60a0b0; font-style: italic; } /* Comment */
-            code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
-            code span.do { color: #ba2121; font-style: italic; } /* Documentation */
-            code span.dt { color: #902000; } /* DataType */
-            code span.dv { color: #40a070; } /* DecVal */
-            code span.er { color: #ff0000; font-weight: bold; } /* Error */
-            code span.ex { } /* Extension */
-            code span.fl { color: #40a070; } /* Float */
-            code span.fu { color: #06287e; } /* Function */
-            code span.im { } /* Import */
-            code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
-            code span.kw { color: #007020; font-weight: bold; } /* Keyword */
-            code span.op { color: #666666; } /* Operator */
-            code span.ot { color: #007020; } /* Other */
-            code span.pp { color: #bc7a00; } /* Preprocessor */
-            code span.sc { color: #4070a0; } /* SpecialChar */
-            code span.ss { color: #bb6688; } /* SpecialString */
-            code span.st { color: #4070a0; } /* String */
-            code span.va { color: #19177c; } /* Variable */
-            code span.vs { color: #4070a0; } /* VerbatimString */
-            code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
-          </style>
-  <style type="text/css">
-pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
-pre > code.sourceCode > span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-div.sourceCode { margin: 1em 0; }
-pre.sourceCode { margin: 0; }
-@media screen {
-div.sourceCode { overflow: auto; }
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>ggplot-grammar.knit</title>
+    <meta charset="utf-8" />
+    <script src="ggplot-grammar_files/header-attrs-2.11/header-attrs.js"></script>
+    <script src="ggplot-grammar_files/clipboard-2.0.6/clipboard.min.js"></script>
+    <link href="ggplot-grammar_files/xaringanExtra-clipboard-0.2.6/xaringanExtra-clipboard.css" rel="stylesheet" />
+    <script src="ggplot-grammar_files/xaringanExtra-clipboard-0.2.6/xaringanExtra-clipboard.js"></script>
+    <script>window.xaringanExtraClipboard(null, {"button":"<i class=\"fa fa-clipboard\"><\/i>","success":"<i class=\"fa fa-check\" style=\"color: #90BE6D\"><\/i>","error":"<i class=\"fa fa-times-circle\" style=\"color: #F94144\"><\/i>"})</script>
+    <link href="ggplot-grammar_files/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
+    <link href="ggplot-grammar_files/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
+    <link rel="stylesheet" href="styles/slides.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+
+
+
+
+class: center, title-slide, middle
+
+# Einführung in ggplot-Grammatik
+
+## Daten bändigen &amp; visualisieren
+
+### B. Philipp Kleer
+
+### Methodentage 2021
+
+### 11. Oktober 2021
+
+.social[
+   [&lt;svg viewBox="0 0 512 512" style="position:relative;display:inline-block;top:.1em;fill:#EB811B;height:1em;" xmlns="http://www.w3.org/2000/svg"&gt;  &lt;path d="M294.75 188.19h-45.92V342h47.47c67.62 0 83.12-51.34 83.12-76.91 0-41.64-26.54-76.9-84.67-76.9zM256 8C119 8 8 119 8 256s111 248 248 248 248-111 248-248S393 8 256 8zm-80.79 360.76h-29.84v-207.5h29.84zm-14.92-231.14a19.57 19.57 0 1 1 19.57-19.57 19.64 19.64 0 0 1-19.57 19.57zM300 369h-81V161.26h80.6c76.73 0 110.44 54.83 110.44 103.85C410 318.39 368.38 369 300 369z"&gt;&lt;/path&gt;&lt;/svg&gt;](https://orcid.org/0000-0003-1935-387X)   [&lt;svg viewBox="0 0 512 512" style="position:relative;display:inline-block;top:.1em;fill:#EB811B;height:1em;" xmlns="http://www.w3.org/2000/svg"&gt;  &lt;path d="M105.2 24.9c-3.1-8.9-15.7-8.9-18.9 0L29.8 199.7h132c-.1 0-56.6-174.8-56.6-174.8zM.9 287.7c-2.6 8 .3 16.9 7.1 22l247.9 184-226.2-294zm160.8-88l94.3 294 94.3-294zm349.4 88l-28.8-88-226.3 294 247.9-184c6.9-5.1 9.7-14 7.2-22zM425.7 24.9c-3.1-8.9-15.7-8.9-18.9 0l-56.6 174.8h132z"&gt;&lt;/path&gt;&lt;/svg&gt;](https://gitlab.com/bpkleer)   [&lt;svg viewBox="0 0 512 512" style="position:relative;display:inline-block;top:.1em;fill:#EB811B;height:1em;" xmlns="http://www.w3.org/2000/svg"&gt;  &lt;path d="M496 128v16a8 8 0 0 1-8 8h-24v12c0 6.627-5.373 12-12 12H60c-6.627 0-12-5.373-12-12v-12H24a8 8 0 0 1-8-8v-16a8 8 0 0 1 4.941-7.392l232-88a7.996 7.996 0 0 1 6.118 0l232 88A8 8 0 0 1 496 128zm-24 304H40c-13.255 0-24 10.745-24 24v16a8 8 0 0 0 8 8h464a8 8 0 0 0 8-8v-16c0-13.255-10.745-24-24-24zM96 192v192H60c-6.627 0-12 5.373-12 12v20h416v-20c0-6.627-5.373-12-12-12h-36V192h-64v192h-64V192h-64v192h-64V192H96z"&gt;&lt;/path&gt;&lt;/svg&gt;](https://www.uni-giessen.de/faculties/f03/departments/dps/staff/researchers/kleer?set_language=en)   [&lt;svg viewBox="0 0 448 512" style="position:relative;display:inline-block;top:.1em;fill:#EB811B;height:1em;" xmlns="http://www.w3.org/2000/svg"&gt;  &lt;path d="M0 32v448h448V32H0zm262.2 334.4c-6.6 3-33.2 6-50-14.2-9.2-10.6-25.3-33.3-42.2-63.6-8.9 0-14.7 0-21.4-.6v46.4c0 23.5 6 21.2 25.8 23.9v8.1c-6.9-.3-23.1-.8-35.6-.8-13.1 0-26.1.6-33.6.8v-8.1c15.5-2.9 22-1.3 22-23.9V225c0-22.6-6.4-21-22-23.9V193c25.8 1 53.1-.6 70.9-.6 31.7 0 55.9 14.4 55.9 45.6 0 21.1-16.7 42.2-39.2 47.5 13.6 24.2 30 45.6 42.2 58.9 7.2 7.8 17.2 14.7 27.2 14.7v7.3zm22.9-135c-23.3 0-32.2-15.7-32.2-32.2V167c0-12.2 8.8-30.4 34-30.4s30.4 17.9 30.4 17.9l-10.7 7.2s-5.5-12.5-19.7-12.5c-7.9 0-19.7 7.3-19.7 19.7v26.8c0 13.4 6.6 23.3 17.9 23.3 14.1 0 21.5-10.9 21.5-26.8h-17.9v-10.7h30.4c0 20.5 4.7 49.9-34 49.9zm-116.5 44.7c-9.4 0-13.6-.3-20-.8v-69.7c6.4-.6 15-.6 22.5-.6 23.3 0 37.2 12.2 37.2 34.5 0 21.9-15 36.6-39.7 36.6z"&gt;&lt;/path&gt;&lt;/svg&gt;](https://www.researchgate.net/profile/Benedikt_Kleer)
+]
+
+---
+
+# Starten wir!
+Nun tauchen wir in die Welt von **ggplot2** ein. Das Paket ist **das** Grafik-Paket in R. Viele weitere Grafikpakete beruhen auf derselben Grammatik wie **ggplot2**, so dass Kenntnisse dieses Pakets jedem helfen. 
+
+--
+
+Auch hier laden wir zuerst **tidyverse** bzw. installieren es, wenn es noch nicht installiert ist:
+
+
+```r
+# install.packages("tidyverse")
+library("tidyverse")
+
+# alternativ: 
+# install.packages("ggplot2")
+# library("ggplot2")
+```
+
+--
+
+Anschließend laden wir den Datensatz `pss` ins *environment*.
+
+
+```r
+pss &lt;- readRDS("../datasets/pss.rds") #oder eigener Pfad, wenn nicht in Cloud
+```
+
+---
+
+# ggplot
+
+Wir machen **gplot2** ist sehr umfangreich, wir machen heute einen Einstieg in die Grammatik. Da die Grafiken aber als Layer aufgebaut sind, können mithilfe des Verständnisses der Grafikgrammatik auch aufwendigere Grafiken erstellt werden. 
+
+Einen Überblick, was wir heute machen:
+
+--
+
+1. Balkendiagramme und Grundaufbau von ggplot
+
+--
+
+2. Histogramme
+
+--
+
+3. Scatterplots
+
+--
+
+4. Gruppierungen
+
+---
+
+class: inverse2, mline, center, middle
+
+# Balkendiagramme
+
+---
+
+# Direkte Ausgabe
+
+Ein Balkendiagramm ist ein Plot einer einzelnen kategorialen Variable. Mit der Funktion `ggplot()` kann man direkt einen Plot ausgeben. 
+
+.pull-left-40[
+
+```r
+# direkter Output
+ggplot(data = pss,
+       mapping = aes(x = edu)
+       )
+```
+]
+
+--
+
+.pull-right-60[
+&lt;img src="ggplot-grammar_files/figure-html/ggplot1-out-1.png" width="60%" style="display: block; margin: auto;" /&gt;
+]
+
+---
+
+# Objekte speichern
+Alternativ (und meist besser) ist es Grafiken in Objekte zu speichern:
+
+--
+
+.pull-left-40[
+
+```r
+# oder speichern als Objekt
+mfPlot &lt;- ggplot(data = pss,
+                 mapping = aes(x = edu)
+                 )
+mfPlot
+```
+]
+
+--
+
+.pull-right-60[
+&lt;img src="ggplot-grammar_files/figure-html/ggplot2-out-1.png" width="60%" style="display: block; margin: auto;" /&gt;
+]
+
+--
+
+Aber warum sind beide Plots leer?
+
+???
+
+nur die Struktur wurde angegeben, nicht was geplottet werden soll.
+
+---
+
+# ggplot() verstehen
+
+Wir haben nur das Grundgerüst mit der Funktion `ggplot()` übergeben. Diese Funktion beinhaltet immer die Daten (in `data`) und die Struktur des Plots (`mapping`). Ein Balkendiagramm ist eine univariate Darstellung und deshalb übergeben wir nur eine Variable (hier `edu`). 
+
+--
+
+Um nun ein Balkendiagramm aus dem Plot zu machen, benötigen wir einen weiteren Layer, der eben ein Balkendiagramm ausgibt. Dies ist der Zusatz `geom_bar()`.
+
+--
+
+.pull-left-40[
+
+```r
+ggplot(data = pss,
+       mapping = aes(x = edu)
+       ) +
+* geom_bar()
+
+# oder:
+# mfPlot + 
+#   geom_bar()
+```
+]
+
+--
+
+.pull-right-60[
+.center[
+&lt;img src="ggplot-grammar_files/figure-html/bar-out-1.png" width="50%" style="display: block; margin: auto;" /&gt;
+]
+]
+
+---
+
+# Prozente statt Häufigkeiten
+
+Gerade haben wir uns Häufigkeiten ausgeben lassen. Manchmal möchte man lieber Prozente:
+.pull-left-40[
+
+```r
+ggplot(data = pss, 
+       mapping = aes(x = edu, 
+*                    y = ..prop..,
+*                    group = 1
+                     )
+       ) + 
+  geom_bar()
+```
+]
+
+--
+
+.pull-right-60[
+.center[
+&lt;img src="ggplot-grammar_files/figure-html/bar2-out-1.png" width="60%" style="display: block; margin: auto;" /&gt;
+]
+]
+
+???
+
+Hinweise zum Code:
+
+1. y: Einstellung Prozente
+
+2. group: Einstellung nur eine Gruppe, sonst wäre jeder Balken 100 %
+
+---
+
+# Nun wirklich Balken
+
+Alternativ können wir das Diagramm auch zu einem tatsächlichen Balkendiagramm machen und die Säulen loswerden:
+
+--
+
+.pull-left-40[
+
+```r
+mfPlot +
+  geom_bar() +
+* coord_flip()
+```
+]
+
+--
+
+.pull-right-60[
+.center[
+&lt;img src="ggplot-grammar_files/figure-html/bar3-out-1.png" width="60%" style="display: block; margin: auto;" /&gt;
+]
+]
+
+---
+
+# Bringen wir Farbe ins Spiel!
+In der Regel wollen wir Grafiken ansprechend gestalten, dafür gibt es verschiedene Argumente in `ggplot()`. Die zwei wichtigsten sind `color` und `fill`. Probieren wir es einfach mal der Reihe nach aus. Wir wollen, dass die Balken jetzt jeweils eine andere Farbe haben.
+
+--
+
+.pull-left-40[
+
+```r
+eduPlot &lt;- ggplot(pss, 
+                  aes(edu, 
+*                     color = edu
+                      )
+                  ) +
+  geom_bar()
+eduPlot
+```
+]
+
+--
+
+.pull-right-60[
+.center[
+&lt;img src="ggplot-grammar_files/figure-html/bar4-out-1.png" width="60%" style="display: block; margin: auto;" /&gt;
+]
+]
+
+---
+
+# Coloring
+`color` macht also hier nur die Randlinie, nicht aber die Fläche der Balken farbig. Mit `fill` können wir das beheben.
+
+--
+
+.pull-left-40[
+
+```r
+eduPlot &lt;- ggplot(pss, 
+                  aes(edu, 
+*                     fill = edu
+                      )
+                  ) +
+  geom_bar()
+eduPlot
+```
+]
+
+.pull-right-60[
+&lt;img src="ggplot-grammar_files/figure-html/bar5-out-1.png" width="60%" style="display: block; margin: auto;" /&gt;
+]
+
+---
+
+# Eigene Farbpaletten
+
+Wenn man eigene Farben benennen will, kann man dies in der Unterfunktion `geom_bar()`. Es empfiehlt sich vorab einen Farbvektor zu definieren:
+
+--
+
+.pull-left-40[
+
+```r
+cntryCol = c("steelblue", 
+              "seagreen", 
+              "red4", 
+              "orange",
+              "pink",
+              "lightgray"
+             )
+
+ggplot(pss, 
+       aes(x = edu, 
+           fill = edu
+           )
+       ) +
+*  geom_bar(fill = cntryCol)
+```
+]
+
+--
+
+.pull-right-60[
+.center[
+&lt;img src="ggplot-grammar_files/figure-html/bar6-out-1.png" width="60%" style="display: block; margin: auto;" /&gt;
+]
+]
+
+---
+
+# Eigene Farbpaletten 
+
+Neben dieser Möglichkeit können auch Farbpaletten genutzt werden, die eine beliebige Anzahl an Farben inkludieren. **Wichtig:** Sind in der Farbpalette weniger Farben definiert, gibt es einen Fehler. Es müssen mindestens so viele Farben vorhanden sein, wie die Variable Kategorien hat. Hierzu fügt man einen weiteren Layer `scale_fill_manual()` bzw. `scale_fill_color()` hinzu. 
+
+--
+
+.pull-left-40[
+
+```r
+# a colourblind-friendly palettes
+cbp1 &lt;- c("#999999", 
+          "#E69F00",
+          "#56B4E9",
+          "#009E73",
+          "#F0E442",
+          "#0072B2",
+          "#D55E00",
+          "#CC79A7"
+          )
+
+eduPlotCb&lt;- ggplot(pss, 
+                   aes(edu, 
+                       fill = edu
+                       )
+                   ) + 
+  geom_bar() +
+* scale_fill_manual(values = cbp1)
+
+eduPlotCb
+```
+]
+
+--
+
+.pull-right-60[
+.center[
+&lt;img src="ggplot-grammar_files/figure-html/bar7-out-1.png" width="60%" style="display: block; margin: auto;" /&gt;
+]
+] 
+
+---
+
+# Geld sparen
+
+Für einen kostensparenden Druck kann man auch einfach direkt `scale_fill_gray()` nutzen:
+
+--
+
+.pull-left-40[
+
+```r
+ggplot(pss, 
+       aes(district, 
+           fill = district
+           )
+       ) + 
+  geom_bar() +
+  scale_fill_grey()
+```
+]
+
+--
+
+.pull-right-60[
+.center[
+&lt;img src="ggplot-grammar_files/figure-html/bar8-out-1.png" width="60%" style="display: block; margin: auto;" /&gt;
+]
+]
+
+--
+
+Alternativ kann man auch verschiedene vorgefertigte Farbpaletten nutzen. Dazu muss man oftmals das entsprechenden Paket laden und dann gibt es eine dazugehörige Funktion, die als zusätzlicher Layer festgelegt wird. 
+
+---
+
+# RColorBrewer
+
+Ein solche Paket ist zum Beispiel `RColorBrewer`:
+
+--
+
+
+```r
+# if(!require("RColorBrewer")) install.packages("RColorBrewer")
+library("RColorBrewer")
+
+display.brewer.all()
+```
+
+--
+
+Die einzelnen Farbpaletten können, dann wie folgt hinzugefügt werden:
+
+```r
+eduPlot +
+  scale_fill_brewer(palette = "Dark2")
+```
+
+---
+
+# RColorBrewer
+
+.center[
+&lt;img src="ggplot-grammar_files/figure-html/brewer2-out-1.png" width="50%" style="display: block; margin: auto;" /&gt;
+]
+
+---
+
+# Layout: Achsen anpassen
+
+Als nächsten Schritt passen wir die Achsen an, da die Standardeinstellungen dafür meistens nicht schön sind. Hierfür gibt es folgende Funktionen:
+
+--
+
+- `coord_cartesian()` (Achsengrenzen festlegen)
+
+--
+
+- `scale_x_continuous()`/`scale_y_continuous()` (für numerische Vektoren)
+
+--
+
+- `scale_x_discrete()`/`scale_y_discrete()` (für Faktoren oder Character-Variablen)
+
+--
+
+Was ist mit unseren Achsen?
+
+---
+
+ # Layout: y-Achse anpassen
+
+.pull-left[
+
+```r
+eduPlot2 &lt;- eduPlot + 
+  coord_cartesian(ylim = c(0,
+                           1500
+                           )
+                  ) +
+  scale_y_continuous(breaks = seq(0,  
+                                  1500,  
+                                  100  
+                                  )  
+                     )
+eduPlot2
+```
+]
+
+--
+
+.pull-right[
+&lt;img src="ggplot-grammar_files/figure-html/axes-out-1.png" width="75%" style="display: block; margin: auto;" /&gt;
+]
+
+---
+
+# Layout: x-Achse anpassen
+
+Die x-Achse ist kategoriell und daher macht eine metrische Aufteilung keinen Sinn. Mit `scale_x_discrete()` können wir aber die limits festsetzen:
+
+--
+
+.pull-left[
+
+```r
+eduPlot3 &lt;- eduPlot2 + 
+  scale_x_discrete(limits = c("ES-ISCED I",    
+                              "ES-ISCED II",  
+                              "ES-ISCED III",   
+                              "ES-ISCED IV",  
+                              "ES-ISCED V"  
+                              )  
+                   )
+
+eduPlot3
+```
+]
+
+.pull-right[
+.center[
+&lt;img src="ggplot-grammar_files/figure-html/axes2-out-1.png" width="75%" style="display: block; margin: auto;" /&gt;
+]
+]
+
+--
+
+Was haben wir ausgelassen?
+
+---
+
+# Layout: Titel, Caption, Legende und weitere Infos
+
+Wir können eine Reihe an Achsenbeschriftungen hinzufügen. Dies geschieht am einfachsten über die Funktion `labs()`. Darin gibt es folgende Unterargumente:
+
+--
+
+- `xlab`: x-Achsentitel
+- `ylab`: y-Achsentitel
+- `title`: Titel
+- `caption`: Fußnote/Caption
+
+--
+
+
+```r
+eduPlot4 &lt;- eduPlot3 +
+  labs(x = "Education level",  
+       y = "Frequency", 
+       title = "my first shot at ggplot2",  
+       caption = "Data: Panem Social Survey."  
+       )  
+
+eduPlot4
+```
+
+---
+
+# Layout: Titel, Caption, Legende und weitere Infos
+
+.center[
+&lt;img src="ggplot-grammar_files/figure-html/text1-out-1.png" width="50%" style="display: block; margin: auto;" /&gt;
+]
+
+Das schaut schon soweit gut aus, jetzt wollen wir nur noch die Legende anpassen, so dass auch dort ein angepasster Titel steht. 
+
+---
+
+# Layout: und wieder coloring
+
+Dies machen wir in der Funktion `scale_fill_manual()`, die wir zuvor schon genutzt haben. Wir überschreiben sozusagen die Angaben:
+
+--
+.pull-left[
+
+```r
+eduPlot5 &lt;- eduPlot4 +
+  scale_fill_manual(values = cbp1, 
+                    name = "Education category", 
+                    labels = c("sehr niedrig", 
+                               "niedrig",  
+                               "mittel", 
+                               "hoch",
+                               "sehr hoch"
+                               )
+                    )
+
+eduPlot5
+```
+]
+
+--
+
+.pull-right[
+.center[
+&lt;img src="ggplot-grammar_files/figure-html/legend1-out-1.png" width="60%" style="display: block; margin: auto;" /&gt;
+]
+]
+
+--
+
+Über die Funktion `theme()` können viele Feineinstellungen vorgenommen werden. Diese können wir nicht im einzelnen hier besprechen, aber es kann wirklich jedes Detail eingestellt werden. Mehr dazu machen die Personen, die am Nachmittag nochmal vertieft mit `ggplot` arbeiten. 
+
+---
+
+class: inverse2, mline, center, middle
+
+# Histogramme
+
+---
+
+# Zum nächsten ...
+
+Gehen wir nun über zu Histogrammen. Diese nutzen wir für metrische Variablen. Hierfür nutzen wir den Layer `geom_histogram()`.
+
+--
+
+.pull-left-40[
+
+```r
+agePlot &lt;- ggplot(pss,
+                  aes(agea)
+                  ) + 
+  geom_histogram()  
+
+agePlot
+```
+]
+
+--
+
+.pull-right-60[
+.center[
+&lt;img src="ggplot-grammar_files/figure-html/hist1-out-1.png" width="60%" style="display: block; margin: auto;" /&gt;
+]
+]
+
+--
+
+Auch hier können wir ganz einfach Anpassungen von oben übernehmen und den Plot schöner gestalten.
+
+---
+
+# Fine-Tuning Histogram
+.pull-left-40[
+
+```r
+agePlot2 &lt;- agePlot +
+  geom_histogram(color = "lightgray", 
+                 fill = "gray"
+                 ) + 
+  labs(x = "Age in years", 
+       y = "Frequency", 
+       title = "Histogram of Age (PSS)"
+       )
+
+agePlot2
+```
+]
+
+--
+
+.pull-right-60[
+.center[
+&lt;img src="ggplot-grammar_files/figure-html/hist2-out-1.png" width="60%" style="display: block; margin: auto;" /&gt;
+]
+]
+
+---
+
+# Dichte 
+
+Oftmals fügen wir auch die Dichte hinzu, um einfacher beurteilen zu können, ob annähernd eine Normalverteilung vorliegt. Hierzu bestimmen wir, dass die y-Achse die Dichte anzeig (`y = ..density..`) und fügen `geom_density()` hinzu. Mit `alpha` stellen wir Durchsichtigkeit ein und mit `fill` die Farbe der Fläche. 
+
+--
+
+.pull-left-40[
+
+```r
+ageDensPlot &lt;- ggplot(pss, 
+                      aes(agea)
+                      ) + 
+* geom_histogram(aes(y = ..density..),
+                 color = "lightgray", 
+                 fill = "gray"
+                 ) + 
+* geom_density(alpha = 0.2,
+*              fill = "lightblue"
+*              ) +
+  labs(x = "Age in years", 
+       y = "Density", 
+       title = "Histogram of Age (PSS)"
+       )
+
+ageDensPlot
+```
+]
+
+--
+ 
+.pull-right-60[
+.center[
+&lt;img src="ggplot-grammar_files/figure-html/hist3-out-1.png" width="60%" style="display: block; margin: auto;" /&gt;
+]
+]
+
+---
+
+# Anpassungen: Histogramme
+
+`geom_histogram()` wählt automatisch die Breite der `bin` (Säulen), was irreführend sein kann. Hier könnten wir zum Beispiel so einstellen, dass wir so viele `bins` erhalten, wie es auch tatsächliche Alterskategorien gibt. Man kann einfach die Breite der `bins` mit `binwidth()` festlegen. Hier wählen wir den realen Abstand zwischen zwei Einträgen in dem Vektor/Variable (hier 1).
+
+--
+
+.pull-left[
+
+```r
+ggplot(pss, 
+       aes(agea)
+       ) + 
+  geom_histogram(aes(y = ..density..), 
+                 color = "lightgray", 
+                 fill = "gray",
+*                binwidth = 1
+                 ) + 
+  geom_density(alpha = 0.2, 
+               fill = "lightblue"
+               ) +
+  labs(x = "Age in years", 
+       y = "Density", 
+       title = "Histogram of Age (PSS)"
+       )
+```
+]
+
+--
+
+.pull-right[
+.center[
+&lt;img src="ggplot-grammar_files/figure-html/hist5-out-1.png" width="75%" style="display: block; margin: auto;" /&gt;
+]
+]
+
+---
+
+class: inverse2, mline, center, middle
+
+# Scatterplots
+
+---
+
+# Scatterplots
+
+Oftmals wollen wir zwei Variablen darstellen und ihren Zusammenhang. So könnten wir uns zum Beispiel für den Zusammenhang zwischen der Zufriedenheit mit dem demkoratischen System (`stfdem`) und der Zufriedenheit mit der ökonomischen Entwicklung (`stfeco`) anschauen. Dies sind beides Variablen auf pseudometrischen Niveau gemessen, in R aber als numerische Variablen hinterlegt. 
+
+--
+
+Um Scatterplots darzustellen nutzen wir `geom_point()`. Wir geben jetzt zwei Variablen in `aes()` an. Einmal die x-Achsenvariable und dann die y-Achsenvariable.
+
+
+```r
+scatter1 &lt;- ggplot(pss, 
+                   aes(stfeco, 
+                       stfdem
+                       )
+                   ) + 
+*  geom_point()
+
+scatter1
+```
+
+---
+
+# Scatterplots
+
+.center[
+&lt;img src="ggplot-grammar_files/figure-html/scatter1-out-1.png" width="40%" style="display: block; margin: auto;" /&gt;
+]
+
+--
+
+Warum sehen wir nun so wenige Punkte, obwohl der Datensatz **5000** Fälle hat?
+
+???
+
+Überlappende Datenpunkte `\(\rightarrow\)` Jittern!
+
+---
+
+# Scatterplot: pseudometrische Variablen
+
+Um pseudo-metrische Variablen korrekt darzustellen, benötigen wir `geom_jitter()`, da die Datenpunkte sonst übereinanderlappen. **Wichtig:** Das jittern sollte angegeben werden, damit kein falscher Dateneindruck entsteht!
+
+--
+
+.pull-left[
+
+```r
+scatter2 &lt;- ggplot(pss, 
+                   aes(stfeco, 
+                       stfdem
+                       )
+                   ) +
+*  geom_jitter(width = 0.3,
+*              height = 0.3
+*              ) +
+  labs(x = "Satisfaction with Economy",
+       y = "Satisfaction with Democracy",
+       caption = "Data jittered."
+       )
+
+scatter2
+```
+]
+
+--
+
+.pull-right[
+.center[
+&lt;img src="ggplot-grammar_files/figure-html/scatter2-out-1.png" width="60%" style="display: block; margin: auto;" /&gt;
+]
+]
+
+---
+
+# Anpassungen: Scatteprlots
+
+Weitergehend können wir mit `alpha` in `geom_jitter()` (oder auch in `geom_point()`) einen besseren Eindruck verstärken. Datenkombinationen die weniger oft vorkommen erscheinen nciht so kräftig:
+
+--
+
+.pull-left-40[
+
+```r
+ggplot(pss, 
+       aes(stfeco, 
+           stfdem
+           )
+       ) +  
+* geom_jitter(alpha = .2,
+              col = "blue"
+              )
+```
+]
+
+--
+
+.pull-right-60[
+.center[
+&lt;img src="ggplot-grammar_files/figure-html/scatter3-out-1.png" width="60%" style="display: block; margin: auto;" /&gt;
+]
+]
+
+---
+
+# Anpassungen: Scatterplots
+Als weitere Argumente können sowohl in `geom_jitter()` als auch in `geom_point()` mit `shape` das Erscheinungsbild geändert werden. Das Cheat Sheet findet man [hier](https://github.com/rstudio/cheatsheets/raw/master/data-visualization.pdf).
+
+---
+
+# Gruppierungen
+Oftmals möchte man eine Variable oder den Zusammenhang zweier Variablen getrennt nach einer kategoriellen Variable einblicken. Dazu gibt es in `ggplot` verschiedene Möglichkeiten. Ein paar davon werde ich kurz vorstellen:
+
+--
+
+- Balkendiagramm: `fill` / `color` und `facets`
+
+--
+
+- Scatterplots: `shape` und `facets`
+
+---
+
+# Gruppierungen: Balkendiagramme
+
+Wir möchten gerne wissen, wie viele Befragte in den fünf ausgewählten Distrikten weiblich bzw. männlich sind. Dies können wir einfach erhalten, in dem wir in `ggplot()` mit `fill` eine Aufteilung nach Geschlecht hinzufügen. Das funktioniert auch analog mit `color` (nur ist es etwas unübersichtlich bei Balkendiagrammen).
+
+--
+
+.pull-left-40[
+
+```r
+barg &lt;- ggplot(pss, 
+               aes(district, 
+*                  fill = gndr
+                   )
+               ) +
+  geom_bar()
+
+barg
+```
+]
+
+--
+
+.pull-right-60[
+.center[
+&lt;img src="ggplot-grammar_files/figure-html/bargroup-out-1.png" width="60%" style="display: block; margin: auto;" /&gt;
+]
+]
+
+---
+
+# position_dodge()
+
+Will man dies nun etwas übersichtlicher nebeneinander haben, geschieht dies einfach mit dem Argument `position` in `geom_bar()`:
+
+--
+
+.pull-left-40[
+
+```r
+barg2 &lt;- ggplot(pss, 
+               aes(district, 
+                   fill = gndr
+                   )
+               ) +
+* geom_bar(position = position_dodge())
+
+barg2
+```
+]
+
+--
+
+.pull-right-60[
+.center[
+&lt;img src="ggplot-grammar_files/figure-html/barg2-out-1.png" width="60%" style="display: block; margin: auto;" /&gt;
+]
+]
+
+
+---
+
+# Alternativ: facets
+
+Alternativ kann man `facets` innerhalb eines **ggplots** erstellen. Dies geht entweder mit `facet_wrap()` oder mit `facet_grid`:
+
+.pull-left-40[
+
+```r
+barg2 &lt;- ggplot(pss, 
+               aes(district, 
+                   fill = gndr
+                   )
+               ) +
+  geom_bar() +
+* facet_wrap(vars(gndr))
+
+barg2
+```
+]
+
+--
+
+.pull-right-60[
+.center[
+&lt;img src="ggplot-grammar_files/figure-html/facet1-out-1.png" width="60%" style="display: block; margin: auto;" /&gt;
+]
+]
+
+???
+
+facet_grid() kommt später noch
+
+---
+
+# Gruppierungen: Scatterplots
+
+Bei Scatteprlots kann man auch direkt `facet_wrap`/`facet_grid` benutzen. Wir möchten nun das Scatterplot von vorher nach Distrikten ausgeben lassen. Dazu können wir zuerst den Distrikten verschiedene Formen zuordnen. Dazu geben wir innerhalb von `aes()` einfach an, dass die Form (`shape`) in Abhängigkeit der Variable `district` ausgegeben werden soll.
+
+.pull-left-40[
+
+```r
+ggplot(pss, 
+       aes(stfeco, 
+           stfdem,
+*          shape = district
+           )
+       ) +  
+  geom_jitter(alpha = .2, 
+              col = "blue"
+              )
+```
+]
+
+--
+
+.pull-right-60[
+.center[
+&lt;img src="ggplot-grammar_files/figure-html/scatter-shapes-out-1.png" width="55%" style="display: block; margin: auto;" /&gt;
+]
+]
+
+--
+
+Das ist jetzt noch nicht ganz so übersichtlich. 
+
+---
+
+# Anpassungen bei Gruppierungen
+
+Jetzt könnte man noch zusätzlich die Farbe in Abhängigkeit des Distrikts ändern. Dazu nutzt man das `color`-Argument in `aes()` und entfernt es aus `geom_jitter()`. Lässt man das `color`-Argument in `geom_jitter()` bestehen, wird dies als zuletzt definierte Einstellung verwendet und alles bleibt blau.
+
+--
+
+.pull-left-40[
+
+```r
+ggplot(pss, 
+       aes(stfeco, 
+           stfdem,
+           shape = district,
+           color = district
+           )
+       ) +  
+  geom_jitter(alpha = .2)
+```
+]
+
+--
+
+.pull-right-60[
+.center[
+&lt;img src="ggplot-grammar_files/figure-html/scatter-color-out-1.png" width="60%" style="display: block; margin: auto;" /&gt;
+]
+]
+
+---
+
+# Bisheriges Ergebnis
+
+Die Abbildung ist zwar jetzt schön bunt, aber so richtig einen guten Überblick gibt auch diese Darstellung noch nicht. Um das zu erreichen, nutzt man `facets`. Der Unterschied zwischen den zwei möglichen `facets` ist folgender:
+
+--
+
+- Bei `facet_wrap()` wird aus einer eigentlich eindimensionalen Darstellung eine zweidimensionalen Darstellung gemacht und dementsprechend mehrere Abbildungen erstellt. Wenn man zum Beispiel eine kategoriale Variable hat, nach der man die Darstellung splitten möchte, ist `facet_wrap()` die richtige Wahl. Mit den Argumenten `nrow` und `ncol` kann man dazu die Anzahl der Zeilen und Spalten festlegen.
+
+--
+
+- `facet_grid()` dagegen ist zweidimensional. Hier wird ein Grafikpanel anhand von zwei Variablen erstellt, dass alle Kombinationen (auch die ohne Fälle) anzeigt. Dazu wird die Reihenfolge der Variablen auch wie in einer Formel angegeben, erst pro Zeile und dann pro Spalte.
+
+---
+# facet_wrap()
+
+.pull-left-40[
+
+```r
+ggplot(pss, 
+       aes(stfeco, 
+           stfdem,
+           shape = district,
+           color = district
+           )
+       ) +  
+  geom_jitter(alpha = .2) +
+  facet_wrap(vars(district))
+```
+]
+
+--
+
+.pull-right-60[
+.center[
+&lt;img src="ggplot-grammar_files/figure-html/scatter-facetwrap-out-1.png" width="60%" style="display: block; margin: auto;" /&gt;
+]
+]
+
+---
+
+# facet_grid()
+
+Wie oben beschrieben wird in `facet_grid()` ein tatsächlicher zweidimensionaler Plot erstellt. Dazu geben wir in der Funktion selbst an, über welche (kategorialen) Variablen der Plot geteilt werden soll. Die erste Variable ist die Trennung über Zeilen und die zweite Variable die Trennung über Spalten. Im Beispiel trennen wir in Zeilen nach Distrikt und in Spalten nach Geschlecht:
+
+--
+
+.pull-left-40[
+
+```r
+ggplot(pss, 
+       aes(stfeco, 
+           stfdem,
+           shape = district,
+           color = district
+           )
+       ) +  
+  geom_jitter(alpha = .2) +
+  facet_grid(district ~ gndr)
+```
+]
+
+--
+
+.pull-right-60[
+.center[
+&lt;img src="ggplot-grammar_files/figure-html/scatter-facetgrid-out-1.png" width="60%" style="display: block; margin: auto;" /&gt;
+]
+]
+
+---
+
+# Was es noch zu entdecken gibt in ggplot2?
+
+--
+
+- Schriftarten bearbeiten bzw. Darstellung des Plots
+
+--
+
+- *missing values* darstellen
+
+--
+
+- Marginal Plots
+
+--
+
+- bivariate Normalverteilungen
+
+--
+
+- Karten bearbeiten
+
+--
+
+- Zusammenfügen von Plots
+
+---
+
+# Lab
+Die Übungsaufgaben findet ihr als `task ggplot` in RStudio Cloud.
+
+---
+
+class: inverse2, mline, center, middle
+
+# Das war's!
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"seal": false,
+"highlightStyle": "github",
+"highlightLines": true,
+"highlightLanguage": "r",
+"countIncrementalSlides": false,
+"ratio": "16:9",
+"slideNumberFormat": "<div class=\"progress-bar-container\">\n  <div class=\"progress-bar\" style=\"width: calc(%current% / %total% * 100%);\">\n  </div>\n</div>`\n",
+"navigation": {
+"scroll": false
 }
-@media print {
-pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
-}
-pre.numberSource code
-  { counter-reset: source-line 0; }
-pre.numberSource code > span
-  { position: relative; left: -4em; counter-increment: source-line; }
-pre.numberSource code > span > a:first-child::before
-  { content: counter(source-line);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; display: inline-block;
-    -webkit-touch-callout: none; -webkit-user-select: none;
-    -khtml-user-select: none; -moz-user-select: none;
-    -ms-user-select: none; user-select: none;
-    padding: 0 4px; width: 4em;
-    color: #aaaaaa;
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
   }
-pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
-div.sourceCode
-  {   }
-@media screen {
-pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
-}
-code span.al { color: #ff0000; font-weight: bold; } /* Alert */
-code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
-code span.at { color: #7d9029; } /* Attribute */
-code span.bn { color: #40a070; } /* BaseN */
-code span.bu { } /* BuiltIn */
-code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
-code span.ch { color: #4070a0; } /* Char */
-code span.cn { color: #880000; } /* Constant */
-code span.co { color: #60a0b0; font-style: italic; } /* Comment */
-code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
-code span.do { color: #ba2121; font-style: italic; } /* Documentation */
-code span.dt { color: #902000; } /* DataType */
-code span.dv { color: #40a070; } /* DecVal */
-code span.er { color: #ff0000; font-weight: bold; } /* Error */
-code span.ex { } /* Extension */
-code span.fl { color: #40a070; } /* Float */
-code span.fu { color: #06287e; } /* Function */
-code span.im { } /* Import */
-code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
-code span.kw { color: #007020; font-weight: bold; } /* Keyword */
-code span.op { color: #666666; } /* Operator */
-code span.ot { color: #007020; } /* Other */
-code span.pp { color: #bc7a00; } /* Preprocessor */
-code span.sc { color: #4070a0; } /* SpecialChar */
-code span.ss { color: #bb6688; } /* SpecialString */
-code span.st { color: #4070a0; } /* String */
-code span.va { color: #19177c; } /* Variable */
-code span.vs { color: #4070a0; } /* VerbatimString */
-code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
-  </style>
-  <script src="ggplot-grammar_files/header-attrs-2.11/header-attrs.js"></script>
-  <script src="ggplot-grammar_files/jquery-3.6.0/jquery-3.6.0.min.js"></script>
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <link href="ggplot-grammar_files/bootstrap-3.3.5/css/readable.min.css" rel="stylesheet" />
-  <script src="ggplot-grammar_files/bootstrap-3.3.5/js/bootstrap.min.js"></script>
-  <script src="ggplot-grammar_files/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
-  <script src="ggplot-grammar_files/bootstrap-3.3.5/shim/respond.min.js"></script>
-  <style>h1 {font-size: 34px;}
-         h1.title {font-size: 38px;}
-         h2 {font-size: 30px;}
-         h3 {font-size: 24px;}
-         h4 {font-size: 18px;}
-         h5 {font-size: 16px;}
-         h6 {font-size: 12px;}
-         code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
-         pre:not([class]) { background-color: white }</style>
-  <link href="ggplot-grammar_files/slidy-2/styles/slidy.css" rel="stylesheet" />
-  <script src="ggplot-grammar_files/slidy-2/scripts/slidy.js"></script>
-  <script src="ggplot-grammar_files/slidy_shiny-1/slidy_shiny.js"></script>
-  <link href="ggplot-grammar_files/pagedtable-1.1/css/pagedtable.css" rel="stylesheet" />
-  <script src="ggplot-grammar_files/pagedtable-1.1/js/pagedtable.js"></script>
-  <script src="ggplot-grammar_files/clipboard-2.0.6/clipboard.min.js"></script>
-  <link href="ggplot-grammar_files/xaringanExtra-clipboard-0.2.6/xaringanExtra-clipboard.css" rel="stylesheet" />
-  <script src="ggplot-grammar_files/xaringanExtra-clipboard-0.2.6/xaringanExtra-clipboard.js"></script>
-  <script>window.xaringanExtraClipboard(null, {"button":"<i class=\"fa fa-clipboard\"><\/i>","success":"<i class=\"fa fa-check\" style=\"color: #90BE6D\"><\/i>","error":"<i class=\"fa fa-times-circle\" style=\"color: #F94144\"><\/i>"})</script>
-  <link href="ggplot-grammar_files/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
-  <link href="ggplot-grammar_files/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
-  <link rel="stylesheet" type="text/css" media="screen, projection, print"
-   href="styles/style-slides.css" />
-</head>
-<body>
-<div class="slide titlepage">
-  <h1 class="title">Einführung in ggplot2-Grammatik</h1>
-  <h1 class="subtitle">Daten bändigen &amp; visualisieren</h1>
-  <p class="author">
-B. Philipp Kleer
-  </p>
-  <p class="date">11. Oktober 2021</p>
-</div>
-<div id="starten-wir" class="slide section level2">
-<h1>Starten wir!</h1>
-<p>Nun tauchen wir in die Welt von <strong>ggplot2</strong> ein. Das Paket ist <strong>das</strong> Grafik-Paket in R. Viele weitere Grafikpakete beruhen auf derselben Grammatik wie <strong>ggplot2</strong>, so dass Kenntnisse dieses Pakets jedem helfen.</p>
-<p>Auch hier laden wir zuerst <strong>tidyverse</strong> bzw. installieren es, wenn es noch nicht installiert ist:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># install.packages(&quot;tidyverse&quot;)</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;tidyverse&quot;</span>)</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co"># alternativ: </span></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="co"># install.packages(&quot;ggplot2&quot;)</span></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="co"># library(&quot;ggplot2&quot;)</span></span></code></pre></div>
-<p>Anschließend laden wir den Datensatz <code>pss</code> ins <em>environment</em>.</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>pss <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(<span class="st">&quot;../datasets/pss.rds&quot;</span>) <span class="co">#oder eigener Pfad, wenn nicht in Cloud</span></span></code></pre></div>
-<p>Wir machen <strong>gplot2</strong> ist sehr umfangreich, wir machen heute einen Einstieg in die Grammatik. Da die Grafiken aber als Layer aufgebaut sind, können mithilfe des Verständnisses der Grafikgrammatik auch aufwendigere Grafiken erstellt werden.</p>
-<p>Einen Überblick, was wir heute machen:</p>
-<ol style="list-style-type: decimal">
-<li><p>Balkendiagramme und Grundaufbau von ggplot</p></li>
-<li><p>Histogramme</p></li>
-<li><p>Scatterplots</p></li>
-<li><p>Gruppierungen</p></li>
-</ol>
-</div>
-<div id="balkendiagramme" class="slide section level2">
-<h1>Balkendiagramme</h1>
-<p>Ein Balkendiagramm ist ein Plot einer einzelnen kategorialen Variable. Es gibt zwei Wege eine Grafik mit <strong>ggplot2</strong> zu erstellen: einmal als direkte Ausgabe und einmal als Objekt zu speichern. Vorteil von letzterem ist, dass man dann am gespeicherten Plot Anpassungen vornehmen kann ohne den ganzen vorherigen Code nochmals ausführen lassen zu müssen.</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># direkter Output</span></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> pss,</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>       <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> edu)</span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>       )</span></code></pre></div>
-<p><img src="ggplot-grammar_files/figure-slidy/ggplot1-1.png" width="576" style="display: block; margin: auto;" /></p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># oder speichern als Objekt</span></span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>mfPlot <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(<span class="at">data =</span> pss,</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>                 <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> edu)</span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>                 )</span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>mfPlot</span></code></pre></div>
-<p><img src="ggplot-grammar_files/figure-slidy/ggplot2-1.png" width="576" style="display: block; margin: auto;" /></p>
-<p>Aber warum sind beide Plots leer?</p>
-</div>
-<div id="ggplot-verstehen" class="slide section level2">
-<h1>ggplot() verstehen</h1>
-<p>Wir haben nur das Grundgerüst mit der Funktion <strong>ggplot()</strong> übergeben. Diese Funktion beinhaltet immer die Daten (in <code>data</code>) und die Struktur des Plots (<code>mapping</code>). Ein Balkendiagramm ist eine univariate Darstellung und deshalb übergeben wir nur eine Variable (hier <code>edu</code>).</p>
-<p>Um nun ein Balkendiagramm aus dem Plot zu machen, benötigen wir einen weiteren Layer, der eben ein Balkendiagramm ausgibt. Dies ist der Zusatz <code>geom_bar()</code>.</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> pss,</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>       <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> edu)</span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>       ) <span class="sc">+</span></span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>()</span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="co"># oder:</span></span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="co"># mfPlot + </span></span>
-<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a><span class="co">#   geom_bar()</span></span></code></pre></div>
-<p><img src="ggplot-grammar_files/figure-slidy/bar-1.png" width="576" style="display: block; margin: auto;" /></p>
-<p>Jetzt haben wir ein Balkendiagramm mit Häufigkeiten. Manchmal möchte man lieber Prozente:</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> pss, </span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>       <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> edu, </span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>                     <span class="at">y =</span> ..prop..,  <span class="co">#Einstellung Prozente</span></span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>                     <span class="at">group =</span> <span class="dv">1</span>   <span class="co"># Einstellung nur eine Gruppe, sonst wäre jeder Balken 100 %</span></span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>                     )</span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>       ) <span class="sc">+</span> </span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>()</span></code></pre></div>
-<p><img src="ggplot-grammar_files/figure-slidy/bar2-1.png" width="576" style="display: block; margin: auto;" /></p>
-<p>Alternativ können wir das Diagramm auch zu einem tatsächlichen Balkendiagramm machen und die Säulen loswerden:</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>mfPlot <span class="sc">+</span></span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>() <span class="sc">+</span></span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_flip</span>()</span></code></pre></div>
-<p><img src="ggplot-grammar_files/figure-slidy/bar3-1.png" width="576" style="display: block; margin: auto;" /></p>
-</div>
-<div id="bringen-wir-farbe-ins-spiel" class="slide section level2">
-<h1>Bringen wir Farbe ins Spiel!</h1>
-<p>In der Regel wollen wir Grafiken ansprechend gestalten, dafür gibt es verschiedene Argumente in <strong>ggplot()</strong>. Die zwei wichtigsten sind <code>color</code> und <code>fill</code>. Probieren wir es einfach mal der Reihe nach aus. Wir wollen, dass die Balken jetzt jeweils eine andere Farbe haben.</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>eduPlot <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(pss, </span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>                  <span class="fu">aes</span>(edu, </span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>                      <span class="at">color =</span> edu</span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>                      )</span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>                  ) <span class="sc">+</span></span>
-<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>()</span>
-<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>eduPlot</span></code></pre></div>
-<p><img src="ggplot-grammar_files/figure-slidy/bar4-1.png" width="576" style="display: block; margin: auto;" /></p>
-<p><code>color</code> macht also hier nur die Randlinie, nicht aber die Fläche der Balken farbig. Mit <code>fill</code> können wir das beheben.</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>eduPlot <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(pss, </span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>                  <span class="fu">aes</span>(edu, </span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>                      <span class="at">fill =</span> edu</span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>                      )</span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>                  ) <span class="sc">+</span></span>
-<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>()</span>
-<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>eduPlot</span></code></pre></div>
-<p><img src="ggplot-grammar_files/figure-slidy/bar5-1.png" width="576" style="display: block; margin: auto;" /></p>
-<p>Wenn man eigene Farben benennen will, kann man dies in der Unterfunktion <code>geom_bar()</code>. Es empfiehlt sich vorab einen Farbvektor zu definieren:</p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>cntryCol <span class="ot">=</span> <span class="fu">c</span>(<span class="st">&quot;steelblue&quot;</span>, </span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>              <span class="st">&quot;seagreen&quot;</span>, </span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>              <span class="st">&quot;red4&quot;</span>, </span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>              <span class="st">&quot;orange&quot;</span>,</span>
-<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>              <span class="st">&quot;pink&quot;</span>,</span>
-<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>              <span class="st">&quot;lightgray&quot;</span></span>
-<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>             )</span>
-<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(pss, </span>
-<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">x =</span> edu, </span>
-<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>           <span class="at">fill =</span> edu</span>
-<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a>           )</span>
-<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a>       ) <span class="sc">+</span></span>
-<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a>   <span class="fu">geom_bar</span>(<span class="at">fill =</span> cntryCol) </span></code></pre></div>
-<p><img src="ggplot-grammar_files/figure-slidy/bar6-1.png" width="576" style="display: block; margin: auto;" /></p>
-<p>Neben dieser Möglichkeit können auch Farbpaletten genutzt werden, die eine beliebige Anzahl an Farben inkludieren. <strong>Wichtig:</strong> Sind in der Farbpalette weniger Farben definiert, gibt es einen Fehler. Es müssen mindestens so viele Farben vorhanden sein, wie die Variable Kategorien hat. Hierzu fügt man einen weiteren Layer <code>scale_fill_manual()</code> bzw. <code>scale_fill_color()</code> hinzu.</p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># a colourblind-friendly palettes</span></span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>cbp1 <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;#999999&quot;</span>, </span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>          <span class="st">&quot;#E69F00&quot;</span>,</span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>          <span class="st">&quot;#56B4E9&quot;</span>,</span>
-<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>          <span class="st">&quot;#009E73&quot;</span>,</span>
-<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>          <span class="st">&quot;#F0E442&quot;</span>,</span>
-<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>          <span class="st">&quot;#0072B2&quot;</span>,</span>
-<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>          <span class="st">&quot;#D55E00&quot;</span>,</span>
-<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>          <span class="st">&quot;#CC79A7&quot;</span></span>
-<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>          )</span>
-<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a>eduPlotCb<span class="ot">&lt;-</span> <span class="fu">ggplot</span>(pss, </span>
-<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a>                   <span class="fu">aes</span>(edu, </span>
-<span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a>                       <span class="at">fill =</span> edu</span>
-<span id="cb11-15"><a href="#cb11-15" aria-hidden="true" tabindex="-1"></a>                       )</span>
-<span id="cb11-16"><a href="#cb11-16" aria-hidden="true" tabindex="-1"></a>                   ) <span class="sc">+</span> </span>
-<span id="cb11-17"><a href="#cb11-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>() <span class="sc">+</span></span>
-<span id="cb11-18"><a href="#cb11-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> cbp1)</span>
-<span id="cb11-19"><a href="#cb11-19" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-20"><a href="#cb11-20" aria-hidden="true" tabindex="-1"></a>eduPlotCb</span></code></pre></div>
-<p><img src="ggplot-grammar_files/figure-slidy/bar7-1.png" width="576" style="display: block; margin: auto;" /></p>
-<p>Für einen kostensparenden Druck kann man auch einfach direkt <code>scale_fill_gray()</code> nutzen:</p>
-<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(pss, </span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>       <span class="fu">aes</span>(district, </span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>           <span class="at">fill =</span> district</span>
-<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>           )</span>
-<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>       ) <span class="sc">+</span> </span>
-<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>() <span class="sc">+</span></span>
-<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_grey</span>()</span></code></pre></div>
-<p><img src="ggplot-grammar_files/figure-slidy/bar8-1.png" width="576" style="display: block; margin: auto;" /> Alternativ kann man auch verschiedene vorgefertigte Farbpaletten nutzen. Dazu muss man oftmals das entsprechenden Paket laden und dann gibt es eine dazugehörige Funktion, die als zusätzlicher Layer festgelegt wird.</p>
-<p>Ein solche Paket ist zum Beispiel <code>RColorBrewer</code>:</p>
-<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># if(!require(&quot;RColorBrewer&quot;)) install.packages(&quot;RColorBrewer&quot;)</span></span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;RColorBrewer&quot;</span>)</span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="fu">display.brewer.all</span>()</span></code></pre></div>
-<p><img src="ggplot-grammar_files/figure-slidy/brewer-1.png" width="576" style="display: block; margin: auto;" /></p>
-<p>Die einzelnen Farbpaletten können, dann wie folgt hinzugefügt werden:</p>
-<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>eduPlot <span class="sc">+</span></span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_brewer</span>(<span class="at">palette =</span> <span class="st">&quot;Dark2&quot;</span>)</span></code></pre></div>
-<p><img src="ggplot-grammar_files/figure-slidy/brewer2-1.png" width="576" style="display: block; margin: auto;" /></p>
-</div>
-<div id="achsen-anpassen" class="slide section level2">
-<h1>Achsen anpassen</h1>
-<p>Als nächsten Schritt passen wir die Achsen an, da die Standardeinstellungen dafür meistens nicht schön sind. Hierfür gibt es folgende Funktionen:</p>
-<ul>
-<li><code>coord_cartesian()</code> (Achsengrenzen festlegen)</li>
-<li><code>scale_x_continuous()</code>/<code>scale_y_continuous()</code> (für numerische Vektoren)</li>
-<li><code>scale_x_discrete()</code>/<code>scale_y_discrete()</code> (für Faktoren oder Character-Variablen)</li>
-</ul>
-<p>Was ist mit unseren Achsen?</p>
-<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>eduPlot2 <span class="ot">&lt;-</span> eduPlot <span class="sc">+</span> </span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_cartesian</span>(<span class="at">ylim =</span> <span class="fu">c</span>(<span class="dv">0</span>,</span>
-<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>                           <span class="dv">1500</span></span>
-<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>                           )</span>
-<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>                  ) <span class="sc">+</span></span>
-<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">breaks =</span> <span class="fu">seq</span>(<span class="dv">0</span>, </span>
-<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>                                  <span class="dv">1500</span>, </span>
-<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>                                  <span class="dv">100</span></span>
-<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a>                                  )</span>
-<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a>                     )</span>
-<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a>eduPlot2</span></code></pre></div>
-<p><img src="ggplot-grammar_files/figure-slidy/axes-1.png" width="576" style="display: block; margin: auto;" /></p>
-<p>Die x-Achse ist kategoriell und daher macht eine metrische Aufteilung keinen Sinn. Mit <code>scale_x_discrete()</code> können wir aber die limits festsetzen:</p>
-<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>eduPlot3 <span class="ot">&lt;-</span> eduPlot2 <span class="sc">+</span> </span>
-<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_discrete</span>(<span class="at">limits =</span> <span class="fu">c</span>(<span class="st">&quot;ES-ISCED I&quot;</span>, </span>
-<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>                              <span class="st">&quot;ES-ISCED II&quot;</span>, </span>
-<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>                              <span class="st">&quot;ES-ISCED III&quot;</span>, </span>
-<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>                              <span class="st">&quot;ES-ISCED IV&quot;</span>,</span>
-<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>                              <span class="st">&quot;ES-ISCED V&quot;</span></span>
-<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>                              )</span>
-<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>                   )</span>
-<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a>eduPlot3</span></code></pre></div>
-<p><img src="ggplot-grammar_files/figure-slidy/axes2-1.png" width="576" style="display: block; margin: auto;" /></p>
-<p>Was haben wir ausgelassen?</p>
-</div>
-<div id="titel-caption-legende-und-weitere-infos" class="slide section level2">
-<h1>Titel, Caption, Legende und weitere Infos</h1>
-<p>Wir können eine Reihe an Achsenbeschriftungen hinzufügen. Dies geschieht am einfachsten über die Funktion <code>labs()</code>. Darin gibt es folgende Unterargumente:</p>
-<ul>
-<li><code>xlab</code>: x-Achsentitel</li>
-<li><code>ylab</code>: y-Achsentitel</li>
-<li><code>title</code>: Titel</li>
-<li><code>caption</code>: Fußnote/Caption</li>
-</ul>
-<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>eduPlot4 <span class="ot">&lt;-</span> eduPlot3 <span class="sc">+</span></span>
-<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;Education level&quot;</span>,</span>
-<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">&quot;Frequency&quot;</span>,</span>
-<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>       <span class="at">title =</span> <span class="st">&quot;my first shot at ggplot2&quot;</span>,</span>
-<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>       <span class="at">caption =</span> <span class="st">&quot;Data: Panem Social Survey.&quot;</span></span>
-<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>       )</span>
-<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a>eduPlot4</span></code></pre></div>
-<p><img src="ggplot-grammar_files/figure-slidy/text1-1.png" width="576" style="display: block; margin: auto;" /></p>
-<p>Das schaut schon soweit gut aus, jetzt wollen wir nur noch die Legende anpassen, so dass auch dort ein angepasster Titel steht. Dies machen wir in der Funktion <code>scale_fill_manual()</code>, die wir zuvor schon genutzt haben. Wir überschreiben sozusagen die Angaben:</p>
-<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>eduPlot5 <span class="ot">&lt;-</span> eduPlot4 <span class="sc">+</span></span>
-<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> cbp1,</span>
-<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>                    <span class="at">name =</span> <span class="st">&quot;Education category&quot;</span>,</span>
-<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>                    <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">&quot;sehr niedrig&quot;</span>,</span>
-<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>                               <span class="st">&quot;niedrig&quot;</span>, </span>
-<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>                               <span class="st">&quot;mittel&quot;</span>,</span>
-<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a>                               <span class="st">&quot;hoch&quot;</span>,</span>
-<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a>                               <span class="st">&quot;sehr hoch&quot;</span></span>
-<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a>                               )</span>
-<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a>                    )</span>
-<span id="cb18-11"><a href="#cb18-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-12"><a href="#cb18-12" aria-hidden="true" tabindex="-1"></a>eduPlot5</span></code></pre></div>
-<p><img src="ggplot-grammar_files/figure-slidy/legend1-1.png" width="576" style="display: block; margin: auto;" /></p>
-<p>Über die Funktion <code>theme()</code> können viele Feineinstellungen vorgenommen werden. Diese können wir nicht im einzelnen hier besprechen, aber es kann wirklich jedes Detail eingestellt werden. Mehr dazu machen die Personen, die am Nachmittag nochmal vertieft mit <strong>ggplot()</strong> arbeiten.</p>
-</div>
-<div id="histogramme" class="slide section level2">
-<h1>Histogramme</h1>
-<p>Gehen wir nun über zu Histogrammen. Diese nutzen wir für metrische Variablen. Hierfür nutzen wir den Layer <code>geom_histogram()</code>.</p>
-<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>agePlot <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(pss,</span>
-<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>                  <span class="fu">aes</span>(agea)</span>
-<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>                  ) <span class="sc">+</span> </span>
-<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>()  </span>
-<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a>agePlot</span></code></pre></div>
-<p><img src="ggplot-grammar_files/figure-slidy/hist1-1.png" width="576" style="display: block; margin: auto;" /></p>
-<p>Auch hier können wir ganz einfach Anpassungen von oben übernehmen und den Plot schöner gestalten:</p>
-<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>agePlot2 <span class="ot">&lt;-</span> agePlot <span class="sc">+</span></span>
-<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">color =</span> <span class="st">&quot;lightgray&quot;</span>, </span>
-<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>                 <span class="at">fill =</span> <span class="st">&quot;gray&quot;</span></span>
-<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>                 ) <span class="sc">+</span> </span>
-<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;Age in years&quot;</span>, </span>
-<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">&quot;Frequency&quot;</span>, </span>
-<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>       <span class="at">title =</span> <span class="st">&quot;Histogram of Age (PSS)&quot;</span></span>
-<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a>       )</span>
-<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a>agePlot2</span></code></pre></div>
-<p><img src="ggplot-grammar_files/figure-slidy/hist2-1.png" width="576" style="display: block; margin: auto;" /></p>
-<p>Oftmals fügen wir auch die Dichte hinzu, um einfacher beurteilen zu können, ob annähernd eine Normalverteilung vorliegt. Hierzu bestimmen wir, dass die y-Achse die Dichte anzeig (<code>y = ..density..</code>) und fügen <code>geom_density()</code> hinzu. Mit <code>alpha</code> stellen wir Durchsichtigkeit ein und mit <code>fill</code> die Farbe der Fläche.</p>
-<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>ageDensPlot <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(pss, </span>
-<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>                      <span class="fu">aes</span>(agea)</span>
-<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>                      ) <span class="sc">+</span> </span>
-<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="fu">aes</span>(<span class="at">y =</span> ..density..), </span>
-<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>                 <span class="at">color =</span> <span class="st">&quot;lightgray&quot;</span>, </span>
-<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a>                 <span class="at">fill =</span> <span class="st">&quot;gray&quot;</span></span>
-<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a>                 ) <span class="sc">+</span> </span>
-<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_density</span>(<span class="at">alpha =</span> <span class="fl">0.2</span>, </span>
-<span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a>               <span class="at">fill =</span> <span class="st">&quot;lightblue&quot;</span></span>
-<span id="cb21-10"><a href="#cb21-10" aria-hidden="true" tabindex="-1"></a>               ) <span class="sc">+</span></span>
-<span id="cb21-11"><a href="#cb21-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;Age in years&quot;</span>, </span>
-<span id="cb21-12"><a href="#cb21-12" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">&quot;Density&quot;</span>, </span>
-<span id="cb21-13"><a href="#cb21-13" aria-hidden="true" tabindex="-1"></a>       <span class="at">title =</span> <span class="st">&quot;Histogram of Age (PSS)&quot;</span></span>
-<span id="cb21-14"><a href="#cb21-14" aria-hidden="true" tabindex="-1"></a>       )</span>
-<span id="cb21-15"><a href="#cb21-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-16"><a href="#cb21-16" aria-hidden="true" tabindex="-1"></a>ageDensPlot</span></code></pre></div>
-<p><img src="ggplot-grammar_files/figure-slidy/hist3-1.png" width="576" style="display: block; margin: auto;" /></p>
-<p><code>geom_histogram()</code> wählt automatisch die Breite der <code>bin</code> (Säulen), was irreführend sein kann. Hier könnten wir zum Beispiel so einstellen, dass wir so viele <code>bins</code> erhalten, wie es auch tatsächliche Alterskategorien gibt. Man kann einfach die Breite der <code>bins</code> mit <code>binwidth()</code> festlegen. Hier wählen wir den realen Abstand zwischen zwei Einträgen in dem Vektor/Variable (hier 1).</p>
-<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(pss, </span>
-<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>       <span class="fu">aes</span>(agea)</span>
-<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>       ) <span class="sc">+</span> </span>
-<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="fu">aes</span>(<span class="at">y =</span> ..density..), </span>
-<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>                 <span class="at">color =</span> <span class="st">&quot;lightgray&quot;</span>, </span>
-<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a>                 <span class="at">fill =</span> <span class="st">&quot;gray&quot;</span>,</span>
-<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a>                 <span class="at">binwidth =</span> <span class="dv">1</span></span>
-<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a>                 ) <span class="sc">+</span> </span>
-<span id="cb22-9"><a href="#cb22-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_density</span>(<span class="at">alpha =</span> <span class="fl">0.2</span>, </span>
-<span id="cb22-10"><a href="#cb22-10" aria-hidden="true" tabindex="-1"></a>               <span class="at">fill =</span> <span class="st">&quot;lightblue&quot;</span></span>
-<span id="cb22-11"><a href="#cb22-11" aria-hidden="true" tabindex="-1"></a>               ) <span class="sc">+</span></span>
-<span id="cb22-12"><a href="#cb22-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;Age in years&quot;</span>, </span>
-<span id="cb22-13"><a href="#cb22-13" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">&quot;Density&quot;</span>, </span>
-<span id="cb22-14"><a href="#cb22-14" aria-hidden="true" tabindex="-1"></a>       <span class="at">title =</span> <span class="st">&quot;Histogram of Age (PSS)&quot;</span></span>
-<span id="cb22-15"><a href="#cb22-15" aria-hidden="true" tabindex="-1"></a>       )</span></code></pre></div>
-<p><img src="ggplot-grammar_files/figure-slidy/hist5-1.png" width="576" style="display: block; margin: auto;" /></p>
-</div>
-<div id="scatterplots" class="slide section level2">
-<h1>Scatterplots</h1>
-<p>Oftmals wollen wir zwei Variablen darstellen und ihren Zusammenhang. So könnten wir uns zum Beispiel für den Zusammenhang zwischen der Zufriedenheit mit dem demkoratischen System (<code>stfdem</code>) und der Zufriedenheit mit der ökonomischen Entwicklung (<code>stfeco</code>) anschauen. Dies sind beides Variablen auf pseudometrischen Niveau gemessen, in R aber als numerische Variablen hinterlegt.</p>
-<p>Um Scatterplots darzustellen nutzen wir <code>geom_point()</code>. Wir geben jetzt zwei Variablen in <code>aes()</code> an. Einmal die x-Achsenvariable und dann die y-Achsenvariable.</p>
-<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>scatter1 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(pss, </span>
-<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>                   <span class="fu">aes</span>(stfeco, </span>
-<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>                       stfdem</span>
-<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>                       )</span>
-<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>                   ) <span class="sc">+</span> </span>
-<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a>   <span class="fu">geom_point</span>()</span>
-<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a>scatter1</span></code></pre></div>
-<p><img src="ggplot-grammar_files/figure-slidy/scatter1-1.png" width="576" style="display: block; margin: auto;" /></p>
-<p>Warum sehen wir nun so wenige Punkte, obwohl der Datensatz <span class="math inline">\(5000\)</span> Fälle hat?</p>
-</div>
-<div id="scatterplot-pseudometrische-variablen" class="slide section level2">
-<h1>Scatterplot pseudometrische Variablen</h1>
-<p>Um pseudo-metrische Variablen korrekt darzustellen, benötigen wir <code>geom_jitter()</code>, da die Datenpunkte sonst übereinanderlappen. <strong>Wichtig:</strong> Das jittern sollte angegeben werden, damit kein falscher Dateneindruck entsteht!</p>
-<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>scatter2 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(pss, </span>
-<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>                   <span class="fu">aes</span>(stfeco, </span>
-<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>                       stfdem</span>
-<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>                       )</span>
-<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a>                   ) <span class="sc">+</span></span>
-<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a>   <span class="fu">geom_jitter</span>(<span class="at">width =</span> <span class="fl">0.3</span>,</span>
-<span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a>               <span class="at">height =</span> <span class="fl">0.3</span></span>
-<span id="cb24-8"><a href="#cb24-8" aria-hidden="true" tabindex="-1"></a>               ) <span class="sc">+</span></span>
-<span id="cb24-9"><a href="#cb24-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;Satisfaction with Economy&quot;</span>,</span>
-<span id="cb24-10"><a href="#cb24-10" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">&quot;Satisfaction with Democracy&quot;</span>,</span>
-<span id="cb24-11"><a href="#cb24-11" aria-hidden="true" tabindex="-1"></a>       <span class="at">caption =</span> <span class="st">&quot;Data jittered.&quot;</span></span>
-<span id="cb24-12"><a href="#cb24-12" aria-hidden="true" tabindex="-1"></a>       )</span>
-<span id="cb24-13"><a href="#cb24-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-14"><a href="#cb24-14" aria-hidden="true" tabindex="-1"></a>scatter2</span></code></pre></div>
-<p><img src="ggplot-grammar_files/figure-slidy/scatter2-1.png" width="576" style="display: block; margin: auto;" /></p>
-<p>Weitergehend können wir mit <code>alpha</code> in <code>geom_jitter()</code> (oder auch in <code>geom_point()</code>) einen besseren Eindruck verstärken. Datenkombinationen die weniger oft vorkommen erscheinen nciht so kräftig:</p>
-<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(pss, </span>
-<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>       <span class="fu">aes</span>(stfeco, </span>
-<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>           stfdem</span>
-<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>           )</span>
-<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>       ) <span class="sc">+</span>  </span>
-<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_jitter</span>(<span class="at">alpha =</span> .<span class="dv">2</span>, </span>
-<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a>              <span class="at">col =</span> <span class="st">&quot;blue&quot;</span></span>
-<span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a>              )</span></code></pre></div>
-<p><img src="ggplot-grammar_files/figure-slidy/scatter3-1.png" width="576" style="display: block; margin: auto;" /></p>
-<p>Als weitere Argumente können sowohl in <code>geom_jitter()</code> als auch in <code>geom_point()</code> mit <code>shape</code> das Erscheinungsbild geändert werden. Das Cheat Sheet findet man <a href="https://github.com/rstudio/cheatsheets/raw/master/data-visualization.pdf">hier</a>.</p>
-</div>
-<div id="gruppierungen" class="slide section level2">
-<h1>Gruppierungen</h1>
-<p>Oftmals möchte man eine Variable oder den Zusammenhang zweier Variablen getrennt nach einer kategoriellen Variable einblicken. Dazu gibt es in <strong>ggplot2</strong> verschiedene Möglichkeiten. Ein paar davon werde ich kurz vorstellen:</p>
-<ul>
-<li><p>Balkendiagramm: <code>fill</code>, <code>color</code> und <code>facets</code></p></li>
-<li><p>Scatterplots: <code>shape</code> und <code>facets</code></p></li>
-</ul>
-<h3 id="balkendiagramme-1">Balkendiagramme</h3>
-<p>Wir möchten gerne wissen, wie viele Befragte in den fünf ausgewählten Distrikten weiblich bzw. männlich sind. Dies können wir einfach erhalten, in dem wir in <code>ggplot()</code> mit <code>fill</code> eine Aufteilung nach Geschlecht hinzufügen. Das funktioniert auch analog mit <code>color</code> (nur ist es etwas unübersichtlich bei Balkendiagrammen).</p>
-<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>barg <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(pss, </span>
-<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>               <span class="fu">aes</span>(district, </span>
-<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>                   <span class="at">fill =</span> gndr</span>
-<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>                   )</span>
-<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a>               ) <span class="sc">+</span></span>
-<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>()</span>
-<span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-8"><a href="#cb26-8" aria-hidden="true" tabindex="-1"></a>barg</span></code></pre></div>
-<p><img src="ggplot-grammar_files/figure-slidy/bargroup-1.png" width="576" style="display: block; margin: auto;" /></p>
-<p>Will man dies nun etwas übersichtlicher nebeneinander haben, geschieht dies einfach mit dem Argument <code>position</code> in <code>geom_bar()</code>:</p>
-<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>barg2 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(pss, </span>
-<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>               <span class="fu">aes</span>(district, </span>
-<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>                   <span class="at">fill =</span> gndr</span>
-<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>                   )</span>
-<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a>               ) <span class="sc">+</span></span>
-<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">position =</span> <span class="fu">position_dodge</span>())</span>
-<span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-8"><a href="#cb27-8" aria-hidden="true" tabindex="-1"></a>barg2</span></code></pre></div>
-<p><img src="ggplot-grammar_files/figure-slidy/barg2-1.png" width="576" style="display: block; margin: auto;" /></p>
-<p>Alternativ kann man <code>facets</code> innerhalb eines <strong>ggplots</strong> erstellen. Dies geht entweder mit <code>facet_wrap()</code> oder mit <code>facet_grid</code>:</p>
-<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>barg2 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(pss, </span>
-<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>               <span class="fu">aes</span>(district, </span>
-<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>                   <span class="at">fill =</span> gndr</span>
-<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a>                   )</span>
-<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a>               ) <span class="sc">+</span></span>
-<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>() <span class="sc">+</span></span>
-<span id="cb28-7"><a href="#cb28-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="fu">vars</span>(gndr))</span>
-<span id="cb28-8"><a href="#cb28-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-9"><a href="#cb28-9" aria-hidden="true" tabindex="-1"></a>barg2</span></code></pre></div>
-<p><img src="ggplot-grammar_files/figure-slidy/facet1-1.png" width="576" style="display: block; margin: auto;" /></p>
-<h3 id="scatterplots-1">Scatterplots</h3>
-<p>Bei Scatteprlots kann man ebenfalls mit <code>shape</code> arbeiten oder auch direkt <code>facet_wrap</code>/<code>facet_grid</code> benutzen.</p>
-<p>Wir möchten nun das Scatterplot von vorher nach Distrikten ausgeben lassen. Dazu können wir zuerst den Distrikten verschiedene Formen zuordnen. Dazu geben wir innerhalb von <code>aes()</code> einfach an, dass die Form (<code>shape</code>) in Abhängigkeit der Variable <code>district</code> ausgegeben werden soll.</p>
-<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(pss, </span>
-<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>       <span class="fu">aes</span>(stfeco, </span>
-<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>           stfdem,</span>
-<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a>           <span class="at">shape =</span> district</span>
-<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a>           )</span>
-<span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a>       ) <span class="sc">+</span>  </span>
-<span id="cb29-7"><a href="#cb29-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_jitter</span>(<span class="at">alpha =</span> .<span class="dv">2</span>, </span>
-<span id="cb29-8"><a href="#cb29-8" aria-hidden="true" tabindex="-1"></a>              <span class="at">col =</span> <span class="st">&quot;blue&quot;</span></span>
-<span id="cb29-9"><a href="#cb29-9" aria-hidden="true" tabindex="-1"></a>              )</span></code></pre></div>
-<p><img src="ggplot-grammar_files/figure-slidy/scatter-shapes-1.png" width="576" style="display: block; margin: auto;" /></p>
-<p>Das ist jetzt noch nicht ganz so übersichtlich. Jetzt könnte man noch zusätzlich die Farbe in Abhängigkeit des Distrikts ändern. Dazu nutzt man das <code>color</code>-Argument in <code>aes()</code> und entfernt es aus <code>geom_jitter()</code>. Lässt man das <code>color</code>-Argument in <code>geom_jitter()</code> bestehen, wird dies als zuletzt definierte Einstellung verwendet und alles bleibt blau.</p>
-<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(pss, </span>
-<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>       <span class="fu">aes</span>(stfeco, </span>
-<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>           stfdem,</span>
-<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a>           <span class="at">shape =</span> district,</span>
-<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a>           <span class="at">color =</span> district</span>
-<span id="cb30-6"><a href="#cb30-6" aria-hidden="true" tabindex="-1"></a>           )</span>
-<span id="cb30-7"><a href="#cb30-7" aria-hidden="true" tabindex="-1"></a>       ) <span class="sc">+</span>  </span>
-<span id="cb30-8"><a href="#cb30-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_jitter</span>(<span class="at">alpha =</span> .<span class="dv">2</span>)</span></code></pre></div>
-<p><img src="ggplot-grammar_files/figure-slidy/scatter-color-1.png" width="576" style="display: block; margin: auto;" /></p>
-<p>Die Abbildung ist zwar jetzt schön bunt, aber so richtig einen guten Überblick gibt auch diese Darstellung noch nicht. Um das zu erreichen, nutzt man <code>facets</code>. Der Unterschied zwischen den zwei möglichen <code>facets</code> ist folgender: Bei <code>facet_wrap()</code> wird aus einer eigentlich eindimensionalen Darstellung eine zweidimensionalen Darstellung gemacht und dementsprechend mehrere Abbildungen erstellt. Wenn man zum Beispiel eine kategoriale Variable hat, nach der man die Darstellung splitten möchte, ist <code>facet_wrap()</code> die richtige Wahl. Mit den Argumenten <code>nrow</code> und <code>ncol</code> kann man dazu die Anzahl der Zeilen und Spalten festlegen. <code>facet_grid()</code> dagegen ist zweidimensional. Hier wird ein Grafikpanel anhand von zwei Variablen erstellt, dass alle Kombinationen (auch die ohne Fälle) anzeigt. Dazu wird die Reihenfolge der Variablen auch wie in einer Formel angegeben, erst pro Zeile und dann pro Spalte.</p>
-<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(pss, </span>
-<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>       <span class="fu">aes</span>(stfeco, </span>
-<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>           stfdem,</span>
-<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a>           <span class="at">shape =</span> district,</span>
-<span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a>           <span class="at">color =</span> district</span>
-<span id="cb31-6"><a href="#cb31-6" aria-hidden="true" tabindex="-1"></a>           )</span>
-<span id="cb31-7"><a href="#cb31-7" aria-hidden="true" tabindex="-1"></a>       ) <span class="sc">+</span>  </span>
-<span id="cb31-8"><a href="#cb31-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_jitter</span>(<span class="at">alpha =</span> .<span class="dv">2</span>) <span class="sc">+</span></span>
-<span id="cb31-9"><a href="#cb31-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="fu">vars</span>(district))</span></code></pre></div>
-<p><img src="ggplot-grammar_files/figure-slidy/scatter-facetwrap-1.png" width="576" style="display: block; margin: auto;" /></p>
-<p>Wie oben beschrieben wird in <code>facet_grid()</code> ein tatsächlicher zweidimensionaler Plot erstellt. Dazu geben wir in der Funktion selbst an, über welche (kategorialen) Variablen der Plot geteilt werden soll. Die erste Variable ist die Trennung über Zeilen und die zweite Variable die Trennung über Spalten. Im Beispiel trennen wir in Zeilen nach Distrikt und in Spalten nach Geschlecht:</p>
-<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(pss, </span>
-<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>       <span class="fu">aes</span>(stfeco, </span>
-<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>           stfdem,</span>
-<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a>           <span class="at">shape =</span> district,</span>
-<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a>           <span class="at">color =</span> district</span>
-<span id="cb32-6"><a href="#cb32-6" aria-hidden="true" tabindex="-1"></a>           )</span>
-<span id="cb32-7"><a href="#cb32-7" aria-hidden="true" tabindex="-1"></a>       ) <span class="sc">+</span>  </span>
-<span id="cb32-8"><a href="#cb32-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_jitter</span>(<span class="at">alpha =</span> .<span class="dv">2</span>) <span class="sc">+</span></span>
-<span id="cb32-9"><a href="#cb32-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_grid</span>(district <span class="sc">~</span> gndr)</span></code></pre></div>
-<p><img src="ggplot-grammar_files/figure-slidy/scatter-facetgrid-1.png" width="576" style="display: block; margin: auto;" /></p>
-</div>
-<div id="was-es-noch-zu-entdecken-gibt-in-ggplot2" class="slide section level2">
-<h1>Was es noch zu entdecken gibt in <code>ggplot2</code>?</h1>
-<ul>
-<li><p>Schriftarten bearbeiten bzw. Darstellung des Plots</p></li>
-<li><p><em>missing values</em> darstellen</p></li>
-<li><p>Marginal Plots</p></li>
-<li><p>bivariate Normalverteilungen</p></li>
-<li><p>Karten bearbeiten</p></li>
-<li><p>Zusammenfügen von Plots</p></li>
-</ul>
-<h3 id="lab">Lab</h3>
-<p>Die Übungsaufgaben findet ihr als <code>task ggplot</code> in RStudio Cloud.</p>
-</div>
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
 
-  <!-- dynamically load mathjax for compatibility with self-contained -->
-  <script>
-    (function () {
-      var script = document.createElement("script");
-      script.type = "text/javascript";
-      script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
-      document.getElementsByTagName("head")[0].appendChild(script);
-    })();
-  </script>
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
 
-</body>
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
 </html>
