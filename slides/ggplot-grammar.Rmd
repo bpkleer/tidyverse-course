@@ -1,42 +1,40 @@
 ---
-title: "Einführung in ggplot2-Grammatik"
-subtitle: "Daten bändigen & visualisieren"
-author: "B. Philipp Kleer"
-date: "11. Oktober 2021"
-output: 
-  slidy_presentation:
-      footer: "CC BY-SA 4.0, B. Philipp Kleer"
-      widescreen: true
-      highlight: pygments
-      theme: readable
-      css: ./styles/style-slides.css
-      df_print: paged
-      mathjax: default
-      self_contained: false
-      incremental: false #True  dann jedes Bullet einzeln
-      collapse: true # means the text output will be merged into the R source code block
+output:
+  xaringan::moon_reader:
+    css: ["./styles/slides.css"]  
+    nature:
+      seal: false
+      highlightStyle: github
+      highlightLines: true
+      highlightLanguage: ["r"]
+      countIncrementalSlides: false
+      ratio: '16:9'
+      slideNumberFormat: |
+        <div class="progress-bar-container">
+          <div class="progress-bar" style="width: calc(%current% / %total% * 100%);">
+          </div>
+        </div>`
+      navigation:
+        scroll: false
 ---
 
 ```{r setup, include=FALSE}
 library("knitr")
 library("rmarkdown")
 library("tidyverse")
+library("icons")
 
 pss <- readRDS("../datasets/pss.rds")
 
 opts_chunk$set(#fig.path = 'pics/s6-', # path for calculated figures
                fig.align = 'center',  # alignment of figure (also possible right, left, default)
                fig.show = 'hold', # how to show figures: hold -> direct at the end of code chunk; animate: all plots in an animation
-               fig.width = 6,   # figure width
-               fig.height = 6,  # figure height
+               out.width = "60%",
                echo = TRUE,     # Code is printed
                eval = FALSE,    # Code is NOT evaluated
                warning = FALSE, # warnings are NOT displayed
                message = FALSE, # messages are NOT displayed
-               size = "tiny",  # latex-size of code chunks
-               background = "#E7E7E7", # background color of code chunks
                comment = "", # no hashtags before output
-               options(width = 80),
                results = "markdown",
                rows.print = 15
 )
@@ -52,8 +50,28 @@ htmltools::tagList(
 
 ```
 
-## Starten wir!
+class: center, title-slide, middle
+
+# Einführung in ggplot-Grammatik
+
+## Daten bändigen & visualisieren
+
+### B. Philipp Kleer
+
+### Methodentage 2021
+
+### 11. Oktober 2021
+
+.social[
+   [`r icons::icon_style(fontawesome("orcid"), fill=rgb(235, 129, 27, maxColorValue = 255), scale = 1)`](https://orcid.org/0000-0003-1935-387X)   [`r icons::icon_style(fontawesome("gitlab"), fill=rgb(235, 129, 27, maxColorValue = 255), scale = 1)`](https://gitlab.com/bpkleer)   [`r icons::icon_style(fontawesome("university"), fill=rgb(235, 129, 27, maxColorValue = 255), scale = 1)`](https://www.uni-giessen.de/faculties/f03/departments/dps/staff/researchers/kleer?set_language=en)   [`r icons::icon_style(fontawesome("researchgate"), fill=rgb(235, 129, 27, maxColorValue = 255), scale = 1)`](https://www.researchgate.net/profile/Benedikt_Kleer)
+]
+
+---
+
+# Starten wir!
 Nun tauchen wir in die Welt von **ggplot2** ein. Das Paket ist **das** Grafik-Paket in R. Viele weitere Grafikpakete beruhen auf derselben Grammatik wie **ggplot2**, so dass Kenntnisse dieses Pakets jedem helfen. 
+
+--
 
 Auch hier laden wir zuerst **tidyverse** bzw. installieren es, wenn es noch nicht installiert ist:
 
@@ -66,51 +84,137 @@ library("tidyverse")
 # library("ggplot2")
 ```
 
-Anschließend laden wir den Datensatz ```pss``` ins *environment*.
+--
+
+Anschließend laden wir den Datensatz `pss` ins *environment*.
 
 ``` {r uni-load}
 pss <- readRDS("../datasets/pss.rds") #oder eigener Pfad, wenn nicht in Cloud
 ```
 
+---
+
+# ggplot
+
 Wir machen **gplot2** ist sehr umfangreich, wir machen heute einen Einstieg in die Grammatik. Da die Grafiken aber als Layer aufgebaut sind, können mithilfe des Verständnisses der Grafikgrammatik auch aufwendigere Grafiken erstellt werden. 
 
 Einen Überblick, was wir heute machen:
 
+--
+
 1. Balkendiagramme und Grundaufbau von ggplot
+
+--
 
 2. Histogramme
 
+--
+
 3. Scatterplots
+
+--
 
 4. Gruppierungen
 
-## Balkendiagramme
-Ein Balkendiagramm ist ein Plot einer einzelnen kategorialen Variable. Es gibt zwei Wege eine Grafik mit **ggplot2** zu erstellen: einmal als direkte Ausgabe und einmal als Objekt zu speichern. Vorteil von letzterem ist, dass man dann am gespeicherten Plot Anpassungen vornehmen kann ohne den ganzen vorherigen Code nochmals ausführen lassen zu müssen.
+---
 
-``` {r ggplot1, eval=TRUE}
+class: inverse2, mline, center, middle
+
+# Balkendiagramme
+
+---
+
+# Direkte Ausgabe
+
+Ein Balkendiagramm ist ein Plot einer einzelnen kategorialen Variable. Mit der Funktion `ggplot()` kann man direkt einen Plot ausgeben. 
+
+.pull-left-40[
+``` {r ggplot1}
 # direkter Output
 ggplot(data = pss,
        mapping = aes(x = edu)
        )
 ```
+]
 
+--
 
-``` {r ggplot2, eval=TRUE}
+.pull-right-60[
+``` {r ggplot1-out, eval=TRUE, echo=FALSE}
+# direkter Output
+ggplot(data = pss,
+       mapping = aes(x = edu)
+       )
+```
+]
+
+---
+
+# Objekte speichern
+Alternativ (und meist besser) ist es Grafiken in Objekte zu speichern:
+
+--
+
+.pull-left-40[
+``` {r ggplot2}
 # oder speichern als Objekt
 mfPlot <- ggplot(data = pss,
                  mapping = aes(x = edu)
                  )
 mfPlot
 ```
+]
+
+--
+
+.pull-right-60[
+``` {r ggplot2-out, eval=TRUE, echo=FALSE}
+# oder speichern als Objekt
+mfPlot <- ggplot(data = pss,
+                 mapping = aes(x = edu)
+                 )
+mfPlot
+```
+]
+
+--
 
 Aber warum sind beide Plots leer?
 
-## ggplot() verstehen
-Wir haben nur das Grundgerüst mit der Funktion **ggplot()** übergeben. Diese Funktion beinhaltet immer die Daten (in ```data```) und die Struktur des Plots (```mapping```). Ein Balkendiagramm ist eine univariate Darstellung und deshalb übergeben wir nur eine Variable (hier ```edu```). 
+???
 
-Um nun ein Balkendiagramm aus dem Plot zu machen, benötigen wir einen weiteren Layer, der eben ein Balkendiagramm ausgibt. Dies ist der Zusatz ```geom_bar()```.
+nur die Struktur wurde angegeben, nicht was geplottet werden soll.
 
-``` {r bar, eval=TRUE}
+---
+
+# ggplot() verstehen
+
+Wir haben nur das Grundgerüst mit der Funktion `ggplot()` übergeben. Diese Funktion beinhaltet immer die Daten (in `data`) und die Struktur des Plots (`mapping`). Ein Balkendiagramm ist eine univariate Darstellung und deshalb übergeben wir nur eine Variable (hier `edu`). 
+
+--
+
+Um nun ein Balkendiagramm aus dem Plot zu machen, benötigen wir einen weiteren Layer, der eben ein Balkendiagramm ausgibt. Dies ist der Zusatz `geom_bar()`.
+
+--
+
+.pull-left-40[
+``` {r bar}
+ggplot(data = pss,
+       mapping = aes(x = edu)
+       ) +
+  geom_bar() #<<
+
+# oder:
+# mfPlot + 
+#   geom_bar()
+```
+]
+
+--
+
+.pull-right-60[
+.center[
+``` {r bar-out, eval=TRUE, echo=FALSE, out.width="50%"}
 ggplot(data = pss,
        mapping = aes(x = edu)
        ) +
@@ -120,9 +224,31 @@ ggplot(data = pss,
 # mfPlot + 
 #   geom_bar()
 ```
+]
+]
 
-Jetzt haben wir ein Balkendiagramm mit Häufigkeiten. Manchmal möchte man lieber Prozente:
-``` {r bar2, eval=TRUE}
+---
+
+# Prozente statt Häufigkeiten
+
+Gerade haben wir uns Häufigkeiten ausgeben lassen. Manchmal möchte man lieber Prozente:
+.pull-left-40[
+``` {r bar2}
+ggplot(data = pss, 
+       mapping = aes(x = edu, 
+                     y = ..prop..,  #<<
+                     group = 1      #<<
+                     )
+       ) + 
+  geom_bar()
+```
+]
+
+--
+
+.pull-right-60[
+.center[
+``` {r bar2-out, eval=TRUE, echo=FALSE}
 ggplot(data = pss, 
        mapping = aes(x = edu, 
                      y = ..prop..,  #Einstellung Prozente
@@ -131,18 +257,69 @@ ggplot(data = pss,
        ) + 
   geom_bar()
 ```
+]
+]
+
+???
+
+Hinweise zum Code:
+
+1. y: Einstellung Prozente
+
+2. group: Einstellung nur eine Gruppe, sonst wäre jeder Balken 100 %
+
+---
+
+# Nun wirklich Balken
 
 Alternativ können wir das Diagramm auch zu einem tatsächlichen Balkendiagramm machen und die Säulen loswerden:
-``` {r bar3, eval=TRUE}
+
+--
+
+.pull-left-40[
+``` {r bar3}
+mfPlot +
+  geom_bar() +
+  coord_flip()  #<<
+```
+]
+
+--
+
+.pull-right-60[
+.center[
+``` {r bar3-out, eval=TRUE, echo=FALSE}
 mfPlot +
   geom_bar() +
   coord_flip()
 ```
+]
+]
 
-## Bringen wir Farbe ins Spiel!
-In der Regel wollen wir Grafiken ansprechend gestalten, dafür gibt es verschiedene Argumente in **ggplot()**. Die zwei wichtigsten sind ```color``` und ```fill```. Probieren wir es einfach mal der Reihe nach aus. Wir wollen, dass die Balken jetzt jeweils eine andere Farbe haben.
+---
 
-``` {r bar4, eval=TRUE}
+# Bringen wir Farbe ins Spiel!
+In der Regel wollen wir Grafiken ansprechend gestalten, dafür gibt es verschiedene Argumente in `ggplot()`. Die zwei wichtigsten sind `color` und `fill`. Probieren wir es einfach mal der Reihe nach aus. Wir wollen, dass die Balken jetzt jeweils eine andere Farbe haben.
+
+--
+
+.pull-left-40[
+``` {r bar4, eval=FALSE}
+eduPlot <- ggplot(pss, 
+                  aes(edu, 
+                      color = edu   #<<
+                      )
+                  ) +
+  geom_bar()
+eduPlot
+```
+]
+
+--
+
+.pull-right-60[
+.center[
+``` {r bar4-out, eval=TRUE, echo=FALSE}
 eduPlot <- ggplot(pss, 
                   aes(edu, 
                       color = edu
@@ -151,10 +328,31 @@ eduPlot <- ggplot(pss,
   geom_bar()
 eduPlot
 ```
+]
+]
 
-```color``` macht also hier nur die Randlinie, nicht aber die Fläche der Balken farbig. Mit ```fill``` können wir das beheben.
+---
 
-```{r bar5, eval=TRUE}
+# Coloring
+`color` macht also hier nur die Randlinie, nicht aber die Fläche der Balken farbig. Mit `fill` können wir das beheben.
+
+--
+
+.pull-left-40[
+```{r bar5}
+eduPlot <- ggplot(pss, 
+                  aes(edu, 
+                      fill = edu  #<<
+                      )
+                  ) +
+  geom_bar()
+eduPlot
+
+```
+]
+
+.pull-right-60[
+```{r bar5-out, eval=TRUE, echo=FALSE}
 eduPlot <- ggplot(pss, 
                   aes(edu, 
                       fill = edu
@@ -164,9 +362,40 @@ eduPlot <- ggplot(pss,
 eduPlot
 
 ```
+]
 
-Wenn man eigene Farben benennen will, kann man dies in der Unterfunktion ```geom_bar()```. Es empfiehlt sich vorab einen Farbvektor zu definieren:
-``` {r bar6, eval=TRUE}
+---
+
+# Eigene Farbpaletten
+
+Wenn man eigene Farben benennen will, kann man dies in der Unterfunktion `geom_bar()`. Es empfiehlt sich vorab einen Farbvektor zu definieren:
+
+--
+
+.pull-left-40[
+``` {r bar6}
+cntryCol = c("steelblue", 
+              "seagreen", 
+              "red4", 
+              "orange",
+              "pink",
+              "lightgray"
+             )
+
+ggplot(pss, 
+       aes(x = edu, 
+           fill = edu
+           )
+       ) +
+   geom_bar(fill = cntryCol) #<< 
+```
+]
+
+--
+
+.pull-right-60[
+.center[
+``` {r bar6-out, eval=TRUE, echo=FALSE}
 cntryCol = c("steelblue", 
               "seagreen", 
               "red4", 
@@ -182,10 +411,47 @@ ggplot(pss,
        ) +
    geom_bar(fill = cntryCol) 
 ```
+]
+]
 
-Neben dieser Möglichkeit können auch Farbpaletten genutzt werden, die eine beliebige Anzahl an Farben inkludieren. **Wichtig:** Sind in der Farbpalette weniger Farben definiert, gibt es einen Fehler. Es müssen mindestens so viele Farben vorhanden sein, wie die Variable Kategorien hat. Hierzu fügt man einen weiteren Layer ```scale_fill_manual()``` bzw. ```scale_fill_color()``` hinzu. 
+---
 
-``` {r bar7, eval=TRUE}
+# Eigene Farbpaletten 
+
+Neben dieser Möglichkeit können auch Farbpaletten genutzt werden, die eine beliebige Anzahl an Farben inkludieren. **Wichtig:** Sind in der Farbpalette weniger Farben definiert, gibt es einen Fehler. Es müssen mindestens so viele Farben vorhanden sein, wie die Variable Kategorien hat. Hierzu fügt man einen weiteren Layer `scale_fill_manual()` bzw. `scale_fill_color()` hinzu. 
+
+--
+
+.pull-left-40[
+``` {r bar7}
+# a colourblind-friendly palettes
+cbp1 <- c("#999999", 
+          "#E69F00",
+          "#56B4E9",
+          "#009E73",
+          "#F0E442",
+          "#0072B2",
+          "#D55E00",
+          "#CC79A7"
+          )
+
+eduPlotCb<- ggplot(pss, 
+                   aes(edu, 
+                       fill = edu
+                       )
+                   ) + 
+  geom_bar() +
+  scale_fill_manual(values = cbp1)  #<<
+
+eduPlotCb
+```
+]
+
+--
+
+.pull-right-60[
+.center[
+``` {r bar7-out, eval=TRUE, echo=FALSE}
 # a colourblind-friendly palettes
 cbp1 <- c("#999999", 
           "#E69F00",
@@ -207,9 +473,19 @@ eduPlotCb<- ggplot(pss,
 
 eduPlotCb
 ```
+]
+] 
 
-Für einen kostensparenden Druck kann man auch einfach direkt ```scale_fill_gray()``` nutzen:
-``` {r bar8, eval=TRUE}
+---
+
+# Geld sparen
+
+Für einen kostensparenden Druck kann man auch einfach direkt `scale_fill_gray()` nutzen:
+
+--
+
+.pull-left-40[
+``` {r bar8}
 ggplot(pss, 
        aes(district, 
            fill = district
@@ -218,47 +494,150 @@ ggplot(pss,
   geom_bar() +
   scale_fill_grey()
 ```
+]
+
+--
+
+.pull-right-60[
+.center[
+``` {r bar8-out, eval=TRUE, echo=FALSE}
+ggplot(pss, 
+       aes(district, 
+           fill = district
+           )
+       ) + 
+  geom_bar() +
+  scale_fill_grey()
+```
+]
+]
+
+--
+
 Alternativ kann man auch verschiedene vorgefertigte Farbpaletten nutzen. Dazu muss man oftmals das entsprechenden Paket laden und dann gibt es eine dazugehörige Funktion, die als zusätzlicher Layer festgelegt wird. 
 
-Ein solche Paket ist zum Beispiel ```RColorBrewer```:
-``` {r brewer, eval=TRUE}
+---
+
+# RColorBrewer
+
+Ein solche Paket ist zum Beispiel `RColorBrewer`:
+
+--
+
+``` {r brewer}
 # if(!require("RColorBrewer")) install.packages("RColorBrewer")
 library("RColorBrewer")
 
 display.brewer.all()
 ```
 
+--
+
 Die einzelnen Farbpaletten können, dann wie folgt hinzugefügt werden:
-``` {r brewer2, eval=TRUE}
+``` {r brewer2}
 eduPlot +
   scale_fill_brewer(palette = "Dark2")
 ```
 
+---
 
-## Achsen anpassen
+# RColorBrewer
+
+.center[
+``` {r brewer2-out, eval=TRUE, echo=FALSE, out.width="50%"}
+library("RColorBrewer")
+
+eduPlot +
+  scale_fill_brewer(palette = "Dark2")
+```
+]
+
+---
+
+# Layout: Achsen anpassen
+
 Als nächsten Schritt passen wir die Achsen an, da die Standardeinstellungen dafür meistens nicht schön sind. Hierfür gibt es folgende Funktionen:
 
-- ```coord_cartesian()``` (Achsengrenzen festlegen)
-- ```scale_x_continuous()```/```scale_y_continuous()``` (für numerische Vektoren)
-- ```scale_x_discrete()```/```scale_y_discrete()``` (für Faktoren oder Character-Variablen)
+--
+
+- `coord_cartesian()` (Achsengrenzen festlegen)
+
+--
+
+- `scale_x_continuous()`/`scale_y_continuous()` (für numerische Vektoren)
+
+--
+
+- `scale_x_discrete()`/`scale_y_discrete()` (für Faktoren oder Character-Variablen)
+
+--
 
 Was ist mit unseren Achsen?
-``` {r axes, eval=TRUE}
+
+---
+
+ # Layout: y-Achse anpassen
+
+.pull-left[
+``` {r axes}
 eduPlot2 <- eduPlot + 
   coord_cartesian(ylim = c(0,
                            1500
                            )
                   ) +
-  scale_y_continuous(breaks = seq(0, 
-                                  1500, 
-                                  100
-                                  )
+  scale_y_continuous(breaks = seq(0,  
+                                  1500,  
+                                  100  
+                                  )  
                      )
 eduPlot2
 ```
+]
 
-Die x-Achse ist kategoriell und daher macht eine metrische Aufteilung keinen Sinn. Mit ```scale_x_discrete()``` können wir aber die limits festsetzen:
-``` {r axes2, eval=TRUE}
+--
+
+.pull-right[
+``` {r axes-out, eval=TRUE, echo=FALSE, out.width="75%" }
+eduPlot2 <- eduPlot + 
+  coord_cartesian(ylim = c(0,
+                           1500
+                           )
+                  ) +
+  scale_y_continuous(breaks = seq(0,     
+                                  1500,  
+                                  100   
+                                  )  
+                     )
+eduPlot2
+```
+]
+
+---
+
+# Layout: x-Achse anpassen
+
+Die x-Achse ist kategoriell und daher macht eine metrische Aufteilung keinen Sinn. Mit `scale_x_discrete()` können wir aber die limits festsetzen:
+
+--
+
+.pull-left[
+``` {r axes2}
+eduPlot3 <- eduPlot2 + 
+  scale_x_discrete(limits = c("ES-ISCED I",    
+                              "ES-ISCED II",  
+                              "ES-ISCED III",   
+                              "ES-ISCED IV",  
+                              "ES-ISCED V"  
+                              )  
+                   )
+
+eduPlot3
+```
+]
+
+.pull-right[
+.center[
+``` {r axes2-out, eval=TRUE, echo=FALSE, out.width="75%"}
 eduPlot3 <- eduPlot2 + 
   scale_x_discrete(limits = c("ES-ISCED I", 
                               "ES-ISCED II", 
@@ -270,18 +649,45 @@ eduPlot3 <- eduPlot2 +
 
 eduPlot3
 ```
+]
+]
+
+--
 
 Was haben wir ausgelassen?
 
-## Titel, Caption, Legende und weitere Infos
-Wir können eine Reihe an Achsenbeschriftungen hinzufügen. Dies geschieht am einfachsten über die Funktion ```labs()```. Darin gibt es folgende Unterargumente:
+---
 
-- ```xlab```: x-Achsentitel
-- ```ylab```: y-Achsentitel
-- ```title```: Titel
-- ```caption```: Fußnote/Caption
+# Layout: Titel, Caption, Legende und weitere Infos
 
-``` {r text1, eval=TRUE}
+Wir können eine Reihe an Achsenbeschriftungen hinzufügen. Dies geschieht am einfachsten über die Funktion `labs()`. Darin gibt es folgende Unterargumente:
+
+--
+
+- `xlab`: x-Achsentitel
+- `ylab`: y-Achsentitel
+- `title`: Titel
+- `caption`: Fußnote/Caption
+
+--
+
+``` {r text1}
+eduPlot4 <- eduPlot3 +
+  labs(x = "Education level",  
+       y = "Frequency", 
+       title = "my first shot at ggplot2",  
+       caption = "Data: Panem Social Survey."  
+       )  
+
+eduPlot4
+```
+
+---
+
+# Layout: Titel, Caption, Legende und weitere Infos
+
+.center[
+``` {r text1-out, eval=TRUE, echo=FALSE, out.width="50%"}
 eduPlot4 <- eduPlot3 +
   labs(x = "Education level",
        y = "Frequency",
@@ -291,10 +697,39 @@ eduPlot4 <- eduPlot3 +
 
 eduPlot4
 ```
+]
 
-Das schaut schon soweit gut aus, jetzt wollen wir nur noch die Legende anpassen, so dass auch dort ein angepasster Titel steht. Dies machen wir in der Funktion ```scale_fill_manual()```, die wir zuvor schon genutzt haben. Wir überschreiben sozusagen die Angaben:
+Das schaut schon soweit gut aus, jetzt wollen wir nur noch die Legende anpassen, so dass auch dort ein angepasster Titel steht. 
 
-``` {r legend1, eval=TRUE}
+---
+
+# Layout: und wieder coloring
+
+Dies machen wir in der Funktion `scale_fill_manual()`, die wir zuvor schon genutzt haben. Wir überschreiben sozusagen die Angaben:
+
+--
+.pull-left[
+``` {r legend1}
+eduPlot5 <- eduPlot4 +
+  scale_fill_manual(values = cbp1, 
+                    name = "Education category", 
+                    labels = c("sehr niedrig", 
+                               "niedrig",  
+                               "mittel", 
+                               "hoch",
+                               "sehr hoch"
+                               )
+                    )
+
+eduPlot5
+```
+]
+
+--
+
+.pull-right[
+.center[
+``` {r legend1-out, eval=TRUE, echo=FALSE}
 eduPlot5 <- eduPlot4 +
   scale_fill_manual(values = cbp1,
                     name = "Education category",
@@ -308,14 +743,29 @@ eduPlot5 <- eduPlot4 +
 
 eduPlot5
 ```
+]
+]
 
-Über die Funktion ```theme()``` können viele Feineinstellungen vorgenommen werden. Diese können wir nicht im einzelnen hier besprechen, aber es kann wirklich jedes Detail eingestellt werden. Mehr dazu machen die Personen, die am Nachmittag nochmal vertieft mit **ggplot()** arbeiten. 
+--
 
+Über die Funktion `theme()` können viele Feineinstellungen vorgenommen werden. Diese können wir nicht im einzelnen hier besprechen, aber es kann wirklich jedes Detail eingestellt werden. Mehr dazu machen die Personen, die am Nachmittag nochmal vertieft mit `ggplot` arbeiten. 
 
-## Histogramme
-Gehen wir nun über zu Histogrammen. Diese nutzen wir für metrische Variablen. Hierfür nutzen wir den Layer ```geom_histogram()```.
+---
 
-``` {r hist1, eval=TRUE}
+class: inverse2, mline, center, middle
+
+# Histogramme
+
+---
+
+# Zum nächsten ...
+
+Gehen wir nun über zu Histogrammen. Diese nutzen wir für metrische Variablen. Hierfür nutzen wir den Layer `geom_histogram()`.
+
+--
+
+.pull-left-40[
+``` {r hist1}
 agePlot <- ggplot(pss,
                   aes(agea)
                   ) + 
@@ -323,9 +773,32 @@ agePlot <- ggplot(pss,
 
 agePlot
 ```
+]
 
-Auch hier können wir ganz einfach Anpassungen von oben übernehmen und den Plot schöner gestalten:
-``` {r hist2, eval=TRUE}
+--
+
+.pull-right-60[
+.center[
+``` {r hist1-out, eval=TRUE, echo=FALSE}
+agePlot <- ggplot(pss,
+                  aes(agea)
+                  ) + 
+  geom_histogram()  
+
+agePlot
+```
+]
+]
+
+--
+
+Auch hier können wir ganz einfach Anpassungen von oben übernehmen und den Plot schöner gestalten.
+
+---
+
+# Fine-Tuning Histogram
+.pull-left-40[
+``` {r hist2}
 agePlot2 <- agePlot +
   geom_histogram(color = "lightgray", 
                  fill = "gray"
@@ -337,9 +810,61 @@ agePlot2 <- agePlot +
 
 agePlot2
 ```
+]
 
-Oftmals fügen wir auch die Dichte hinzu, um einfacher beurteilen zu können, ob annähernd eine Normalverteilung vorliegt. Hierzu bestimmen wir, dass die y-Achse die Dichte anzeig (```y = ..density..```) und fügen ```geom_density()``` hinzu. Mit ```alpha``` stellen wir Durchsichtigkeit ein und mit ```fill``` die Farbe der Fläche. 
-``` {r hist3, eval=TRUE}
+--
+
+.pull-right-60[
+.center[
+``` {r hist2-out, eval=TRUE, echo=FALSE, out.wdith="75%"}
+agePlot2 <- agePlot +
+  geom_histogram(color = "lightgray", 
+                 fill = "gray"
+                 ) + 
+  labs(x = "Age in years", 
+       y = "Frequency", 
+       title = "Histogram of Age (PSS)"
+       )
+
+agePlot2
+```
+]
+]
+
+---
+
+# Dichte 
+
+Oftmals fügen wir auch die Dichte hinzu, um einfacher beurteilen zu können, ob annähernd eine Normalverteilung vorliegt. Hierzu bestimmen wir, dass die y-Achse die Dichte anzeig (`y = ..density..`) und fügen `geom_density()` hinzu. Mit `alpha` stellen wir Durchsichtigkeit ein und mit `fill` die Farbe der Fläche. 
+
+--
+
+.pull-left-40[
+``` {r hist3}
+ageDensPlot <- ggplot(pss, 
+                      aes(agea)
+                      ) + 
+  geom_histogram(aes(y = ..density..), #<<
+                 color = "lightgray", 
+                 fill = "gray"
+                 ) + 
+  geom_density(alpha = 0.2,  #<<
+               fill = "lightblue" #<<
+               ) + #<< 
+  labs(x = "Age in years", 
+       y = "Density", 
+       title = "Histogram of Age (PSS)"
+       )
+
+ageDensPlot
+```
+]
+
+--
+ 
+.pull-right-60[
+.center[
+``` {r hist3-out, eval=TRUE, echo=FALSE}
 ageDensPlot <- ggplot(pss, 
                       aes(agea)
                       ) + 
@@ -357,9 +882,43 @@ ageDensPlot <- ggplot(pss,
 
 ageDensPlot
 ```
+]
+]
 
-```geom_histogram()``` wählt automatisch die Breite der ```bin``` (Säulen), was irreführend sein kann. Hier könnten wir zum Beispiel so einstellen, dass wir so viele ```bins``` erhalten, wie es auch tatsächliche Alterskategorien gibt. Man kann einfach die Breite der ```bins``` mit ```binwidth()``` festlegen. Hier wählen wir den realen Abstand zwischen zwei Einträgen in dem Vektor/Variable (hier 1).
-```{r hist5, eval=TRUE}
+---
+
+# Anpassungen: Histogramme
+
+`geom_histogram()` wählt automatisch die Breite der `bin` (Säulen), was irreführend sein kann. Hier könnten wir zum Beispiel so einstellen, dass wir so viele `bins` erhalten, wie es auch tatsächliche Alterskategorien gibt. Man kann einfach die Breite der `bins` mit `binwidth()` festlegen. Hier wählen wir den realen Abstand zwischen zwei Einträgen in dem Vektor/Variable (hier 1).
+
+--
+
+.pull-left[
+```{r hist5}
+ggplot(pss, 
+       aes(agea)
+       ) + 
+  geom_histogram(aes(y = ..density..), 
+                 color = "lightgray", 
+                 fill = "gray",
+                 binwidth = 1 #<<
+                 ) + 
+  geom_density(alpha = 0.2, 
+               fill = "lightblue"
+               ) +
+  labs(x = "Age in years", 
+       y = "Density", 
+       title = "Histogram of Age (PSS)"
+       )
+
+```
+]
+
+--
+
+.pull-right[
+.center[
+```{r hist5-out, eval=TRUE, echo=FALSE, out.width="75%"}
 ggplot(pss, 
        aes(agea)
        ) + 
@@ -377,29 +936,93 @@ ggplot(pss,
        )
 
 ```
+]
+]
 
-## Scatterplots
-Oftmals wollen wir zwei Variablen darstellen und ihren Zusammenhang. So könnten wir uns zum Beispiel für den Zusammenhang zwischen der Zufriedenheit mit dem demkoratischen System (```stfdem```) und der Zufriedenheit mit der ökonomischen Entwicklung (```stfeco```) anschauen. Dies sind beides Variablen auf pseudometrischen Niveau gemessen, in R aber als numerische Variablen hinterlegt. 
+---
 
-Um Scatterplots darzustellen nutzen wir ```geom_point()```. Wir geben jetzt zwei Variablen in ```aes()``` an. Einmal die x-Achsenvariable und dann die y-Achsenvariable.
+class: inverse2, mline, center, middle
 
-```{r scatter1, eval=TRUE}
+# Scatterplots
+
+---
+
+# Scatterplots
+
+Oftmals wollen wir zwei Variablen darstellen und ihren Zusammenhang. So könnten wir uns zum Beispiel für den Zusammenhang zwischen der Zufriedenheit mit dem demkoratischen System (`stfdem`) und der Zufriedenheit mit der ökonomischen Entwicklung (`stfeco`) anschauen. Dies sind beides Variablen auf pseudometrischen Niveau gemessen, in R aber als numerische Variablen hinterlegt. 
+
+--
+
+Um Scatterplots darzustellen nutzen wir `geom_point()`. Wir geben jetzt zwei Variablen in `aes()` an. Einmal die x-Achsenvariable und dann die y-Achsenvariable.
+
+```{r scatter1}
 scatter1 <- ggplot(pss, 
                    aes(stfeco, 
                        stfdem
                        )
                    ) + 
-   geom_point()
+   geom_point() #<< 
 
 scatter1
 ```
 
-Warum sehen wir nun so wenige Punkte, obwohl der Datensatz $5000$ Fälle hat?
+---
 
-## Scatterplot pseudometrische Variablen
-Um pseudo-metrische Variablen korrekt darzustellen, benötigen wir ```geom_jitter()```, da die Datenpunkte sonst übereinanderlappen. **Wichtig:** Das jittern sollte angegeben werden, damit kein falscher Dateneindruck entsteht!
+# Scatterplots
 
-``` {r scatter2, eval=TRUE}
+.center[
+```{r scatter1-out, eval=TRUE, echo=FALSE, out.width="40%"}
+scatter1 <- ggplot(pss, 
+                   aes(stfeco, 
+                       stfdem
+                       )
+                   ) + 
+   geom_point()  
+
+scatter1
+```
+]
+
+--
+
+Warum sehen wir nun so wenige Punkte, obwohl der Datensatz **5000** Fälle hat?
+
+???
+
+Überlappende Datenpunkte $\rightarrow$ Jittern!
+
+---
+
+# Scatterplot: pseudometrische Variablen
+
+Um pseudo-metrische Variablen korrekt darzustellen, benötigen wir `geom_jitter()`, da die Datenpunkte sonst übereinanderlappen. **Wichtig:** Das jittern sollte angegeben werden, damit kein falscher Dateneindruck entsteht!
+
+--
+
+.pull-left[
+``` {r scatter2}
+scatter2 <- ggplot(pss, 
+                   aes(stfeco, 
+                       stfdem
+                       )
+                   ) +
+   geom_jitter(width = 0.3, #<< 
+               height = 0.3 #<<
+               ) + #<<
+  labs(x = "Satisfaction with Economy",
+       y = "Satisfaction with Democracy",
+       caption = "Data jittered."
+       )
+
+scatter2
+```
+]
+
+--
+
+.pull-right[
+.center[
+``` {r scatter2-out, eval=TRUE, echo=FALSE, out.width="60%"}
 scatter2 <- ggplot(pss, 
                    aes(stfeco, 
                        stfdem
@@ -415,10 +1038,35 @@ scatter2 <- ggplot(pss,
 
 scatter2
 ```
+]
+]
 
-Weitergehend können wir mit ```alpha``` in ```geom_jitter()``` (oder auch in ```geom_point()```) einen besseren Eindruck verstärken. Datenkombinationen die weniger oft vorkommen erscheinen nciht so kräftig:
+---
 
-``` {r scatter3, eval=TRUE}
+# Anpassungen: Scatteprlots
+
+Weitergehend können wir mit `alpha` in `geom_jitter()` (oder auch in `geom_point()`) einen besseren Eindruck verstärken. Datenkombinationen die weniger oft vorkommen erscheinen nciht so kräftig:
+
+--
+
+.pull-left-40[
+``` {r scatter3}
+ggplot(pss, 
+       aes(stfeco, 
+           stfdem
+           )
+       ) +  
+  geom_jitter(alpha = .2,  #<<
+              col = "blue"
+              )
+``` 
+]
+
+--
+
+.pull-right-60[
+.center[
+``` {r scatter3-out, eval=TRUE, echo=FALSE}
 ggplot(pss, 
        aes(stfeco, 
            stfdem
@@ -428,20 +1076,53 @@ ggplot(pss,
               col = "blue"
               )
 ``` 
+]
+]
 
-Als weitere Argumente können sowohl in ```geom_jitter()``` als auch in ```geom_point()``` mit ```shape``` das Erscheinungsbild geändert werden. Das Cheat Sheet findet man [hier](https://github.com/rstudio/cheatsheets/raw/master/data-visualization.pdf).
+---
 
-## Gruppierungen
-Oftmals möchte man eine Variable oder den Zusammenhang zweier Variablen getrennt nach einer kategoriellen Variable einblicken. Dazu gibt es in **ggplot2** verschiedene Möglichkeiten. Ein paar davon werde ich kurz vorstellen:
+# Anpassungen: Scatterplots
+Als weitere Argumente können sowohl in `geom_jitter()` als auch in `geom_point()` mit `shape` das Erscheinungsbild geändert werden. Das Cheat Sheet findet man [hier](https://github.com/rstudio/cheatsheets/raw/master/data-visualization.pdf).
 
-- Balkendiagramm: ```fill```, ```color``` und ```facets```
+---
 
-- Scatterplots: ```shape``` und ```facets```
+# Gruppierungen
+Oftmals möchte man eine Variable oder den Zusammenhang zweier Variablen getrennt nach einer kategoriellen Variable einblicken. Dazu gibt es in `ggplot` verschiedene Möglichkeiten. Ein paar davon werde ich kurz vorstellen:
 
-### Balkendiagramme
-Wir möchten gerne wissen, wie viele Befragte in den fünf ausgewählten Distrikten weiblich bzw. männlich sind. Dies können wir einfach erhalten, in dem wir in ```ggplot()``` mit ```fill``` eine Aufteilung nach Geschlecht hinzufügen. Das funktioniert auch analog mit ```color``` (nur ist es etwas unübersichtlich bei Balkendiagrammen).
+--
 
-```{r bargroup, eval=TRUE}
+- Balkendiagramm: `fill` / `color` und `facets`
+
+--
+
+- Scatterplots: `shape` und `facets`
+
+---
+
+# Gruppierungen: Balkendiagramme
+
+Wir möchten gerne wissen, wie viele Befragte in den fünf ausgewählten Distrikten weiblich bzw. männlich sind. Dies können wir einfach erhalten, in dem wir in `ggplot()` mit `fill` eine Aufteilung nach Geschlecht hinzufügen. Das funktioniert auch analog mit `color` (nur ist es etwas unübersichtlich bei Balkendiagrammen).
+
+--
+
+.pull-left-40[
+```{r bargroup}
+barg <- ggplot(pss, 
+               aes(district, 
+                   fill = gndr #<<
+                   )
+               ) +
+  geom_bar()
+
+barg
+```
+]
+
+--
+
+.pull-right-60[
+.center[
+```{r bargroup-out, eval=TRUE, echo=FALSE}
 barg <- ggplot(pss, 
                aes(district, 
                    fill = gndr
@@ -451,9 +1132,35 @@ barg <- ggplot(pss,
 
 barg
 ```
+]
+]
 
-Will man dies nun etwas übersichtlicher nebeneinander haben, geschieht dies einfach mit dem Argument ```position``` in ```geom_bar()```:
-```{r barg2, eval=TRUE}
+---
+
+# position_dodge()
+
+Will man dies nun etwas übersichtlicher nebeneinander haben, geschieht dies einfach mit dem Argument `position` in `geom_bar()`:
+
+--
+
+.pull-left-40[
+```{r barg2}
+barg2 <- ggplot(pss, 
+               aes(district, 
+                   fill = gndr
+                   )
+               ) +
+  geom_bar(position = position_dodge()) #<<
+
+barg2
+```
+]
+
+--
+
+.pull-right-60[
+.center[
+```{r barg2-out, eval=TRUE, echo=FALSE}
 barg2 <- ggplot(pss, 
                aes(district, 
                    fill = gndr
@@ -463,10 +1170,35 @@ barg2 <- ggplot(pss,
 
 barg2
 ```
+]
+]
 
-Alternativ kann man ```facets``` innerhalb eines **ggplots** erstellen. Dies geht entweder mit ```facet_wrap()``` oder mit ```facet_grid```:
 
-``` {r facet1, eval=TRUE}
+---
+
+# Alternativ: facets
+
+Alternativ kann man `facets` innerhalb eines **ggplots** erstellen. Dies geht entweder mit `facet_wrap()` oder mit `facet_grid`:
+
+.pull-left-40[
+``` {r facet1}
+barg2 <- ggplot(pss, 
+               aes(district, 
+                   fill = gndr
+                   )
+               ) +
+  geom_bar() +
+  facet_wrap(vars(gndr)) #<<  
+
+barg2
+```
+]
+
+--
+
+.pull-right-60[
+.center[
+``` {r facet1-out, eval=TRUE, echo=FALSE}
 barg2 <- ggplot(pss, 
                aes(district, 
                    fill = gndr
@@ -477,13 +1209,38 @@ barg2 <- ggplot(pss,
 
 barg2
 ```
+]
+]
 
-### Scatterplots
-Bei Scatteprlots kann man ebenfalls mit ```shape``` arbeiten oder auch direkt ```facet_wrap```/```facet_grid``` benutzen.
+???
 
-Wir möchten nun das Scatterplot von vorher nach Distrikten ausgeben lassen. Dazu können wir zuerst den Distrikten verschiedene Formen zuordnen. Dazu geben wir innerhalb von ```aes()``` einfach an, dass die Form (```shape```) in Abhängigkeit der Variable ```district``` ausgegeben werden soll.
+facet_grid() kommt später noch
 
-``` {r scatter-shapes, eval=TRUE}
+---
+
+# Gruppierungen: Scatterplots
+
+Bei Scatteprlots kann man auch direkt `facet_wrap`/`facet_grid` benutzen. Wir möchten nun das Scatterplot von vorher nach Distrikten ausgeben lassen. Dazu können wir zuerst den Distrikten verschiedene Formen zuordnen. Dazu geben wir innerhalb von `aes()` einfach an, dass die Form (`shape`) in Abhängigkeit der Variable `district` ausgegeben werden soll.
+
+.pull-left-40[
+``` {r scatter-shapes}
+ggplot(pss, 
+       aes(stfeco, 
+           stfdem,
+           shape = district #<<
+           )
+       ) +  
+  geom_jitter(alpha = .2, 
+              col = "blue"
+              )
+```
+]
+
+--
+
+.pull-right-60[
+.center[
+``` {r scatter-shapes-out, eval=TRUE, echo=FALSE, out.width="55%"}
 ggplot(pss, 
        aes(stfeco, 
            stfdem,
@@ -494,10 +1251,23 @@ ggplot(pss,
               col = "blue"
               )
 ```
+]
+]
 
-Das ist jetzt noch nicht ganz so übersichtlich. Jetzt könnte man noch zusätzlich die Farbe in Abhängigkeit des Distrikts ändern. Dazu nutzt man das ```color```-Argument in ```aes()``` und entfernt es aus ```geom_jitter()```. Lässt man das ```color```-Argument in ```geom_jitter()``` bestehen, wird dies als zuletzt definierte Einstellung verwendet und alles bleibt blau.
+--
 
-``` {r scatter-color, eval=TRUE}
+Das ist jetzt noch nicht ganz so übersichtlich. 
+
+---
+
+# Anpassungen bei Gruppierungen
+
+Jetzt könnte man noch zusätzlich die Farbe in Abhängigkeit des Distrikts ändern. Dazu nutzt man das `color`-Argument in `aes()` und entfernt es aus `geom_jitter()`. Lässt man das `color`-Argument in `geom_jitter()` bestehen, wird dies als zuletzt definierte Einstellung verwendet und alles bleibt blau.
+
+--
+
+.pull-left-40[
+``` {r scatter-color}
 ggplot(pss, 
        aes(stfeco, 
            stfdem,
@@ -507,12 +1277,44 @@ ggplot(pss,
        ) +  
   geom_jitter(alpha = .2)
 ```
+]
 
-Die Abbildung ist zwar jetzt schön bunt, aber so richtig einen guten Überblick gibt auch diese Darstellung noch nicht. Um das zu erreichen, nutzt man ```facets```. Der Unterschied zwischen den zwei möglichen ```facets``` ist folgender: Bei ```facet_wrap()``` wird aus einer eigentlich eindimensionalen Darstellung eine zweidimensionalen Darstellung gemacht und dementsprechend mehrere Abbildungen erstellt. Wenn man zum Beispiel eine kategoriale Variable hat, nach der man die Darstellung splitten möchte, ist ```facet_wrap()``` die richtige Wahl. Mit den Argumenten ```nrow``` und ```ncol``` kann man dazu die Anzahl der Zeilen und Spalten festlegen.
-```facet_grid()``` dagegen ist zweidimensional. Hier wird ein Grafikpanel anhand von zwei Variablen erstellt, dass alle Kombinationen (auch die ohne Fälle) anzeigt. Dazu wird die Reihenfolge der Variablen auch wie in einer Formel angegeben, erst pro Zeile und dann pro Spalte.
+--
 
+.pull-right-60[
+.center[
+``` {r scatter-color-out, eval=TRUE, echo=FALSE}
+ggplot(pss, 
+       aes(stfeco, 
+           stfdem,
+           shape = district,
+           color = district
+           )
+       ) +  
+  geom_jitter(alpha = .2)
+```
+]
+]
 
-``` {r scatter-facetwrap, eval=TRUE}
+---
+
+# Bisheriges Ergebnis
+
+Die Abbildung ist zwar jetzt schön bunt, aber so richtig einen guten Überblick gibt auch diese Darstellung noch nicht. Um das zu erreichen, nutzt man `facets`. Der Unterschied zwischen den zwei möglichen `facets` ist folgender:
+
+--
+
+- Bei `facet_wrap()` wird aus einer eigentlich eindimensionalen Darstellung eine zweidimensionalen Darstellung gemacht und dementsprechend mehrere Abbildungen erstellt. Wenn man zum Beispiel eine kategoriale Variable hat, nach der man die Darstellung splitten möchte, ist `facet_wrap()` die richtige Wahl. Mit den Argumenten `nrow` und `ncol` kann man dazu die Anzahl der Zeilen und Spalten festlegen.
+
+--
+
+- `facet_grid()` dagegen ist zweidimensional. Hier wird ein Grafikpanel anhand von zwei Variablen erstellt, dass alle Kombinationen (auch die ohne Fälle) anzeigt. Dazu wird die Reihenfolge der Variablen auch wie in einer Formel angegeben, erst pro Zeile und dann pro Spalte.
+
+---
+# facet_wrap()
+
+.pull-left-40[
+``` {r scatter-facetwrap}
 ggplot(pss, 
        aes(stfeco, 
            stfdem,
@@ -523,9 +1325,36 @@ ggplot(pss,
   geom_jitter(alpha = .2) +
   facet_wrap(vars(district))
 ```
+]
 
-Wie oben beschrieben wird in ```facet_grid()``` ein tatsächlicher zweidimensionaler Plot erstellt. Dazu geben wir in der Funktion selbst an, über welche (kategorialen) Variablen der Plot geteilt werden soll. Die erste Variable ist die Trennung über Zeilen und die zweite Variable die Trennung über Spalten. Im Beispiel trennen wir in Zeilen nach Distrikt und in Spalten nach Geschlecht:
-``` {r scatter-facetgrid, eval=TRUE}
+--
+
+.pull-right-60[
+.center[
+``` {r scatter-facetwrap-out, eval=TRUE, echo=FALSE}
+ggplot(pss, 
+       aes(stfeco, 
+           stfdem,
+           shape = district,
+           color = district
+           )
+       ) +  
+  geom_jitter(alpha = .2) +
+  facet_wrap(vars(district))
+```
+]
+]
+
+---
+
+# facet_grid()
+
+Wie oben beschrieben wird in `facet_grid()` ein tatsächlicher zweidimensionaler Plot erstellt. Dazu geben wir in der Funktion selbst an, über welche (kategorialen) Variablen der Plot geteilt werden soll. Die erste Variable ist die Trennung über Zeilen und die zweite Variable die Trennung über Spalten. Im Beispiel trennen wir in Zeilen nach Distrikt und in Spalten nach Geschlecht:
+
+--
+
+.pull-left-40[
+``` {r scatter-facetgrid}
 ggplot(pss, 
        aes(stfeco, 
            stfdem,
@@ -536,20 +1365,61 @@ ggplot(pss,
   geom_jitter(alpha = .2) +
   facet_grid(district ~ gndr)
 ```
+]
 
-## Was es noch zu entdecken gibt in ```ggplot2```?
+--
+
+.pull-right-60[
+.center[
+``` {r scatter-facetgrid-out, eval=TRUE, echo=FALSE}
+ggplot(pss, 
+       aes(stfeco, 
+           stfdem,
+           shape = district,
+           color = district
+           )
+       ) +  
+  geom_jitter(alpha = .2) +
+  facet_grid(district ~ gndr)
+```
+]
+]
+
+---
+
+# Was es noch zu entdecken gibt in ggplot2?
+
+--
 
 - Schriftarten bearbeiten bzw. Darstellung des Plots
 
+--
+
 - *missing values* darstellen
+
+--
 
 - Marginal Plots
 
+--
+
 - bivariate Normalverteilungen
+
+--
 
 - Karten bearbeiten
 
+--
+
 - Zusammenfügen von Plots
 
-### Lab
-Die Übungsaufgaben findet ihr als ```task ggplot``` in RStudio Cloud.
+---
+
+# Lab
+Die Übungsaufgaben findet ihr als `task ggplot` in RStudio Cloud.
+
+---
+
+class: inverse2, mline, center, middle
+
+# Das war's!

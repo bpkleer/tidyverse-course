@@ -1,22 +1,28 @@
 ---
-title: "Datensätze zusammenführen"
-subtitle: "Daten bändigen & visualisieren"
-author: "B. Philipp Kleer"
-date: "11. Oktober 2021"
-output: 
-  slidy_presentation:
-    slide_level: 3
-    footer: "Copyright: CC BY-SA 4.0, B. Philipp Kleer"
-    css: styles/style-slides.css
-    df_print: paged
-    highlight: espresso
-    theme: readable
+output:
+  xaringan::moon_reader:
+    css: ["./styles/slides.css"]  
+    nature:
+      seal: false
+      highlightStyle: github
+      highlightLines: true
+      highlightLanguage: ["r"]
+      countIncrementalSlides: false
+      ratio: '16:9'
+      slideNumberFormat: |
+        <div class="progress-bar-container">
+          <div class="progress-bar" style="width: calc(%current% / %total% * 100%);">
+          </div>
+        </div>`
+      navigation:
+        scroll: false
 ---
 
 ```{r setup, include=FALSE}
 library("knitr")
 library("rmarkdown")
 library("tidyverse")
+library("icons")
 
 uni <- readRDS("../datasets/uni.rds")
 uni1 <- readRDS("../datasets/uni1.rds")
@@ -28,19 +34,15 @@ statclass <- readRDS("../datasets/statclass.rds")
 statclass2 <- readRDS("../datasets/statclass2.rds")
 
 points <- readRDS("../datasets/points.rds")
-opts_chunk$set(fig.path = 'pics/s6-', # path for calculated figures
+opts_chunk$set(#fig.path = 'pics/s6-', # path for calculated figures
                fig.align = 'center',  # alignment of figure (also possible right, left, default)
                fig.show = 'hold', # how to show figures: hold -> direct at the end of code chunk; animate: all plots in an animation
-               fig.width = 3,   # figure width
-               fig.height = 4,  # figure height
+               out.width = "60%",
                echo = TRUE,     # Code is printed
                eval = FALSE,    # Code is NOT evaluated
                warning = FALSE, # warnings are NOT displayed
                message = FALSE, # messages are NOT displayed
-               size = "tiny",  # latex-size of code chunks
-               background = "#E7E7E7", # background color of code chunks
                comment = "", # no hashtags before output
-               options(width = 80),
                results = "markdown",
                rows.print = 15
 )
@@ -55,56 +57,171 @@ htmltools::tagList(
 )
 ```
 
-## ```Tidyr``` und ```dplyr```
-Wenn wir mit Sekundärdaten arbeiten, sind diese oftmals bereits so vorbereitet, dass die Daten entweder im *long*- oder im *wide*-Format vorliegen. Wenn wir aber selbst Daten erheben oder z.B. über eine API laden, kann es sein, dass dies nicht der Fall ist. Auch kommt es vor, dass die Datenerhebung in Teilschritten erfolgt oder zum Beispiel Daten aus zwei verschiedenen Zeitpunkten für die Datenanalyse zusammengefügt werden sollen. Auch bei Multi-Level-Modellen werden oftmals Makrodaten mit Mikrodaten vor der Analyse verbunden. 
+class: center, title-slide, middle
 
-Diese verschiedenen Varianten werden wir uns nun in ```tidyverse``` mithilfe von ```tidyr``` und ```dplyr``` anschauen.
+# Umgang mit Datensätzen
 
-## Das Gerüst von Datensätzen mit ```tidyr```
-Es ist für die Verarbeitung wichtig, dass die Datensätz *tidy* sind, damit die Funktionen in R problemlos mit den Daten laufen. Das bedeutet, dass die Daten in einem bestimmten Format vorliegen müssen, damit die Funktionen in R auch gut mit den Daten funktionieren (weniger *troubleshooting*). 
+## Daten bändigen & visualisieren
+
+### B. Philipp Kleer
+
+### Methodentage 2021
+
+### 11. Oktober 2021
+
+.social[
+   [`r icons::icon_style(fontawesome("orcid"), fill=rgb(235, 129, 27, maxColorValue = 255), scale = 1)`](https://orcid.org/0000-0003-1935-387X)   [`r icons::icon_style(fontawesome("gitlab"), fill=rgb(235, 129, 27, maxColorValue = 255), scale = 1)`](https://gitlab.com/bpkleer)   [`r icons::icon_style(fontawesome("university"), fill=rgb(235, 129, 27, maxColorValue = 255), scale = 1)`](https://www.uni-giessen.de/faculties/f03/departments/dps/staff/researchers/kleer?set_language=en)   [`r icons::icon_style(fontawesome("researchgate"), fill=rgb(235, 129, 27, maxColorValue = 255), scale = 1)`](https://www.researchgate.net/profile/Benedikt_Kleer)
+]
+
+---
+
+# Tidyr und dplyr
+Daten können in verschiedenen Formaten vorliegen. Die zwei bekanntesten sind wohl das
+
+--
+
+1. *long*-Format
+
+--
+
+2. *wide*-Format (*standard*)
+
+--
+
+Aber auch andere Formate für Daten sind möglich. Z.B. wenn wir Daten über eine API laden. Auch bei Zusammenführen von Datensätzen muss das Format beachtet werden.
+
+--
+
+Diese verschiedenen Varianten werden wir uns nun in `tidyverse` mithilfe von `tidyr` und `dplyr` anschauen.
+
+???
+Das Wide-Format eignet sich für die Darstellung von Querschnittsdaten oder Zeitreihendaten. Im Wide-Format enthalten mehrere Spalten die Messwerte der gleichen Variable zu unterschiedlichen Zeitpunkten oder Versuchswiederholungen, während das Individuum oder Beobachtungseinheit die ganze Zeile der Tabelle beansprucht. Diese Art der Darstellung ist intuitiv für den Vergleich von verschiedenen Werten der gleichen Variable, aber ungeeignet für die Darstellung von Paneldaten mit mehr als einer Variable. 
+
+Im Long-Format werden alle Werte der messwiederholten Variable in der gleichen Spalte und der zugehörige Zeitpunkt in einer eigenen Variable dargestellt. Daher werden die Daten im Long-Format auch als „gestapelt“ bezeichnet. Weitere Variablen werden in einer eigenen Spalte notiert, nutzen jedoch ebenfalls die Werte der Zeitvariable. Die Zeitvariable (die auch die Versuchswiederholung oder den Kontext der Messung angeben kann), ist somit explizit angegeben. 
+
+---
+
+class: inverse2, mline, center, middle
+
+# tidyr und Datensatz-Formate
+
+---
+
+# Das Gerüst von Datensätzen mit tidyr
+
+Es ist für die Verarbeitung in R wichtig, dass die Datensätze *tidy* sind, damit die Funktionen in R problemlos mit den Daten laufen. Zum Beispiel für die Anwendung von `ggplot` empfehlen sich *tidy*-Datensätze. Das bedeutet, dass die Daten in einem bestimmten Format vorliegen müssen, damit die Funktionen in R auch gut mit den Daten funktionieren (weniger *troubleshooting*). 
+
+--
 
 **Was ist ein Datensatz?**
+
+--
+
 Ein Datensatz ist generell immer eine Sammlung von Werten, sei es numerisch oder eine Zeichenkette. Diese Werte sind immer auf zwei Arten organisiert: Jeder Wert gehört zu einer **Variable** und zu einer **Beobachtung**. Eine **Variable** inkludiert alle Werte, die für diese gemessen worden sind (also alle Beobachtungen auf dieser Variable). Eine **Beobachtung** inkludiert alle Werte, die für diese Beobachtung gemessen wurden (also alle Variablenwerte dieser *Einheit*). 
+
+--
 
 Damit Daten in R gut mit den Funktionen genutzt werden können, müssen diese in einem *tidy*-Format vorliegen (auch *long*-Format genannt). Ein Datensatz ist dann *tidy*, wenn ...
 
-> - ... jede Variable eine Spalte ist,
-> - ... jede Beobachtung eine Zeile ist,
-> - ... und jede Beobachtungseinheit eine Tabelle formt.
+--
+
+- ... jede Variable eine Spalte ist,
+
+--
+
+- ... jede Beobachtung eine Zeile ist,
+
+--
+
+- ... und jede Beobachtungseinheit eine Tabelle formt.
 
 
-### untidy data sets
-Die folgenden zwei Datensätze zeigen Daten, die jeweils nicht *tidy* sind. Wir werden diese im Folgenden bereinigen.
+???
+
+Also das long-format!
+
+---
+
+# untidy data sets (Beispiel 1)
+Im Folgenden bearbeiten wir zwei Datensätze, die jeweils nicht *tidy* sind.
+
+--
+
+.center[
 ```{r statclass, eval=TRUE}
 statclass
 ```
+]
+
+--
 
 Dieser Datensatz ist im sogenannten *wide*-Format. D.h. wenn wir neue Prüfungen hätten, würden wir einfach weitere Spalten hinzufügen. Dies ist aber für die Verarbeitung mit R teilweise problematisch, denn wir benötigen oft ein *long*-Format.
 
+---
+
+# untidy data sets (Beispiel 2)
+
+.center[
 ``` {r statclass2, eval=TRUE}
 statclass2
 ```
+]
 
-In diesem Fall haben wir mehrere Probleme: Zum einen sind in den Spalten nicht überall Variablen, sondern Beobachtungen (```momo```, ```kim```, ```sascha```) und in ```exam``` finden wir wiederum Variablennamen. 
+--
 
-Fangen wir mit ```statclass``` an. 
+In diesem Fall haben wir mehrere Probleme: Zum einen sind in den Spalten nicht überall Variablen, sondern Beobachtungen (`momo`, `kim`, `sascha`) und in `exam` finden wir wiederum Variablennamen. 
 
-### Tidy-up ```statclass```
+--
+
+Fangen wir mit `statclass` an. 
+
+
+---
+
+# Tidy-up statclass
+
 In der Tabelle kann die Note jeder Person aus jeder Prüfung ausgelesen werden. Überlegt kurz, welche Variablen wir bei diesem Satz generieren möchten!
 
 ```{r statclassa, eval=TRUE}
 statclass
 ```
 
-> - ```names```: momo, sascha, kim
-> - ```course```: statI, statII, r, spss
-> - ```grade```: Wert in Abhängigkeit der zwei oberen.
+--
 
-Es sind also zwei Informationen in den Spalten ```stat1```, ```stat2```, ```r``` und ```spss```. Nämlich welcher Test es ist (implizit über Variablenname) und die Note. D.h. hier sind Werte als Variablenname angegeben und das verstößt gegen die Regeln eines *tidy* Datensatzes. Wir benötigen in einem *tidy*-Format aber beide Informationen explizit! Denn die Spaltennamen sind hier Werte (Art der Prüfung) und nicht einfach Namen.
+- `names`: momo, sascha, kim
+- `course`: statI, statII, r, spss
+- `grade`: Wert in Abhängigkeit der zwei oberen.
 
-Um dies zu bereinigen, nutzt man ```pivot_longer()```. Hierbei geben wir zuerst an, welche Spalten neugeordnet werden sollen (in unserem Fall ```stat1``` bis ```spss```), dann in welche neuen Variablen die Namen bzw. die Werte gespeichert werden sollen. Mit ```names_to``` benennen wir die neue Variable, die den Test unterscheidet und mit ```values_to``` benennen wir die Variable, die die Noten beinhaltet. 
+--
 
-``` {r pivot-longer, eval=TRUE}
+Es sind also zwei Informationen in den Spalten `stat1`, `stat2`, `r` und `spss`. Nämlich welcher Test es ist (implizit über Variablenname) und die Note. D.h. hier sind Werte als Variablenname angegeben und das verstößt gegen die Regeln eines *tidy* Datensatzes. Wir benötigen in einem *tidy*-Format aber beide Informationen explizit! Denn die Spaltennamen sind hier Werte (Art der Prüfung) und nicht einfach Namen.
+
+---
+
+# Tidy-up statclass
+
+Um dies zu bereinigen, nutzt man `pivot_longer()`. Hierbei geben wir zuerst an, welche Spalten neugeordnet werden sollen (in unserem Fall `stat1` bis `spss`), dann in welche neuen Variablen die Namen bzw. die Werte gespeichert werden sollen. Mit `names_to` benennen wir die neue Variable, die den Test unterscheidet und mit `values_to` benennen wir die Variable, die die Noten beinhaltet. 
+
+.pull-left-40[
+``` {r pivot-longer}
+statclassTidy <- statclass %>% 
+  pivot_longer(stat1:spss, #<<
+               names_to = "course", #<<
+               values_to = "grade" #<<
+               ) %>% #<<
+  arrange(name,
+          course
+          )
+
+statclassTidy
+
+```
+]
+
+.pull-right-60[
+.center[
+.code60[
+``` {r pivot-longer-out, eval=TRUE, echo=FALSE}
 statclassTidy <- statclass %>% 
   pivot_longer(stat1:spss, 
                names_to = "course", 
@@ -116,12 +233,34 @@ statclassTidy <- statclass %>%
 
 statclassTidy
 
+``` 
+]
+]
+]
+
+Jetzt haben wir ein *long*-Format, dass die Datenbearbeitung oft einfacher macht (z.B. mit `ggplot2`). **Aber Aufpassen**: Man kann jetzt nicht einfach mehr einen Mittelwert von `grade` berechnen, da dies verschiedene Kurse beinhaltet. Man muss dabei also Bedingungen setzen (wenn man im *long*-Format ist).
+
+---
+
+# Back to wide
+Möchte man dies wieder umkehren, nutzt man die Funktion `pivot_wider()`:
+
+.pull-left-40[
+``` {r pivot-wider}
+statclassRe <- statclassTidy %>% 
+  pivot_wider(names_from = course,  #<<
+              values_from = grade, #<<
+              ) #<<
+
+statclassRe
 ```
+]
 
-Jetzt haben wir ein *long*-Format, dass die Datenbearbeitung oft einfacher macht (z.B. mit ```ggplot2```). **Aber Aufpassen**: Man kann jetzt nicht einfach mehr einen Mittelwert von ```grade``` berechnen, da dies verschiedene Kurse beinhaltet. Man muss dabei also Bedingungen setzen (wenn man im *long*-Format ist).
+--
 
-Möchte man dies wieder umkehren, nutzt man die Funktion ```pivot_wider()```:
-``` {r pivot-wider, eval=TRUE}
+.pull-right-60[
+.center[
+``` {r pivot-wider-out, eval=TRUE, echo=FALSE}
 statclassRe <- statclassTidy %>% 
   pivot_wider(names_from = course, 
               values_from = grade, 
@@ -129,18 +268,46 @@ statclassRe <- statclassTidy %>%
 
 statclassRe
 ```
+]
+]
 
+---
 
-### Tidy-up ```statclass2```
-Wo liegt hier das Problem?
+# Tidy-up statclass2
+
+Wo liegt hier noch ein weiteres Problem?
+.center[
 ``` {r statclass2a, eval=TRUE}
 statclass2
 ```
+]
 
-> - Namenwerte sind Spaltennamen!
+--
 
+$\Rightarrow$ Namenwerte sind Spaltennamen!
+
+---
+
+# Tidy-up statclass2
 Und hier die Lösung: Auch hier wandeln wir wieder in das *long*-Format um!
-```{r statclass2tidy, eval=TRUE}
+
+.pull-left-40[
+```{r statclass2tidy}
+statclass2Tidy <- statclass2 %>%
+  pivot_longer(momo:sascha, #<<
+              names_to = "names", #<< 
+              values_to = "grade" #<<
+              )
+  
+statclass2Tidy
+```
+]
+
+--
+
+.pull-right-60[
+.center[
+```{r statclass2tidy-out, eval=TRUE, echo=FALSE}
 statclass2Tidy <- statclass2 %>%
   pivot_longer(momo:sascha, 
               names_to = "names", 
@@ -149,12 +316,41 @@ statclass2Tidy <- statclass2 %>%
   
 statclass2Tidy
 ```
+]
+]
+
+--
 
 Gibt es evtl. noch mehr Probleme?
 
-> - ```exam``` beinhaltet keine Werte, sondern Namen von Variablen, nämlich von ```exam1``` und ```exam2```! Variablen, die die Note in der Prüfung angeben, deren Wert noch in ```grade``` steht. Deshalb nutzen wir hier jetzt ```pivot_wider()```, um die Daten final *tidy* zu machen:
+--
 
-``` {r statclass2tidy2, eval=TRUE}
+`exam` beinhaltet keine Werte, sondern Variablennamen, nämlich `exam1` und `exam2`! Variablen, die die Note in der Prüfung angeben, deren Wert noch in `grade` steht. Deshalb nutzen wir hier jetzt `pivot_wider()`, um die Daten final *tidy* zu machen.
+
+---
+
+# Tidy-up statclass2
+
+.pull-left-40[
+``` {r statclass2tidy2}
+statclass2Tidy <- statclass2Tidy %>% 
+  pivot_wider(names_from = exam, #<<
+              values_from = grade #<<
+              ) %>% #<<
+  relocate(names) %>% 
+  arrange(names,
+          test
+          )
+
+statclass2Tidy
+```
+]
+
+--
+
+.pull-right-60[
+.center[
+``` {r statclass2tidy2-out, eval=TRUE, echo=FALSE}
 statclass2Tidy <- statclass2Tidy %>% 
   pivot_wider(names_from = exam, 
               values_from = grade
@@ -166,27 +362,62 @@ statclass2Tidy <- statclass2Tidy %>%
 
 statclass2Tidy
 ```
+]
+]
 
-Nur zur Übung könnte man auch dies wiederum in den Ursprungsdatensatz mit ```pivot_wider()``` verändern:
+---
 
-``` {r statclass2tidy3, eval=TRUE}
+# Und wieder *wider*
+Nur zur Übung könnte man auch dies wiederum in den Ursprungsdatensatz mit `pivot_wider()` verändern:
+
+--
+.pull-left-40[
+``` {r statclass2tidy3}
+statclass2re <- statclass2Tidy %>% 
+  pivot_wider(names_from = test,  #<<
+              values_from = c(exam1,  #<<
+                              exam2 #<<
+                              )
+              )
+
+statclass2re
+```
+]
+
+--
+
+.pull-right-60[
+``` {r statclass2tidy3-out, eval=TRUE, echo=FALSE}
 statclass2re <- statclass2Tidy %>% 
   pivot_wider(names_from = test,
               values_from = c(exam1, 
                               exam2
                               )
               )
+
+statclass2re
 ```
+]
 
-## Daten bearbeiten mit ```dplyr```
+---
 
-### Teilen eines Datensatzes
+class: inverse2, mline, middle, center
+
+# Daten bearbeiten mit dplyr
+
+---
+
+# Teilen eines Datensatzes
 Zuerst wiederholen wir noch einmal, wie wir einen Datensatz teilen: Wir filtern die Fälle, die für unsere spätere Analyse relevant sind. Zum Beispiel wollen wir nur über Psychologie-Studierende aus Marburg forschen. Anschließend möchten wir eine neue Variable erstellen, die eine Beschreibung für die Studiendauer inkludiert (als Faktor)
 
 Welche Funktionen müssen wir anwenden?
 
-### Teilen eines Datensatzes
-```{r split-df, eval=TRUE}
+
+---
+
+# Teilen eines Datensatzes
+
+```{r split-df}
 uniPumPsy <- uni %>%
   filter(city == "Marburg" & study == "Psychology") %>%
   mutate(term.group = factor(case_when(term <= 2 ~ "Anfänger:in", 
@@ -199,13 +430,29 @@ uniPumPsy <- uni %>%
 head(uniPumPsy)
 ```
 
-### Datensätze zusammenführen (Fälle hinzufügen) 
-Im nächsten Schritt nehmen wir nun an, dass die Datenerfassung von 4 verschiedenen Personen durchgeführt wurde und es somit 4 Teildatensätze gibt, die nun zu einem vollständigen Datensatz verbunden werden sollen. Dazu nutzen wir die Funktion ```bind_rows()```. In unserem Beispiel haben alle 4 Teildatensätze genau die gleiche Anzahl an Variablen, die dazu auch noch genau gleich benannt sind! Mit dem Argument ```.id``` erstellen wir eine Variable names ```"origin"```, die die Herkunft des Falles erfasst. Dies ist automatisch nummeriert. Mit ```mutate()``` machen wir daraus einen Faktor, der eine bessere Beschreibung beinhaltet (*coder1*, *coder2*, *coder3*, *coder4*)
+--
 
-### Datensätze zusammenführen (Fälle hinzufügen) 
-Im nächsten Schritt nehmen wir nun an, dass die Datenerfassung von 4 verschiedenen Personen durchgeführt wurde und es somit 4 Teildatensätze gibt, die nun zu einem vollständigen Datensatz verbunden werden sollen. Dazu nutzen wir die Funktion ```bind_rows()```. In unserem Beispiel haben alle 4 Teildatensätze genau die gleiche Anzahl an Variablen, die dazu auch noch genau gleich benannt sind! Mit dem Argument ```.id``` erstellen wir eine Variable names ```"origin"```, die die Herkunft des Falles erfasst. Dies ist automatisch nummeriert. Mit ```mutate()``` machen wir daraus einen Faktor, der eine bessere Beschreibung beinhaltet (*coder1*, *coder2*, *coder3*, *coder4*)
+```{r split-df-out, eval=TRUE, echo=FALSE}
+uniPumPsy <- uni %>%
+  filter(city == "Marburg" & study == "Psychology") %>%
+  mutate(term.group = factor(case_when(term <= 2 ~ "Anfänger:in", 
+                                       term > 2 & term <= 6 ~ "Regelstudienzeit", 
+                                       term > 6 ~ "Langzeit"
+                                       )
+                             )
+         ) 
 
-```{r merge1, eval=TRUE}
+head(uniPumPsy)
+```
+
+---
+
+# Datensätze zusammenführen (Fälle hinzufügen) 
+Im nächsten Schritt nehmen wir nun an, dass die Datenerfassung von 4 verschiedenen Personen durchgeführt wurde und es somit 4 Teildatensätze gibt, die nun zu einem vollständigen Datensatz verbunden werden sollen. Dazu nutzen wir die Funktion `bind_rows()`. In unserem Beispiel haben alle 4 Teildatensätze genau die gleiche Anzahl an Variablen, die dazu auch noch genau gleich benannt sind! Mit dem Argument `.id` erstellen wir eine Variable names `"origin"`, die die Herkunft des Falles erfasst. Dies ist automatisch nummeriert. Mit `mutate()` machen wir daraus einen Faktor, der eine bessere Beschreibung beinhaltet (*coder1*, *coder2*, *coder3*, *coder4*)
+
+.pull-left-40[
+.code60[
+```{r merge1}
 uniAll <- uni1 %>%
   bind_rows(list(uni2,
                  uni3, 
@@ -225,14 +472,52 @@ uniAll <- uni1 %>%
 table(uniAll$origin)
 head(uniAll$origin)
 ``` 
+]
+]
+
+--
+
+.pull-right-60[
+.center[
+```{r merge1-out, eval=TRUE, echo=FALSE}
+uniAll <- uni1 %>%
+  bind_rows(list(uni2,
+                 uni3, 
+                 uni4
+                 ), 
+            .id = "origin"
+            ) %>%
+  mutate(origin = factor(origin, 
+                         labels = c("coder1", 
+                                    "coder2", 
+                                    "coder3", 
+                                    "coder4"
+                                    )
+                         )
+         )
+
+table(uniAll$origin)
+head(uniAll$origin)
+``` 
+]
 
 Wir haben hier jetzt also aus vier Teildatensätzen einen gesamten Datensatz erstellt, der alle Fälle der vier Teildatensätze enthält. Wichtig, in diesem Fall waren alle Variablennamen gleich!
+]
 
-### Datensätze zusammenführen (Fälle hinzufügen) 
+
+---
+
+# Datensätze zusammenführen (Fälle hinzufügen) 
 Nun probieren wir einmal aus, was passiert, wenn es zum Beispiel in einem Teildatensatz einen Typo gibt. Zuerst erstellen wir dazu einfach zwei neue Datensätze, die jeweils nur 3 Fälle inkludieren, und unterschiedliche Variablen.
 
-``` {r merge-prob, eval=TRUE}
-uniA <- uni[1:3, 4:5]
+--
+
+.pull-left-40[
+.code60[
+``` {r merge-prob}
+uniA <- uni[1:3, 
+            4:5
+            ]
 
 City <- c("Giessen", 
           "Marburg",
@@ -252,25 +537,100 @@ head(uniA)
 
 head(uniB)
 ``` 
+]
+]
+--
 
-Wir haben also in beiden Datensätzen die zwei Variablen, die Studienort und die Distanz zum Studienort angeben. im Datensatz ```uniB``` ist aber die Variable des Studienorts anders geschrieben. Probieren wir ```bind_rows()``` aus. 
+.pull-right-60[
+.center[
+``` {r merge-prob-out, eval=TRUE, echo=FALSE}
+uniA <- uni[1:3, 
+            4:5
+            ]
 
-### Datensätze zusammenführen (Fälle hinzufügen) 
-``` {r test-bind-rows, eval=TRUE}
+City <- c("Giessen", 
+          "Marburg",
+          "Marburg"
+          )
+
+distance <- c(21,
+              30,
+              45
+              )
+
+uniB <- data.frame(City, 
+                   distance
+                   )
+
+head(uniA)
+
+head(uniB)
+``` 
+]
+]
+
+--
+
+Wir haben also in beiden Datensätzen die zwei Variablen, die Studienort und die Distanz zum Studienort angeben. im Datensatz `uniB` ist aber die Variable des Studienorts anders geschrieben. Probieren wir `bind_rows()` aus. 
+
+---
+
+# Datensätze zusammenführen (Fälle hinzufügen) 
+
+.pull-left-40[
+``` {r test-bind-rows}
+uniTest <- uniA %>% 
+  bind_rows(uniB) #<
+
+uniTest
+```
+]
+
+--
+
+.pull-right-60[
+``` {r test-bind-rows-out, eval=TRUE, echo=TRUE}
 uniTest <- uniA %>% 
   bind_rows(uniB)
 
 uniTest
 ```
+]
 
-Da die Variablennamen nicht genau gleich sind, werden nun drei Variablen geschaffen: ```city```, ```distance``` und ```City```. Wo die Variable nicht vorliegt, werden automatisch ```NAs``` erzeugt. Dies ist vorteilhaft, kann aber auch frickelig werden, wenn bei der Datensatzerstellung nicht streng nach einem Codenamen-Schema gearbeitet wurde. **Lösung**: Im Vorfeld Variablen abklären und umbenennen. Andernfalls kann man ```full_join()``` nutzen.
+**Wo ist der Fehler?**
 
-### Datensätze zusammenführen (unterschiedliche Spaltennamen)
-Dieser Ansatz ist nicht weniger aufwändig, als das Umbenennen von Spaltennamen, bietet aber dennoch eine Alternative. Mit ```full_join()``` kombinieren wir zwei Datensätze und können im Argument ```by``` angeben, welche Spalten jeweils denselben Inhalt haben. Schreibaufwand hierbei ist, dass gleiche Spaltennamen auch aufgeführt werden müssen, da ansonsten (hier im Beispiel) die Variablen ```distance.x``` und ```distance.y``` gebildet werden. Dies liegt daran, da ```full_join()``` eigentlich dafür gedacht ist, neue/zusätzliche Variablen hinzuzufügen. 
+???
 
-In unserem Beispiel würden wir also angeben, dass aus Datensatz ```uniA``` die Spalte ```city``` gleich der Spalte ```City``` aus dem Datensatz ```uniB``` ist. Gleiches gilt für die ```distance``` Variable. 
+Da die Variablennamen nicht genau gleich sind, werden nun drei Variablen geschaffen: `city`, `distance` und `City`. Wo die Variable nicht vorliegt, werden automatisch `NAs` erzeugt. Dies ist vorteilhaft, kann aber auch frickelig werden, wenn bei der Datensatzerstellung nicht streng nach einem Codenamen-Schema gearbeitet wurde. **Lösung**: Im Vorfeld Variablen abklären und umbenennen. Andernfalls kann man `full_join()` nutzen.
 
-``` {r full-join, eval=TRUE}
+---
+
+# Unterschiedliche Spaltennamen
+
+Wenn die Spalten verschiedene Namen haben, benötigt man das Argument `by`. Hierin werden die Kombinationen der zusammengehörigen Variablen bestimmt. 
+
+In unserem Beispiel würden wir also angeben, dass aus Datensatz `uniA` die Spalte `city` gleich der Spalte `City` aus dem Datensatz `uniB` ist. Gleiches gilt für die `distance` Variable. 
+
+--
+
+.pull-left-40[
+``` {r full-join}
+uniTest2 <- uniA %>% 
+  full_join(uniB,
+            by = c("city" = "City", #<<
+                   "distance" = "distance" #<<
+                   ) #<<
+            )
+
+head(uniTest2)
+```
+]
+
+--
+
+.pull-right-60[
+.center[
+``` {r full-join-out, eval=TRUE, echo=FALSE}
 uniTest2 <- uniA %>% 
   full_join(uniB,
             by = c("city" = "City", 
@@ -280,17 +640,52 @@ uniTest2 <- uniA %>%
 
 head(uniTest2)
 ```
+]
+]
 
-### Zwei Datensätze kombinieren 
-Dies ist oft bei Mehrebenenansätzen nötig. Man hat Daten auf zwei verschiedenen Ebene und führt diese vor der Analyse in einem Datensatz zusammen, um alle Variablen aus einem Datensatz ansprechen zu können. Hierbei möchten wir Daten zu einem Datensatz hinzufügen, wobei wir eine Variable angeben, die als **Matching**-Variable dient. In diesem Beispiel haben wir im Datensatz ```uniMacro``` noch zusätzliche Variablen zu den jeweiligen Studienorten: Neben ```city``` und ```study``` sind hierin auch ```supervision``` (Betreuungsrelation) und ```maxsem``` (max. Seminargröße) pro Studienort und pro Studienfach eingetragen.
+???
 
-Für das **Mergen** von Datensätzen, kann man je nach Ausgangspunkt ```left_join()``` bzw. ```right_join()``` oder auch ```full_join()``` nutzen. Um die Daten korrekt zu mergen, müssen wir sowohl die Variable ```city``` als auch ```study``` nutzen, da sich die Makro-Variablen eben nach Studienort und Studienfach unterscheiden! Dies geben wir im Argument ```by``` an. Bei ```left_join()``` geben wir den Datensatz, an dem die Daten hinzugefügt werden sollen, per **Piping** weiter. Bei ```right_join()``` werden die Daten an den zweiten Datensatz angehängt. 
+Dieser Ansatz ist nicht weniger aufwändig, als das Umbenennen von Spaltennamen, bietet aber dennoch eine Alternative. Mit `full_join()` kombinieren wir zwei Datensätze und können im Argument `by` angeben, welche Spalten jeweils denselben Inhalt haben. Schreibaufwand hierbei ist, dass gleiche Spaltennamen auch aufgeführt werden müssen, da ansonsten (hier im Beispiel) die Variablen `distance.x` und `distance.y` gebildet werden. Dies liegt daran, da `full_join()` eigentlich dafür gedacht ist, neue/zusätzliche Variablen hinzuzufügen. 
 
+---
 
-### Zwei Datensätze kombinieren 
-Wir möchten nun die Makrodaten aus ```uniMacro``` jeweils passend auf Studienort und Studienfach in den Mikrodatensatz hinzufügen, um anschließend ein Multi-Level-Modell zu berechnen. Hierzu nutzen wir ```left_join()``` und geben im Argument ```by``` an, dass sowohl ```city``` als auch ```study``` als **Matching**-Variablen genutzt werden sollen.
+# Zwei Datensätze kombinieren 
+Mögliche Anwendungsfälle:
 
-``` {r left-join, eval=TRUE}
+- mehrere Erhebungen 
+
+- Multi-Level-Daten
+
+Für das **Mergen** von Datensätzen, kann man je nach Ausgangspunkt `left_join()` bzw. `right_join()` oder auch `full_join()` nutzen. Um die Daten korrekt zu mergen, müssen wir sowohl die Variable `city` als auch `study` nutzen, da sich die Makro-Variablen eben nach Studienort und Studienfach unterscheiden! Dies geben wir im Argument `by` an. Bei `left_join()` geben wir den Datensatz, an dem die Daten hinzugefügt werden sollen, per **Piping** weiter. Bei `right_join()` werden die Daten an den zweiten Datensatz angehängt. 
+
+???
+Dies ist oft bei Mehrebenenansätzen nötig. Man hat Daten auf zwei verschiedenen Ebene und führt diese vor der Analyse in einem Datensatz zusammen, um alle Variablen aus einem Datensatz ansprechen zu können. Hierbei möchten wir Daten zu einem Datensatz hinzufügen, wobei wir eine Variable angeben, die als **Matching**-Variable dient. In diesem Beispiel haben wir im Datensatz `uniMacro` noch zusätzliche Variablen zu den jeweiligen Studienorten: Neben `city` und `study` sind hierin auch `supervision` (Betreuungsrelation) und `maxsem` (max. Seminargröße) pro Studienort und pro Studienfach eingetragen.
+
+---
+
+# Zwei Datensätze kombinieren 
+
+Wir möchten nun die Makrodaten aus `uniMacro` jeweils passend auf Studienort und Studienfach in den Mikrodatensatz hinzufügen, um anschließend ein Multi-Level-Modell zu berechnen. Hierzu nutzen wir `left_join()` und geben im Argument `by` an, dass sowohl `city` als auch `study` als **Matching**-Variablen genutzt werden sollen.
+
+--
+ 
+.pull-left-40[
+``` {r left-join}
+uniMerged <- uni %>%
+  left_join(uniMacro, 
+            by = c("city", #<<
+                   "study" #<<
+                   ) #<<
+            ) 
+uniMerged
+``` 
+]
+
+--
+
+.pull-right-60[
+.scrollable[
+``` {r left-join-out, eval=TRUE, echo=FALSE}
 uniMerged <- uni %>%
   left_join(uniMacro, 
             by = c("city", 
@@ -299,10 +694,33 @@ uniMerged <- uni %>%
             ) 
 uniMerged
 ``` 
+]
+]
+---
 
-Alternativ geht dies auch mit ```full_join()```:
+# Zwei Datensätze kombinieren mit full_join()
 
-``` {r full-join2, eval=TRUE}
+Alternativ geht dies auch mit `full_join()`:
+
+--
+
+.pull-left-40[
+``` {r full-join2}
+uniMerged2 <- uni %>%
+  full_join(uniMacro,  #<<
+            by = c("city", #<<
+                   "study" #<<
+                   )
+            ) 
+uniMerged2
+``` 
+]
+
+--
+
+.pull-right-60[
+.scrollable[
+``` {r full-join2-out, eval=TRUE, echo=FALSE}
 uniMerged2 <- uni %>%
   full_join(uniMacro, 
             by = c("city",
@@ -311,32 +729,79 @@ uniMerged2 <- uni %>%
             ) 
 uniMerged2
 ``` 
+]
+]
 
-### Datensätze zusammenführen (neue Variablen hinzufügen)
-Will man nur weitere Variablen in einen Datensatz hinzufügen, kann man auch hierfür ```full_join()``` nutzen. Wir haben zum Beispiel in einem weiteren Datensatz aus dem Prüfungsverwaltungssystem vor der Anonymisierung der Daten die geleisteten Creditpoints der Befragtena ausgelesen. Diese haben wir im Datensatz ```points``` getrennt gespeichert und dort ebenfalls eine ID-Variable genutzt, die auf die ID-Variable des Datensatzes ```uni``` matcht. Wir fügen jetzt die Creditpoints dem Datensatz ```uni``` mit ```full_join()``` hinzu. Schauen wir uns zuerst nochmal die zwei Datensätze an:
+---
 
+# Neue Variablen hinzufügen
+
+Will man nur weitere Variablen in einen Datensatz hinzufügen, kann man auch hierfür `full_join()` nutzen. Wir haben zum Beispiel in einem weiteren Datensatz aus dem Prüfungsverwaltungssystem vor der Anonymisierung der Daten die geleisteten Creditpoints der Befragtena ausgelesen. Diese haben wir im Datensatz `points` getrennt gespeichert und dort ebenfalls eine ID-Variable genutzt, die auf die ID-Variable des Datensatzes `uni` matcht. Wir fügen jetzt die Creditpoints dem Datensatz `uni` mit `full_join()` hinzu. Schauen wir uns zuerst nochmal die zwei Datensätze an:
+
+.pull-left-30[
+.center[
+.scrollable[
 ```{r points, eval=TRUE}
 points
+```
+]
+]
+]
 
+.pull-right-70[
+.center[
+.scrollable[
+```{r uni, eval=TRUE}
 uni
 ```
-Wir haben zwar in beiden Variablen eine ID-Variable, allerdings ist die Spalte unterschiedlich benannt. Wir können jetzt - wie zuvor oben - wieder im ```by```-Argument dies angeben. Diesmal wollen wir einfach schnell vorher den Spaltennamen in einem der Datensätze anpassen. Dazu nutzen wir einfach ```rename()```. Die Logik in der Funktion ist ```neuer Name = alter Name```.
+]
+]
+]
 
-``` {r add-points, eval=TRUE}
+--
+
+Wir haben zwar in beiden Variablen eine ID-Variable, allerdings ist die Spalte unterschiedlich benannt. 
+
+---
+
+# Neue Variablen hinzufügen
+
+Wir können jetzt - wie zuvor oben - wieder im `by`-Argument dies angeben. Diesmal wollen wir einfach schnell vorher den Spaltennamen in einem der Datensätze anpassen. Dazu nutzen wir einfach `rename()`. Die Logik in der Funktion ist `neuer Name = alter Name`. Dann sind die Spaltennamen gleich und wir können die Datensätze mergen.
+
+.pull-left-40[
+``` {r add-points}
+points <- points %>% 
+  rename(ID = id)  #<<
+
+uni <- uni %>% 
+  full_join(points,   #<<
+            by = "ID" #<<
+            ) #<<
+uni
+```
+]
+
+--
+
+.pull-right-60[
+.center[
+.scrollable[
+```{r add-points-out, eval=TRUE, echo=FALSE}
 points <- points %>% 
   rename(ID = id)
 
-points
-```
-
-Jetzt sind die Spaltennamen gleich und wir können die Datensätze mergen.
-
-```{r final-merge, eval=TRUE}
 uni <- uni %>% 
   full_join(points, 
             by = "ID"
             )
 uni
 ```
+]
+]
+]
 
-## Das war's! Nun machen wir ein kleines Quiz!
+---
+
+class: inverse2, center, middle, mline
+
+# Das war's! Nun machen wir ein kleines Quiz!

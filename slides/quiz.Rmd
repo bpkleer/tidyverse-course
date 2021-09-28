@@ -1,26 +1,28 @@
 ---
-title: "Quiz"
-subtitle: "Daten bändigen & visualisieren"
-author: "B. Philipp Kleer"
-date: "11. Oktober 2021"
-output: 
-  slidy_presentation:
-      footer: "CC BY-SA 4.0, B. Philipp Kleer"
-      widescreen: true
-      highlight: pygments
-      theme: readable
-      css: ./styles/style-slides.css
-      df_print: paged
-      mathjax: default
-      self_contained: false
-      incremental: false #True  dann jedes Bullet einzeln
-      collapse: true # means the text output will be merged into the R source code block
+output:
+  xaringan::moon_reader:
+    css: ["./styles/slides.css"]  
+    nature:
+      seal: false
+      highlightStyle: github
+      highlightLines: true
+      highlightLanguage: ["r"]
+      countIncrementalSlides: false
+      ratio: '16:9'
+      slideNumberFormat: |
+        <div class="progress-bar-container">
+          <div class="progress-bar" style="width: calc(%current% / %total% * 100%);">
+          </div>
+        </div>`
+      navigation:
+        scroll: false
 ---
 
 ```{r setup, include=FALSE}
 library("knitr")
 library("rmarkdown")
 library("tidyverse")
+library("icons")
 
 uni <- readRDS("../datasets/uni.rds")
 
@@ -51,7 +53,27 @@ htmltools::tagList(
 )
 ```
 
-## Was macht der folgende Code?
+class: center, title-slide, middle
+
+# Einführung in ggplot-Grammatik
+
+## Daten bändigen & visualisieren
+
+### B. Philipp Kleer
+
+### Methodentage 2021
+
+### 11. Oktober 2021
+
+.social[
+   [`r icons::icon_style(fontawesome("orcid"), fill=rgb(235, 129, 27, maxColorValue = 255), scale = 1)`](https://orcid.org/0000-0003-1935-387X)   [`r icons::icon_style(fontawesome("gitlab"), fill=rgb(235, 129, 27, maxColorValue = 255), scale = 1)`](https://gitlab.com/bpkleer)   [`r icons::icon_style(fontawesome("university"), fill=rgb(235, 129, 27, maxColorValue = 255), scale = 1)`](https://www.uni-giessen.de/faculties/f03/departments/dps/staff/researchers/kleer?set_language=en)   [`r icons::icon_style(fontawesome("researchgate"), fill=rgb(235, 129, 27, maxColorValue = 255), scale = 1)`](https://www.researchgate.net/profile/Benedikt_Kleer)
+]
+
+---
+
+# Was macht der folgende Code?
+
+.pull-left-40[
 ``` {r quiz1}
 df %>% 
   slice(seq(1, 
@@ -61,13 +83,22 @@ df %>%
   group_by(device) %>% 
   summarize(mean(timeOfUse))
 ```
+]
 
-> - der Datensatz ```df``` wird geteilt, wie wählen mit ```seq()``` jeden 100. Fall
-> - wir nehmen daraus dann nur Fälle, deren Variable ```os``` gleich ```"iOS"``` ist
-> - dann sortieren wir nachd er Variable ```device``` 
-> - zuletzt lassen wir den Mittelwert der Variable ```timeOfUse``` gruppiert nach ```device``` ausgeben.
+--
 
-## Und was macht dieser Code?
+.pull-right-60[
+**Lösung:**
+- der Datensatz `df` wird geteilt, wir wählen mit `seq()` jeden 100. Fall
+- wir nehmen daraus dann nur Fälle, deren Variable `os` gleich `"iOS"` ist
+- dann sortieren wir nach der Variable `device` 
+- zuletzt lassen wir den Mittelwert der Variable `timeOfUse` gruppiert nach `device` ausgeben.
+]
+
+---
+
+# Und was macht dieser Code?
+
 ``` {r quiz2}
 df %>% 
   select(gndr, income, residence, inhabitants) %>% 
@@ -77,11 +108,18 @@ df %>%
                                 inhabitants > 50000 ~ "large city"))
 ``` 
 
-> - aus dem Datensatz ```df``` werden die Variablen ```gndr```, ```income```, ```residence``` und ```inhabitants``` gefiltert
-> - danach fügen wir die Fälle aus dem Datensatz ```df2``` hinzu.
-> - zuletzt schaffen wir eine neue Variable ```sizeOfTown```, die der Höhe der Einwohner:innen eine Beschreibung zuordnet (ordinale Variable)
+--
 
-## Und was macht dieser Code?
+**Lösung:**
+- aus dem Datensatz `df` werden die Variablen `gndr`, `income`, `residence` und `inhabitants` gefiltert
+- danach fügen wir die Fälle aus dem Datensatz `df2` hinzu.
+- zuletzt schaffen wir eine neue Variable `sizeOfTown`, die der Höhe der Einwohner:innen eine Beschreibung zuordnet (ordinale Variable)
+ 
+
+---
+
+# Und was macht dieser Code?
+
 ``` {r quiz3}
 df %>% 
   bind_rows(df3) %>% 
@@ -91,8 +129,16 @@ df %>%
                                 inhabitants > 50000 ~ "large city"))
 ``` 
 
-> - fehlerhaft Code!
-> - in ```filter()``` genutzte Anweisungen sind falsch!
-> - korrekt ist: ```filter(income > 1000 & gndr == "female")```
 
-## Das war's! Ab zu ```ggplot```!
+--
+
+**Lösung:**
+- fehlerhaft Code!
+- in `filter()` genutzte Anweisungen sind falsch!
+- korrekt ist: `filter(income > 1000 & gndr == "female")`
+ 
+
+---
+class: inverse2, mline, center, middle
+
+# Das war's! Ab zu `ggplot`!

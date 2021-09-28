@@ -1,15 +1,12 @@
 ---
-title: "Einführung in dplyr-Grammatik"
-subtitle: "Daten bändigen & visualisieren"
-author: "B. Philipp Kleer"
-date: "11. Oktober 2021"
-institute: "Methodentage 2021"
 output:
   xaringan::moon_reader:
-    css: [metropolis, metropolis-fonts, "./styles/scrollable.css"]  
+    css: ["./styles/slides.css"]  
     nature:
+      seal: false
       highlightStyle: github
       highlightLines: true
+      highlightLanguage: ["r"]
       countIncrementalSlides: false
       ratio: '16:9'
       slideNumberFormat: |
@@ -19,7 +16,6 @@ output:
         </div>`
       navigation:
         scroll: false
-
 ---
 
 ```{r setup, include=FALSE}
@@ -27,22 +23,20 @@ library("knitr")
 library("rmarkdown")
 library("tidyverse")
 library("DT")
+library("icons")
 
-uni <- readRDS("./datasets/uni.rds")
+uni <- readRDS("../datasets/uni.rds")
 
-opts_chunk$set(fig.path = "pics/s6-", # path for calculated figures
+opts_chunk$set(fig.path = "pics/dplyr-", # path for calculated figures
                fig.align = "center",  # alignment of figure (also possible right, left, default)
                fig.show = "hold", # how to show figures: hold -> direct at the end of code chunk; animate: all plots in an animation
-               fig.width = 3,   # figure width
-               fig.height = 4,  # figure height
+               out.width = "60%",
                echo = TRUE,     # Code is printed
                eval = FALSE,    # Code is NOT evaluated
                warning = FALSE, # warnings are NOT displayed
                message = FALSE, # messages are NOT displayed
-               size = "tiny",  # latex-size of code chunks
                background = "#E7E7E7", # background color of code chunks
                comment = "", # no hashtags before output
-               options(width = 80),
                results = "markdown",
                rows.print = 15
 )
@@ -65,7 +59,25 @@ htmltools::tagList(
 
 ```
 
-# Starten wir!
+class: center, title-slide, middle
+
+# Einführung in dplyr-Grammatik
+
+## Daten bändigen & visualisieren
+
+### B. Philipp Kleer
+
+### Methodentage 2021
+
+### 11. Oktober 2021
+
+.social[
+   [`r icons::icon_style(fontawesome("orcid"), fill=rgb(235, 129, 27, maxColorValue = 255), scale = 1)`](https://orcid.org/0000-0003-1935-387X)   [`r icons::icon_style(fontawesome("gitlab"), fill=rgb(235, 129, 27, maxColorValue = 255), scale = 1)`](https://gitlab.com/bpkleer)   [`r icons::icon_style(fontawesome("university"), fill=rgb(235, 129, 27, maxColorValue = 255), scale = 1)`](https://www.uni-giessen.de/faculties/f03/departments/dps/staff/researchers/kleer?set_language=en)   [`r icons::icon_style(fontawesome("researchgate"), fill=rgb(235, 129, 27, maxColorValue = 255), scale = 1)`](https://www.researchgate.net/profile/Benedikt_Kleer)
+]
+
+---
+
+# Starten wir jetzt!
 
 Nun tauchen wir in die Welt von **dplyr** ein. Das Paket nutzt man oft, um Datenstrukturen zu erkunden oder Transformationen vorzunehmen. Dabei gibt es einen Grundstock an Vokabeln, die über **piping** miteinander verbunden werden. 
 
@@ -154,16 +166,16 @@ Mit **select()** wählen wir Spalten aus, die uns angezeigt werden
 
 
 ``` {r select, eval=FALSE}
-select(uni,   # Datenquelle
-       c(mot, # ausgewählte Spalten
-         term 
+select(uni,    
+       c(mot, #<<
+         term #<< 
          )
        )
 ```
 
 ``` {r select-unseen, eval=TRUE, echo=FALSE}
-select(uni,   # Datenquelle
-       c(mot, # ausgewählte Spalten
+select(uni,    
+       c(mot,  
          term 
          )
        ) %>% 
@@ -174,11 +186,11 @@ select(uni,   # Datenquelle
 ---
 
 # slice()
-Demgegenüber können wir mit **slice()** Zeilen auswählen, also Fälle:
+Demgegenüber können wir mit **slice()** Zeilen auswählen, also Fälle: 
 
 ``` {r slice, eval=TRUE}
-slice(uni,    # Datenquelle
-      50:55  # ausgewählte Zahlen
+slice(uni,    
+      50:55   #<<
       )  
 ```
 
@@ -203,22 +215,22 @@ Mit `filter()` können wir spezifische Fälle des Datensatzes auswählen. Zur Er
 # filter()
 Zur Anwendung:
 
-.pull-left[
+.pull-left-40[
 
 ``` {r filter, eval = FALSE}
-filter(uni,  # Datenquelle
-       city == "Giessen" # Filtervariable #<<
+filter(uni,  
+       city == "Giessen" #<<
        )
 ```
 ]
 
 --
 
-.pull-right[
+.pull-right-60[
 .scrollable[
 ```{r filter2, eval=TRUE, echo=FALSE, size=8}
 filter(uni,
-       city == "Frankfurt" & study == "Political Science"
+       city == "Giessen"
        )
 ```
 ]
@@ -227,24 +239,24 @@ filter(uni,
 ---
 
 # arrange()
-.pull-left[
+.pull-left-40[
 Mit **arrange()** können wir den Datensatz sortieren. 
 
 ``` {r arrange, eval=FALSE}
 arrange(uni, 
-        abi
+        abi #<<
         )
 ```
 ]
 
 --
 
-.pull-right[
+.pull-right-60[
 .scrollable[
 
-``` {r arrange-true, eval=TRUE, echo=FALSE}
+``` {r arrange-out, eval=TRUE, echo=FALSE}
 arrange(uni, 
-        abi
+        abi 
         )
 ```
 ]
@@ -253,7 +265,7 @@ arrange(uni,
 ---
 
 # arrange()
-.pull-left[
+.pull-left-40[
 Die Sortierung ist dabei immer aufsteigend. Dies kann man über die Funktion ```desc()``` ändert (**desc**ending):
 ``` {r arrange2, eval=FALSE}
 arrange(uni,
@@ -264,9 +276,9 @@ arrange(uni,
 
 --
 
-.pull-right[
+.pull-right-60[
 .scrollable[
-``` {r arrange2-true, eval=TRUE, echo=FALSE}
+``` {r arrange2-out, eval=TRUE, echo=FALSE}
 arrange(uni,
         desc(abi)
         )
@@ -277,7 +289,7 @@ arrange(uni,
 ---
 
 # arrange()
-.pull-left[
+.pull-left-40[
 Alternativ kann man auch einfach ein Minuszeichen vor die Variable, nach der sortiert werden soll, setzen:
 
 ``` {r arrange3, eval=FALSE}
@@ -289,9 +301,9 @@ arrange(uni,
 
 --
 
-.pull-right[
+.pull-right-60[
 .scrollable[
-``` {r arrange3-true, eval=TRUE, echo=FALSE}
+``` {r arrange3-out, eval=TRUE, echo=FALSE}
 arrange(uni, 
         -abi
         )
@@ -302,7 +314,7 @@ arrange(uni,
 ---
 
 # mutate()
-.pull-left-narrow[
+.pull-left-40[
 Mit **mutate()** werden neue Variablen geschaffen. 
 
 Zum Beispiel könnten wir eine Variable schaffen, die den Abstand zum Mittelwert in der Variable `abi` misst.
@@ -312,24 +324,25 @@ Zum Beispiel könnten wir eine Variable schaffen, die den Abstand zum Mittelwert
 
 --
 
-.pull-right-wide[
+.pull-right-60[
 ``` {r mutate, eval=FALSE}
 mutate(uni, 
        abiDist = abi - mean(abi,      #<<
                              na.rm = TRUE #<<
-                            ). #<<
+                            ) #<<
        )
 ```
-]
 
 .scrollable[
-``` {r mutate-true, eval=TRUE, echo=FALSE}
+``` {r mutate-out, eval=TRUE, echo=FALSE}
 mutate(uni, 
-       abiDist = abi - mean(abi,
-                             na.rm = TRUE
-                            )
-       )
+       abiDist = abi - mean(abi,     
+                             na.rm = TRUE  
+                            ) 
+       ) %>% 
+  select(ID, abi, abiDist, mot, study, city, distance, term)
 ```
+
 ]
 ]
 
@@ -355,30 +368,34 @@ case_when(Fallauswahl ~ neuer Codewert)
 Im Beispiel:
 ``` {r mutate2, eval=FALSE}
 mutate(uni,
-       dum.pum = case_when(city == "Marburg" ~ 1, # "Fallauswahl" ~ "neuer Codewert" #<<
-                           city == "Gießen" ~ 0, #<< 
-                           city == "Frankfurt" ~ 0 #<<
-                           )
+       dumPum = case_when(city == "Marburg" ~ 1, # "Fallauswahl" ~ "neuer Codewert" #<<
+                          city == "Gießen" ~ 0, #<< 
+                          city == "Frankfurt" ~ 0 #<<
+                          )
        )
 ```
 
 ---
 
 # mutate() & case_when()
+
+.center[
 .scrollable[
-``` {r mutate2-true, eval=TRUE, echo=FALSE}
+``` {r mutate2-out, eval=TRUE, echo=FALSE}
 mutate(uni,
-       dum.pum = case_when(city == "Marburg" ~ 1, # "Fallauswahl" ~ "neuer Codewert"
-                           city == "Gießen" ~ 0, 
-                           city == "Frankfurt" ~ 0
-                           )
+       dumPum = case_when(city == "Marburg" ~ 1, # "Fallauswahl" ~ "neuer Codewert"
+                          city == "Gießen" ~ 0, 
+                          city == "Frankfurt" ~ 0
+                          )
        )
 ```
+]
 ]
 
 ---
 
 # mutate() & case_when()
+
 Auch hier könnten mehrere Bedingungen verknüpft werden: So möchten wir einen Dummy schaffen, der anzeigt, ob eine Person in Marburg Erziehungswissenschaften studiert. 
 
 --
@@ -386,8 +403,8 @@ Auch hier könnten mehrere Bedingungen verknüpft werden: So möchten wir einen 
 Wir würden wie folgt beginnen:
 ``` {r mutate3}
 mutate(uni, 
-       dum.pum.es = case_when(city == "Marburg" & study == "Educational Science" ~ 1 #<<
-                              )
+       dumPumEs = case_when(city == "Marburg" & study == "Educational Science" ~ 1 #<<
+                            )
        )
 ```
 
@@ -399,23 +416,26 @@ Wenn man nicht alle verschiedenen Kombinationen eingeben möchte und zum Beispie
 
 ``` {r mutate4, eval=FALSE}
 mutate(uni, 
-       dum.pum.es = case_when(city == "Marburg" & study == "Educational Science" ~ 1,
-                              TRUE ~ 0 #<<
-                              )
+       dumPumEs = case_when(city == "Marburg" & study == "Educational Science" ~ 1,
+                            TRUE ~ 0 #<<
+                            )
        )
 ```
 
 ---
 
 # mutate() & case_when()
+
+.center[
 .scrollable[
-``` {r mutate4-true, eval=TRUE, echo=FALSE}
+``` {r mutate4-out, eval=TRUE, echo=FALSE}
 mutate(uni, 
-       dum.pum.es = case_when(city == "Marburg" & study == "Educational Science" ~ 1,
-                              TRUE ~ 0
-                              )
+       dumPumEs = case_when(city == "Marburg" & study == "Educational Science" ~ 1,
+                            TRUE ~ 0
+                            )
        )
 ```
+]
 ]
 
 ---
@@ -439,12 +459,23 @@ In **summarise()** können verschiedene Funktionen genutzt werden, die auf die V
 
 **Wichtig:** Das Ausgabe-Format ist immer ein *tibble*.
 
-```{r summarize2, eval=TRUE}
+.pull-left[
+```{r summarize2}
 summarise(uni,
           mean(term),
           mean(mot)
           )
 ```
+]
+
+.pull-right[
+```{r summarize2-out, eval=TRUE, echo=FALSE}
+summarise(uni,
+          mean(term),
+          mean(mot)
+          )
+```
+]
 
 ---
 
@@ -453,7 +484,8 @@ Die Unterfunktion **summarise_if()** bietet dazu die Möglichkeit leicht auf ein
 
 --
 
-``` {r summarize3, eval=TRUE}
+.pull-left-40[
+``` {r summarize3}
 summarise_if(uni,
              is.numeric, #<<
              list(mean = mean, 
@@ -461,6 +493,22 @@ summarise_if(uni,
                   )
              )
 ```
+]
+
+--
+
+.pull-right-60[
+.center[
+``` {r summarize3-out, eval=TRUE, echo=FALSE}
+summarise_if(uni,
+             is.numeric,
+             list(mean = mean, 
+                  sd = sd
+                  )
+             )
+```
+]
+]
 
 --
 
@@ -473,7 +521,8 @@ Die Unterfunktion **summarise_at()** bietet die Möglichkeit nur bei bestimmten 
 
 --
 
-``` {r summarize4, eval=TRUE}
+.pull-left-30[
+``` {r summarize4}
 summarise_at(uni,
              vars(mot,  #<<
                   abi,  #<<
@@ -484,31 +533,52 @@ summarise_at(uni,
                   )
              )
 ```
+]
+
+--
+
+.pull-right-60[
+.center[
+``` {r summarize4-out, eval=TRUE, echo=FALSE}
+summarise_at(uni,
+             vars(mot,  #<<
+                  abi,  #<<
+                  term  #<<
+                  ),
+             list(mean = mean, 
+                  sd = sd
+                  )
+             )
+```
+]
+]
 
 ---
 
 # group_by()
-.pull-left[
+.pull-left-40[
 Mit **group_by()** kann der Datensatz gruppiert werden, also zum Beispiel nach eine kategoriellen Variable. In `uni`-Datensatz zum Beispiel nach `study`:
 
 ``` {r groupby, eval=FALSE}
 group_by(uni,
-         study 
+         `study`
          )
 ```
-
-Was sehen wir?  
 ]
 
-.pull-right[
+.pull-right-60[
 .scrollable[
-``` {r groupby-true, eval=TRUE, echo=FALSE}
+``` {r groupby-out, eval=TRUE, echo=FALSE}
 group_by(uni,
          study
          )
 ```
 ]
 ]
+
+--
+
+Was sehen wir? 
 
 ???
 Antwort: **Nichts!**
@@ -520,13 +590,29 @@ Antwort: **Nichts!**
 
 --
 
-```{r groupby2, eval=TRUE}
+.pull-left-40[
+```{r groupby2}
 summarize(group_by(uni, 
                    study
                    ), 
           mean(term) #<<
           )
 ```
+]
+
+--
+
+.pull-right-60[
+.center[
+```{r groupby2-out, eval=TRUE, echo=FALSE}
+summarize(group_by(uni, 
+                   study
+                   ), 
+          mean(term)   
+          )
+```
+]
+]
 
 --
 
@@ -536,11 +622,11 @@ Jetzt haben wir für jeden Studienort einen Mittelwert für das Fachsemester (`t
 
 **Wichtig**: Wenn Daten gespeichert oder übergeben werden, sollte am Ende die Befehlskette immer mit `ungroup()` enden, um die Datenteilung nicht zu übergeben!
 
---- 
+---
 
-class: inverse, mline, center, middle
+class: inverse2, mline, center, middle
 
-# Piping `%>%` 
+# Piping `%>%`
 
 ---
 
@@ -553,7 +639,7 @@ Den *pipe*-Operator in `tidyverse` ist `%>%` und kann einfach per Tastenkürzel 
 
 --
 
-Seit R Version 4.0 gibt es den Pipe-Operator auch in RBase, daher diese beiden nicht verwechseln.
+Seit R Version 4.0 gibt es den Pipe-Operator auch in RBase (`\>`), daher diese beiden nicht verwechseln.
 
 ---
 
@@ -563,42 +649,54 @@ Hier mal ein Beispiel: Das Ziel ist es eine Variable zu erstellen, die den Abitu
 ---
 
 # Beispiel Pipes
+
 Die Schritte, die wir hierbei machen, sind folgende:
 
 --
 
+.pull-left[
 1. Wir geben den Datensatz `uni` weiter.
-
---
 
 2. Wir gruppieren den Datensatz nach `city`.
 
---
-
 3. Wir berechnen eine neue Variable `abiMean`.
-
---
 
 4. Wir heben die Gruppierung wieder auf.
 
+5. (bzw. 0.) Wir überspeichern den alten Datensatz.
+]
+
 --
 
-5./0. Wir überspeichern den alten Datensatz.
-
---
-
-``` {r pipe, eval=TRUE}
+.pull-right[
+``` {r pipe}
 uni <- uni %>%      
   group_by(city) %>%  
   mutate(abiMean = mean(abi, 
                          na.rm = TRUE
                         )
          ) %>% 
-  ungroup() 
+  ungroup() #<<
 
 table(uni$city, 
       uni$abiMean)
 ```
+
+.center[
+``` {r pipe-out, eval=TRUE, echo=FALSE}
+uni <- uni %>%      
+  group_by(city) %>%  
+  mutate(abiMean = mean(abi, 
+                         na.rm = TRUE
+                        )
+         ) %>% 
+  ungroup() #<<
+
+table(uni$city, 
+      uni$abiMean)
+```
+]
+] 
 
 ---
 
@@ -607,7 +705,9 @@ Alternativ könnten wir uns dies auch erstmal nur ausgeben lassen.
 
 --
 
-```{r pipe2, eval=TRUE}
+.pull-left[
+
+```{r pipe2}
 uni %>% 
   group_by(city) %>% 
   summarize(mean = mean(abi, 
@@ -615,7 +715,22 @@ uni %>%
                         )
             )
 ```
+]
 
+--
+
+.pull-right[
+.center[
+```{r pipe2-out, eval=TRUE, echo=FALSE}
+uni %>% 
+  group_by(city) %>% 
+  summarize(mean = mean(abi, 
+                        na.rm = TRUE
+                        )
+            )
+```
+]
+]
 ---
 
 # Pipes
@@ -633,7 +748,8 @@ unterscheiden.
 
 --
 
-```{r pipe3, eval=TRUE}
+.pull-left-60[
+```{r pipe3}
 uni <- uni %>%
   mutate(termg = case_when(term <= 2 ~ "Anfänger:in", 
                            term > 2 & term <= 6 ~ "Erfahrene", 
@@ -643,6 +759,22 @@ uni <- uni %>%
 table(uni$termg)
 str(uni$termg)
 ```
+]
+
+--
+
+.pull-right-40[
+```{r pipe3-out, eval=TRUE, echo=FALSE}
+uni <- uni %>%
+  mutate(termg = case_when(term <= 2 ~ "Anfänger:in", 
+                           term > 2 & term <= 6 ~ "Erfahrene", 
+                           term > 6 ~ "Langzeit"
+                           )
+         )
+table(uni$termg)
+str(uni$termg)
+```
+]
 
 ---
 
@@ -651,7 +783,8 @@ Etwas komplexer wäre folgende Aufgabe: Wir möchten nicht die Abweichung zum Mi
 
 --
 
-```{r pipe4, eval=TRUE}
+.pull-left-40[
+```{r pipe4}
 uni <- uni %>%
   group_by(city) %>%
   mutate(abigm = mean(abi)) %>%
@@ -666,15 +799,39 @@ uni[, c("ID",
         )
     ]
 ```
+]
 
+--
+
+.pull-right-60[
+.center[
+```{r pipe4-out, eval=TRUE, echo=FALSE}
+uni <- uni %>%
+  group_by(city) %>%
+  mutate(abigm = mean(abi)) %>%
+  mutate(abid = abi - abigm) %>%
+  ungroup()
+
+uni[, c("ID",
+        "abi",
+        "city", 
+        "abigm", 
+        "abid"
+        )
+    ]
+```
+]
+]
 ---
 
 # Pipes
+
+.pull-left-40[
 Alternativ könnten wir die Daten auch hierarchisch nach Standort und Studienfach gruppieren und uns dann einfach die unterschiedlichen Mittelwerte mit **summarise()** ausgeben lassen:
 
 --
 
-```{r pipe5, eval=TRUE}
+```{r pipe5, eval=FALSE}
 mCityStudy <- uni %>%
   group_by(city,
            study
@@ -683,6 +840,22 @@ mCityStudy <- uni %>%
 
 mCityStudy
 ```
+]
+
+
+.pull-right-60[
+.center[
+```{r pipe5-out, eval=TRUE, echo=FALSE}
+mCityStudy <- uni %>%
+  group_by(city,
+           study
+           ) %>%
+  summarise(mean(abi))
+
+mCityStudy
+```
+]
+]
 
 ---
 
@@ -720,6 +893,6 @@ Nutzt dazu den Datensatz `pss` (Panem Social Survey).
 
 ---
 
-class: inverse, mline, center, middle
+class: inverse2, mline, center, middle
 
 # Das wars!
