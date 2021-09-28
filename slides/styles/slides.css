@@ -235,6 +235,7 @@ a {
 .remark-code, .remark-inline-code {
   font-family: 'Fira Code', 'Lucida Console', Monaco, monospace;
   font-size: 80%;
+  background: #e7e8e2;
 }
 
 /* Font sizes */
@@ -329,12 +330,12 @@ Code chunks
 }
 
 .remark-code-line-highlighted	{
-	  background-color: rgba(235, 129, 27, .2);
-	}
+	background-color: rgba(235, 129, 27, .2);
+}
 	
 /* Code chunk box */
 .remark-code {
-  background-color: rgba(235, 129, 27, .2);
+  background: #e7e8e2;
 }
 
 /* Code sizes */
@@ -385,6 +386,12 @@ other formats
 
 
 **********/
+
+/* gt-tables */
+.gt_table {
+  margin-bottom: 15px;
+  margin-top: 15px;
+}
 
 /* Column ratios */
 .pull-left {

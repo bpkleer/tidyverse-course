@@ -1,0 +1,374 @@
+
+/***** own created style sheet *********/
+
+/********
+
+Fonts
+
+********/
+
+/* Font import */
+@import url(https://fonts.googleapis.com/css?family=Fira+Sans:300,300i,400,400i,500,500i,700,700i);
+@import url(https://cdn.rawgit.com/tonsky/FiraCode/1.204/distr/fira_code.css);
+
+/* font for text */
+body {
+  font-family: 'Fira Sans','Droid Serif', 'Palatino Linotype', 'Book Antiqua', Palatino, 'Microsoft YaHei', 'Songti SC', serif;
+  background-color: #FAFAFA;
+}
+
+/* metropolis orange color for bold */
+b, strong {
+  color: #EB811B;
+}
+
+/* customized link color */
+a {
+  color: #f3a287;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+/* customized link color */
+a {
+  color: #f3a287;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+/* Font sizes */
+.font10 {
+  font-size: 10%;
+}
+
+.font20 {
+  font-size: 20%;
+}
+
+.font30 {
+  font-size: 30%;
+}
+
+.font40 {
+  font-size: 40%;
+}
+
+.font50 {
+  font-size: 50%;
+}
+
+.font60 {
+  font-size: 60%;
+}
+
+.font70 {
+  font-size: 70%;
+}
+
+.font80 {
+  font-size: 80%;
+}
+
+.font90 {
+  font-size: 90%;
+}
+
+.font100 {
+  font-size: 100%;
+}
+
+.font110 {
+  font-size: 110%;
+}
+
+.font120 {
+  font-size: 120%;
+}
+
+.font130 {
+  font-size: 130%;
+}
+
+.font140 {
+  font-size: 140%;
+}
+
+.font150 {
+  font-size: 150%;
+}
+
+.font160 {
+  font-size: 160%;
+}
+.font170 {
+  font-size: 170%;
+}
+.font180 {
+  font-size: 180%;
+}
+.font190 {
+  font-size: 190%;
+}
+.font200 {
+  font-size: 200%;
+}
+
+/**********
+
+Code chunks 
+
+**********/
+
+code {
+  font-family: 'Fira Code', 'Lucida Console', Monaco, monospace;
+  font-size: 80%;
+  background: #e7e8e2;
+}
+
+
+/* Code sizes */
+.code10 .code {
+  font-size: 10%;
+}
+
+.code20 .code {
+  font-size: 20%;
+}
+
+.code30 .code {
+  font-size: 30%;
+}
+
+.code40 .code {
+  font-size: 40%;
+}
+
+.code50 .code {
+  font-size: 50%;
+}
+
+.code60 .code {
+  font-size: 60%;
+}
+
+.code70 .code {
+  font-size: 70%;
+}
+
+.code80 .code {
+  font-size: 80%;
+}
+
+.code90 .code {
+  font-size: 90%;
+}
+
+.code100 .code {
+  font-size: 100%;
+}
+
+	
+/*******
+
+Headers 
+
+*******/
+
+title {
+  font-size: 28px;
+  color:#1A292C;
+  text-align: center;
+  padding-top: 25px;
+  text-shadow: none;
+}
+
+h1 {
+  font-size: 26px;
+  color:#1A292C;
+  text-align: left;
+  margin-left: 00px;
+}
+
+h1.title {
+  font-size: 26px;
+  color:#1A292C;
+  text-align: center;
+  margin-left: 00px;
+}
+
+h1.subtitle {
+  font-size: 24px;
+  color:#1A292C;
+  text-align: center;
+}
+
+h2 {
+  font-size: 22px;
+  color:#1A292C;
+  text-align: left;
+  padding-top: 15px;
+  padding-bottom: 00px;
+  text-shadow: none;
+  margin-left: 00px;
+  margin-bottom: 10px;
+}
+
+h3 {
+  font-size: 20px;
+  color:#1A292C;
+  text-align: left;
+  padding-top: 15px;
+  padding-bottom: 00px;
+  text-shadow: none;
+  margin-left: 00px;
+  margin-bottom: 10px;
+}
+
+h4 {
+  font-size: 20px;
+  color:#1A292C;
+  text-align: left;
+  padding-top: 15px;
+  padding-bottom: 00px;
+  text-shadow: none;
+  margin-left: 00px;
+  margin-bottom: 10px;
+}
+
+h3.code{
+  font-size: 20px;
+  padding-top: -15px;
+  text-align: left;
+  padding-bottom: 00px;
+  text-shadow: none;
+  margin-left: 00px;
+  margin-bottom: 10px;
+}
+
+
+p.author p.date {
+	font-size: 18px;
+	color: #1A292C;
+}
+
+p.caption {
+  font-size: 16px;
+  font-style: normal;
+  color: #1A292C;
+  text-align: center;
+}
+
+/* trennlinie */
+
+hr {
+  color: #EB811B;
+  border: 1px solid #EB811B;
+}
+
+/*****
+
+Lists / tables
+
+*****/
+
+/* TOC */
+.list-group-item.active, .list-group-item.active:focus, .list-group-item.active:hover {
+    z-index: 2;
+    color: #1A292C;
+    background-color: rgba(235, 129, 27, .2);
+    border-color: #1A292C;
+}
+
+/* unordered list */
+ul{
+  list-style-type: square;
+  display: block;
+}
+
+/* list item in unordered list */
+ul li{
+  margin-top: 0;
+  margin-bottom: 0;
+  margin-left: .1em;
+  margin-right: 0;
+}
+
+/* ordered list */
+ol {
+  list-style-type: upper-roman;
+  display: block;
+}
+
+/* list item in ordered list */
+ol li{
+  margin-top: 0;
+  margin-bottom: 0;
+  margin-left: .1em;
+  margin-right: 0;
+}
+
+/* table */
+table {
+  font-size: 80%;
+  text-align: center;
+  margin-bottom: 20px;
+  margin-top: 20px;
+}
+
+/* gt-tables */
+.gt_table {
+  margin-bottom: 15px;
+  margin-top: 15px;
+}
+
+.pagedtable-footer {
+  padding-top: 4px;
+  padding-bottom: 5px;
+  font-size: 13px;
+}
+
+/* special containers for column-design */
+.flex-container{
+  justify-content:space-evenly; 
+  display: flex;
+  flex-flow: row wrap;
+}
+
+.flex-picture {
+  text-align: center; 
+  flex-grow:1; 
+  flex-basis: 30%;
+}
+
+.flex-text{
+  text-align: left; 
+  flex-grow: 1; 
+  flex-basis: 50%;
+}
+
+
+/***********
+
+own types
+
+***********/
+
+#infobox {
+  padding: 1em;
+  background: #FAFAFA;
+  color: #1A292C;
+  border: 16px #1A292C;
+  border-radius: 10px;
+  line-height: 120%;
+  font-size: 20px;
+  margin-bottom: 20px;
+  margin-top: 10px;
+  margin-left: 20px;
+  margin-right: 20px;
+}
+
+div.blue { 
+  background-color:#F5F5F5; 
+  border-radius: 5px; 
+  padding: 20px;
+}
