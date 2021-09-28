@@ -57,7 +57,7 @@ class: center, title-slide, middle
 
 # Einführung in ggplot-Grammatik
 
-## Daten bändigen & visualisieren
+## Daten bändigen & visualisieren mit <img src="https://www.r-project.org/logo/Rlogo.svg" width="35";>
 
 ### B. Philipp Kleer
 

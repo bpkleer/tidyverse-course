@@ -61,7 +61,7 @@ htmltools::tagList(
 
 class: center, title-slide, middle
 
-# Daten bändigen & visualisieren
+# Daten bändigen & visualisieren mit <img src="https://www.r-project.org/logo/Rlogo.svg" width="35";>
 
 ## Was wir machen und wie wir uns organisieren
 
