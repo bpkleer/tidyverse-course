@@ -48,5 +48,8 @@ Für die Darstllung von Tabellen wird dazu noch das Paket `DT` und `icons` benö
 install.packages("DT", dependencies = TRUE)
 
 remotes::install_github("mitchelloharawild/icons")
+
+# hinzufügen der fontawesome Icons (andere auch noch möglich)
+download_fontawesome()
 ```
 
