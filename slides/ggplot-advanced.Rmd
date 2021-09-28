@@ -12,7 +12,7 @@ output:
       highlightStyle: github
       highlightLines: true
       highlightLanguage: ["r"]
-      css: styles/htmlbook.css
+      css: ./styles/htmlbook.css
       df_print: paged
       mathjax: default
       self_contained: false

@@ -12,7 +12,7 @@ output:
       highlightStyle: github
       highlightLines: true
       highlightLanguage: ["r"]
-      css: styles/htmlbook.css
+      css: ./styles/htmlbook.css
       df_print: paged
       mathjax: default
       self_contained: false
@@ -44,7 +44,7 @@ library("extrafont")
 library("tidyverse")
 loadfonts(quiet = TRUE)
 library("knitr")
-opts_chunk$set(fig.path = 'pics/s6-', # path for calculated figures
+opts_chunk$set(#fig.path = 'pics/s6-', # path for calculated figures
                fig.align = 'center',  # alignment of figure (also possible right, left, default)
                fig.show = 'hold', # how to show figures: hold -> direct at the end of code chunk; animate: all plots in an animation
                fig.width = 3,   # figure width

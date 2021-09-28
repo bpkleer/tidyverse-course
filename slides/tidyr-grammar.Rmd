@@ -1,7 +1,7 @@
 ---
 output:
   xaringan::moon_reader:
-    css: ["./styles/slides.css"]  
+    css: ./styles/slides.css  
     nature:
       seal: false
       highlightStyle: github
