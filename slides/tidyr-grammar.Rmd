@@ -284,7 +284,7 @@ statclass2
 
 --
 
-$\Rightarrow$ Namenwerte sind Spaltennamen!
+$\rightarrow$ Namenwerte sind Spaltennamen!
 
 ---
 
@@ -660,6 +660,27 @@ Für das **Mergen** von Datensätzen, kann man je nach Ausgangspunkt `left_join(
 
 ???
 Dies ist oft bei Mehrebenenansätzen nötig. Man hat Daten auf zwei verschiedenen Ebene und führt diese vor der Analyse in einem Datensatz zusammen, um alle Variablen aus einem Datensatz ansprechen zu können. Hierbei möchten wir Daten zu einem Datensatz hinzufügen, wobei wir eine Variable angeben, die als **Matching**-Variable dient. In diesem Beispiel haben wir im Datensatz `uniMacro` noch zusätzliche Variablen zu den jeweiligen Studienorten: Neben `city` und `study` sind hierin auch `supervision` (Betreuungsrelation) und `maxsem` (max. Seminargröße) pro Studienort und pro Studienfach eingetragen.
+
+---
+
+# left_join(), right_join() & full_join()
+Die Logik der drei Funktionen ist recht gut visuell darzustellen.
+
+1. **pull-left()**: Daten des linken Datensatzes werden um gemeinsame des rechten Datensatzes ergänzt. 
+
+![left-join()](./pics/left_join.jpg)
+
+--
+
+2. **pull-right()**: Daten des rechten Datensatzes werden um gemeinsame des linken Datensatzes ergänzt. 
+
+![right_join()](./pics/right_join.jpg)
+
+--
+
+3. **full_join()**: Daten beider Datensätze werden komplett verbunden.
+
+![full_join()](./pics/full_join.jpg)
 
 ---
 
