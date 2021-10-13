@@ -219,7 +219,7 @@ Zur Anwendung:
 
 ``` {r filter, eval = FALSE}
 filter(uni,  
-       city == "Giessen" #<<
+       city == "Gießen" #<<
        )
 ```
 ]
@@ -230,7 +230,7 @@ filter(uni,
 .scrollable[
 ```{r filter2, eval=TRUE, echo=FALSE, size=8}
 filter(uni,
-       city == "Giessen"
+       city == "Gießen"
        )
 ```
 ]

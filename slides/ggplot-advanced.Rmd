@@ -1,6 +1,5 @@
 ---
 title: "Weiterführende Darstellungen in `ggplot2`"
-
 output: 
   html_document:
       toc: true
